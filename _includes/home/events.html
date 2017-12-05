@@ -1,0 +1,122 @@
+<section class="content content-jumbotron">
+    <section class="container text-center">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <span class="text-script">attend one of our</span>
+                <h1 class="text-caps">upcoming events</h1>
+                <p class="lead">We offer hands-on trainings, workshops and special events throughout the year for team leads and teachers to build their knowledge of restoration science and inquiry-based curriculum. The first step is to attend one of ORS basic trainings which are held once per month from March to October.</p>
+                <p class="lead ng-binding">Interested in attending a BOP training? Join the 702 team leads who have attended over 37 events.</p>
+            </div>
+        </div>
+        <div class="row">
+            <!-- ngRepeat: calendarEvent in vm.events --><div ng-repeat="calendarEvent in vm.events" class="col-sm-12 col-md-4 library-item" ng-init="openSpots = vm.getOpenSpots(calendarEvent.registrants, calendarEvent.maximumCapacity);
+                daysRemaining = vm.getDaysRemainingDeadline(calendarEvent.dates, calendarEvent.deadlineToRegister)">
+                <div class="panel" data-category="transition" ui-sref="events.view({ eventId: calendarEvent._id })" href="/events/5894b6a658dc86ad76329fa8">
+                    <div class="panel-heading" ng-style="{'background-color':'#4CAF50'}" style="background-color: rgb(76, 175, 80);">
+                        <h3 ng-hide="calendarEvent.category.type.type === 'Other'" class="panel-title ng-binding" ng-bind="calendarEvent.category.type.type">Scientist Workshop</h3>
+                        <h3 ng-show="calendarEvent.category.type.type === 'Other'" class="panel-title ng-binding ng-hide">
+                          Other: </h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <h4><b ng-bind="calendarEvent.title" class="ng-binding">Marine Genomics - Professor Elizabeth Alter</b></h4>
+                        <!-- ngRepeat: date in calendarEvent.dates --><h3 class="blue ng-binding" ng-repeat="date in calendarEvent.dates">Nov 28 <small class="ng-binding">
+                          2017<br>
+                          5:15pm-7:30pm</small></h3><!-- end ngRepeat: date in calendarEvent.dates -->
+                        <p ng-show="calendarEvent.location.addressString" class="ng-binding"><i class="fa fa-map-marker"></i> 1 Pace Plaza w210, New York, NY 10038, USA</p>
+                    </div>
+                    <div class="panel-footer">
+                        <p class="text-muted text-center small">
+                            <span ng-show="(daysRemaining >= 0 &amp;&amp; openSpots > 0)" id="openSpots" class="ng-hide">
+                              <i class="fa fa-calendar-times-o"></i>
+                              <b class="ng-binding">0 spots</b><br></span>
+                            <span ng-show="(daysRemaining >= 0 &amp;&amp; openSpots <= 0 &amp;&amp; openSpots !== null)" id="noOpenSpots">
+                              <i class="fa fa-calendar-times-o"></i>
+                              <b>Event is full</b><br></span>
+                            <span ng-show="(daysRemaining < 0 || (openSpots <= 0 &amp;&amp; openSpots !== null))" id="registrationClosed">
+                              <i class="fa fa-clock-o"></i>
+                              <b>Registration is closed</b></span>
+                            <span ng-show="(daysRemaining === 0 &amp;&amp; (openSpots > 0 || openSpots === null))" id="registerToday" class="ng-hide">
+                              <i class="fa fa-clock-o"></i>
+                              <b>Last day to register!</b></span>
+                            <span ng-show="(daysRemaining > 0 &amp;&amp; (openSpots > 0 || openSpots === null))" id="registrationOpen" class="ng-hide">
+                              <i class="fa fa-clock-o"></i>
+                              <b class="ng-binding">1 days</b> left to register</span>
+                        </p>
+                    </div>
+                </div>
+            </div><!-- end ngRepeat: calendarEvent in vm.events --><div ng-repeat="calendarEvent in vm.events" class="col-sm-12 col-md-4 library-item" ng-init="openSpots = vm.getOpenSpots(calendarEvent.registrants, calendarEvent.maximumCapacity);
+                daysRemaining = vm.getDaysRemainingDeadline(calendarEvent.dates, calendarEvent.deadlineToRegister)">
+                <div class="panel" data-category="transition" ui-sref="events.view({ eventId: calendarEvent._id })" href="/events/5894b71e58dc86ad76329faa">
+                    <div class="panel-heading" ng-style="{'background-color':'#4CAF50'}" style="background-color: rgb(76, 175, 80);">
+                        <h3 ng-hide="calendarEvent.category.type.type === 'Other'" class="panel-title ng-binding" ng-bind="calendarEvent.category.type.type">Scientist Workshop</h3>
+                        <h3 ng-show="calendarEvent.category.type.type === 'Other'" class="panel-title ng-binding ng-hide">
+                          Other: </h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <h4><b ng-bind="calendarEvent.title" class="ng-binding">Restoration and Environmental Justice - Bronx River Alliance</b></h4>
+                        <!-- ngRepeat: date in calendarEvent.dates --><h3 class="blue ng-binding" ng-repeat="date in calendarEvent.dates">Dec 5 <small class="ng-binding">
+                          2017<br>
+                          5:15pm-7:30pm</small></h3><!-- end ngRepeat: date in calendarEvent.dates -->
+                        <p ng-show="calendarEvent.location.addressString" class="ng-binding"><i class="fa fa-map-marker"></i> 1 Pace Plaza w210, New York, NY 10038, USA</p>
+                    </div>
+                    <div class="panel-footer">
+                        <p class="text-muted text-center small">
+                            <span ng-show="(daysRemaining >= 0 &amp;&amp; openSpots > 0)" id="openSpots" class="ng-hide">
+                              <i class="fa fa-calendar-times-o"></i>
+                              <b class="ng-binding">0 spots</b><br></span>
+                            <span ng-show="(daysRemaining >= 0 &amp;&amp; openSpots <= 0 &amp;&amp; openSpots !== null)" id="noOpenSpots">
+                              <i class="fa fa-calendar-times-o"></i>
+                              <b>Event is full</b><br></span>
+                            <span ng-show="(daysRemaining < 0 || (openSpots <= 0 &amp;&amp; openSpots !== null))" id="registrationClosed">
+                              <i class="fa fa-clock-o"></i>
+                              <b>Registration is closed</b></span>
+                            <span ng-show="(daysRemaining === 0 &amp;&amp; (openSpots > 0 || openSpots === null))" id="registerToday" class="ng-hide">
+                              <i class="fa fa-clock-o"></i>
+                              <b>Last day to register!</b></span>
+                            <span ng-show="(daysRemaining > 0 &amp;&amp; (openSpots > 0 || openSpots === null))" id="registrationOpen" class="ng-hide">
+                              <i class="fa fa-clock-o"></i>
+                              <b class="ng-binding">19 days</b> left to register</span>
+                        </p>
+                    </div>
+                </div>
+            </div><!-- end ngRepeat: calendarEvent in vm.events --><div ng-repeat="calendarEvent in vm.events" class="col-sm-12 col-md-4 library-item" ng-init="openSpots = vm.getOpenSpots(calendarEvent.registrants, calendarEvent.maximumCapacity);
+                daysRemaining = vm.getDaysRemainingDeadline(calendarEvent.dates, calendarEvent.deadlineToRegister)">
+                <div class="panel" data-category="transition" ui-sref="events.view({ eventId: calendarEvent._id })" href="/events/5a04a24f6257c00f982fc015">
+                    <div class="panel-heading" ng-style="{'background-color':'#795548'}" style="background-color: rgb(121, 85, 72);">
+                        <h3 ng-hide="calendarEvent.category.type.type === 'Other'" class="panel-title ng-binding" ng-bind="calendarEvent.category.type.type">Professional Development</h3>
+                        <h3 ng-show="calendarEvent.category.type.type === 'Other'" class="panel-title ng-binding ng-hide">
+                          Other: </h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <h4><b ng-bind="calendarEvent.title" class="ng-binding">The Harbor is Your Classroom!    Part 1: Oyster Tank Investigation</b></h4>
+                        <!-- ngRepeat: date in calendarEvent.dates --><h3 class="blue ng-binding" ng-repeat="date in calendarEvent.dates">Dec 13 <small class="ng-binding">
+                          2017<br>
+                          9:00am-4:00pm</small></h3><!-- end ngRepeat: date in calendarEvent.dates -->
+                        <p ng-show="calendarEvent.location.addressString" class="ng-binding ng-hide"><i class="fa fa-map-marker"></i> </p>
+                    </div>
+                    <div class="panel-footer">
+                        <p class="text-muted text-center small">
+                            <span ng-show="(daysRemaining >= 0 &amp;&amp; openSpots > 0)" id="openSpots">
+                              <i class="fa fa-calendar-times-o"></i>
+                              <b class="ng-binding">20 spots</b><br></span>
+                            <span ng-show="(daysRemaining >= 0 &amp;&amp; openSpots <= 0 &amp;&amp; openSpots !== null)" id="noOpenSpots" class="ng-hide">
+                              <i class="fa fa-calendar-times-o"></i>
+                              <b>Event is full</b><br></span>
+                            <span ng-show="(daysRemaining < 0 || (openSpots <= 0 &amp;&amp; openSpots !== null))" id="registrationClosed" class="ng-hide">
+                              <i class="fa fa-clock-o"></i>
+                              <b>Registration is closed</b></span>
+                            <span ng-show="(daysRemaining === 0 &amp;&amp; (openSpots > 0 || openSpots === null))" id="registerToday" class="ng-hide">
+                              <i class="fa fa-clock-o"></i>
+                              <b>Last day to register!</b></span>
+                            <span ng-show="(daysRemaining > 0 &amp;&amp; (openSpots > 0 || openSpots === null))" id="registrationOpen">
+                              <i class="fa fa-clock-o"></i>
+                              <b class="ng-binding">23 days</b> left to register</span>
+                        </p>
+                    </div>
+                </div>
+            </div><!-- end ngRepeat: calendarEvent in vm.events -->
+        </div>
+        <a class="btn btn-danger" ui-sref="events.list" href="/events">See all events <i class="fa fa-angle-right"></i></a>
+        <br><br>
+    </section>
+</section>

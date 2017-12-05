@@ -1,0 +1,484 @@
+---
+bindings:
+- name:     'teamsLeading'
+  resource: ':/api/teams/'
+  optional: true
+  params:
+    byOwner: true
+
+- name: 'teamsOn'
+  resource: ':/api/teams/'
+  optional: true
+  params:
+    byMember: true
+
+- name:     'currentTeam'
+  resource: ':/api/teams/{{ qs `team` (first .bindings.teamsOn._id) }}'
+  optional: true
+
+- name:     'stations'
+  resource: ':/api/restoration-stations/'
+  optional: true
+  params:
+    teamLeadId: '{{ .bindings.user._id }}'
+
+- name:     'publishedExpeditions'
+  resource: ':/api/expeditions/'
+  params:
+    published: true
+    limit:     5
+    sort:      startDate
+
+- name:     'expeditions'
+  resource: ':/api/expeditions/'
+  optional: true
+  params:
+    teamId:   '{{ .bindings.currentTeam._id }}'
+    byMember: true
+    limit:    5
+
+- name:     'activities'
+  resource: ':/api/expedition-activities/'
+  params:
+    teamId: '{{ .bindings.currentTeam._id }}'
+    limit:  5
+
+  only_if:  '{{ .bindings.currentTeam._id }}'
+  optional: true
+---
+<section class="content shaded" id="dashboard">
+    <section class="container-fluid">
+        {{ if .bindings.user }}
+        <div class="page-header">
+            <div class="row">
+                <h2 class="col-md-3">Dashboard</h2>
+                <div class="col-md-9">
+                    {{ if .bindings.teamsLeading }}
+                    {{ if gt (count .bindings.teamsLeading) 1 }}
+                    <div class="pull-right">
+                        <a class="btn btn-lg btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="teamMenu">
+                            {{ .bindings.currentTeam.name }} <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="teamMenu">
+                            {{ range .bindings.teamsLeading }}
+                            <li>
+                                <a href="?team={{ ._id }}">{{ .name }}</a>
+                            </li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                    {{ else if count .bindings.teamsLeading }}
+                    <div class="pull-right" id="single-team-name">
+                        <a href="..."><h3>{{ first .bindings.teamsLeading | .name }}</h3></a>
+                    </div>
+                    {{ end }}
+                    {{ end }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    {{ if .bindings.currentTeam }}
+                    {{ range .bindings.currentTeam.teamLeads }}
+                    <p class="pull-right">
+                        <img src="{{ .profileImageURL }}" alt="{{ .displayName }}" class="pull-left header-profile-image" />
+                        <a ng-click="vm.openViewUserModal(teamLead)">{{ .displayName }}</a> &nbsp;&nbsp;&nbsp;
+                    </p>
+                    {{ end }}
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {{ if in `team lead pending` .bindings.user.roles }}
+                <!--
+                    Team Lead (Pending): visible when user has the role "team lead pending"
+                -->
+                <div class="alert alert-info text-center">
+                    Sorry, your team lead account is still pending! You will be able to add members and teams as soon as your account is approved.
+                </div>
+                {{ else if and (in `team lead` .bindings.user.roles) (not .bindings.teamsLeading) }}
+                <!--
+                    Team Lead / no teams: visible when user has the role "team lead", but is not assigned to any teams
+                -->
+                <div class="alert alert-info text-center">
+                    You don't have any teams yet! <a class="btn btn-default" ng-click="vm.openViewUserModal(null, 'formTeamMember')">Add members</a>
+                </div>
+                {{ else if in `team member pending` .bindings.user.roles}}
+                <!--
+                    Team Member (Pending): visible when user has the role "team member pending"
+                -->
+                <div class="alert alert-info text-center">
+                    Sorry, your team membership is still pending! As soon as your team lead adds you to a team, you'll see data here.
+                </div>
+                {{ else }}
+                <!--
+                    Team Member / no teams: visible when user has the role "team member", but is not assigned to any teams
+                -->
+                <div class="alert alert-info text-center">
+                    Sorry, you aren't on a team yet! As soon as your team lead adds you to a team, you'll see data here.
+                </div>
+                {{ end }}
+            </div>
+        </div>
+        <div class="row">
+            <div
+                {{ if any .bindings.user.roles `team lead` `team member` `admin` }}
+                class="col-md-8"
+                {{ else }}
+                class="col-md-12"
+                {{ end }}
+            >
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="btn btn-default pull-right" ui-sref="restoration-stations.list">See all</a>
+                        <h4>Oyster Restoration Stations</h4>
+                    </div>
+                    <div class="panel-body">
+                        <leaflet-map map-controls="vm.mapControls" map-click-event="vm.mapClick" marker-drag-end-event="vm.markerDragEnd" can-move-marker="vm.canMoveMarker" show-marker="vm.showMarker" can-click-map-to-add-marker="vm.canClickMapToAddMarker" add-points="vm.mapPoints"></leaflet-map>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Published Expeditions</h4>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            {{ range $expedition := .bindings.publishedExpeditions.expeditions }}
+                            <tr onclick="window.location='/expeditions/{{ ._id }}'">
+                                <td>
+                                    {{ .name }}
+                                    <br/>
+                                    <small class="text-muted">
+                                        {{ time .monitoringStartDate `ymd` }}, {{ time .monitoringStartDate `3:04pm` }} - {{ time .monitoringEndDate `3:04pm` }}
+                                    </small>
+                                </td>
+                                <td><i class="glyphicon glyphicon-map-marker gray"></i> {{ .station.name }}</td>
+                                <td>
+                                    {{ .team.name }}
+                                    <br/> {{ range .team.teamLeads }}
+                                    <span class="text-muted">
+                                      {{ .teamLead.displayName }}
+                                    </span>
+                                    <br/>
+                                    <small>{{ $expedition.team.schoolOrg.name }}</small> {{ end }}
+                                </td>
+                            </tr>
+                            {{ end }}
+                        </table>
+                    </div>
+                    <div class="panel-footer">
+                        <a class="btn btn-default" href="/expeditions/data/?active=pubexpeditions" id="pubexpeditions">See all</a>
+                        <a class="btn btn-default" href="/expeditions/data/?active=compareexpeditions" id="compareexpeditions">Compare data</a>
+                    </div>
+                </div>
+                <div class="row">
+                    {{ if and (in `team lead` .bindings.user) .bindings.currentTeam }}
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>Team Members <span class="badge badge-success pull-right">{{ count .bindings.currentTeam.members }}</span></h4>
+                            </div>
+                            <div class="panel-body">
+                                {{ range .bindings.currentTeam.members }}
+                                <p>
+                                    <a ng-click="vm.openViewUserModal(member)">
+                                        <img ng-src="{{ .profileImageURL }}" class="header-profile-image">
+                                        {{ .displayName }}
+                                    </a>
+                                </p>
+                                {{ else }}
+                                <div class="alert">
+                                    No members yet! To start,
+                                    <a
+                                        href="/profiles/team/"
+                                    {{ if in `team lead pending` .bindings.user }}
+                                        class="disabled"
+                                        disabled="disabled"
+                                    {{ end }}
+                                    >
+                                        invite members to join
+                                    </a>.
+                                </div>
+                                {{ end }}
+                            </div>
+                            <div class="panel-footer">
+                                <a
+                                    class="btn btn-primary"
+                                    ng-click="vm.openViewUserModal(null, 'formTeamMember')"
+                                {{ if in `team lead pending` .bindings.user }}
+                                    class="disabled"
+                                    disabled="disabled"
+                                {{ end }}
+                                >
+                                    Add members
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {{ end }}
+
+                    <div class="col-lg-4">
+                        {{ if and (in `team lead`) .bindings.currentTeam }}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>Activity <span class="badge badge-success pull-right">{{ count .bindings.activities }}</span></h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="alert alert-success">{{ count .bindings.activities }} members updated their protocols</div>
+                                {{ range .bindings.activities }}
+                                <div class="row">
+                                    <div class="col-sm-2 col-xs-4">
+                                        <img ng-src="{{ .user.profileImageURL }}" class="header-profile-image">
+                                    </div>
+                                    <div class="col-sm-10 col-xs-8">
+                                        <p>
+                                            {{ .user.displayName }}
+                                            <small class="text-muted">{{ ago .created }}></small>
+                                            <br />
+                                            <span class="text-muted">{{ .status }}</span>
+                                            <a
+                                                href="/expeditions/protocols/ {{ .expedition._id }}"
+                                            {{ if in `team lead pending` .bindings.user.roles }}
+                                                ng-class="disabled"
+                                                disabled="disabled"
+                                            {{ end }}
+                                            >
+                                                <!-- vm.displaySubmittedProtocols(activity) -->
+                                                ACT-TEMP {{ .created }}
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                                {{ end }}
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+
+                    {{ if any .bindings.user.roles `team lead` `team lead pending` `admin` }}
+                    <div
+                        {{ if and (any `team lead` `admin` .bindings.user.roles) .bindings.currentTeam }}
+                        class="col-lg-4"
+                        {{ else }}
+                        class="col-lg-12"
+                        {{ end }}
+                    >
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>Documents</h4>
+                            </div>
+                            <div class="panel-body">
+                                <p>
+                                    <a href="https://drive.google.com/drive/folders/0Bzf_STNcTtRmaW9XN1hlM09vRXc?usp=sharing" target="_blank">
+                                        <i class="glyphicon glyphicon-folder-open pull-left"></i>&nbsp;&nbsp;Data Sheets
+                                    </a>
+                                </p>
+                                <p>
+                                    <a href="https://drive.google.com/drive/folders/0Bzf_STNcTtRmM2VubzJaM1dWZEU?usp=sharing" target="_blank">
+                                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;Manuals
+                                    </a>
+                                </p>
+                                <p>
+                                    <a href="https://drive.google.com/folderview?id=0BwOkf1kzdWyncFR4SFRHMkJMZkU&usp=sharing" target="_blank">
+                                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;Species ID
+                                    </a>
+                                </p>
+                                <p>
+                                    <a href="https://drive.google.com/folderview?id=0Bzf_STNcTtRmbG1pMVpUM1lGUmM&usp=sharing" target="_blank">
+                                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;Additional Resources
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                {{ if any .bindings.user.roles `team lead` `admin` }}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>My ORS</h4>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <!--TODO: Change list to only show all ORS user has created, then all stations user has visited on an expedition (we're removing ORS owned by teams, ORS are now owned by team leads)-->
+                            {{ range .bindings.stations }}
+                            <tr ng-click="vm.openViewRestorationStation(station)">
+                                <td>
+                                    <h3>
+                                        {{ if eq .status `Active` }}
+                                        <i class="glyphicon glyphicon-map-marker green"></i>
+                                        {{ else }}
+                                        <i class="glyphicon glyphicon-map-marker red"></i>
+                                        {{ end }}
+                                    </h3>
+                                </td>
+                                <td>
+                                    {{ if .photo }}
+                                    <img src="{{ .photo.path }}" class="img-thumbnail">
+                                    {{ end }}
+                                </td>
+                                <td>
+                                    {{ .name }}
+                                    <br/>
+                                    <span class="small text-muted">{{ .bodyOfWater }}</span>
+                                    <br/>
+                                    {{ if .teamLead }}
+                                    <span class="small text-muted">by {{ .teamLead.displayName }} from </span>
+                                    {{ end }}
+
+                                    {{ if .schoolOrg }}
+                                    <span class="small text-muted">{{ .schoolOrg.name }}</span>
+                                    {{ end }}
+                                </td>
+                                <td class="text-right">
+                                    {{ if eq .status `Active` }}
+                                    <span class="label label-success">Active</span>
+                                    {{ else }}
+                                    <span class="label label-danger" ng-show="station.status !== 'Active'">{{ .status }}</span>
+                                    {{ end }}
+                                </td>
+                            </tr>
+                            {{ end }}
+                        </table>
+
+                        {{ if not .bindings.stations }}
+                        {{ if any .bindings.user.roles `team lead` `team lead pending` `admin` }}
+                        <div class="alert">
+                            No ORS yet! Why don't you <a ng-click="vm.openFormRestorationStation()" id="register-first-ORS">register one</a>?
+                        </div>
+                        {{ end }}
+                        {{ end }}
+                    </div>
+                    <div class="panel-footer">
+                        <!-- <a class="btn btn-default" ui-sref="restoration-stations.list">See all</a> -->
+                        {{ if any .bindings.user.roles `team lead` `team lead pending` `admin` }}
+                        <a
+                            class="btn btn-primary"
+                            ng-click="vm.openFormRestorationStation()"
+                            id="register-an-ORS"
+                        {{ if in `team lead pending` .bindings.user.roles }}
+                            class="disabled"
+                            disabled="disabled"
+                        {{ end }}
+                        >
+                            Register an ORS
+                        </a>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+
+                {{ if and (any .bindings.user.roles `team lead` `team member`) .bindings.currentTeam }}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>My Expeditions</h4>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            {{ range $expedition := .bindings.expeditions.expeditions }}
+                            <tr href="/expeditions/view/{{ ._id }}">
+                                <td>
+                                    {{ .name }}
+                                    <br/>
+                                    <small class="text-muted">
+                                        {{ time .monitoringStartDate `ymd` }}, {{ time .monitoringStartDate `3:04pm` }} {{ time .monitoringEndDate `3:04pm` }}
+                                    </small>
+                                </td>
+                                <td>
+                                    <i class="glyphicon glyphicon-map-marker gray"></i>
+                                    {{ .station.name }}
+                                </td>
+                                <td class="text-right">
+                                    <!--<span class="label label-default" ng-show="vm.isUpcoming(expedition)">Coming up</span>-->
+                                    <span
+                                        class="label label-danger"
+                                        ng-show="((((vm.checkStatusIncomplete(expedition) || vm.checkStatusReturned(expedition) || vm.checkStatusUnpublished(expedition)) &&
+                                    vm.isTeamMember) || ((expedition.status === 'incomplete' || expedition.status === 'returned') && (vm.isTeamLead || vm.isAdmin))))"
+                                    >
+                                        Protocols Incomplete
+                                    </span>
+
+                                    <!--&& !vm.isUpcoming(expedition)-->
+                                    <span
+                                        class="label label-info"
+                                        ng-show="vm.checkStatusPending(expedition) && vm.isTeamMember"
+                                    >
+                                        Protocols Submitted
+                                    </span>
+
+                                    <span
+                                        class="label label-info"
+                                        ng-show="expedition.status === 'pending' && (vm.isTeamLead || vm.isAdmin) && !vm.isTeamMember"
+                                    >
+                                        Protocols Need Review
+                                    </span>
+
+                                    <span
+                                        class="label label-success"
+                                        ng-show="expedition.status === 'published'"
+                                    >
+                                        Expedition Published
+                                    </span>
+                                </td>
+                            </tr>
+                            {{ end }}
+                        </table>
+
+                        {{ if not .bindings.expeditions }}
+                        {{ if any .bindings.user.roles `team lead` `team lead pending` `admin` }}
+                        <div class="alert">
+                            No expeditions yet! Why don't you
+                            <a
+                                ng-click="vm.createExpedition()"
+                            {{ if in `team lead pending` .bindings.user.roles }}
+                                class="disabled"
+                                disabled="disabled"
+                            {{ end }}
+                            >
+                                create one
+                            </a>?
+                        </div>
+                        {{ else }}
+                        <div class="alert">
+                            No expeditions yet! As soon as your team lead assigns you to one, you'll see it here.
+                        </div>
+                        {{ end }}
+                        {{ end }}
+                    </div>
+                    <div class="panel-footer">
+                        <!-- TIFFANY: change link to My Expeditions tab of Expeditions list page -->
+                        <a
+                            class="btn btn-default"
+                            href="/expeditions/list/"
+                            id="myexpeditions"
+                        {{ if in `team lead pending` .bindings.user.roles }}
+                            class="disabled"
+                            disabled="disabled"
+                        {{ end }}
+                        >
+                            See all
+                        </a>
+                        <a
+                            class="btn btn-primary"
+                            ng-click="vm.createExpedition()"
+                        {{ if in `team lead pending` .bindings.user.roles }}
+                            class="disabled"
+                            disabled="disabled"
+                        {{ end }}
+                        >
+                          Create an expedition
+                        </a>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+        {{ else }}
+            <h3>Unauthenticated</h3>
+        {{ end }}
+    </section>
+</section>

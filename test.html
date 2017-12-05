@@ -1,0 +1,43 @@
+---
+bindings:
+- name: users
+  resource: :/api/users
+  
+---
+<section class="content">
+<ul>
+{{ range .bindings.users.users }}
+    <li class="row list-unstyled">
+        <div class="col-md-3">
+            {{ if contains .profileImageURL `avatar-gray` }}
+            <img class="img-thumbnail" src="https://ih1.redbubble.net/image.119704365.3247/flat,800x800,075,f.jpg" width="128" height="128">
+            {{ else }}
+            <img class="img-thumbnail" src="{{ .profileImageURL }}" width="128" height="128">
+            {{ end }}
+        </div>
+        <div class="col-md-9">
+          <dl class="dl-horizontal">
+            <dt>Name</dt>
+            <dd>{{ .displayName }}</dd>
+
+            <dt>Roles</dt>
+            <dd>{{ range .roles }}<div class="badge badge-{{ if eq . `admin` }}danger{{ else }}success{{ end }} ">{{ . }}</div>{{ end }}</dd>
+
+            <dt>Email</dt>
+            <dd><a href="mailto:{{ .email }}">{{ .email }}</a></dd>
+
+            <dt>Organization</dt>
+            <dd>
+                {{ if .schoolOrg }} 
+                <div>{{ .schoolOrg.name }}</div>
+                <div><a target="_blank" href="https://google.com/search?q={{ .schoolOrg.streetAddress }}, {{ .schoolOrg.city }}, {{ .schoolOrg.state }}">{{ .schoolOrg.streetAddress }}, {{ .schoolOrg.city }}, {{ .schoolOrg.state }}</a></div>
+                {{ else }}
+                  &mdash;
+                {{ end }}
+            </dd>
+          </dl>
+        </div>
+    </li>
+{{ end }}
+</ul>
+</section>
