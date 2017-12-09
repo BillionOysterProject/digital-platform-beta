@@ -90,21 +90,21 @@ bindings:
         </div>
         <div class="row">
             <div class="col-md-12">
-                {{ if in `team lead pending` .bindings.user.roles }}
+                {{ if has `team lead pending` .bindings.user.roles }}
                 <!--
                     Team Lead (Pending): visible when user has the role "team lead pending"
                 -->
                 <div class="alert alert-info text-center">
                     Sorry, your team lead account is still pending! You will be able to add members and teams as soon as your account is approved.
                 </div>
-                {{ else if and (in `team lead` .bindings.user.roles) (not .bindings.teamsLeading) }}
+                {{ else if and (has `team lead` .bindings.user.roles) (not .bindings.teamsLeading) }}
                 <!--
                     Team Lead / no teams: visible when user has the role "team lead", but is not assigned to any teams
                 -->
                 <div class="alert alert-info text-center">
                     You don't have any teams yet! <a class="btn btn-default" ng-click="vm.openViewUserModal(null, 'formTeamMember')">Add members</a>
                 </div>
-                {{ else if in `team member pending` .bindings.user.roles}}
+                {{ else if has `team member pending` .bindings.user.roles}}
                 <!--
                     Team Member (Pending): visible when user has the role "team member pending"
                 -->
@@ -173,7 +173,7 @@ bindings:
                     </div>
                 </div>
                 <div class="row">
-                    {{ if and (in `team lead` .bindings.user) .bindings.currentTeam }}
+                    {{ if and (has `team lead` .bindings.user.roles) .bindings.currentTeam }}
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -192,7 +192,7 @@ bindings:
                                     No members yet! To start,
                                     <a
                                         href="/profiles/team/"
-                                    {{ if in `team lead pending` .bindings.user }}
+                                    {{ if has `team lead pending` .bindings.user }}
                                         class="disabled"
                                         disabled="disabled"
                                     {{ end }}
@@ -206,7 +206,7 @@ bindings:
                                 <a
                                     class="btn btn-primary"
                                     ng-click="vm.openViewUserModal(null, 'formTeamMember')"
-                                {{ if in `team lead pending` .bindings.user }}
+                                {{ if has `team lead pending` .bindings.user }}
                                     class="disabled"
                                     disabled="disabled"
                                 {{ end }}
@@ -219,7 +219,7 @@ bindings:
                     {{ end }}
 
                     <div class="col-lg-4">
-                        {{ if and (in `team lead`) .bindings.currentTeam }}
+                        {{ if and (has `team lead` .bindings.user.roles) .bindings.currentTeam }}
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4>Activity <span class="badge badge-success pull-right">{{ count .bindings.activities }}</span></h4>
@@ -239,7 +239,7 @@ bindings:
                                             <span class="text-muted">{{ .status }}</span>
                                             <a
                                                 href="/expeditions/protocols/ {{ .expedition._id }}"
-                                            {{ if in `team lead pending` .bindings.user.roles }}
+                                            {{ if has `team lead pending` .bindings.user.roles }}
                                                 ng-class="disabled"
                                                 disabled="disabled"
                                             {{ end }}
@@ -360,7 +360,7 @@ bindings:
                             class="btn btn-primary"
                             ng-click="vm.openFormRestorationStation()"
                             id="register-an-ORS"
-                        {{ if in `team lead pending` .bindings.user.roles }}
+                        {{ if has `team lead pending` .bindings.user.roles }}
                             class="disabled"
                             disabled="disabled"
                         {{ end }}
@@ -434,7 +434,7 @@ bindings:
                             No expeditions yet! Why don't you
                             <a
                                 ng-click="vm.createExpedition()"
-                            {{ if in `team lead pending` .bindings.user.roles }}
+                            {{ if has `team lead pending` .bindings.user.roles }}
                                 class="disabled"
                                 disabled="disabled"
                             {{ end }}
@@ -455,7 +455,7 @@ bindings:
                             class="btn btn-default"
                             href="/expeditions/list/"
                             id="myexpeditions"
-                        {{ if in `team lead pending` .bindings.user.roles }}
+                        {{ if has `team lead pending` .bindings.user.roles }}
                             class="disabled"
                             disabled="disabled"
                         {{ end }}
@@ -465,7 +465,7 @@ bindings:
                         <a
                             class="btn btn-primary"
                             ng-click="vm.createExpedition()"
-                        {{ if in `team lead pending` .bindings.user.roles }}
+                        {{ if has `team lead pending` .bindings.user.roles }}
                             class="disabled"
                             disabled="disabled"
                         {{ end }}
