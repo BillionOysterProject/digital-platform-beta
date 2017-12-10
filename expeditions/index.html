@@ -1,0 +1,121 @@
+---
+bindings:
+- name:     'expeditions'
+  resource: ':/api/expeditions'
+  params:
+    byOwner: true
+    limit:   '{{ or qs `limit` 15 }}'
+    page:    '{{ or qs `page` 1 }}'
+
+- name:     'teamsOn'
+  resource: ':/api/teams/'
+  optional: true
+  params:
+    byMember: true
+---
+<div class="jumbotron text-center">
+    <section class="content">
+        <section class="container-fluid">
+                <h2 id="list-expeditions">My Expeditions</h2>
+        </section>
+    </section>
+</div>
+
+<section class="content">
+    <section class="container-fluid">
+        <div>
+            <div class="pull-right">
+                {{ if any .bindings.user.roles `team lead` `admin` }}
+                <a class="btn btn-default" href="/expeditions/create">
+                    <i class="glyphicon glyphicon-plus"></i> Create an expedition
+                </a>
+                {{ end }}
+            </div>
+
+            {{ if any .bindings.user.roles `team lead` `team member` `admin` `partner` }}
+            {{ if .bindings.expeditions.totalCount }}
+            <!-- BEGIN Expeditions -->
+            <div role="tabpanel" class="tab-pane" id="myexpeditions" ng-class="{active: vm.activeTab === 'myexpeditions'}">
+                <div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Expedition</th>
+                                {{ if has `team member` .bindings.user.roles }}
+                                <th ng-show="vm.isTeamMember">Assignment</th>
+                                {{ end }}
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{ range .bindings.expeditions.expeditions }}
+                            <tr onclick="location.href='/expeditions/view/{{ ._id }}'">
+                                <td>
+                                    <h4>{{ .name }}</h4>
+                                    <br/>
+                                    <p class="text-muted">{{ .team.name }}</p>
+                                </td>
+
+                                {{ if has `team member` .bindings.user.roles }}
+                                <td ng-show="vm.isTeamMember">
+                                    vm.displayAssignedProtocols(expedition)
+                                </td>
+                                {{ end }}
+
+                                <td>
+                                    {{ if any (findkey .protocols `status`) `incomplete` }}
+                                    <span class="label label-danger">Protocols Incomplete</span>
+                                    {{ end }}
+
+                                    {{ if and (eq .status `pending`) }}
+                                    {{   if has `team member` .bindings.user.roles }}
+                                    <span class="label label-info">Protocols Submitted</span>
+                                    {{   else }}
+                                    <span class="label label-info">Protocols Need Review</span>
+                                    {{   end }}
+                                    {{ end }}
+
+                                    {{ if eq .status `published` }}
+                                    <span class="label label-success" ng-show=" .status === 'published'">Expedition Published</span>
+                                    {{ else }}
+                                    <span class="label label-default" ng-show=" .status !== 'published'">Expedition Unpublished</span>
+                                    {{ end }}
+                                </td>
+                                <td>
+                                    <b>{{ time .monitoringStartDate `January 2, 2006` }}</b>
+                                    <br />
+                                    {{ time .monitoringStartDate `3:04pm` }} - {{ time .monitoringEndDate `3:04pm` }}
+                                </td>
+                                <td><i class="glyphicon glyphicon-map-marker"></i> {{ .station.name }}</td>
+                            </tr>
+                            {{ end }}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END Expeditions -->
+            {{ else }}
+                {{ if .bindings.teams }}
+                {{   if any .bindings.user.roles `team lead` `admin` }}
+                <div class="alert">
+                    No team expeditions yet! Why don't you <a ui-sref="expeditions.create">create one</a>?
+                </div>
+                {{   else }}
+                <div class="alert" ng-show="vm.isTeamMember">
+                    No expeditions yet! As soon as your team lead assigns you to one, you'll see it here.
+                </div>
+                {{   end }}
+                {{ else }}
+                {{   if any .bindings.user.roles `team lead` `admin` }}
+                <div class="alert">
+                    You don't have any teams yet! <a class="btn btn-default" href="/profiles/team">Add members</a>
+                </div>
+                {{   end }}
+                {{ end }}
+            {{ end }}
+            {{ end }}
+        </div>
+    </section>
+</section>

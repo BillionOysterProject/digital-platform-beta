@@ -111,7 +111,7 @@ bindings:
                 <div class="alert alert-info text-center">
                     Sorry, your team membership is still pending! As soon as your team lead adds you to a team, you'll see data here.
                 </div>
-                {{ else }}
+                {{ else if has `team member` .bindings.user.roles }}
                 <!--
                     Team Member / no teams: visible when user has the role "team member", but is not assigned to any teams
                 -->
@@ -121,6 +121,7 @@ bindings:
                 {{ end }}
             </div>
         </div>
+
         <div class="row">
             <div
                 {{ if any .bindings.user.roles `team lead` `team member` `admin` }}
@@ -129,15 +130,19 @@ bindings:
                 class="col-md-12"
                 {{ end }}
             >
+                <!-- BEGIN Oyster Restoration Stations -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="btn btn-default pull-right" ui-sref="restoration-stations.list">See all</a>
                         <h4>Oyster Restoration Stations</h4>
                     </div>
                     <div class="panel-body">
-                        <leaflet-map map-controls="vm.mapControls" map-click-event="vm.mapClick" marker-drag-end-event="vm.markerDragEnd" can-move-marker="vm.canMoveMarker" show-marker="vm.showMarker" can-click-map-to-add-marker="vm.canClickMapToAddMarker" add-points="vm.mapPoints"></leaflet-map>
+                        MAP GOES HERE
                     </div>
                 </div>
+                <!-- END Oyster Restoration Stations -->
+
+                <!-- BEGIN Published Expeditions -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4>Published Expeditions</h4>
@@ -172,8 +177,11 @@ bindings:
                         <a class="btn btn-default" href="/expeditions/data/?active=compareexpeditions" id="compareexpeditions">Compare data</a>
                     </div>
                 </div>
+                <!-- END Published Expeditions -->
+
                 <div class="row">
                     {{ if and (has `team lead` .bindings.user.roles) .bindings.currentTeam }}
+                    <!-- BEGIN Team Members -->
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -216,10 +224,12 @@ bindings:
                             </div>
                         </div>
                     </div>
+                    <!-- END Team Members -->
                     {{ end }}
 
                     <div class="col-lg-4">
                         {{ if and (has `team lead` .bindings.user.roles) .bindings.currentTeam }}
+                        <!-- BEGIN Activity -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4>Activity <span class="badge badge-success pull-right">{{ count .bindings.activities }}</span></h4>
@@ -253,10 +263,12 @@ bindings:
                                 {{ end }}
                             </div>
                         </div>
+                        <!-- END Activity -->
                         {{ end }}
                     </div>
 
                     {{ if any .bindings.user.roles `team lead` `team lead pending` `admin` }}
+                    <!-- BEGIN Documents -->
                     <div
                         {{ if and (any `team lead` `admin` .bindings.user.roles) .bindings.currentTeam }}
                         class="col-lg-4"
@@ -292,10 +304,13 @@ bindings:
                             </div>
                         </div>
                     </div>
+                    <!-- END Documents -->
                     {{ end }}
                 </div>
+
             </div>
 
+            <!-- BEGIN My ORS -->
             <div class="col-md-4">
                 {{ if any .bindings.user.roles `team lead` `admin` }}
                 <div class="panel panel-default">
@@ -476,6 +491,7 @@ bindings:
                 </div>
                 {{ end }}
             </div>
+            <!-- END My ORS -->
         </div>
         {{ else }}
             <h3>Unauthenticated</h3>
