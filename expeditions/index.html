@@ -27,7 +27,7 @@ bindings:
             <div class="pull-right">
                 {{ if any .bindings.user.roles `team lead` `admin` }}
                 <a class="btn btn-default" href="/expeditions/create">
-                    <i class="glyphicon glyphicon-plus"></i> Create an expedition
+                    <i class="fa fa-plus"></i> Create an expedition
                 </a>
                 {{ end }}
             </div>
@@ -88,7 +88,7 @@ bindings:
                                     <br />
                                     {{ time .monitoringStartDate `3:04pm` }} - {{ time .monitoringEndDate `3:04pm` }}
                                 </td>
-                                <td><i class="glyphicon glyphicon-map-marker"></i> {{ .station.name }}</td>
+                                <td><i class="fa fa-map-marker"></i> {{ .station.name }}</td>
                             </tr>
                             {{ end }}
                         </tbody>

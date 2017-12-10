@@ -6,8 +6,8 @@ page:
     url:         'http://platform.bop.nyc'
 
 includes:
-    navbar: /_includes/navbar.html
-    appjs:  /assets/js/application.js
+    navbar:      /_includes/navbar.html
+    user-navbar: /_includes/user-navbar.html
 
 bindings:
 - name:     'user'
@@ -50,30 +50,12 @@ bindings:
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Lobster|Oswald" rel="stylesheet">
 
-    <!-- Application CSS Files -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/lib/summernote/dist/summernote.css">
-    <link rel="stylesheet" href="/assets/lib/select2/select2.css">
-    <link rel="stylesheet" href="/assets/lib/select2/select2-bootstrap.css">
-    <link rel="stylesheet" href="/assets/lib/leaflet/dist/leaflet.css">
-    <link rel="stylesheet" href="/assets/lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
-    <link rel="stylesheet" href="/assets/css/application.css">
-</head>
-
-<body>
-    {{ template "navbar" . }}
-
-    <section>
-        {{ template "content" . }}
-    </section>
-
-
-    <!--Embedding The User Object-->
-    <script type="text/javascript">
-        var user = "";
-    </script>
+    <!-- Application Javascript -->
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/stapes.min.js"></script>
+    <script type="text/javascript" src="/assets/js/tether.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/js/application.js"></script>
 
     <!--Google Analytics-->
     <!--
@@ -88,12 +70,28 @@ bindings:
     </script>
     -->
 
-    <!--Application JavaScript Files-->
-    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/assets/js/stapes.min.js"></script>
-    <script type="text/javascript">{{ template "appjs" . }}</script>
+    <!-- Application CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap3-panel.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/lib/summernote/dist/summernote.css">
+    <link rel="stylesheet" href="/assets/lib/select2/select2.css">
+    <link rel="stylesheet" href="/assets/lib/select2/select2-bootstrap.css">
+    <link rel="stylesheet" href="/assets/lib/leaflet/dist/leaflet.css">
+    <link rel="stylesheet" href="/assets/lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
+    <link rel="stylesheet" href="/assets/css/application.css">
+</head>
 
+<body>
+    <header>
+        {{ template "navbar" . }}
+    </header>
+
+    <section>
+        {{ template "user-navbar" . }}
+        {{ template "content" . }}
+    </section>
 </body>
 
 </html>

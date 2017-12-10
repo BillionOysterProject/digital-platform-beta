@@ -80,7 +80,11 @@ bindings:
                     {{ if .bindings.currentTeam }}
                     {{ range .bindings.currentTeam.teamLeads }}
                     <p class="pull-right">
-                        <img src="{{ .profileImageURL }}" alt="{{ .displayName }}" class="pull-left header-profile-image" />
+                        <img
+                            src="{{ .profileImageURL }}"
+                            alt="{{ .displayName }}"
+                            class="pull-left header-profile-image"
+                        />
                         <a ng-click="vm.openViewUserModal(teamLead)">{{ .displayName }}</a> &nbsp;&nbsp;&nbsp;
                     </p>
                     {{ end }}
@@ -130,17 +134,17 @@ bindings:
                 class="col-md-12"
                 {{ end }}
             >
-                <!-- BEGIN Oyster Restoration Stations -->
+                <!-- BEGIN Oyster Research Stations -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="btn btn-default pull-right" ui-sref="restoration-stations.list">See all</a>
-                        <h4>Oyster Restoration Stations</h4>
+                        <h4>Oyster Research Stations</h4>
                     </div>
                     <div class="panel-body">
                         MAP GOES HERE
                     </div>
                 </div>
-                <!-- END Oyster Restoration Stations -->
+                <!-- END Oyster Research Stations -->
 
                 <!-- BEGIN Published Expeditions -->
                 <div class="panel panel-default">
@@ -158,7 +162,7 @@ bindings:
                                         {{ time .monitoringStartDate `ymd` }}, {{ time .monitoringStartDate `3:04pm` }} - {{ time .monitoringEndDate `3:04pm` }}
                                     </small>
                                 </td>
-                                <td><i class="glyphicon glyphicon-map-marker gray"></i> {{ .station.name }}</td>
+                                <td><i class="fa fa-map-marker gray"></i> {{ .station.name }}</td>
                                 <td>
                                     {{ .team.name }}
                                     <br/> {{ range .team.teamLeads }}
@@ -283,22 +287,22 @@ bindings:
                             <div class="panel-body">
                                 <p>
                                     <a href="https://drive.google.com/drive/folders/0Bzf_STNcTtRmaW9XN1hlM09vRXc?usp=sharing" target="_blank">
-                                        <i class="glyphicon glyphicon-folder-open pull-left"></i>&nbsp;&nbsp;Data Sheets
+                                        <i class="fa fa-folder-open pull-left"></i>&nbsp;&nbsp;Data Sheets
                                     </a>
                                 </p>
                                 <p>
                                     <a href="https://drive.google.com/drive/folders/0Bzf_STNcTtRmM2VubzJaM1dWZEU?usp=sharing" target="_blank">
-                                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;Manuals
+                                        <i class="fa fa-folder-open"></i>&nbsp;&nbsp;Manuals
                                     </a>
                                 </p>
                                 <p>
                                     <a href="https://drive.google.com/folderview?id=0BwOkf1kzdWyncFR4SFRHMkJMZkU&usp=sharing" target="_blank">
-                                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;Species ID
+                                        <i class="fa fa-folder-open"></i>&nbsp;&nbsp;Species ID
                                     </a>
                                 </p>
                                 <p>
                                     <a href="https://drive.google.com/folderview?id=0Bzf_STNcTtRmbG1pMVpUM1lGUmM&usp=sharing" target="_blank">
-                                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;Additional Resources
+                                        <i class="fa fa-folder-open"></i>&nbsp;&nbsp;Additional Resources
                                     </a>
                                 </p>
                             </div>
@@ -325,15 +329,15 @@ bindings:
                                 <td>
                                     <h3>
                                         {{ if eq .status `Active` }}
-                                        <i class="glyphicon glyphicon-map-marker green"></i>
+                                        <i class="fa fa-map-marker green"></i>
                                         {{ else }}
-                                        <i class="glyphicon glyphicon-map-marker red"></i>
+                                        <i class="fa fa-map-marker red"></i>
                                         {{ end }}
                                     </h3>
                                 </td>
                                 <td>
                                     {{ if .photo }}
-                                    <img src="{{ .photo.path }}" class="img-thumbnail">
+                                    <img src="{{ .photo.path }}" class="img-thumbnail" width="240">
                                     {{ end }}
                                 </td>
                                 <td>
@@ -351,9 +355,9 @@ bindings:
                                 </td>
                                 <td class="text-right">
                                     {{ if eq .status `Active` }}
-                                    <span class="label label-success">Active</span>
+                                    <span class="badge badge-success">Active</span>
                                     {{ else }}
-                                    <span class="label label-danger" ng-show="station.status !== 'Active'">{{ .status }}</span>
+                                    <span class="badge badge-danger" ng-show="station.status !== 'Active'">{{ .status }}</span>
                                     {{ end }}
                                 </td>
                             </tr>
@@ -404,13 +408,13 @@ bindings:
                                     </small>
                                 </td>
                                 <td>
-                                    <i class="glyphicon glyphicon-map-marker gray"></i>
+                                    <i class="fa fa-map-marker gray"></i>
                                     {{ .station.name }}
                                 </td>
                                 <td class="text-right">
-                                    <!--<span class="label label-default" ng-show="vm.isUpcoming(expedition)">Coming up</span>-->
+                                    <!--<span class="badge badge-default" ng-show="vm.isUpcoming(expedition)">Coming up</span>-->
                                     <span
-                                        class="label label-danger"
+                                        class="badge badge-danger"
                                         ng-show="((((vm.checkStatusIncomplete(expedition) || vm.checkStatusReturned(expedition) || vm.checkStatusUnpublished(expedition)) &&
                                     vm.isTeamMember) || ((expedition.status === 'incomplete' || expedition.status === 'returned') && (vm.isTeamLead || vm.isAdmin))))"
                                     >
@@ -419,21 +423,21 @@ bindings:
 
                                     <!--&& !vm.isUpcoming(expedition)-->
                                     <span
-                                        class="label label-info"
+                                        class="badge badge-info"
                                         ng-show="vm.checkStatusPending(expedition) && vm.isTeamMember"
                                     >
                                         Protocols Submitted
                                     </span>
 
                                     <span
-                                        class="label label-info"
+                                        class="badge badge-info"
                                         ng-show="expedition.status === 'pending' && (vm.isTeamLead || vm.isAdmin) && !vm.isTeamMember"
                                     >
                                         Protocols Need Review
                                     </span>
 
                                     <span
-                                        class="label label-success"
+                                        class="badge badge-success"
                                         ng-show="expedition.status === 'published'"
                                     >
                                         Expedition Published
