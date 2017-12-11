@@ -66,21 +66,21 @@ bindings:
 
                                 <td>
                                     {{ if any (findkey .protocols `status`) `incomplete` }}
-                                    <span class="label label-danger">Protocols Incomplete</span>
+                                    <span class="badge badge-danger">Protocols Incomplete</span>
                                     {{ end }}
 
                                     {{ if and (eq .status `pending`) }}
                                     {{   if has `team member` .bindings.user.roles }}
-                                    <span class="label label-info">Protocols Submitted</span>
+                                    <span class="badge badge-info">Protocols Submitted</span>
                                     {{   else }}
-                                    <span class="label label-info">Protocols Need Review</span>
+                                    <span class="badge badge-info">Protocols Need Review</span>
                                     {{   end }}
                                     {{ end }}
 
                                     {{ if eq .status `published` }}
-                                    <span class="label label-success" ng-show=" .status === 'published'">Expedition Published</span>
+                                    <span class="badge badge-success" ng-show=" .status === 'published'">Expedition Published</span>
                                     {{ else }}
-                                    <span class="label label-default" ng-show=" .status !== 'published'">Expedition Unpublished</span>
+                                    <span class="badge badge-default" ng-show=" .status !== 'published'">Expedition Unpublished</span>
                                     {{ end }}
                                 </td>
                                 <td>

@@ -71,3 +71,22 @@
         {{ end }}
     </div>
 </nav>
+
+{{ if isArray .page.userlinks }}
+<nav class="navbar navbar-toggleable-sm navbar-default user-navbar">
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+            {{ range .page.userlinks }}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ .href }}" target="{{ .target }}">
+                    {{ if .icon }}
+                    <i class="fa fa-fw fa-{{ .icon }}"></i>
+                    {{ end }}
+                    {{ .title }}
+                </a>
+            </li>
+            {{ end }}
+        </ul>
+    </div>
+</nav>
+{{ end }}

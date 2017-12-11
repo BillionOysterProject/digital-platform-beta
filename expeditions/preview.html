@@ -1,0 +1,140 @@
+---
+page:
+    userlinks:
+    - title: Download CSV
+      icon:  file-text-o
+      href:  '/expeditions/export?type=csv'
+
+    - title: Download PDF
+      icon:  file-pdf-o
+      href:  '/expeditions/export?type=pdf'
+
+    - title: Google Sheets
+      icon:  google
+      href:  '/expeditions/export?type=google'
+
+bindings:
+- name:     'expeditions'
+  resource: ':/api/expeditions'
+  params:
+    searchString: '{{ qs `q` }}'
+
+- name:     'data'
+  resource: ':/api/expeditions/compare'
+  method:   post
+  only_if:  '{{ .bindings.expeditions.totalCount }}'
+  on_error: print
+  rawbody: |
+    {
+        "expeditionIds": {{ jsonify (pluck .bindings.expeditions.expeditions `_id`) }},
+        "protocol1": {
+            "weatherTemperature":    "",
+            "windSpeedDirection":    "",
+            "humidity":              "",
+            "recentRainfall":        "",
+            "tide":                  "",
+            "referencePoint":        "",
+            "tidalCurrent":          "",
+            "waterConditionPhoto":   "",
+            "surfaceCurrentSpeed":   "",
+            "waterColor":            "",
+            "oilSheen":              "",
+            "garbageWater":          "",
+            "pipes":                 "",
+            "landConditionPhoto":    "",
+            "shorelineType":         "",
+            "garbageLand":           "",
+            "surfaceCover":          ""
+        },
+        "protocol2": {
+            "submergedDepth":        "",
+            "oysterCagePhoto":       "",
+            "bioaccumulationOnCage": "",
+            "cageDamage":            "YES",
+            "oysterMeasurements":    "YES"
+        },
+        "protocol3": {
+            "organism":              ""
+        },
+        "protocol4": {
+            "description":           "",
+            "organism":              ""
+        },
+        "protocol5": {
+            "depth":                 "",
+            "temperature":           "",
+            "dissolvedOxygen":       "",
+            "salinity":              "",
+            "pH":                    "",
+            "turbidity":             "",
+            "ammonia":               "",
+            "nitrates":              "",
+            "other":                 ""
+        }
+    }
+---
+<table id="preview" class="table table-hover expeditions-data-table" cellspacing="0" cellpadding="0">
+    <thead class="thead-light">
+        <tr>
+            <th colspan="5">Expedition</th>
+            <th colspan="2" class="protocol-1-bg">Protocol 1: Site Conditions</th>
+            <th colspan="5" class="protocol-2-bg">Protocol 2: Oyster Measurements</th>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <th>Organization</th>
+            <th>Team</th>
+            <th>Expedition</th>
+            <th>Location</th>
+            <th class="protocol-1-bg">Oil sheen</th>
+            <th class="protocol-1-bg">Shoreline type</th>
+            <th class="protocol-2-bg">Cage damage</th>
+            <th class="protocol-2-bg">Oyster Measurements: Population Live (oysters)</th>
+            <th class="protocol-2-bg">Population Avg Size (mm)</th>
+            <th class="protocol-2-bg">Population Min Size (mm)</th>
+            <th class="protocol-2-bg">Population Max Size (mm)</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>3/24/2016</td>
+            <td>International School for Liberal Art</td>
+            <td>Default</td>
+            <td>3/24/16</td>
+            <td>Sherman Creek North</td>
+            <td>No</td>
+            <td>Bulkhead/Wall</td>
+            <td>lost sediment tube</td>
+            <td>85</td>
+            <td>9.84</td>
+            <td>5.0</td>
+            <td>14.0</td>
+        </tr>
+
+        <tr>
+            <td>5/27/2016</td>
+            <td></td>
+            <td>Captain Oyster</td>
+            <td>2016-01</td>
+            <td>Transmitter Park</td>
+            <td>No</td>
+            <td>Riprap/Rocky Shoreline</td>
+            <td></td>
+            <td>108</td>
+            <td>19.4</td>
+            <td>8.0</td>
+            <td>42.0</td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(function() {
+        $('#preview').DataTable({
+            searching: false,
+            paging:    false,
+            info:      false,
+        });
+    });
+</script>
