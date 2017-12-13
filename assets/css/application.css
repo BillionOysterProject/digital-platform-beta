@@ -75,7 +75,7 @@ body > section {
         flex-direction:  column;
         justify-content: flex-start;
         align-items:     stretch;
-        width:           220px;
+        width:           180px;
         padding:         10px;
         flex:            1;
     }
@@ -124,6 +124,10 @@ body > section {
 
     body > header .navbar .navbar-nav .dropdown-menu a:hover {
         background:  #1C2A40;
+    }
+
+    body > section {
+        width:       calc(100% - 180px);
     }
 }
 
@@ -346,6 +350,7 @@ table.expeditions-data-table .protocol-5-bg {
 
 .navbar-default.user-navbar {
     border-bottom:   1px solid rgba(66, 108, 169, 0.5);
+    height:          50px;
 }
 
 .multiDemo ul[dnd-list],
@@ -1251,7 +1256,7 @@ form.ng-submitted .ng-invalid {
 
 .container-ribbon {
     background: url('/assets/img/redribbon-bg.png') center top no-repeat;
-    margin-top: -50px
+    margin-top: -50px;
 }
 
 .container-ribbon .ribbon-text {

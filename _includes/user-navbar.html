@@ -17,8 +17,8 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle user-header-dropdown-toggle" uib-dropdown-toggle="" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img ng-src="/assets/img/profile/avatar-gray.png" alt="{{ .bindings.user.displayName }}" class="header-profile-image" src="/assets/img/profile/avatar-gray.png">
-                    <span ng-bind="authentication.user.displayName"> {{ .bindings.user.displayName }}</span>
+                    <img alt="{{ .bindings.user.displayName }}" class="header-profile-image" src="/assets/img/profile/avatar-gray.png">
+                    <span> {{ .bindings.user.displayName }}</span>
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" role="menu">
@@ -45,7 +45,7 @@
         </ul>
         {{ else }}
         <!-- Unauthenticated User -->
-        <ul class="nav navbar-nav navbar-right ng-hide">
+        <ul class="nav navbar-nav ml-auto">
             <li class="nav-item hidden-xs">
                 <a href="/feedback" class="nav-link icon">
                     <i class="fa fa-question-circle" aria-hidden="true"></i>
