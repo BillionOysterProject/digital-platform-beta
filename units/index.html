@@ -33,31 +33,16 @@ bindings:
             </ul>
         </nav>
 
-        {{ range .bindings.units }}
-        <div class="row">
-            <div class="col-12 library-item">
-                <a class="panel" href="/units/view/{{ ._id }}">
-                    <div class="panel-body text-center" style="color: {{ .color }}">
-                        {{ if .icon }}
-                        <h1><i class="{{ .icon }}"></i></h1>
-                        {{ end }}
-
-                        <h2>{{ .title }}</h2>
-                        <h6>
-                          {{ len .lessons }} Lessons
-                          {{ if .subUnits }}
-                          <span>{{ len .subUnits }} Sub Units</span>
-                          {{ end }}
-                        </h6>
-                    </div>
-                    {{ if eq .status `draft` }}
-                    <div class="panel-footer" ng-show="unit.status === 'draft'">
-                        <h6 class="text-center">Draft</h6>
-                    </div>
+        <ul class="list-group">
+            {{ range .bindings.units }}
+                <a href="/units/{{ ._id }}" class="list-group-item">
+                    {{ if .icon }}
+                    <h1><i class="{{ .icon }}"></i></h1>
                     {{ end }}
-                </a>
-            </div>
-        </div>
-        {{ end }}
+
+                    <h3>{{ .title }}</h3>
+                </li>
+            {{ end }}
+        </ul>
     </section>
 </section>

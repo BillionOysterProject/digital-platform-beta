@@ -14,10 +14,12 @@ bindings:
 
 - name:     'currentTeam'
   resource: ':/api/teams/{{ qs `team` (first .bindings.teamsOn._id) }}'
+  only_if:  '{{ qs `team` (first .bindings.teamsOn._id) }}'
   optional: true
 
 - name:     'stations'
   resource: ':/api/restoration-stations/'
+  only_if:  '{{ .flags.loggedIn }}'
   optional: true
   params:
     teamLeadId: '{{ .bindings.user._id }}'
@@ -39,6 +41,7 @@ bindings:
 
 - name:     'activities'
   resource: ':/api/expedition-activities/'
+  only_if:  '{{ .flags.loggedIn }}'
   params:
     teamId: '{{ .bindings.currentTeam._id }}'
     limit:  5
@@ -94,28 +97,28 @@ bindings:
         </div>
         <div class="row">
             <div class="col-md-12">
-                {{ if has `team lead pending` .bindings.user.roles }}
+                {{ if .flags.teamLeadPending }}
                 <!--
                     Team Lead (Pending): visible when user has the role "team lead pending"
                 -->
                 <div class="alert alert-info text-center">
                     Sorry, your team lead account is still pending! You will be able to add members and teams as soon as your account is approved.
                 </div>
-                {{ else if and (has `team lead` .bindings.user.roles) (not .bindings.teamsLeading) }}
+                {{ else if and (.flags.teamLead) (not .bindings.teamsLeading) }}
                 <!--
                     Team Lead / no teams: visible when user has the role "team lead", but is not assigned to any teams
                 -->
                 <div class="alert alert-info text-center">
                     You don't have any teams yet! <a class="btn btn-default" ng-click="vm.openViewUserModal(null, 'formTeamMember')">Add members</a>
                 </div>
-                {{ else if has `team member pending` .bindings.user.roles}}
+                {{ else if .flags.teamMemberPending }}
                 <!--
                     Team Member (Pending): visible when user has the role "team member pending"
                 -->
                 <div class="alert alert-info text-center">
                     Sorry, your team membership is still pending! As soon as your team lead adds you to a team, you'll see data here.
                 </div>
-                {{ else if has `team member` .bindings.user.roles }}
+                {{ else if .flags.teamMember }}
                 <!--
                     Team Member / no teams: visible when user has the role "team member", but is not assigned to any teams
                 -->
@@ -128,7 +131,7 @@ bindings:
 
         <div class="row">
             <div
-                {{ if any .bindings.user.roles `team lead` `team member` `admin` }}
+                {{ if any .flags.teamLead .flags.teamMember .flags.admin }}
                 class="col-md-8"
                 {{ else }}
                 class="col-md-12"
@@ -184,7 +187,7 @@ bindings:
                 <!-- END Published Expeditions -->
 
                 <div class="row">
-                    {{ if and (has `team lead` .bindings.user.roles) .bindings.currentTeam }}
+                    {{ if and (.flags.teamLead) .bindings.currentTeam }}
                     <!-- BEGIN Team Members -->
                     <div class="col-lg-4">
                         <div class="panel panel-default">
@@ -232,7 +235,7 @@ bindings:
                     {{ end }}
 
                     <div class="col-lg-4">
-                        {{ if and (has `team lead` .bindings.user.roles) .bindings.currentTeam }}
+                        {{ if and (.flags.teamLead) .bindings.currentTeam }}
                         <!-- BEGIN Activity -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -253,7 +256,7 @@ bindings:
                                             <span class="text-muted">{{ .status }}</span>
                                             <a
                                                 href="/expeditions/protocols/ {{ .expedition._id }}"
-                                            {{ if has `team lead pending` .bindings.user.roles }}
+                                            {{ if .flags.teamLead }}
                                                 ng-class="disabled"
                                                 disabled="disabled"
                                             {{ end }}
@@ -271,10 +274,10 @@ bindings:
                         {{ end }}
                     </div>
 
-                    {{ if any .bindings.user.roles `team lead` `team lead pending` `admin` }}
+                    {{ if any .flags.teamLead .flags.teamLeadPending .flags.admin }}
                     <!-- BEGIN Documents -->
                     <div
-                        {{ if and (any `team lead` `admin` .bindings.user.roles) .bindings.currentTeam }}
+                        {{ if and (any .flags.teamLead .flags.admin) .bindings.currentTeam }}
                         class="col-lg-4"
                         {{ else }}
                         class="col-lg-12"
@@ -316,7 +319,7 @@ bindings:
 
             <!-- BEGIN My ORS -->
             <div class="col-md-4">
-                {{ if any .bindings.user.roles `team lead` `admin` }}
+                {{ if any .flags.teamLead .flags.admin }}
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4>My ORS</h4>
@@ -365,7 +368,7 @@ bindings:
                         </table>
 
                         {{ if not .bindings.stations }}
-                        {{ if any .bindings.user.roles `team lead` `team lead pending` `admin` }}
+                        {{ if any .flags.teamLead .flags.teamLeadPending .flags.admin }}
                         <div class="alert">
                             No ORS yet! Why don't you <a ng-click="vm.openFormRestorationStation()" id="register-first-ORS">register one</a>?
                         </div>
@@ -374,12 +377,12 @@ bindings:
                     </div>
                     <div class="panel-footer">
                         <!-- <a class="btn btn-default" ui-sref="restoration-stations.list">See all</a> -->
-                        {{ if any .bindings.user.roles `team lead` `team lead pending` `admin` }}
+                        {{ if any .flags.teamLead .flags.teamLeadPending .flags.admin }}
                         <a
                             class="btn btn-primary"
                             ng-click="vm.openFormRestorationStation()"
                             id="register-an-ORS"
-                        {{ if has `team lead pending` .bindings.user.roles }}
+                        {{ if .flags.teamLead }}
                             class="disabled"
                             disabled="disabled"
                         {{ end }}
@@ -391,7 +394,7 @@ bindings:
                 </div>
                 {{ end }}
 
-                {{ if and (any .bindings.user.roles `team lead` `team member`) .bindings.currentTeam }}
+                {{ if and (any .flags.teamLead .flags.teamMember) .bindings.currentTeam }}
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4>My Expeditions</h4>
@@ -448,12 +451,12 @@ bindings:
                         </table>
 
                         {{ if not .bindings.expeditions }}
-                        {{ if any .bindings.user.roles `team lead` `team lead pending` `admin` }}
+                        {{ if any .flags.teamLead .flags.teamLeadPending .flags.admin }}
                         <div class="alert">
                             No expeditions yet! Why don't you
                             <a
                                 ng-click="vm.createExpedition()"
-                            {{ if has `team lead pending` .bindings.user.roles }}
+                            {{ if .flags.teamLead }}
                                 class="disabled"
                                 disabled="disabled"
                             {{ end }}
@@ -474,7 +477,7 @@ bindings:
                             class="btn btn-default"
                             href="/expeditions/list/"
                             id="myexpeditions"
-                        {{ if has `team lead pending` .bindings.user.roles }}
+                        {{ if .flags.teamLead }}
                             class="disabled"
                             disabled="disabled"
                         {{ end }}
@@ -484,7 +487,7 @@ bindings:
                         <a
                             class="btn btn-primary"
                             ng-click="vm.createExpedition()"
-                        {{ if has `team lead pending` .bindings.user.roles }}
+                        {{ if .flags.teamLead }}
                             class="disabled"
                             disabled="disabled"
                         {{ end }}

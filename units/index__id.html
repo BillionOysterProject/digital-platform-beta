@@ -1,0 +1,64 @@
+---
+page:
+    view:    '{{ .bindings.unit.title }}'
+    notitle: true
+
+bindings:
+- name:     'unit'
+  resource: ':/api/units/{{ param 1 }}'
+
+includes:
+    lessons:   /_includes/units/lessons.html
+    standards: /_includes/units/standards.html
+---
+<div class="jumbotron" style="background: {{ .bindings.unit.color }}">
+    <section class="content">
+        <section class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 box text-center" style="color: {{ .bindings.unit.color }}">
+                    <h1><i class="fa fa-sun-o"></i></h1>
+                    <h2>{{ .bindings.unit.title }}</h2>
+                    <h6>
+                        {{ len .bindings.unit.lessons }} Lessons
+                        {{ if .bindings.unit.subUnits }}
+                        <span> | {{ len .bindings.unit.subUnits }} Sub Units</span>
+                        {{ end }}
+                    </h6>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+
+<section class="content">
+    <section class="container">
+        <div class="text-right w-100">
+        {{ if .flags.admin }}
+            {{ if and (eq .bindings.unit.status `draft`) }}
+            <h6>Draft</h6>
+            {{ end }}
+            {{ if and (eq .bindings.unit.status `published`) }}
+            <h6>Published</h6>
+            {{ end }}
+
+            <a class="btn btn-primary" href="/units/edit//{{ .bindings.unit._id }}">Edit</a>
+            {{ end }}
+
+            <a class="btn btn-default" href="/units/feedback/{{ .bindings.unit._id }}" ng-hide="vm.unit.isCurrentUserOwner">Send feedback</a>
+        </div>
+
+        {{ if .bindings.unit.highlights }}
+        <h3>Highlights</h3>
+        <div>{{ sanitize .bindings.unit.highlights }}</div>
+        {{ end }}
+
+        {{ if .bindings.unit.rationale }}
+        <h3>Rationale</h3>
+        <div>{{ sanitize .bindings.unit.rationale }}</div>
+        {{ end }}
+
+        <br/>
+    </section>
+</section>
+
+{{ template "lessons" . }}

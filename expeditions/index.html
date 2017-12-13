@@ -20,14 +20,14 @@ bindings:
     <section class="container-fluid">
         <div>
             <div class="pull-right">
-                {{ if any .bindings.user.roles `team lead` `admin` }}
+                {{ if any .flags.teamLead .flags.admin }}
                 <a class="btn btn-default" href="/expeditions/create">
                     <i class="fa fa-plus"></i> Create an expedition
                 </a>
                 {{ end }}
             </div>
 
-            {{ if any .bindings.user.roles `team lead` `team member` `admin` `partner` }}
+            {{ if any .flags.teamLead .flags.admin .flags.teamMember .flags.partner }}
             {{ if .bindings.expeditions.totalCount }}
             <!-- BEGIN Expeditions -->
             <div role="tabpanel" class="tab-pane" id="myexpeditions" ng-class="{active: vm.activeTab === 'myexpeditions'}">
@@ -36,7 +36,7 @@ bindings:
                         <thead>
                             <tr>
                                 <th>Expedition</th>
-                                {{ if has `team member` .bindings.user.roles }}
+                                {{ if .flags.teamMember }}
                                 <th ng-show="vm.isTeamMember">Assignment</th>
                                 {{ end }}
                                 <th>Status</th>
@@ -53,7 +53,7 @@ bindings:
                                     <p class="text-muted">{{ .team.name }}</p>
                                 </td>
 
-                                {{ if has `team member` .bindings.user.roles }}
+                                {{ if .flags.teamMember }}
                                 <td ng-show="vm.isTeamMember">
                                     vm.displayAssignedProtocols(expedition)
                                 </td>
@@ -65,7 +65,7 @@ bindings:
                                     {{ end }}
 
                                     {{ if and (eq .status `pending`) }}
-                                    {{   if has `team member` .bindings.user.roles }}
+                                    {{   if .flags.teamMember }}
                                     <span class="badge badge-info">Protocols Submitted</span>
                                     {{   else }}
                                     <span class="badge badge-info">Protocols Need Review</span>
@@ -93,7 +93,7 @@ bindings:
             <!-- END Expeditions -->
             {{ else }}
                 {{ if .bindings.teams }}
-                {{   if any .bindings.user.roles `team lead` `admin` }}
+                {{   if any .flags.teamLead .flags.admin }}
                 <div class="alert">
                     No team expeditions yet! Why don't you <a ui-sref="expeditions.create">create one</a>?
                 </div>
@@ -103,7 +103,7 @@ bindings:
                 </div>
                 {{   end }}
                 {{ else }}
-                {{   if any .bindings.user.roles `team lead` `admin` }}
+                {{   if any .flags.teamLead .flags.admin }}
                 <div class="alert">
                     You don't have any teams yet! <a class="btn btn-default" href="/profiles/team">Add members</a>
                 </div>

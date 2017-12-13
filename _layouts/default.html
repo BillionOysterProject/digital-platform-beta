@@ -13,7 +13,17 @@ bindings:
 - name:     'user'
   resource: ':/api/users/me'
   optional: true
+
+flags:
+    admin:             '{{ has `admin` .bindings.user.roles }}'
+    teamLead:          '{{ has `team lead` .bindings.user.roles }}'
+    teamLeadPending:   '{{ has `team lead pending` .bindings.user.roles }}'
+    teamMember:        '{{ has `team member` .bindings.user.roles }}'
+    teamMemberPending: '{{ has `team member pending` .bindings.user.roles }}'
+    partner:           '{{ has `partner` .bindings.user.roles }}'
+    loggedIn:          '{{ if .bindings.user }}true{{ end }}'
 ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

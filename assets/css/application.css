@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 body {
     font-family:     Roboto, 'Source Sans Pro', 'Helvetica Neue', Helvetica, Calibri, Arial, sans-serif;
     background:      #fff;
@@ -14,13 +18,38 @@ body > header {
     background:      transparent;
 }
 
+.navbar-default {
+    background:      #FFFFFF;
+    box-shadow:      none;
+    border-radius:   0;
+}
+
 #main {
     width:           100%;
 }
 
-h4 {
-    font-size:       18px;
-    margin:          10px 0;
+h1, .h1 {
+  font-size: 36px;
+}
+
+h2, .h2 {
+  font-size: 30px;
+}
+
+h3, .h3 {
+  font-size: 24px;
+}
+
+h4, .h4 {
+  font-size: 18px;
+}
+
+h5, .h5 {
+  font-size: 14px;
+}
+
+h6, .h6 {
+  font-size: 12px;
 }
 
 /* small and below: Navbar spans top of viewport */
@@ -86,7 +115,7 @@ h4 {
         justify-content: flex-start;
         align-items:     stretch;
         width:           180px;
-        padding:         10px;
+        padding:         0;
         flex:            1;
     }
 
@@ -111,11 +140,20 @@ h4 {
 
     .site-navbar .navbar-nav .nav-link {
         color:       #FFFFFF;
-        padding-left: 0;
+    }
+
+    .site-navbar .navbar-nav .dropdown-toggle {
+        background:  #1C2A40;
+        margin-top:  1rem;
     }
 
     .site-navbar .navbar-nav .dropdown-toggle:after {
         display:         none;
+    }
+
+    .site-navbar .navbar-nav .dropdown-toggle:hover {
+        color:           #FFFFFF;
+        cursor:          default;
     }
 
     .site-navbar .navbar-nav .dropdown-menu {
@@ -124,17 +162,19 @@ h4 {
         background:  transparent;
         border:      0;
         width:       100%;
-        padding:     0 0 8px 16px;
+        padding:     0;
+        margin:      0;
     }
 
     .site-navbar .navbar-nav .dropdown-menu a {
-        color:       rgba(255,255,255,.75);
+        color:       rgba(255,255,255, 0.75);
         font-size:   85%;
+        padding:     4px 10px 4px 26px;
     }
 
     .site-navbar .navbar-nav .dropdown-menu a:hover,
     .site-navbar .navbar-nav .dropdown-menu a:active {
-        background:  #1C2A40;
+        background:  #121B29;
     }
 
     #main {
@@ -146,12 +186,42 @@ h4 {
     padding: 15px 15px 15px 15px;
 }
 
+.content-jumbotron,
+.jumbotron {
+    background-color:          #f4f7f8;
+    background-position:       center center;
+    background-repeat:         no-repeat;
+    background-size:           cover;
+    min-height:                150px;
+    padding-top:               20px;
+    padding-bottom:            20px;
+    margin-bottom:             0;
+    border-radius:             0;
+}
+
+.content-jumbotron {
+    background-color:          #fff;
+    padding-top:               50px;
+    padding-bottom:            50px;
+}
+
 form label {
     font-weight:     bold;
 }
 
 .expeditions-data-step {
     border-bottom:   1px solid rgba(66, 108, 169, 0.5);
+}
+
+.expeditions-data-step .step-toggle {
+    text-align:      center;
+    color:           #666666;
+    font-family:     FontAwesome;
+    content:         '\f077';
+}
+
+.expeditions-data-step.collapsed .step-toggle i.fa {
+    content:         '\f078';
 }
 
 .expeditions-data-table {
@@ -238,7 +308,32 @@ table.expeditions-data-table .protocol-5-bg {
 }
 
 
+.library-item .panel {
+    border-color: #ddd;
+    cursor: pointer;
+}
+
+.library-item .panel:active,
+.library-item .panel:hover {
+    border: 1px solid #ea6158
+}
+
+.library-item .panel .panel-heading {
+    background: #ea6158;
+    color: #fff
+}
+
+.library-item .panel .panel-heading.shaded,
+.panel .panel-heading.shaded {
+    background: #f4f7f8;
+    color: #2c3c56
+}
+
+
 /* OLD from here on... */
+/* -=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=- */
+/* -=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=- */
+/* -=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=-=~=- */
 
 .sidebar i,
 .table.table-verticalalign tbody>tr>td {
@@ -292,24 +387,6 @@ table.expeditions-data-table .protocol-5-bg {
     z-index: 100
 }
 
-.content-jumbotron,
-.jumbotron {
-    background-color: #f4f7f8;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 150px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-bottom: 0
-}
-
-.content-jumbotron {
-    background-color: #fff;
-    padding-top: 50px;
-    padding-bottom: 50px
-}
-
 @media (max-width:768px) {
     .content-jumbotron .btn {
         display: block;
@@ -333,11 +410,6 @@ table.expeditions-data-table .protocol-5-bg {
     background: #fff;
     margin-bottom: -45px;
     min-height: 110px
-}
-
-.navbar-default {
-    background: #fff;
-    box-shadow: none
 }
 
 .navbar-default .icon {
@@ -1218,31 +1290,6 @@ form.ng-submitted .ng-invalid {
     border: 1px solid #ccc;
     border-radius: 6px;
     padding: 15px 15px 5px
-}
-
-.library-item .panel {
-    border-color: #ddd;
-    cursor: pointer;
-    -moz-transition: border .2s ease-in-out;
-    -webkit-transition: border .2s ease-in-out;
-    -o-transition: border .2s ease-in-out;
-    transition: border .2s ease-in-out
-}
-
-.library-item .panel:active,
-.library-item .panel:hover {
-    border: 1px solid #ea6158
-}
-
-.library-item .panel .panel-heading {
-    background: #ea6158;
-    color: #fff
-}
-
-.library-item .panel .panel-heading.shaded,
-.panel .panel-heading.shaded {
-    background: #f4f7f8;
-    color: #2c3c56
 }
 
 .panel .panel-heading.flush {
