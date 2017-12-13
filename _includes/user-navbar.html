@@ -16,17 +16,21 @@
                 <a href="http://bop-ccers.tumblr.com" class="nav-link icon" target="_blank"><i class="fa fa-tumblr-square"></i></a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle user-header-dropdown-toggle" uib-dropdown-toggle="" role="button" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle user-header-dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
                     <img alt="{{ .bindings.user.displayName }}" class="header-profile-image" src="/assets/img/profile/avatar-gray.png">
                     <span> {{ .bindings.user.displayName }}</span>
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" role="menu">
                     <li ng-repeat="item in accountMenu.items" ng-if="item.shouldRender(authentication.user);">
-                        <a ui-sref="profiles.main" ng-bind="item.title" href="/profiles">Profile</a>
+                        <a href="/profiles">Profile</a>
                     </li>
-                    <li><a href="#" data-toggle="modal" data-target="#modal-about">About the project</a></li>
-                    <li><a href="https://docs.google.com/document/d/1QSf1aGG_Vfhhft9gtD0onftOAHPrjqqdzPe622DBtkU/pub" target="_blank">User Guide</a></li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#modal-about">About the project</a>
+                    </li>
+                    <li>
+                        <a href="https://docs.google.com/document/d/1QSf1aGG_Vfhhft9gtD0onftOAHPrjqqdzPe622DBtkU/pub" target="_blank">User Guide</a>
+                    </li>
                     <li class="divider"></li>
                     <li class="visible-xs">
                         <a href="#" ng-click="openFeedback()">

@@ -21,7 +21,7 @@ bindings:
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <base href="/">
-    <title>{{ .page.title }}</title>
+    <title>{{ if .page.view }}{{ .page.view }} :: {{ end }}{{ .page.title }}</title>
     <meta name="description" content="{{ .page.description }}">
     <meta name="fragment" content="!">
 
@@ -91,8 +91,13 @@ bindings:
         {{ template "navbar" . }}
     </header>
 
-    <section>
+    <section id="main">
         {{ template "user-navbar" . }}
+        {{ if and .page.view (not .page.notitle) }}
+        <section class="content shaded text-center">
+            <h2>{{ .page.view }}</h2>
+        </section>
+        {{ end }}
         {{ template "content" . }}
     </section>
 </body>

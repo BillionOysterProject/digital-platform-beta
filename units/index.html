@@ -1,0 +1,63 @@
+---
+page:
+    view: Units
+
+bindings:
+- name:     'units'
+  resource: ':/api/units'
+  params:
+    publishedStatus: published
+---
+<section class="content">
+    <section class="container-fluid">
+        <nav class="navbar" view-permissions="admin">
+            <a class="btn btn-default pull-right" href="/units/create">
+                <i class="fa fa-plus"></i> Create new unit
+            </a>
+            <ul class="nav navbar-nav">
+                {{ if has .bindings.user.roles `admin` }}
+                <li class="dropdown" id="publishedStatusSelection">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Published? <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a ok-sel=".Published" ng-click="vm.publishedStatusSelected('published')">Published</a>
+                        </li>
+                        <li>
+                            <a ok-sel=".Drafts" ng-click="vm.publishedStatusSelected('drafts')">Drafts</a>
+                        </li>
+                    </ul>
+                </li>
+                {{ end }}
+            </ul>
+        </nav>
+
+        {{ range .bindings.units }}
+        <div class="row">
+            <div class="col-12 library-item">
+                <a class="panel" href="/units/view/{{ ._id }}">
+                    <div class="panel-body text-center" style="color: {{ .color }}">
+                        {{ if .icon }}
+                        <h1><i class="{{ .icon }}"></i></h1>
+                        {{ end }}
+
+                        <h2>{{ .title }}</h2>
+                        <h6>
+                          {{ len .lessons }} Lessons
+                          {{ if .subUnits }}
+                          <span>{{ len .subUnits }} Sub Units</span>
+                          {{ end }}
+                        </h6>
+                    </div>
+                    {{ if eq .status `draft` }}
+                    <div class="panel-footer" ng-show="unit.status === 'draft'">
+                        <h6 class="text-center">Draft</h6>
+                    </div>
+                    {{ end }}
+                </a>
+            </div>
+        </div>
+        {{ end }}
+    </section>
+</section>

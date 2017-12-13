@@ -10,12 +10,17 @@ body > header {
     background:      #2C3C56;
 }
 
-body > header .navbar {
+.site-navbar {
     background:      transparent;
 }
 
-body > section {
+#main {
     width:           100%;
+}
+
+h4 {
+    font-size:       18px;
+    margin:          10px 0;
 }
 
 /* small and below: Navbar spans top of viewport */
@@ -33,23 +38,28 @@ body > section {
         width:           100%;
     }
 
-    body > header .navbar {
+    .site-navbar {
         width:           100%;
+        padding:         0;
     }
 
-    body > header .navbar .navbar-brand {
+    .site-navbar > * {
+        margin:          0 10px;
+    }
+
+    .site-navbar .navbar-brand {
         padding:         0;
         margin-right:    20px;
         width:           60px;
         text-align:      center;
     }
 
-    body > header .navbar .navbar-brand img {
-        width:           100%;
+    .site-navbar .navbar-brand img {
+        height:          60px;
         display:         inline-block;
     }
 
-    body > header .navbar .nav-link i {
+    .site-navbar .nav-link i {
         display:         none;
     }
 }
@@ -70,7 +80,7 @@ body > section {
         align-items:     stretch;
     }
 
-    body > header .navbar {
+    .site-navbar {
         display:         flex;
         flex-direction:  column;
         justify-content: flex-start;
@@ -80,13 +90,13 @@ body > section {
         flex:            1;
     }
 
-    body > header .navbar .navbar-nav {
+    .site-navbar .navbar-nav {
         display:         flex;
         flex-direction:  column;
         width:           100%;
     }
 
-    body > header .navbar .navbar-brand {
+    .site-navbar .navbar-brand {
         padding:     0;
         margin:      10px 0 20px 0;
         height:      60px;
@@ -94,21 +104,21 @@ body > section {
         text-align:  center;
     }
 
-    body > header .navbar .navbar-brand img {
-        width:       60px;
+    .site-navbar .navbar-brand img {
+        height:      80px;
         display:     inline-block;
     }
 
-    body > header .navbar .navbar-nav .nav-link {
+    .site-navbar .navbar-nav .nav-link {
         color:       #FFFFFF;
         padding-left: 0;
     }
 
-    body > header .navbar .navbar-nav .dropdown-toggle:after {
+    .site-navbar .navbar-nav .dropdown-toggle:after {
         display:         none;
     }
 
-    body > header .navbar .navbar-nav .dropdown-menu {
+    .site-navbar .navbar-nav .dropdown-menu {
         display:     block;
         position:    relative;
         background:  transparent;
@@ -117,27 +127,23 @@ body > section {
         padding:     0 0 8px 16px;
     }
 
-    body > header .navbar .navbar-nav .dropdown-menu a {
+    .site-navbar .navbar-nav .dropdown-menu a {
         color:       rgba(255,255,255,.75);
         font-size:   85%;
     }
 
-    body > header .navbar .navbar-nav .dropdown-menu a:hover {
+    .site-navbar .navbar-nav .dropdown-menu a:hover,
+    .site-navbar .navbar-nav .dropdown-menu a:active {
         background:  #1C2A40;
     }
 
-    body > section {
+    #main {
         width:       calc(100% - 180px);
     }
 }
 
 .content {
     padding: 15px 15px 15px 15px;
-}
-
-.panel > .panel-heading h4 {
-    font-size:       18px;
-    margin:          10px 0;
 }
 
 form label {
