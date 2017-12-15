@@ -60,16 +60,13 @@ h6, .h6 {
     }
 
     body > header {
-        display:         flex;
-        flex-direction:  row;
-        align-items:     stretch;
-        height:          72px;
         width:           100%;
     }
 
     .site-navbar {
         width:           100%;
         padding:         0;
+        height:          54px;
     }
 
     .site-navbar > * {
@@ -78,13 +75,13 @@ h6, .h6 {
 
     .site-navbar .navbar-brand {
         padding:         0;
-        margin-right:    20px;
+        margin:          0;
         width:           60px;
         text-align:      center;
     }
 
     .site-navbar .navbar-brand img {
-        height:          60px;
+        height:          40px;
         display:         inline-block;
     }
 
@@ -96,17 +93,24 @@ h6, .h6 {
 /* medium and above: Sidebar along left-hand side */
 @media (min-width: 993px) {
     body {
-        display:         flex;
-        flex-direction:  row;
-        justify-content: flex-start;
-        align-items:     stretch;
+
     }
 
     body > header {
+        position:        fixed;
+        left:            0;
+        top:             0;
+        bottom:          0;
+        width:           180px;
         display:         flex;
         flex-direction:  column;
         justify-content: flex-start;
         align-items:     stretch;
+    }
+
+    #main {
+        width:           calc(100% - 180px);
+        margin-left:     180px;
     }
 
     .site-navbar {
@@ -114,7 +118,6 @@ h6, .h6 {
         flex-direction:  column;
         justify-content: flex-start;
         align-items:     stretch;
-        width:           180px;
         padding:         0;
         flex:            1;
     }
@@ -175,10 +178,6 @@ h6, .h6 {
     .site-navbar .navbar-nav .dropdown-menu a:hover,
     .site-navbar .navbar-nav .dropdown-menu a:active {
         background:  #121B29;
-    }
-
-    #main {
-        width:       calc(100% - 180px);
     }
 }
 
@@ -315,7 +314,7 @@ table.expeditions-data-table .protocol-5-bg {
 
 .library-item .panel:active,
 .library-item .panel:hover {
-    border: 1px solid #ea6158
+    border: 1px solid #ea6158;
 }
 
 .library-item .panel .panel-heading {

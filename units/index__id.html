@@ -7,9 +7,21 @@ bindings:
 - name:     'unit'
   resource: ':/api/units/{{ param 1 }}'
 
+- name:     'lessons'
+  resource: ':/api/lessons/{{ . }}'
+  repeat:   '.bindings.unit.lessons'
+  on_error: continue
+
+# Retrieve the list of all subjects that are actually used in the lessons we
+# got above.
+- name:     'subjects'
+  resource: ':/api/subject-areas/{{ . }}'
+  repeat:   'uniq (flatten (pluck .bindings.lessons `lessonOverview.subjectAreas`))'
+  on_error: continue
+
 includes:
     lessons:   /_includes/units/lessons.html
-    standards: /_includes/units/standards.html
+
 ---
 <div class="jumbotron" style="background: {{ .bindings.unit.color }}">
     <section class="content">
@@ -37,12 +49,13 @@ includes:
             {{ if and (eq .bindings.unit.status `draft`) }}
             <h6>Draft</h6>
             {{ end }}
+
             {{ if and (eq .bindings.unit.status `published`) }}
             <h6>Published</h6>
             {{ end }}
 
             <a class="btn btn-primary" href="/units/edit//{{ .bindings.unit._id }}">Edit</a>
-            {{ end }}
+        {{ end }}
 
             <a class="btn btn-default" href="/units/feedback/{{ .bindings.unit._id }}" ng-hide="vm.unit.isCurrentUserOwner">Send feedback</a>
         </div>

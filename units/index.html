@@ -10,14 +10,17 @@ bindings:
 ---
 <section class="content">
     <section class="container-fluid">
-        <nav class="navbar" view-permissions="admin">
-            <a class="btn btn-default pull-right" href="/units/create">
-                <i class="fa fa-plus"></i> Create new unit
-            </a>
-            <ul class="nav navbar-nav">
-                {{ if has .bindings.user.roles `admin` }}
-                <li class="dropdown" id="publishedStatusSelection">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        {{ if .flags.admin }}
+        <nav class="navbar navbar-toggleable-sm navbar-default">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link btn btn-default" href="/units/create">
+                        <i class="fa fa-plus"></i> Create new unit
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         Published? <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -29,20 +32,44 @@ bindings:
                         </li>
                     </ul>
                 </li>
-                {{ end }}
             </ul>
         </nav>
+        {{ end }}
 
-        <ul class="list-group">
-            {{ range .bindings.units }}
-                <a href="/units/{{ ._id }}" class="list-group-item">
-                    {{ if .icon }}
-                    <h1><i class="{{ .icon }}"></i></h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Unit Title</th>
+                    <th>Lessons</th>
+                    {{ if .flags.admin }}
+                    <th>&nbsp;</th>
                     {{ end }}
+                </tr>
+            </thead>
+            <tbody>
+            {{ range .bindings.units }}
+                <tr onclick="location.href='/units/{{ ._id }}'">
+                    <td>
+                    {{ if .icon }}
+                        <h1><i class="{{ .icon }}"></i></h1>
+                    {{ end }}
+                    </td>
 
-                    <h3>{{ .title }}</h3>
-                </li>
+                    <td>
+                        <h3>{{ .title }}</h3>
+                    </td>
+
+                    <td>
+                        {{ len .lessons }} lessons
+                    </td>
+
+                    {{ if .flags.admin }}
+                    <td>&nbsp;</td>
+                    {{ end }}
+                </tr>
             {{ end }}
-        </ul>
+            </tbody>
+        </table>
     </section>
 </section>

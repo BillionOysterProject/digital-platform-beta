@@ -3,7 +3,7 @@
         <div class="row">
             <h3 class="col-xs-6 blue">Lessons</h3>
             {{ if .flags.admin }}
-            <div class="col-xs-6 text-right">
+            <div class="col-xs-6 ml-auto mb-2">
                 {{ if .bindings.unit.lessons }}
                 <a class="btn btn-default" ng-click="vm.openSequenceLessons()">Edit sequence</a>
                 {{ end }}
@@ -11,13 +11,9 @@
             </div>
             {{ end }}
         </div>
-        <div class="alert alert-info" ng-show="(!vm.unit.lessons || vm.unit.lessons.length < 1) && !vm.isAdmin">
-            Whoops, this unit doesn't have any lessons yet! Check back for updates.
-        </div>
-        <div class="alert alert-info" ng-show="(!vm.unit.lessons || vm.unit.lessons.length < 1) && vm.isAdmin">
-            This unit doesn't have any lessons yet! You can add lessons to this unit either by editing existing lessons, or by creating new lessons above.
-        </div>
-        <table class="table table-hover table-responsive" ng-show="vm.unit.lessons.length > 0">
+
+        {{ if .bindings.lessons }}
+        <table class="table table-hover table-responsive">
             <thead>
                 <tr>
                     <th>#</th>
@@ -27,96 +23,100 @@
                     <th>Grade</th>
                     <th>Class Periods</th>
                     <th>Setting</th>
-                    {{ .flags.admin }}
+                    {{ if .flags.admin }}
                     <th></th>
                     <th></th>
                     {{ end }}
                 </tr>
             </thead>
-            {{ range $index, $lesson := .lessons }}
-            <tr
-                onclick="location.href='/lessons/view// {{ ._id }}'"
-                class="{{ if not .status `published` }}text-muted{{ end }}"
-            >
-                <td>
-                    <h4 class="{{ if eq .status `published` }}blue{{ else }}gray{{ end }}">
-                        <b>{{ add $index 1 }}</b>
-                    </h4>
-                </td>
+            <tbody>
+                {{ range $index, $lesson := .bindings.lessons }}
+                <tr
+                    onclick="location.href='/lessons/view//{{ ._id }}'"
+                    class="{{ if ne .status `published` }}text-muted{{ end }}"
+                >
+                    <td>
+                        <h4 class="{{ if eq .status `published` }}blue{{ else }}gray{{ end }}">
+                            <b>{{ add $index 1 }}</b>
+                        </h4>
+                    </td>
 
-                <td>
-                    <h4>
-                        {{ .title }}
-                    </h4>
-                    <p class="small" class="{{ if eq .status `published` }}text-muted{{ else }}gray{{ end }}">
-                        <span>{{ sanitize .lessonOverview.lessonSummary }}</span>
-                    </p>
-                </td>
+                    <td>
+                        <h4>
+                            {{ .title }}
+                        </h4>
+                        <p class="small" class="{{ if eq .status `published` }}text-muted{{ else }}gray{{ end }}">
+                            <span>{{ sanitize .lessonOverview.lessonSummary }}</span>
+                        </p>
+                    </td>
 
-                <td>
-                    {{ if .featuredImage }}
-                    <img src="{{ .featuredImage.path }}" class="img-thumbnail" />
-                    {{ end }}
-                </td>
-
-                <td>
-                    <ul class="list-inline">
-                        {{ range .lessonOverview.subjectAreas }}
-                        <li>
-                            {{ if eq $lesson.status `published` }}
-                            <span style="background-color: {{ .subject.color }}" class="badge badge-default">
-                                {{ .subject.subject }}
-                            </span>
-                            {{ else }}
-                            <span class="badge badge-default">
-                                {{ .subject.subject }}
-                            </span>
-                            {{ end }}
-                        </li>
-                    </ul>
-                </td>
-
-                <td>
-                    {{ .lessonOverview.grade }}
-                </td>
-
-                <td>
-                    {{ .lessonOverview.classPeriods }}
-                </td>
-
-                <td>
-                    {{ .lessonOverview.setting }}
-                </td>
-
-                {{ if .flags.admin }}
-                <td class="text-right">
-                    <span
-                        {{ if eq .status `published` }}
-                        class="badge badge-success"
-                        {{ else if eq .status `pending` }}
-                        class="badge badge-info"
-                        {{ else if eq .status `returned` }}
-                        class="badge badge-danger"
-                        {{ else }}
-                        class="badge badge-default"
+                    <td>
+                        {{ if .featuredImage }}
+                        <img src="{{ .featuredImage.path }}" class="img-thumbnail" />
                         {{ end }}
-                    >
-                        {{ .status | titleize }}
-                    </span>
-                </td>
-                <td class="text-right" {{ if eq .status `pending` }}style="min-width: 80px;"{{ end }}>
-                    {{ if eq .status `pending` }}
-                    <a class="btn btn-sm btn-danger pull-right" ng-click="vm.openReturnModal(lesson)">
-                    <i class="fa fa-remove"></i></a>
+                    </td>
 
-                    <a class="btn btn-sm btn-success pull-right" ng-click="vm.openPublishModal(lesson)">
-                    <i class="fa fa-ok"></i></a>
+                    <td>
+                        <ul class="list-inline">
+                            {{ .bindings.subjects }}
+                        </ul>
+                    </td>
+
+                    <td>
+                        {{ .lessonOverview.grade }}
+                    </td>
+
+                    <td>
+                        {{ .lessonOverview.classPeriods }}
+                    </td>
+
+                    <td>
+                        {{ .lessonOverview.setting }}
+                    </td>
+
+                    {{ if .flags.admin }}
+                    <td class="text-right">
+                        <span
+                            {{ if eq .status `published` }}
+                            class="badge badge-success"
+                            {{ else if eq .status `pending` }}
+                            class="badge badge-info"
+                            {{ else if eq .status `returned` }}
+                            class="badge badge-danger"
+                            {{ else }}
+                            class="badge badge-default"
+                            {{ end }}
+                        >
+                            {{ .status | titleize }}
+                        </span>
+                    </td>
+                    <td class="text-right" {{ if eq .status `pending` }}style="min-width: 80px;"{{ end }}>
+                        {{ if eq .status `pending` }}
+                        <a class="btn btn-sm btn-danger pull-right" ng-click="vm.openReturnModal(lesson)">
+                        <i class="fa fa-remove"></i></a>
+
+                        <a class="btn btn-sm btn-success pull-right" ng-click="vm.openPublishModal(lesson)">
+                        <i class="fa fa-ok"></i></a>
+                        {{ end }}
+                    </td>
                     {{ end }}
-                </td>
+                </tr>
                 {{ end }}
-            </tr>
-            {{ end }}
+            </tbody>
         </table>
+        {{ else if .flags.admin }}
+
+        <div class="alert alert-info">
+            This unit doesn't have any lessons yet! You can add lessons to this unit either by editing existing lessons, or by creating new lessons above.
+        </div>
+
+        {{ else }}
+
+        <div class="alert alert-info">
+            Whoops, this unit doesn't have any lessons yet! Check back for updates.
+        </div>
+
+        {{ end }}
 
         <hr />
 
@@ -135,7 +135,7 @@
             {{ range $index, $subUnit := .bindings.unit.subUnits }}
             <tr
                 onclick="location.href='/units/view/ {{ ._id }}'"
-                class="{{ if not .status `published` }}text-muted{{ end }}"
+                class="{{ if ne .status `published` }}text-muted{{ end }}"
             >
                 <td>
                     <h4 class="{{ if eq .status `published` }}blue{{ else }}gray{{ end }}">
@@ -155,10 +155,10 @@
                 </td>
 
                 <td>
-                    <b>{{ .subUnits.length}}</b> Sub Units
+                    <b>{{ .subUnits.length }}</b> Sub Units
                 </td>
 
-                {{ .flags.admin }}
+                {{ if .flags.admin }}
                 <td class="text-right">
                     <span
                         {{ if eq .status `published` }}
@@ -176,6 +176,7 @@
                 </td>
                 {{ end }}
             </tr>
+            {{ end }}
         </table>
         {{ end }}
     </section>
