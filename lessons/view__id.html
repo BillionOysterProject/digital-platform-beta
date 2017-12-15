@@ -19,14 +19,14 @@ bindings:
                 alt="Billion Oyster Project"
                 src="modules/core/client/img/brand/logo.svg"
                 style="width: 100px; height: 128px"
-            />
+            >
 
             <h2 class="blue">
                 <b>{{ $lesson.title }}</b>
             </h2>
 
             {{ if $lesson.user }}
-            <h5 id="lesson-author-info" ng-if="lesson.user">
+            <h5 id="lesson-author-info">
                 <img
                     src="{{ $lesson.user.profileImageURL }}"
                     alt="{{ $lesson.user.displayName }}"
@@ -42,7 +42,9 @@ bindings:
                 <span ng-bind="  | date:'mediumDate'">{{ $lesson.created }}</span>
             </h5>
             {{ else }}
-            <h5>Deleted User<br/>
+            <h5>
+                Deleted User
+                <br />
                 <span ng-bind="  | date:'mediumDate'">{{ $lesson.created }}</span>
             </h5>
             {{ end }}

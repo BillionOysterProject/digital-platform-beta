@@ -3,10 +3,14 @@ page:
     view:    '{{ .bindings.unit.title }}'
     notitle: true
 
+# Retrieve the unit.
 bindings:
 - name:     'unit'
   resource: ':/api/units/{{ param 1 }}'
 
+# Retrieve all of the lessons under the given unit, which come to us as an array
+# on the unit itself. This resource is repeated, once per lesson ID, and yields
+# an array of individual lessons as a result.
 - name:     'lessons'
   resource: ':/api/lessons/{{ . }}'
   repeat:   '.bindings.unit.lessons'
