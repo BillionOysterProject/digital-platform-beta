@@ -7,8 +7,8 @@ bindings:
   resource: ':/api/expeditions'
   params:
     byOwner: true
-    limit:   '{{ or qs `limit` 15 }}'
-    page:    '{{ or qs `page` 1 }}'
+    limit:   '{{ or (qs `limit`) 15 }}'
+    page:    '{{ or (qs `page`) 1 }}'
 
 - name:     'teamsOn'
   resource: ':/api/teams/'

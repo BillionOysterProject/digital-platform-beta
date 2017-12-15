@@ -13,8 +13,8 @@ bindings:
     byMember: true
 
 - name:     'currentTeam'
-  resource: ':/api/teams/{{ qs `team` (first .bindings.teamsOn._id) }}'
-  only_if:  '{{ qs `team` (first .bindings.teamsOn._id) }}'
+  resource: ':/api/teams/{{ or (qs `team`) (first .bindings.teamsOn._id) }}'
+  not_if:   '{{ isEmpty .bindings.teamsOn }}'
   optional: true
 
 - name:     'stations'

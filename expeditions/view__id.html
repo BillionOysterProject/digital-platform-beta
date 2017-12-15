@@ -1,0 +1,11 @@
+---
+page:
+    view: Expedition
+
+bindings:
+- name:     'expedition'
+  resource: ':/api/expeditions/{{ param 1 }}'
+---
+<section class="content">
+  <pre>{{ jsonify . `    ` }}</pre>
+</section>

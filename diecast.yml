@@ -1,0 +1,8 @@
+---
+bindingPrefix: 'https://platform.bop.nyc'
+mounts:
+- mount: '/api'
+  to:    'https://platform.bop.nyc/api'
+  options:
+    passthrough_requests: true
+    passthrough_errors:   true
