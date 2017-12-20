@@ -15,6 +15,120 @@ page:
         cclsMathematics:                 'CCLS - Mathematics'
         cclsElaScienceTechnicalSubjects: 'CCLS - ELA Science & Technical Subjects'
 
+    protocols:
+    - name: 'Protocol 1: Site Conditions'
+      data:
+      - id:    weatherTemperature
+        title: 'Weather/temperature'
+
+      - id:    windSpeedDirection
+        title: 'Wind speed/direction'
+
+      - id:    humidity
+        title: 'Humidity'
+
+      - id:    recentRainfall
+        title: 'Recent rainfall'
+
+      - id:    tide
+        title: 'Tide'
+
+      - id:    referencePoint
+        title: 'Reference point'
+
+      - id:    tidalCurrent
+        title: 'Tidal current'
+
+      - id:    waterConditionPhoto
+        title: 'Water condition photo'
+
+      - id:    surfaceCurrentSpeed
+        title: 'Surface current speed'
+
+      - id:    waterColor
+        title: 'Water color'
+
+      - id:    oilSheen
+        title: 'Oil sheen'
+
+      - id:    garbageWater
+        title: 'Garbage in water'
+
+      - id:    pipes
+        title: 'Pipes'
+
+      - id:    landConditionPhoto
+        title: 'Land condition photo'
+
+      - id:    shorelineType
+        title: 'Shoreline type'
+
+      - id:    garbageLand
+        title: 'Garbage on land'
+
+      - id:    surfaceCover
+        title: 'Surface cover'
+
+    - name: 'Protocol 2: Oyster Measurements'
+      data:
+      - id:    submergedDepth
+        title: 'Cage submerged depth'
+
+      - id:    oysterCagePhoto
+        title: 'Oyster cage photo'
+
+      - id:    bioaccumulationOnCage
+        title: 'Cage bioaccumulation'
+
+      - id:    cageDamage
+        title: 'Cage damage'
+
+      - id:    oysterMeasurements
+        title: 'Oyster Measurements'
+
+    - name: 'Protocol 3: Mobile Trap'
+      data:
+      - id:    organism
+        title: 'Organisms observed'
+
+    - name: 'Protocol 4: Settlement Tiles'
+      data:
+      - id:    description
+        title: 'Settlement tile description'
+
+      - id:    organism
+        title: 'Sessile organisms observed'
+
+
+    - name: 'Protocol 5: Water Quality'
+      data:
+      - id:    depth
+        title: 'Depth'
+
+      - id:    temperature
+        title: 'Temperature'
+
+      - id:    dissolvedOxygen
+        title: 'Dissolved Oxygen'
+
+      - id:    salinity
+        title: 'Salinity'
+
+      - id:    pH
+        title: 'pH'
+
+      - id:    turbidity
+        title: 'Turbidity'
+
+      - id:    ammonia
+        title: 'Ammonia'
+
+      - id:    nitrates
+        title: 'Nitrates'
+
+      - id:    other
+        title: 'Other'
+
 includes:
     navbar:      /_includes/navbar.html
     user-navbar: /_includes/user-navbar.html
@@ -23,6 +137,7 @@ bindings:
 - name:     'user'
   resource: ':/api/users/me'
   optional: true
+  fallback: {}
 
 flags:
     admin:             '{{ has `admin` .bindings.user.roles }}'
@@ -40,7 +155,7 @@ flags:
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    <base href="/">
+    <base href="{{ .diecast.route_prefix }}/">
     <title>{{ if .page.view }}{{ .page.view }} :: {{ end }}{{ .page.title }}</title>
     <meta name="description" content="{{ .page.description }}">
     <meta name="fragment" content="!">
@@ -55,29 +170,29 @@ flags:
     <meta property="og:title" content="{{ .page.title }}">
     <meta property="og:description" content="{{ .page.description }}">
     <meta property="og:url" content="{{ .page.url }}">
-    <meta property="og:image" content="/assets/img/brand/logo.png">
+    <meta property="og:image" content="assets/img/brand/logo.png">
     <meta property="og:type" content="website">
 
     <!-- Twitter META -->
     <meta name="twitter:title" content="{{ .page.title }}">
     <meta name="twitter:description" content="{{ .page.description }}">
     <meta name="twitter:url" content="{{ .page.url }}">
-    <meta name="twitter:image" content="/assets/img/brand/logo.png">
+    <meta name="twitter:image" content="assets/img/brand/logo.png">
 
     <!-- Fav Icon -->
-    <link href="/assets/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="assets/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Lobster|Oswald" rel="stylesheet">
 
     <!-- Application Javascript -->
-    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/assets/js/stapes.min.js"></script>
-    <script type="text/javascript" src="/assets/js/tether.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap-notify.min.js"></script>
-    <script type="text/javascript" src="/assets/js/datatables.min.js"></script>
-    <script type="text/javascript" src="/assets/js/application.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/stapes.min.js"></script>
+    <script type="text/javascript" src="assets/js/tether.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap-notify.min.js"></script>
+    <script type="text/javascript" src="assets/js/datatables.min.js"></script>
+    <script type="text/javascript" src="assets/js/application.js"></script>
 
     <!--Google Analytics-->
     <!--
@@ -93,17 +208,17 @@ flags:
     -->
 
     <!-- Application CSS Files -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/bootstrap3-panel.css">
-    <link rel="stylesheet" href="/assets/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/lib/summernote/dist/summernote.css">
-    <link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="/assets/lib/select2/select2.css">
-    <link rel="stylesheet" href="/assets/lib/select2/select2-bootstrap.css">
-    <link rel="stylesheet" href="/assets/lib/leaflet/dist/leaflet.css">
-    <link rel="stylesheet" href="/assets/lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
-    <link rel="stylesheet" href="/assets/css/application.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap3-panel.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/lib/summernote/dist/summernote.css">
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="assets/lib/select2/select2.css">
+    <link rel="stylesheet" href="assets/lib/select2/select2-bootstrap.css">
+    <link rel="stylesheet" href="assets/lib/leaflet/dist/leaflet.css">
+    <link rel="stylesheet" href="assets/lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
+    <link rel="stylesheet" href="assets/css/application.css">
 </head>
 
 <body>

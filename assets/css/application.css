@@ -18,6 +18,10 @@ body > header {
     background:      transparent;
 }
 
+.site-navbar .nav-item {
+    font-size:       90%;
+}
+
 .navbar-default {
     background:      #FFFFFF;
     box-shadow:      none;
@@ -106,6 +110,7 @@ h6, .h6 {
         flex-direction:  column;
         justify-content: flex-start;
         align-items:     stretch;
+        overflow:        auto;
     }
 
     #main {
@@ -121,9 +126,9 @@ h6, .h6 {
         padding:         0;
         flex:            1;
 
-        -webkit-box-shadow: inset -6px 0px 9px 0px rgba(0,0,0,0.65);
-        -moz-box-shadow:    inset -6px 0px 9px 0px rgba(0,0,0,0.65);
-        box-shadow:         inset -6px 0px 9px 0px rgba(0,0,0,0.65);
+        -webkit-box-shadow: inset -6px 0px 9px 0px rgba(0,0,0,0.33);
+        -moz-box-shadow:    inset -6px 0px 9px 0px rgba(0,0,0,0.33);
+        box-shadow:         inset -6px 0px 9px 0px rgba(0,0,0,0.33);
     }
 
     .site-navbar .navbar-nav {
@@ -134,7 +139,7 @@ h6, .h6 {
 
     .site-navbar .navbar-brand {
         padding:     0;
-        margin:      10px 0 20px 0;
+        margin:      10px 0 40px 0;
         height:      60px;
         width:       100%;
         text-align:  center;
@@ -147,27 +152,16 @@ h6, .h6 {
 
     .site-navbar .navbar-nav .nav-link {
         color:       #FFFFFF;
+        user-select: none;
     }
 
-    .site-navbar .navbar-nav .dropdown-toggle {
-        background:  #1C2A40;
-        margin-top:  1rem;
-        -webkit-box-shadow: inset -6px 0px 9px 0px rgba(0,0,0,0.33);
-        -moz-box-shadow:    inset -6px 0px 9px 0px rgba(0,0,0,0.33);
-        box-shadow:         inset -6px 0px 9px 0px rgba(0,0,0,0.33);
-    }
-
-    .site-navbar .navbar-nav .dropdown-toggle:after {
-        display:         none;
-    }
-
-    .site-navbar .navbar-nav .dropdown-toggle:hover {
-        color:           #FFFFFF;
-        cursor:          default;
+    .site-navbar .navbar-nav .text {
+        display:     inline-block;
+        width:       50%;
+        margin-left: 0.25rem;
     }
 
     .site-navbar .navbar-nav .dropdown-menu {
-        display:     block;
         position:    relative;
         background:  transparent;
         border:      0;
@@ -179,12 +173,17 @@ h6, .h6 {
     .site-navbar .navbar-nav .dropdown-menu a {
         color:       rgba(255,255,255, 0.75);
         font-size:   85%;
-        padding:     4px 10px 4px 26px;
+        padding:     4px 10px 4px 36px;
     }
 
     .site-navbar .navbar-nav .dropdown-menu a:hover,
-    .site-navbar .navbar-nav .dropdown-menu a:active {
+    .site-navbar .navbar-nav .dropdown-menu a:active,
+    .site-navbar .navbar-nav .dropdown-menu a:focus {
         background:  #121B29;
+    }
+
+    .site-navbar .navbar-footer {
+        margin-top:  auto;
     }
 }
 
@@ -1314,7 +1313,7 @@ form.ng-submitted .ng-invalid {
 }
 
 .container-ribbon {
-    background: url('/assets/img/redribbon-bg.png') center top no-repeat;
+    background: url('../img/redribbon-bg.png') center top no-repeat;
     margin-top: -50px;
 }
 
