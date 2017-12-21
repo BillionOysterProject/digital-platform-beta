@@ -332,9 +332,15 @@ class Unitactivities(CollectionView):
 class Units(CollectionView):
     route_base      = 'units'
     collection_name = 'units'
-
-    def prepare_results(self, results):
-        return jsonify(list(results))
+    results_only    = True
+    expand_fields   = {
+        'user': (
+            'users', ['_id', 'displayName'],
+        ),
+        'parentUnits': (
+            'units', ['_id', 'status', 'icon', 'color', 'title'],
+        )
+    }
 
 
 class Useractivities(CollectionView):
