@@ -22,10 +22,6 @@ body > header {
     background:      transparent;
 }
 
-.site-navbar .nav-item {
-    font-size:       90%;
-}
-
 .navbar-default {
     background:      #FFFFFF;
     box-shadow:      none;
@@ -109,7 +105,7 @@ h6, .h6 {
         left:            0;
         top:             0;
         bottom:          0;
-        width:           180px;
+        width:           220px;
         display:         flex;
         flex-direction:  column;
         justify-content: flex-start;
@@ -118,8 +114,8 @@ h6, .h6 {
     }
 
     #main {
-        width:           calc(100% - 180px);
-        margin-left:     180px;
+        width:           calc(100% - 220px);
+        margin-left:     220px;
     }
 
     .site-navbar {
@@ -157,6 +153,18 @@ h6, .h6 {
     .site-navbar .navbar-nav .nav-link {
         color:       #FFFFFF;
         user-select: none;
+        padding:     10px 30px 10px 30px;
+    }
+
+    .site-navbar .navbar-nav .nav-link:hover {
+        background:  #121B29;
+    }
+
+    .site-navbar .navbar-nav .nav-item.show .nav-link {
+        background:  #121B29;
+        -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .5);
+        -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .5);
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, .5)
     }
 
     .site-navbar .navbar-nav .text {
@@ -170,14 +178,12 @@ h6, .h6 {
         background:  transparent;
         border:      0;
         width:       100%;
-        padding:     0;
         margin:      0;
     }
 
     .site-navbar .navbar-nav .dropdown-menu a {
         color:       rgba(255,255,255, 0.75);
-        font-size:   85%;
-        padding:     4px 10px 4px 36px;
+        padding:     4px 20px 4px 56px;
     }
 
     .site-navbar .navbar-nav .dropdown-menu a:hover,
