@@ -16,6 +16,7 @@ bindings:
   resource: ':/api/teams/{{ or (qs `team`) (first .bindings.teamsOn._id) }}'
   not_if:   '{{ isEmpty .bindings.teamsOn }}'
   optional: true
+  fallback: {}
 
 - name:     'stations'
   resource: ':/api/restoration-stations/'

@@ -1,0 +1,31 @@
+---
+page:
+    view: API Documentation
+
+bindings:
+- name:     routes
+  resource: :/api/routes/
+---
+<section class="content">
+    <ul class="list-group">
+        {{ range $i, $route := .bindings.routes }}
+            {{ range $j, $method := .methods }}
+            <li class="list-group-item d-flex">
+                <div class="mr-2">
+                    {{ if eq $method `GET` }}
+                    <span class="badge badge-primary">GET</span>
+                    {{ else if eq $method `POST` }}
+                    <span class="badge badge-success">POST</span>
+                    {{ else if eq $method `PUT` }}
+                    <span class="badge badge-warning">PUT</span>
+                    {{ else if eq $method `DELETE` }}
+                    <span class="badge badge-danger">DELETE</span>
+                    {{ end }}
+                </div>
+
+                <span class="pre">{{ $route.url }}</span>
+            </li>
+            {{ end }}
+        {{ end }}
+    </ul>
+</section>

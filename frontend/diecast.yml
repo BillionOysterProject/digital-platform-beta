@@ -1,8 +1,8 @@
 ---
-bindingPrefix: 'https://platform.bop.nyc'
+bindingPrefix: 'http://127.0.0.1:5000/'
 mounts:
 - mount: '/api'
-  to:    'https://platform.bop.nyc/api'
+  to:    'http://127.0.0.1:5000/api'
   options:
     passthrough_requests: true
     passthrough_errors:   true

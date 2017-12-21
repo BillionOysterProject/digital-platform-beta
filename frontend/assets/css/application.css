@@ -14,6 +14,10 @@ body > header {
     background:      #2C3C56;
 }
 
+.pre {
+    font-family:     monospace !important;
+}
+
 .site-navbar {
     background:      transparent;
 }
@@ -810,32 +814,37 @@ a.white:hover {
 
 .badge,
 .panel-default>.panel-heading .badge {
-    background: #ccc
+    background-color: #ccc;
 }
 
-.badge-success,
+.badge.badge-primary,
+.panel-default>.panel-heading .badge-primary {
+    background-color: #0275d8;
+}
+
+.badge.badge-success,
 .panel-default>.panel-heading .badge-success {
-    background: #4CAF50
+    background-color: #4CAF50;
 }
 
-.badge-info,
+.badge.badge-info,
 .panel-default>.panel-heading .badge-info {
-    background: #426ca9
+    background-color: #426ca9;
 }
 
-.badge-warning,
+.badge.badge-warning,
 .panel-default>.panel-heading .badge-warning {
-    background: #FF9501
+    background-color: #FF9501;
 }
 
-.badge-danger,
+.badge.badge-danger,
 .panel-default>.panel-heading .badge-danger {
-    background: #ea6158
+    background-color: #ea6158;
 }
 
 .btn .badge {
     background: #fff;
-    color: #426ca9
+    color: #426ca9;
 }
 
 .alert {

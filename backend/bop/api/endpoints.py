@@ -8,14 +8,26 @@ import pivot.exceptions
 
 class Endpoint(FlaskView):
     results_only = False
+    strict_slashes = False
     route_prefix = '/api/'
     expand_fields = {}
+
+    @classmethod
+    def register(cls, app):
+        cls._app = app
+        super(Endpoint, cls).register(app)
+
+    @property
+    def app(self):
+        return self._app
 
 
 class CollectionView(Endpoint):
     @classmethod
     def register(cls, app):
         # TODO: make sure cls.collection_name is a string
+
+        cls._app = app
         cls.client = app.db
         super(CollectionView, cls).register(app)
 
@@ -130,4 +142,17 @@ class CollectionView(Endpoint):
         return self.prepare_results(results)
 
     def get(self, record_id):
-        return jsonify(self.collection.get(record_id))
+        result = self.collection.get(record_id)
+        result = self.expand_results([result])[0]
+        result = self.prep_result(result)
+
+        return jsonify(result)
+
+    def post(self):
+        pass
+
+    def put(self):
+        pass
+
+    def delete(self):
+        pass

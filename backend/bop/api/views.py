@@ -29,12 +29,12 @@ class Glossaries(CollectionView):
     collection_name = 'glossaries'
 
 
-class Lessonactivities(CollectionView):
+class LessonActivities(CollectionView):
     route_base      = 'lessonactivities'
     collection_name = 'lessonactivities'
 
 
-class Lessonfeedbacks(CollectionView):
+class LessonFeedbacks(CollectionView):
     route_base      = 'lessonfeedbacks'
     collection_name = 'lessonfeedbacks'
 
@@ -44,222 +44,42 @@ class Lessons(CollectionView):
     collection_name = 'lessons'
 
 
-class Lessontrackers(CollectionView):
+class LessonTrackers(CollectionView):
     route_base      = 'lessontrackers'
     collection_name = 'lessontrackers'
 
 
-class Metaammoniamethods(CollectionView):
-    route_base      = 'metaammoniamethods'
-    collection_name = 'metaammoniamethods'
-
-
-class Metaammoniaunits(CollectionView):
-    route_base      = 'metaammoniaunits'
-    collection_name = 'metaammoniaunits'
-
-
-class Metabioaccumulations(CollectionView):
-    route_base      = 'metabioaccumulations'
-    collection_name = 'metabioaccumulations'
-
-
-class Metabodiesofwater(CollectionView):
-    route_base      = 'metabodiesofwater'
-    collection_name = 'metabodiesofwater'
-
-
-class Metaboroughscounties(CollectionView):
-    route_base      = 'metaboroughscounties'
-    collection_name = 'metaboroughscounties'
-
-
-class Metacclselasciencetechnicalsubjects(CollectionView):
-    route_base      = 'metacclselasciencetechnicalsubjects'
-    collection_name = 'metacclselasciencetechnicalsubjects'
-
-
-class Metacclsmathematics(CollectionView):
-    route_base      = 'metacclsmathematics'
-    collection_name = 'metacclsmathematics'
-
-
-class Metadissolvedoxygenmethods(CollectionView):
-    route_base      = 'metadissolvedoxygenmethods'
-    collection_name = 'metadissolvedoxygenmethods'
-
-
-class Metadissolvedoxygenunits(CollectionView):
-    route_base      = 'metadissolvedoxygenunits'
-    collection_name = 'metadissolvedoxygenunits'
-
-
-class Metaeventtypes(CollectionView):
-    route_base      = 'metaeventtypes'
-    collection_name = 'metaeventtypes'
-
-
-class Metagarbageextents(CollectionView):
-    route_base      = 'metagarbageextents'
-    collection_name = 'metagarbageextents'
-
-
-class Metangsscrosscuttingconcepts(CollectionView):
-    route_base      = 'metangsscrosscuttingconcepts'
-    collection_name = 'metangsscrosscuttingconcepts'
-
-
-class Metangssdisciplinarycoreideas(CollectionView):
-    route_base      = 'metangssdisciplinarycoreideas'
-    collection_name = 'metangssdisciplinarycoreideas'
-
-
-class Metangssscienceengineeringpractices(CollectionView):
-    route_base      = 'metangssscienceengineeringpractices'
-    collection_name = 'metangssscienceengineeringpractices'
-
-
-class Metanitratemethods(CollectionView):
-    route_base      = 'metanitratemethods'
-    collection_name = 'metanitratemethods'
-
-
-class Metanitrateunits(CollectionView):
-    route_base      = 'metanitrateunits'
-    collection_name = 'metanitrateunits'
-
-
-class Metanycssunits(CollectionView):
-    route_base      = 'metanycssunits'
-    collection_name = 'metanycssunits'
-
-
-class Metanyssskeyideas(CollectionView):
-    route_base      = 'metanyssskeyideas'
-    collection_name = 'metanyssskeyideas'
-
-
-class Metanysssmajorunderstandings(CollectionView):
-    route_base      = 'metanysssmajorunderstandings'
-    collection_name = 'metanysssmajorunderstandings'
-
-
-class Metanysssmsts(CollectionView):
-    route_base      = 'metanysssmsts'
-    collection_name = 'metanysssmsts'
-
-
-class Metaorganismcategories(CollectionView):
-    route_base      = 'metaorganismcategories'
-    collection_name = 'metaorganismcategories'
-
-
-class Metaphmethods(CollectionView):
-    route_base      = 'metaphmethods'
-    collection_name = 'metaphmethods'
-
-
-class Metaphunits(CollectionView):
-    route_base      = 'metaphunits'
-    collection_name = 'metaphunits'
-
-
-class Metasalinitymethods(CollectionView):
-    route_base      = 'metasalinitymethods'
-    collection_name = 'metasalinitymethods'
-
-
-class Metasalinityunits(CollectionView):
-    route_base      = 'metasalinityunits'
-    collection_name = 'metasalinityunits'
-
-
-class Metashorelinetypes(CollectionView):
-    route_base      = 'metashorelinetypes'
-    collection_name = 'metashorelinetypes'
-
-
-class Metasubjectareas(CollectionView):
-    route_base      = 'metasubjectareas'
-    collection_name = 'metasubjectareas'
-
-
-class Metatruefalses(CollectionView):
-    route_base      = 'metatruefalses'
-    collection_name = 'metatruefalses'
-
-
-class Metaturbiditymethods(CollectionView):
-    route_base      = 'metaturbiditymethods'
-    collection_name = 'metaturbiditymethods'
-
-
-class Metaturbidityunits(CollectionView):
-    route_base      = 'metaturbidityunits'
-    collection_name = 'metaturbidityunits'
-
-
-class Metawatercolors(CollectionView):
-    route_base      = 'metawatercolors'
-    collection_name = 'metawatercolors'
-
-
-class Metawaterflows(CollectionView):
-    route_base      = 'metawaterflows'
-    collection_name = 'metawaterflows'
-
-
-class Metawatertemperaturemethods(CollectionView):
-    route_base      = 'metawatertemperaturemethods'
-    collection_name = 'metawatertemperaturemethods'
-
-
-class Metawatertemperatureunits(CollectionView):
-    route_base      = 'metawatertemperatureunits'
-    collection_name = 'metawatertemperatureunits'
-
-
-class Metaweatherconditions(CollectionView):
-    route_base      = 'metaweatherconditions'
-    collection_name = 'metaweatherconditions'
-
-
-class Metawinddirections(CollectionView):
-    route_base      = 'metawinddirections'
-    collection_name = 'metawinddirections'
-
-
-class Mobileorganisms(CollectionView):
+class MobileOrganisms(CollectionView):
     route_base      = 'mobileorganisms'
     collection_name = 'mobileorganisms'
 
 
-class Protocolmobiletraps(CollectionView):
+class ProtocolMobileTraps(CollectionView):
     route_base      = 'protocolmobiletraps'
     collection_name = 'protocolmobiletraps'
 
 
-class Protocoloystermeasurements(CollectionView):
+class ProtocolOysterMeasurements(CollectionView):
     route_base      = 'protocoloystermeasurements'
     collection_name = 'protocoloystermeasurements'
 
 
-class Protocolsettlementtiles(CollectionView):
+class ProtocolSettlementTiles(CollectionView):
     route_base      = 'protocolsettlementtiles'
     collection_name = 'protocolsettlementtiles'
 
 
-class Protocolsiteconditions(CollectionView):
+class ProtocolSiteConditions(CollectionView):
     route_base      = 'protocolsiteconditions'
     collection_name = 'protocolsiteconditions'
 
 
-class Protocolwaterqualities(CollectionView):
+class ProtocolWaterQualities(CollectionView):
     route_base      = 'protocolwaterqualities'
     collection_name = 'protocolwaterqualities'
 
 
-class Researchactivities(CollectionView):
+class ResearchActivities(CollectionView):
     route_base      = 'researchactivities'
     collection_name = 'researchactivities'
 
@@ -269,32 +89,32 @@ class Researches(CollectionView):
     collection_name = 'researches'
 
 
-class Researchfeedbacks(CollectionView):
+class ResearchFeedbacks(CollectionView):
     route_base      = 'researchfeedbacks'
     collection_name = 'researchfeedbacks'
 
 
-class Restorationstations(CollectionView):
+class RestorationStations(CollectionView):
     route_base      = 'restorationstations'
     collection_name = 'restorationstations'
 
 
-class Savedlessons(CollectionView):
+class SavedLessons(CollectionView):
     route_base      = 'savedlessons'
     collection_name = 'savedlessons'
 
 
-class Savedresearches(CollectionView):
+class SavedResearches(CollectionView):
     route_base      = 'savedresearches'
     collection_name = 'savedresearches'
 
 
-class Schoolorgs(CollectionView):
+class SchoolOrgs(CollectionView):
     route_base      = 'schoolorgs'
     collection_name = 'schoolorgs'
 
 
-class Sessileorganisms(CollectionView):
+class SessileOrganisms(CollectionView):
     route_base      = 'sessileorganisms'
     collection_name = 'sessileorganisms'
 
@@ -314,7 +134,7 @@ class SystemIndexes(CollectionView):
     collection_name = 'system.indexes'
 
 
-class Teamrequests(CollectionView):
+class TeamRequests(CollectionView):
     route_base      = 'teamrequests'
     collection_name = 'teamrequests'
 
@@ -322,9 +142,19 @@ class Teamrequests(CollectionView):
 class Teams(CollectionView):
     route_base      = 'teams'
     collection_name = 'teams'
+    results_only    = True
+
+    expand_fields   = {
+        'schoolOrg': (
+            'schoolorgs', ['_id', 'name'],
+        ),
+        'teamLeads': (
+            'users', [],
+        )
+    }
 
 
-class Unitactivities(CollectionView):
+class UnitActivities(CollectionView):
     route_base      = 'unitactivities'
     collection_name = 'unitactivities'
 
@@ -343,7 +173,7 @@ class Units(CollectionView):
     }
 
 
-class Useractivities(CollectionView):
+class UserActivities(CollectionView):
     route_base      = 'useractivities'
     collection_name = 'useractivities'
 

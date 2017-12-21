@@ -5,9 +5,12 @@ from .endpoints import Endpoint
 
 
 class Index(Endpoint):
-    route_prefix = '/'
+    route_base = '/'
 
     def index(self):
         return jsonify({
-            'status': 'ok'
+            'status': 'ok',
         })
+
+    def routes(self):
+        return jsonify(self.app.list_routes())
