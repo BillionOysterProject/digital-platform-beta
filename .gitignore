@@ -1,2 +1,5 @@
 /backend/env
 *.pyc
+*.db
+/logs
+*.pid

@@ -23,6 +23,8 @@ class Endpoint(FlaskView):
 
 
 class CollectionView(Endpoint):
+    default_sort = None
+
     @classmethod
     def register(cls, app):
         # TODO: make sure cls.collection_name is a string
@@ -51,15 +53,35 @@ class CollectionView(Endpoint):
 
         if 'sort' in request.args:
             params['sort'] = request.args['sort'].split(',')
+        elif isinstance(self.default_sort, list):
+            params['sort'] = self.default_sort
 
         return params
 
-    def prepare_results(self, results):
-        data = [
-            self.prep_result(r) for r in self.expand_results(
-                list(results)
-            )
-        ]
+    @property
+    def query_results_params(self):
+        params = {}
+
+        if 'expand' in request.args:
+            params['expand'] = (request.args['expand'].lower() in ['true', '1', 'yes'])
+
+        return params
+
+    @property
+    def single_result_params(self):
+        return {}
+
+    def _prepare_query_results(self, results, expand=True):
+        if expand:
+            data = [
+                self._prepare_single_result(r) for r in self._expand_results(
+                    list(results)
+                )
+            ]
+        else:
+            data = [
+                self._prepare_single_result(r) for r in results
+            ]
 
         if self.results_only:
             return jsonify(data)
@@ -69,7 +91,7 @@ class CollectionView(Endpoint):
                 self.collection_name: data,
             }))
 
-    def prep_result(self, result):
+    def _prepare_single_result(self, result):
         try:
             result['_id'] = result.pop('id')
         except KeyError:
@@ -77,13 +99,15 @@ class CollectionView(Endpoint):
 
         return result
 
-    def expand_results(self, results):
+    def _expand_results(self, results):
         """
         Performs object reference expansion, configurable on a per-collection basis.
         """
         if len(self.expand_fields):
+            # for each result...
             for i, result in enumerate(results):
                 if isinstance(result, dict):
+                    # for each k-v pair
                     for k, v in result.items():
                         if k in self.expand_fields:
                             related = self.expand_fields[k]
@@ -112,20 +136,20 @@ class CollectionView(Endpoint):
                                 for vv in v:
                                     try:
                                         result[k].append(
-                                            self.prep_result(
+                                            self._prepare_single_result(
                                                 dict(self.collection_for(related_collection).get(
                                                     vv,
                                                     fields=fields
                                                 ))
                                             )
                                         )
-                                    except pivot.exceptions.RecordNotFound:
+                                    except:
                                         result[k].append({})
 
                             elif isinstance(v, (basestring, int)):
                                 # unpack IDs into expanded objects
                                 try:
-                                    result[k] = self.prep_result(
+                                    result[k] = self._prepare_single_result(
                                         dict(self.collection_for(related_collection).get(
                                             v,
                                             fields=fields
@@ -139,12 +163,12 @@ class CollectionView(Endpoint):
 
     def index(self):
         results = self.collection.query(request.args.get('q', 'all'), **self.filter_params)
-        return self.prepare_results(results)
+        return self._prepare_query_results(results, **self.query_results_params)
 
     def get(self, record_id):
         result = self.collection.get(record_id)
-        result = self.expand_results([result])[0]
-        result = self.prep_result(result)
+        result = self._expand_results([result])[0]
+        result = self._prepare_single_result(result, **self.single_result_params)
 
         return jsonify(result)
 

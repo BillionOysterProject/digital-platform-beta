@@ -146,6 +146,7 @@ h6, .h6 {
     }
 
     .site-navbar .navbar-brand img {
+        margin-top:  10px;
         height:      80px;
         display:     inline-block;
     }

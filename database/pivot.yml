@@ -1,0 +1,8 @@
+backend: 'sqlite://./bop.db'
+
+environments:
+    development:
+        backend: 'mongodb+scram://ds129146.mlab.com:29146/bop-dev?autoregister=true'
+
+    production:
+        backend: 'mongodb+scram://ds021722-a1.mlab.com:21722/bop-prod?autoregister=true'

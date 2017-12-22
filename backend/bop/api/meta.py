@@ -1,183 +1,189 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from .endpoints import CollectionView
+# from flask import jsonify
 
 
-class MetaAmmoniaMethods(CollectionView):
-    route_base      = 'metaammoniamethods'
+class MetacollectionView(CollectionView):
+    results_only    = True
+    default_sort    = ['order']
+
+
+class MetaAmmoniaMethods(MetacollectionView):
+    route_base      = 'ammonia-methods'
     collection_name = 'metaammoniamethods'
 
 
-class MetaAmmoniaUnits(CollectionView):
-    route_base      = 'metaammoniaunits'
+class MetaAmmoniaUnits(MetacollectionView):
+    route_base      = 'ammonia-units'
     collection_name = 'metaammoniaunits'
 
 
-class MetaBioaccumulations(CollectionView):
-    route_base      = 'metabioaccumulations'
+class MetaBioaccumulations(MetacollectionView):
+    route_base      = 'bioaccumulations'
     collection_name = 'metabioaccumulations'
 
 
-class MetaBodiesOfWater(CollectionView):
-    route_base      = 'metabodiesofwater'
+class MetaBodiesOfWater(MetacollectionView):
+    route_base      = 'bodies-of-water'
     collection_name = 'metabodiesofwater'
 
 
-class MetaBoroughsCounties(CollectionView):
-    route_base      = 'metaboroughscounties'
+class MetaBoroughsCounties(MetacollectionView):
+    route_base      = 'boroughs-counties'
     collection_name = 'metaboroughscounties'
 
 
-class MetaCclsElaScienceTechnicalSubjects(CollectionView):
-    route_base      = 'metacclselasciencetechnicalsubjects'
+class MetaCclsElaScienceTechnicalSubjects(MetacollectionView):
+    route_base      = 'ccls-ela-science-technical-subjects'
     collection_name = 'metacclselasciencetechnicalsubjects'
 
 
-class MetaCclsMathematics(CollectionView):
-    route_base      = 'metacclsmathematics'
+class MetaCclsMathematics(MetacollectionView):
+    route_base      = 'ccls-mathematics'
     collection_name = 'metacclsmathematics'
 
 
-class MetaDissolvedOxygenMethods(CollectionView):
-    route_base      = 'metadissolvedoxygenmethods'
+class MetaDissolvedOxygenMethods(MetacollectionView):
+    route_base      = 'dissolved-oxygen-methods'
     collection_name = 'metadissolvedoxygenmethods'
 
 
-class MetaDissolvedOxygenUnits(CollectionView):
-    route_base      = 'metadissolvedoxygenunits'
+class MetaDissolvedOxygenUnits(MetacollectionView):
+    route_base      = 'dissolved-oxygen-units'
     collection_name = 'metadissolvedoxygenunits'
 
 
-class MetaEventTypes(CollectionView):
-    route_base      = 'metaeventtypes'
+class MetaEventTypes(MetacollectionView):
+    route_base      = 'event-types'
     collection_name = 'metaeventtypes'
 
 
-class MetaGarbageExtents(CollectionView):
-    route_base      = 'metagarbageextents'
+class MetaGarbageExtents(MetacollectionView):
+    route_base      = 'garbage-extents'
     collection_name = 'metagarbageextents'
 
 
-class MetaNgssCrossCuttingConcepts(CollectionView):
-    route_base      = 'metangsscrosscuttingconcepts'
+class MetaNgssCrossCuttingConcepts(MetacollectionView):
+    route_base      = 'ngss-cross-cutting-concepts'
     collection_name = 'metangsscrosscuttingconcepts'
 
 
-class MetaNgssDisciplinaryCoreIdeas(CollectionView):
-    route_base      = 'metangssdisciplinarycoreideas'
+class MetaNgssDisciplinaryCoreIdeas(MetacollectionView):
+    route_base      = 'ngss-disciplinary-core-ideas'
     collection_name = 'metangssdisciplinarycoreideas'
 
 
-class MetaNgssScienceEngineeringPractices(CollectionView):
-    route_base      = 'metangssscienceengineeringpractices'
+class MetaNgssScienceEngineeringPractices(MetacollectionView):
+    route_base      = 'ngss-science-engineering-practices'
     collection_name = 'metangssscienceengineeringpractices'
 
 
-class MetaNitrateMethods(CollectionView):
-    route_base      = 'metanitratemethods'
+class MetaNitrateMethods(MetacollectionView):
+    route_base      = 'nitrate-methods'
     collection_name = 'metanitratemethods'
 
 
-class MetaNitrateUnits(CollectionView):
-    route_base      = 'metanitrateunits'
+class MetaNitrateUnits(MetacollectionView):
+    route_base      = 'nitrate-units'
     collection_name = 'metanitrateunits'
 
 
-class MetaNycssUnits(CollectionView):
-    route_base      = 'metanycssunits'
+class MetaNycssUnits(MetacollectionView):
+    route_base      = 'nycss-units'
     collection_name = 'metanycssunits'
 
 
-class MetaNysssKeyIdeas(CollectionView):
-    route_base      = 'metanyssskeyideas'
+class MetaNysssKeyIdeas(MetacollectionView):
+    route_base      = 'nysss-key-ideas'
     collection_name = 'metanyssskeyideas'
 
 
-class MetaNysssMajorUnderstandings(CollectionView):
-    route_base      = 'metanysssmajorunderstandings'
+class MetaNysssMajorUnderstandings(MetacollectionView):
+    route_base      = 'nysss-major-understandings'
     collection_name = 'metanysssmajorunderstandings'
 
 
-class MetaNysssMsts(CollectionView):
-    route_base      = 'metanysssmsts'
+class MetaNysssMsts(MetacollectionView):
+    route_base      = 'nysss-msts'
     collection_name = 'metanysssmsts'
 
 
-class MetaOrganismCategories(CollectionView):
-    route_base      = 'metaorganismcategories'
+class MetaOrganismCategories(MetacollectionView):
+    route_base      = 'organism-categories'
     collection_name = 'metaorganismcategories'
 
 
-class MetaPhMethods(CollectionView):
-    route_base      = 'metaphmethods'
+class MetaPhMethods(MetacollectionView):
+    route_base      = 'ph-methods'
     collection_name = 'metaphmethods'
 
 
-class MetaPhUnits(CollectionView):
-    route_base      = 'metaphunits'
+class MetaPhUnits(MetacollectionView):
+    route_base      = 'ph-units'
     collection_name = 'metaphunits'
 
 
-class MetaSalinityMethods(CollectionView):
-    route_base      = 'metasalinitymethods'
+class MetaSalinityMethods(MetacollectionView):
+    route_base      = 'salinity-methods'
     collection_name = 'metasalinitymethods'
 
 
-class MetaSalinityUnits(CollectionView):
-    route_base      = 'metasalinityunits'
+class MetaSalinityUnits(MetacollectionView):
+    route_base      = 'salinity-units'
     collection_name = 'metasalinityunits'
 
 
-class MetaShorelineTypes(CollectionView):
-    route_base      = 'metashorelinetypes'
+class MetaShorelineTypes(MetacollectionView):
+    route_base      = 'shoreline-types'
     collection_name = 'metashorelinetypes'
 
 
-class MetaSubjectAreas(CollectionView):
-    route_base      = 'metasubjectareas'
+class MetaSubjectAreas(MetacollectionView):
+    route_base      = 'subject-areas'
     collection_name = 'metasubjectareas'
 
 
-class MetaTrueFalses(CollectionView):
-    route_base      = 'metatruefalses'
+class MetaTrueFalses(MetacollectionView):
+    route_base      = 'true-falses'
     collection_name = 'metatruefalses'
 
 
-class MetaTurbidityMethods(CollectionView):
-    route_base      = 'metaturbiditymethods'
+class MetaTurbidityMethods(MetacollectionView):
+    route_base      = 'turbidity-methods'
     collection_name = 'metaturbiditymethods'
 
 
-class MetaTurbidityUnits(CollectionView):
-    route_base      = 'metaturbidityunits'
+class MetaTurbidityUnits(MetacollectionView):
+    route_base      = 'turbidity-units'
     collection_name = 'metaturbidityunits'
 
 
-class MetaWaterColors(CollectionView):
-    route_base      = 'metawatercolors'
+class MetaWaterColors(MetacollectionView):
+    route_base      = 'water-colors'
     collection_name = 'metawatercolors'
 
 
-class MetaWaterFlows(CollectionView):
-    route_base      = 'metawaterflows'
+class MetaWaterFlows(MetacollectionView):
+    route_base      = 'water-flows'
     collection_name = 'metawaterflows'
 
 
-class MetaWaterTemperatureMethods(CollectionView):
-    route_base      = 'metawatertemperaturemethods'
+class MetaWaterTemperatureMethods(MetacollectionView):
+    route_base      = 'water-temperature-methods'
     collection_name = 'metawatertemperaturemethods'
 
 
-class MetaWaterTemperatureUnits(CollectionView):
-    route_base      = 'metawatertemperatureunits'
+class MetaWaterTemperatureUnits(MetacollectionView):
+    route_base      = 'water-temperature-units'
     collection_name = 'metawatertemperatureunits'
 
 
-class MetaWeatherConditions(CollectionView):
-    route_base      = 'metaweatherconditions'
+class MetaWeatherConditions(MetacollectionView):
+    route_base      = 'weather-conditions'
     collection_name = 'metaweatherconditions'
 
 
-class MetaWindDirections(CollectionView):
-    route_base      = 'metawinddirections'
+class MetaWindDirections(MetacollectionView):
+    route_base      = 'wind-directions'
     collection_name = 'metawinddirections'
