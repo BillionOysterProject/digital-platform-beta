@@ -1,9 +1,10 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
-from flask import jsonify, request
+from flask import jsonify, request, g
 from flask_classy import FlaskView
 from collections import OrderedDict
 import pivot.exceptions
+from ..utils import as_bool
 
 
 class Endpoint(FlaskView):
@@ -15,11 +16,16 @@ class Endpoint(FlaskView):
     @classmethod
     def register(cls, app):
         cls._app = app
+        cls.client = app.db
         super(Endpoint, cls).register(app)
 
     @property
     def app(self):
         return self._app
+
+    @classmethod
+    def collection_for(cls, name):
+        return cls.client.collection(name)
 
 
 class CollectionView(Endpoint):
@@ -27,15 +33,7 @@ class CollectionView(Endpoint):
 
     @classmethod
     def register(cls, app):
-        # TODO: make sure cls.collection_name is a string
-
-        cls._app = app
-        cls.client = app.db
         super(CollectionView, cls).register(app)
-
-    @classmethod
-    def collection_for(cls, name):
-        return cls.client.collection(name)
 
     @property
     def collection(self):
@@ -63,7 +61,7 @@ class CollectionView(Endpoint):
         params = {}
 
         if 'expand' in request.args:
-            params['expand'] = (request.args['expand'].lower() in ['true', '1', 'yes'])
+            params['expand'] = as_bool(request.args['expand'])
 
         return params
 
@@ -162,7 +160,8 @@ class CollectionView(Endpoint):
         return results
 
     def index(self):
-        results = self.collection.query(request.args.get('q', 'all'), **self.filter_params)
+        query = g.get('query', request.args.get('q', 'all'))
+        results = self.collection.query(query, **self.filter_params)
         return self._prepare_query_results(results, **self.query_results_params)
 
     def get(self, record_id):

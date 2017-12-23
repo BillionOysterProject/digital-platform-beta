@@ -1,3 +1,7 @@
 --index-url https://pypi.python.org/simple/
 Flask
 flask-classy
+python-dateutil
+pytz
+ipython
+pycolorize
