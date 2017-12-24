@@ -78,6 +78,18 @@ class Users(CollectionView):
     def me(self):
         return jsonify(None)
 
+    def teamleads(self):
+        basequery = request.args.get('q')
+        query = ['roles/team lead']
+
+        if basequery:
+            query = [basequery] + query
+
+        if len(query):
+            g.query = '/'.join(query)
+
+        return super(Users, self).index()
+
 
 class Sessions(CollectionView):
     route_base      = 'sessions'
@@ -85,5 +97,5 @@ class Sessions(CollectionView):
 
 
 class SchoolOrgs(CollectionView):
-    route_base      = 'schoolorgs'
+    route_base      = 'school-orgs'
     collection_name = 'schoolorgs'

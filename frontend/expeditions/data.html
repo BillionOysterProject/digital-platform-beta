@@ -66,11 +66,18 @@ page:
 
         <div class="form-group row">
             <label for="date" class="col-sm-2 col-form-label">
-                <span class="hidden-md-down">Research Station (ORS) Name</span>
-                <span class="hidden-lg-up">ORS Name</span>
+                ORS Name
             </label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" name="ors">
+                <div class="input-group">
+                    <input
+                        type="text"
+                        class="form-control typeahead w-100"
+                        name="ors"
+                        data-typeahead-url="/api/restoration-stations?fields=name&amp;q=str:name/contains:{}"
+                        data-typeahead-field="name"
+                    >
+                </div>
             </div>
         </div>
 
@@ -79,7 +86,15 @@ page:
                 Organization Name
             </label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" name="organization">
+                <div class="input-group">
+                    <input
+                        type="text"
+                        class="form-control typeahead w-100"
+                        name="organization"
+                        data-typeahead-url="/api/school-orgs?fields=name&amp;q=str:name/contains:{}"
+                        data-typeahead-field="name"
+                    >
+                </div>
             </div>
         </div>
 
@@ -88,7 +103,15 @@ page:
                 Team Name
             </label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" name="team">
+                <div class="input-group">
+                    <input
+                        type="text"
+                        class="form-control typeahead w-100"
+                        name="team"
+                        data-typeahead-url="/api/teams?fields=name&amp;q=str:name/contains:{}"
+                        data-typeahead-field="name"
+                    >
+                </div>
             </div>
         </div>
 
@@ -97,7 +120,15 @@ page:
                 Team Lead
             </label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" name="teamLead">
+                <div class="input-group">
+                    <input
+                        type="text"
+                        class="form-control typeahead w-100"
+                        name="teamLead"
+                        data-typeahead-url="/api/users/teamleads?fields=displayName&amp;q=str:displayName/contains:{}"
+                        data-typeahead-field="displayName"
+                    >
+                </div>
             </div>
         </div>
     </form>

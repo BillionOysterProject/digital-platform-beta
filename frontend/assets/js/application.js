@@ -14,6 +14,7 @@ $(function(){
     var App = Stapes.subclass({
         constructor: function() {
             this.setupFormIntercept();
+            this.setupTypeaheadHandlers();
         },
 
         setupFormIntercept: function() {
@@ -105,6 +106,47 @@ $(function(){
                     '<br />' +
                 '</b>',
             });
+        },
+
+        setupTypeaheadHandlers: function() {
+            // setup typeahead for fields that have it
+            $('.typeahead').each(function(i, el){
+                el = $(el);
+
+                el.typeahead({
+                    highlight: true,
+                    async: true,
+                },{
+                    limit: parseInt(el.data('typeahead-limit') || 9),
+                    source: function(query, _, asyncResults){
+                        var url = el.data('typeahead-url');
+                        var field = el.data('typeahead-field');
+
+                        if(url){
+                            url = url.replace('{}', query.replace(/^\//, ''));
+
+                            $.ajax(url, {
+                                success: function(data){
+                                    if (field) {
+                                        var results = [];
+
+                                        $.each(data, function(i, value) {
+                                            if ($.isPlainObject(value)) {
+                                                results.push(value[field]);
+                                            }
+                                        });
+
+                                        asyncResults(results);
+                                    } else {
+                                        asyncResults(data);
+                                    }
+                                }.bind(this),
+                                error: this.showResponseError.bind(this),
+                            });
+                        }
+                    }.bind(this),
+                });
+            }.bind(this));
         },
     });
 

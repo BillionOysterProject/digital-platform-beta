@@ -3,3 +3,4 @@
 *.db
 /logs
 *.pid
+.DS_Store

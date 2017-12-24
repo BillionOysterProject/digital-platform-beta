@@ -5,10 +5,11 @@ from flask_classy import FlaskView
 from collections import OrderedDict
 import pivot.exceptions
 from ..utils import as_bool
+import dpath.util
 
 
 class Endpoint(FlaskView):
-    results_only = False
+    results_only = True
     strict_slashes = False
     route_prefix = '/api/'
     expand_fields = {}
@@ -48,6 +49,9 @@ class CollectionView(Endpoint):
 
         if 'offset' in request.args:
             params['offset'] = int(request.args['offset'])
+
+        if 'fields' in request.args:
+            params['fields'] = request.args['fields'].split(',')
 
         if 'sort' in request.args:
             params['sort'] = request.args['sort'].split(',')
@@ -101,60 +105,77 @@ class CollectionView(Endpoint):
         """
         Performs object reference expansion, configurable on a per-collection basis.
         """
+
+        # hang onto expanded results for the duration of this call so we don't needlessly
+        # hammer the database with repeat calls during this process
+        _result_cache = {}
+
         if len(self.expand_fields):
             # for each result...
             for i, result in enumerate(results):
                 if isinstance(result, dict):
-                    # for each k-v pair
-                    for k, v in result.items():
-                        if k in self.expand_fields:
-                            related = self.expand_fields[k]
-                            related_collection = k
-                            fields = []
+                    # deep get the value from the result
+                    for field, related in self.expand_fields.items():
+                        if isinstance(related, tuple):
+                            try:
+                                value = dpath.util.get(dict(result), field, separator='.')
+                            except KeyError:
+                                continue
 
-                            if isinstance(related, list):
-                                # list means just use the field name as the collection and only
-                                # retrieve the given fields
-                                fields = related
+                            related_collection = related[0]
 
-                            elif isinstance(related, tuple):
-                                # tuple means that the first arg is the collection, the second is
-                                # the field list
-                                related_collection = related[0]
+                            try:
+                                related_fields = list(related[1])
+                            except IndexError:
+                                related_fields = None
 
-                                try:
-                                    fields = list(related[1])
-                                except IndexError:
-                                    pass
+                            output = None
 
-                            if isinstance(v, list):
-                                # unpack lists of IDs into lists of expanded objects
-                                result[k] = []
+                            # retrieved value is a list, expand each item
+                            if isinstance(value, list):
+                                output = []
 
-                                for vv in v:
+                                for expand_id in value:
                                     try:
-                                        result[k].append(
-                                            self._prepare_single_result(
-                                                dict(self.collection_for(related_collection).get(
-                                                    vv,
-                                                    fields=fields
-                                                ))
-                                            )
-                                        )
-                                    except:
-                                        result[k].append({})
+                                        cache_key = '{}:{}'.format(related_collection, expand_id)
 
-                            elif isinstance(v, (basestring, int)):
+                                        if cache_key not in _result_cache:
+                                            _result_cache[cache_key] = dict(
+                                                self.collection_for(related_collection).get(
+                                                    expand_id,
+                                                    fields=related_fields
+                                                )
+                                            )
+
+                                        output.append(self._prepare_single_result(
+                                            _result_cache[cache_key]
+                                        ))
+                                    except:
+                                        output.append({})
+
+                            elif isinstance(value, (basestring, int)):
                                 # unpack IDs into expanded objects
                                 try:
-                                    result[k] = self._prepare_single_result(
-                                        dict(self.collection_for(related_collection).get(
-                                            v,
-                                            fields=fields
-                                        ))
-                                    )
+                                    cache_key = '{}:{}'.format(related_collection, value)
+
+                                    if cache_key not in _result_cache:
+                                        _result_cache[cache_key] = dict(
+                                            self.collection_for(related_collection).get(
+                                                value,
+                                                fields=related_fields
+                                            )
+                                        )
+
+                                    output = self._prepare_single_result(_result_cache[cache_key])
                                 except pivot.exceptions.RecordNotFound:
-                                    result[k] = {}
+                                    output = {}
+
+                            if output:
+                                dpath.util.set(result, field, output, separator='.')
+
+                        else:
+                            raise TypeError("Expansion rule must be tuple(collection, [fields ..])")
+
                 results[i] = result
 
         return results

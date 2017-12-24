@@ -13,6 +13,48 @@ class Expeditions(CollectionView):
     route_base      = 'expeditions'
     collection_name = 'expeditions'
 
+    expand_fields   = {
+        'teamLead': (
+            'users', ['_id', 'displayName', 'username', 'profileImageURL'],
+        ),
+        'team': (
+            'teams', ['_id', 'name', 'schoolOrg'],
+        ),
+        'station': (
+            'restorationstations', ['_id', 'name'],
+        ),
+        'teamLists.mobileTrap': (
+            'users', ['_id', 'displayName', 'username', 'profileImageURL'],
+        ),
+        'teamLists.oysterMeasurement': (
+            'users', ['_id', 'displayName', 'username', 'profileImageURL'],
+        ),
+        'teamLists.settlementTiles': (
+            'users', ['_id', 'displayName', 'username', 'profileImageURL'],
+        ),
+        'teamLists.siteCondition': (
+            'users', ['_id', 'displayName', 'username', 'profileImageURL'],
+        ),
+        'teamLists.waterQuality': (
+            'users', ['_id', 'displayName', 'username', 'profileImageURL'],
+        ),
+        'protocols.mobileTrap': (
+            'protocolmobiletraps', ['_id', 'status'],
+        ),
+        'protocols.oysterMeasurement': (
+            'protocoloystermeasurements', ['_id', 'status'],
+        ),
+        'protocols.settlementTiles': (
+            'protocolsettlementtiles', ['_id', 'status'],
+        ),
+        'protocols.siteCondition': (
+            'protocolsiteconditions', ['_id', 'status'],
+        ),
+        'protocols.waterQuality': (
+            'protocolwaterqualities', ['_id', 'status'],
+        ),
+    }
+
 
 class ProtocolMobileTraps(CollectionView):
     route_base      = 'protocol-mobile-traps'
