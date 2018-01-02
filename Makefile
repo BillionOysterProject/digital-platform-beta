@@ -1,11 +1,10 @@
 .PHONY: database backend frontend
 
 all:
-	true
+	cd backend && make
 
 run:
-	supervisord -c scripts/stack.ini
-	make tail
+	procwatch -c scripts/stack.ini -D
 
 tail:
 	tail -f logs/*

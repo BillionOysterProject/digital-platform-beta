@@ -18,17 +18,44 @@ page:
     protocols:
     - name: 'Protocol 1: Site Conditions'
       data:
-      - id:    weatherTemperature
-        title: 'Weather/temperature'
+      - id:    temerature
+        title: 'Temperature (&deg;C)'
+        field: 'meteorologicalConditions.airTemperatureC'
+        group: 'weather'
 
-      - id:    windSpeedDirection
-        title: 'Wind speed/direction'
+      - id:    weather
+        title: 'Weather Conditions'
+        field: 'meteorologicalConditions.weatherConditions'
+        group: 'weather'
+
+      - id:    windSpeed
+        title: 'Wind Speed (mph)'
+        field: 'meteorologicalConditions.windSpeedMPH'
+        group: 'weather'
+
+      - id:    windDirection
+        title: 'Wind direction'
+        field: 'meteorologicalConditions.windDirection'
+        group: 'weather'
 
       - id:    humidity
         title: 'Humidity'
+        group: 'weather'
 
-      - id:    recentRainfall
-        title: 'Recent rainfall'
+      - id:    recentRainfallDay
+        title: 'Recent rainfall (past day)'
+        field: 'recentRainfall.rainedIn24Hours'
+        group: 'weather'
+
+      - id:    recentRainfall3Day
+        title: 'Recent rainfall (past 3 days)'
+        field: 'recentRainfall.rainedIn72Hours'
+        group: 'weather'
+
+      - id:    recentRainfall7Day
+        title: 'Recent rainfall (past 7 days)'
+        field: 'recentRainfall.rainedIn7Days'
+        group: 'weather'
 
       - id:    tide
         title: 'Tide'
@@ -235,7 +262,9 @@ flags:
             <h2>{{ .page.view }}</h2>
         </section>
         {{ end }}
+        <section class="content-body">
         {{ template "content" . }}
+        </section>
     </section>
 </body>
 

@@ -28,7 +28,7 @@ bindings:
             </div>
 
             {{ if any .flags.teamLead .flags.admin .flags.teamMember .flags.partner }}
-            {{ if .bindings.expeditions.totalCount }}
+            {{ if .bindings.expeditions }}
             <!-- BEGIN Expeditions -->
             <div role="tabpanel" class="tab-pane" id="myexpeditions" ng-class="{active: vm.activeTab === 'myexpeditions'}">
                 <div>
@@ -45,7 +45,7 @@ bindings:
                             </tr>
                         </thead>
                         <tbody>
-                            {{ range .bindings.expeditions.expeditions }}
+                            {{ range .bindings.expeditions }}
                             <tr onclick="location.href='/expeditions/view/{{ ._id }}'">
                                 <td>
                                     <h4>{{ .name }}</h4>

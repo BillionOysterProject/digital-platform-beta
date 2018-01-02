@@ -1,0 +1,40 @@
+---
+layout: none
+headers:
+    'Content-Type': 'text/plain'
+
+bindings:
+- name:     'expeditions'
+  resource: ':/api/expeditions'
+  fallback: {}
+  params:
+    searchString: '{{ qs `q` }}'
+    expand:       false
+    limit:        '{{ qs `limit` 10000 }}'
+
+- name:     'stations'
+  resource: ':/api/restoration-stations/{{ . }}'
+  params:
+    fields: ['name']
+  repeat:   'uniq (flatten (pluck .bindings.expeditions `station`))'
+  on_error: continue
+
+- name:     'teams'
+  resource: ':/api/teams/{{ . }}'
+  repeat:   'uniq (flatten (pluck .bindings.expeditions `team`))'
+  on_error: continue
+
+- name:     'organizations'
+  resource: ':/api/school-orgs/{{ . }}'
+  params:
+    fields: ['name']
+  repeat:   'uniq (flatten (pluck .bindings.teams `schoolOrg._id`))'
+  on_error: continue
+---
+{{- tsv `EXPEDITION_DATE` `ORGANIZATION` `TEAM` `EXPEDITION` `ORS_NAME` `PROTOCOL1_OIL` }}
+{{- range .bindings.expeditions }}
+{{-   $team    := firstByKey $.bindings.teams         `_id` .team               }}
+{{-   $org     := firstByKey $.bindings.organizations `_id` $team.schoolOrg._id }}
+{{-   $station := firstByKey $.bindings.stations      `_id` .station            }}
+{{- tsv .monitoringStartDate $org.name $team.name .name $station.name `No` `Bulkhead/Wall` `lost sediment tube` `85` `9.84` `5.0` `14.0` -}}
+{{ end -}}

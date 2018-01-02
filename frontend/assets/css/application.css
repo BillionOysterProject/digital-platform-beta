@@ -111,6 +111,7 @@ h6, .h6 {
         justify-content: flex-start;
         align-items:     stretch;
         overflow:        auto;
+        z-index:         10001;
     }
 
     #main {
@@ -195,6 +196,19 @@ h6, .h6 {
 
     .site-navbar .navbar-footer {
         margin-top:  auto;
+    }
+
+    .user-navbar {
+        position:        fixed;
+        left:            220px;
+        top:             0;
+        right:           0;
+        height:          50px;
+        z-index:         10000;
+    }
+
+    .content-body {
+        margin-top:      50px;
     }
 }
 

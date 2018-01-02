@@ -1,6 +1,10 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from .endpoints import CollectionView
+from flask import jsonify, g, request
+from flask_classy import route
+from collections import OrderedDict
+import dpath.util
 
 
 class ExpeditionActivities(CollectionView):
@@ -24,7 +28,7 @@ class Expeditions(CollectionView):
             'restorationstations', ['_id', 'name'],
         ),
         'teamLists.mobileTrap': (
-            'users', ['_id', 'displayName', 'username', 'profileImageURL'],
+            'users', ['_id', 'displyaName', 'username', 'profileImageURL'],
         ),
         'teamLists.oysterMeasurement': (
             'users', ['_id', 'displayName', 'username', 'profileImageURL'],
@@ -56,9 +60,9 @@ class Expeditions(CollectionView):
     }
 
 
-class ProtocolMobileTraps(CollectionView):
-    route_base      = 'protocol-mobile-traps'
-    collection_name = 'protocolmobiletraps'
+class ProtocolSiteConditions(CollectionView):
+    route_base      = 'protocol-site-conditions'
+    collection_name = 'protocolsiteconditions'
 
 
 class ProtocolOysterMeasurements(CollectionView):
@@ -66,14 +70,14 @@ class ProtocolOysterMeasurements(CollectionView):
     collection_name = 'protocoloystermeasurements'
 
 
+class ProtocolMobileTraps(CollectionView):
+    route_base      = 'protocol-mobile-traps'
+    collection_name = 'protocolmobiletraps'
+
+
 class ProtocolSettlementTiles(CollectionView):
     route_base      = 'protocol-settlement-tiles'
     collection_name = 'protocolsettlementtiles'
-
-
-class ProtocolSiteConditions(CollectionView):
-    route_base      = 'protocol-site-conditions'
-    collection_name = 'protocolsiteconditions'
 
 
 class ProtocolWaterQualities(CollectionView):

@@ -1,5 +1,8 @@
 ---
 bindingPrefix: 'http://127.0.0.1:5000/'
+patterns:
+  - '*.html'
+  - '*.csv'
 mounts:
 - mount: '/api'
   to:    'http://127.0.0.1:5000/api'
