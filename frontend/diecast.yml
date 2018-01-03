@@ -9,3 +9,157 @@ mounts:
   options:
     passthrough_requests: true
     passthrough_errors:   true
+
+header:
+  page:
+      labels:
+          nycsssUnits:                     'NYC Science Scope & Sequence - Units'
+          nysssKeyIdeas:                   'NYS Science Standards - Key Ideas'
+          nysssMajorUnderstandings:        'NYS Science Standards - Major Understandings'
+          nysssMst:                        'NYS Science Standards - MST'
+          ngssDisciplinaryCoreIdeas:       'NGSS - Disciplinary Core Ideas'
+          ngssScienceEngineeringPractices: 'NGSS - Science and Engineering Practices'
+          ngssCrossCuttingConcepts:        'NGSS - Cross-Cutting Concepts'
+          cclsMathematics:                 'CCLS - Mathematics'
+          cclsElaScienceTechnicalSubjects: 'CCLS - ELA Science & Technical Subjects'
+
+      protocols:
+      - name: 'Protocol 1: Site Conditions'
+        data:
+        - id:    temerature
+          title: 'Temperature (&deg;C)'
+          field: 'meteorologicalConditions.airTemperatureC'
+          group: 'weather'
+
+        - id:    weather
+          title: 'Weather Conditions'
+          field: 'meteorologicalConditions.weatherConditions'
+          group: 'weather'
+
+        - id:    windSpeed
+          title: 'Wind Speed (mph)'
+          field: 'meteorologicalConditions.windSpeedMPH'
+          group: 'weather'
+
+        - id:    windDirection
+          title: 'Wind direction'
+          field: 'meteorologicalConditions.windDirection'
+          group: 'weather'
+
+        - id:    humidity
+          title: 'Humidity'
+          group: 'weather'
+
+        - id:    rainfall_1day
+          title: 'Recent rainfall (past day)'
+          field: 'recentRainfall.rainedIn24Hours'
+          group: 'weather'
+
+        - id:    rainfall_3day
+          title: 'Recent rainfall (past 3 days)'
+          field: 'recentRainfall.rainedIn72Hours'
+          group: 'weather'
+
+        - id:    rainfall_7day
+          title: 'Recent rainfall (past 7 days)'
+          field: 'recentRainfall.rainedIn7Days'
+          group: 'weather'
+
+        - id:    tide
+          title: 'Tide'
+
+        - id:    referencePoint
+          title: 'Reference point'
+
+        - id:    tidalCurrent
+          title: 'Tidal current'
+
+        - id:    waterConditionPhoto
+          title: 'Water condition photo'
+
+        - id:    surfaceCurrentSpeed
+          title: 'Surface current speed'
+
+        - id:    waterColor
+          title: 'Water color'
+
+        - id:    oilSheen
+          title: 'Oil sheen'
+
+        - id:    garbageWater
+          title: 'Garbage in water'
+
+        - id:    pipes
+          title: 'Pipes'
+
+        - id:    landConditionPhoto
+          title: 'Land condition photo'
+
+        - id:    shorelineType
+          title: 'Shoreline type'
+
+        - id:    garbageLand
+          title: 'Garbage on land'
+
+        - id:    surfaceCover
+          title: 'Surface cover'
+
+      - name: 'Protocol 2: Oyster Measurements'
+        data:
+        - id:    submergedDepth
+          title: 'Cage submerged depth'
+
+        - id:    oysterCagePhoto
+          title: 'Oyster cage photo'
+
+        - id:    bioaccumulationOnCage
+          title: 'Cage bioaccumulation'
+
+        - id:    cageDamage
+          title: 'Cage damage'
+
+        - id:    oysterMeasurements
+          title: 'Oyster Measurements'
+
+      - name: 'Protocol 3: Mobile Trap'
+        data:
+        - id:    organism
+          title: 'Organisms observed'
+
+      - name: 'Protocol 4: Settlement Tiles'
+        data:
+        - id:    description
+          title: 'Settlement tile description'
+
+        - id:    organism
+          title: 'Sessile organisms observed'
+
+
+      - name: 'Protocol 5: Water Quality'
+        data:
+        - id:    depth
+          title: 'Depth'
+
+        - id:    temperature
+          title: 'Temperature'
+
+        - id:    dissolvedOxygen
+          title: 'Dissolved Oxygen'
+
+        - id:    salinity
+          title: 'Salinity'
+
+        - id:    ph
+          title: 'pH'
+
+        - id:    turbidity
+          title: 'Turbidity'
+
+        - id:    ammonia
+          title: 'Ammonia'
+
+        - id:    nitrates
+          title: 'Nitrates'
+
+        - id:    other
+          title: 'Other'

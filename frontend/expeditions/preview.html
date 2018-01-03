@@ -12,65 +12,6 @@
 ##     - title: Google Sheets
 ##       icon:  google
 ##       href:  '/expeditions/export?type=google'
-
-bindings:
-- name:     'expeditions'
-  resource: ':/api/expeditions'
-  fallback: {}
-  params:
-    searchString: '{{ qs `q` }}'
-    expand:       false
-    limit:        10
-    sort:         '-monitoringStartDate'
-
-- name:     'stations'
-  resource: ':/api/restoration-stations/{{ . }}'
-  params:
-    fields: ['name']
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `station`))'
-  on_error: continue
-
-- name:     'teams'
-  resource: ':/api/teams/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `team`))'
-  on_error: continue
-
-- name:     'organizations'
-  resource: ':/api/school-orgs/{{ . }}'
-  params:
-    fields: ['name']
-  repeat:   'uniq (flatten (pluck .bindings.teams `schoolOrg._id`))'
-  on_error: continue
-
-- name:     'protocol1'
-  only_if:  '{{ qs `p1` }}'
-  resource: ':/api/protocol-site-conditions/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.siteCondition`))'
-  on_error: continue
-
-- name:     'protocol2'
-  only_if:  '{{ qs `p2` }}'
-  resource: ':/api/protocol-oyster-measurements/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.oysterMeasurement`))'
-  on_error: continue
-
-- name:     'protocol3'
-  only_if:  '{{ qs `p3` }}'
-  resource: ':/api/protocol-mobile-traps/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.mobileTrap`))'
-  on_error: continue
-
-- name:     'protocol4'
-  only_if:  '{{ qs `p4` }}'
-  resource: ':/api/protocol-settlement-tiles/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.settlementTiles`))'
-  on_error: continue
-
-- name:     'protocol5'
-  only_if:  '{{ qs `p5` }}'
-  resource: ':/api/protocol-water-qualities/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.waterQuality`))'
-  on_error: continue
 ---
 <table id="preview" class="table table-hover expeditions-data-table nowrap" cellspacing="0" cellpadding="0">
     <thead class="thead-light">
@@ -97,38 +38,6 @@ bindings:
     </thead>
 
     <tbody>
-        {{ range .bindings.expeditions }}
-        {{   $team      := firstByKey $.bindings.teams         `_id` .team                        }}
-        {{   $org       := firstByKey $.bindings.organizations `_id` $team.schoolOrg._id          }}
-        {{   $station   := firstByKey $.bindings.stations      `_id` .station                     }}
-        {{   $protocol1 := firstByKey $.bindings.protocol1     `_id` .protocols.siteCondition     }}
-        {{   $protocol2 := firstByKey $.bindings.protocol2     `_id` .protocols.oysterMeasurement }}
-        {{   $protocol3 := firstByKey $.bindings.protocol3     `_id` .protocols.mobileTrap        }}
-        {{   $protocol4 := firstByKey $.bindings.protocol4     `_id` .protocols.settlementTiles   }}
-        {{   $protocol5 := firstByKey $.bindings.protocol5     `_id` .protocols.waterQuality      }}
-        <tr>
-            <td>{{ .monitoringStartDate }}</td>
-            <td>{{ $org.name }}</td>
-            <td>{{ $team.name }}</td>
-            <td>{{ .name }}</td>
-            <td>{{ $station.name }}</td>
-            {{ range $index, $protocol := $.page.protocols }}
-            {{   range $di, $key := $protocol.data }}
-            {{     if eq $index 0 }}
-            <td>{{ get $protocol1 (or $key.field $key.id) }}</td>
-            {{     else if eq $index 1 }}
-            <td>{{ get $protocol2 (or $key.field $key.id) }}</td>
-            {{     else if eq $index 2 }}
-            <td>{{ get $protocol3 (or $key.field $key.id) }}</td>
-            {{     else if eq $index 3 }}
-            <td>{{ get $protocol4 (or $key.field $key.id) }}</td>
-            {{     else if eq $index 4 }}
-            <td>{{ get $protocol5 (or $key.field $key.id) }}</td>
-            {{     end }}
-            {{   end }}
-            {{ end }}
-        </tr>
-        {{ end }}
     </tbody>
 </table>
 

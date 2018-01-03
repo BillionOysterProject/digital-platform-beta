@@ -1,10 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from .endpoints import CollectionView
-from flask import jsonify, g, request
-from flask_classy import route
-from collections import OrderedDict
-import dpath.util
 
 
 class ExpeditionActivities(CollectionView):

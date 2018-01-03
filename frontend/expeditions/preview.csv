@@ -3,6 +3,9 @@ layout: none
 headers:
     'Content-Type': 'text/plain'
 
+postprocessors:
+- 'trim-empty-lines'
+
 bindings:
 - name:     'expeditions'
   resource: ':/api/expeditions'
@@ -11,6 +14,8 @@ bindings:
     searchString: '{{ qs `q` }}'
     expand:       false
     limit:        '{{ qs `limit` 10000 }}'
+    offset:       '{{ qs `offset` 0 }}'
+    sort:         '{{ qs `sort` }}'
 
 - name:     'stations'
   resource: ':/api/restoration-stations/{{ . }}'
@@ -30,11 +35,75 @@ bindings:
     fields: ['name']
   repeat:   'uniq (flatten (pluck .bindings.teams `schoolOrg._id`))'
   on_error: continue
+
+- name:     'protocol1'
+  resource: ':/api/protocol-site-conditions/{{ . }}'
+  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.siteCondition`))'
+  on_error: continue
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `weather` }}'
+
+- name:     'protocol2'
+  resource: ':/api/protocol-oyster-measurements/{{ . }}'
+  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.oysterMeasurement`))'
+  on_error: continue
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `measurements` }}'
+
+- name:     'protocol3'
+  resource: ':/api/protocol-mobile-traps/{{ . }}'
+  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.mobileTrap`))'
+  on_error: continue
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `mobile` }}'
+
+- name:     'protocol4'
+  resource: ':/api/protocol-settlement-tiles/{{ . }}'
+  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.settlementTiles`))'
+  on_error: continue
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `settlement` }}'
+
+- name:     'protocol5'
+  resource: ':/api/protocol-water-qualities/{{ . }}'
+  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.waterQuality`))'
+  on_error: continue
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `water` }}'
 ---
-{{- tsv `EXPEDITION_DATE` `ORGANIZATION` `TEAM` `EXPEDITION` `ORS_NAME` `PROTOCOL1_OIL` }}
-{{- range .bindings.expeditions }}
-{{-   $team    := firstByKey $.bindings.teams         `_id` .team               }}
-{{-   $org     := firstByKey $.bindings.organizations `_id` $team.schoolOrg._id }}
-{{-   $station := firstByKey $.bindings.stations      `_id` .station            }}
-{{- tsv .monitoringStartDate $org.name $team.name .name $station.name `No` `Bulkhead/Wall` `lost sediment tube` `85` `9.84` `5.0` `14.0` -}}
-{{ end -}}
+{{ push `headers` }}
+
+{{ $groups := compact (split (qs `groups` ``) `,`) }}
+{{ range $index, $protocol := $.page.protocols }}
+{{   range $protocol.data }}
+{{     if any $groups .group }}
+{{       push `headers` (printf "P%.0f_%v" (add $index 1) (upper (underscore .id))) }}
+{{       push (printf "fields_%.0f" (add $index 1)) (or .field .id) }}
+{{     end }}
+{{   end }}
+{{ end }}
+{{ tsv `EXPEDITION_DATE` `ORGANIZATION` `TEAM` `EXPEDITION` `ORS_NAME` $.vars.headers }}
+
+{{ range $.bindings.expeditions }}
+{{   var `values` }}
+{{   $team      := firstByKey $.bindings.teams         `_id` .team               }}
+{{   $org       := firstByKey $.bindings.organizations `_id` $team.schoolOrg._id }}
+{{   $station   := firstByKey $.bindings.stations      `_id` .station            }}
+{{   $protocol1 := firstByKey $.bindings.protocol1     `_id` .protocols.siteCondition     }}
+{{   $protocol2 := firstByKey $.bindings.protocol2     `_id` .protocols.oysterMeasurement }}
+{{   $protocol3 := firstByKey $.bindings.protocol3     `_id` .protocols.mobileTrap        }}
+{{   $protocol4 := firstByKey $.bindings.protocol4     `_id` .protocols.settlementTiles   }}
+{{   $protocol5 := firstByKey $.bindings.protocol5     `_id` .protocols.waterQuality      }}
+
+{{   range $.vars.fields_1 }}
+{{     push `values` (get $protocol1 . ``) }}
+{{   end }}
+{{   range $.vars.fields_2 }}
+{{     push `values` (get $protocol2 . ``) }}
+{{   end }}
+{{   range $.vars.fields_3 }}
+{{     push `values` (get $protocol3 . ``) }}
+{{   end }}
+{{   range $.vars.fields_4 }}
+{{     push `values` (get $protocol4 . ``) }}
+{{   end }}
+{{   range $.vars.fields_5 }}
+{{     push `values` (get $protocol5 . ``) }}
+{{   end }}
+{{ tsv .monitoringStartDate $org.name $team.name .name $station.name (flatten $.vars.values) }}
+{{ end }}
