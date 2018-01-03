@@ -40,47 +40,45 @@ bindings:
   resource: ':/api/protocol-site-conditions/{{ . }}'
   repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.siteCondition`))'
   on_error: continue
-  only_if:  '{{ any (split (qs `groups` ``) `,`) `weather` }}'
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `weather` }}'
 
 - name:     'protocol2'
   resource: ':/api/protocol-oyster-measurements/{{ . }}'
   repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.oysterMeasurement`))'
   on_error: continue
-  only_if:  '{{ any (split (qs `groups` ``) `,`) `measurements` }}'
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `measurements` }}'
 
 - name:     'protocol3'
   resource: ':/api/protocol-mobile-traps/{{ . }}'
   repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.mobileTrap`))'
   on_error: continue
-  only_if:  '{{ any (split (qs `groups` ``) `,`) `mobile` }}'
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `mobile` }}'
 
 - name:     'protocol4'
   resource: ':/api/protocol-settlement-tiles/{{ . }}'
   repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.settlementTiles`))'
   on_error: continue
-  only_if:  '{{ any (split (qs `groups` ``) `,`) `settlement` }}'
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `settlement` }}'
 
 - name:     'protocol5'
   resource: ':/api/protocol-water-qualities/{{ . }}'
   repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.waterQuality`))'
   on_error: continue
-  only_if:  '{{ any (split (qs `groups` ``) `,`) `water` }}'
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `water` }}'
 ---
-{{ push `headers` }}
+{{ var `headers` `EXPEDITION_DATE` `ORGANIZATION` `TEAM` `EXPEDITION` `ORS_NAME` }}
 
 {{ $groups := compact (split (qs `groups` ``) `,`) }}
 {{ range $index, $protocol := $.page.protocols }}
 {{   range $protocol.data }}
-{{     if any $groups .group }}
+{{     if any $groups `all` .group }}
 {{       push `headers` (printf "P%.0f_%v" (add $index 1) (upper (underscore .id))) }}
 {{       push (printf "fields_%.0f" (add $index 1)) (or .field .id) }}
 {{     end }}
 {{   end }}
 {{ end }}
-{{ tsv `EXPEDITION_DATE` `ORGANIZATION` `TEAM` `EXPEDITION` `ORS_NAME` $.vars.headers }}
 
 {{ range $.bindings.expeditions }}
-{{   var `values` }}
 {{   $team      := firstByKey $.bindings.teams         `_id` .team               }}
 {{   $org       := firstByKey $.bindings.organizations `_id` $team.schoolOrg._id }}
 {{   $station   := firstByKey $.bindings.stations      `_id` .station            }}
@@ -89,6 +87,8 @@ bindings:
 {{   $protocol3 := firstByKey $.bindings.protocol3     `_id` .protocols.mobileTrap        }}
 {{   $protocol4 := firstByKey $.bindings.protocol4     `_id` .protocols.settlementTiles   }}
 {{   $protocol5 := firstByKey $.bindings.protocol5     `_id` .protocols.waterQuality      }}
+
+{{   var `values` (time .monitoringStartDate `ymd`) $org.name $team.name .name $station.name }}
 
 {{   range $.vars.fields_1 }}
 {{     push `values` (get $protocol1 . ``) }}
@@ -105,5 +105,7 @@ bindings:
 {{   range $.vars.fields_5 }}
 {{     push `values` (get $protocol5 . ``) }}
 {{   end }}
-{{ tsv .monitoringStartDate $org.name $team.name .name $station.name (flatten $.vars.values) }}
+{{   push `lines` $.vars.values }}
 {{ end }}
+
+{{ tsv $.vars.headers $.vars.lines }}

@@ -47,6 +47,16 @@
             searching: false,
             paging:    false,
             info:      false,
+            ajax:      {
+                url: '/expeditions/preview.csv?limit=4&groups=all',
+                dataType: 'text',
+                dataSrc: function(data) {
+                    return Papa.parse(data, {
+                        delimiter:     "\t",
+                        dynamicTyping: true,
+                    }).data;
+                },
+            },
         });
     });
 </script>
