@@ -13,49 +13,99 @@
 ##       icon:  google
 ##       href:  '/expeditions/export?type=google'
 ---
-<table id="preview" class="table table-hover expeditions-data-table nowrap" cellspacing="0" cellpadding="0">
+<table id="preview" class="table table-hover expeditions-data-table nowrap hide" cellspacing="0" cellpadding="0">
     <thead class="thead-light">
-        <tr>
-            <th colspan="5">Expedition</th>
-            {{ range $index, $protocol := $.page.protocols }}
-            <th colspan="{{ count $protocol.data }}" class="protocol-{{ (add $index 1) }}-bg">
-              {{ $protocol.name }}
-            </th>
-            {{ end }}
-        </tr>
-        <tr>
-            <th>Date</th>
-            <th>Organization</th>
-            <th>Team</th>
-            <th>Expedition</th>
-            <th>Location</th>
-            {{ range $index, $protocol := $.page.protocols }}
-            {{   range $protocol.data }}
-            <th class="protocol-{{ (add $index 1) }}-bg">{{ .title }}</th>
-            {{   end }}
-            {{ end }}
-        </tr>
+
     </thead>
 
     <tbody>
     </tbody>
 </table>
 
+<div id="spinner">
+    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+    <h2>Loading data...</h2>
+</div>
+
 <script type="text/javascript">
     $(function() {
-        $('#preview').DataTable({
-            searching: false,
-            paging:    false,
-            info:      false,
-            ajax:      {
-                url: '/expeditions/preview.csv?limit=4&groups=all',
-                dataType: 'text',
-                dataSrc: function(data) {
-                    return Papa.parse(data, {
-                        delimiter:     "\t",
-                        dynamicTyping: true,
-                    }).data;
-                },
+        var table = $('#preview');
+        var spinner = $('#spinner');
+
+        $.ajax({
+            url: '/expeditions/preview.csv?groups={{ qs `groups` `all` }}',
+            dataType: 'text',
+            success: function(data) {
+                Papa.parse(data, {
+                    delimiter:     "\t",
+                    dynamicTyping: true,
+                    complete: function(records) {
+                        var headerGroups = [];
+                        var headers = {};
+                        var tableHeader = $('#preview thead');
+
+                        $.each(records.data[0], function(i, value) {
+                            var parts = value.split(' - ', 2);
+
+                            if (headerGroups.indexOf(parts[0]) < 0) {
+                                headerGroups.push(parts[0]);
+                            }
+
+                            if (!$.isArray(headers[parts[0]])) {
+                                headers[parts[0]] = [];
+                            }
+
+                            headers[parts[0]].push(parts[1]);
+                        });
+
+                        var groupTr = $('<tr></tr>');
+                        var headerTr = $('<tr></tr>');
+
+                        $.each(headerGroups, function(i, group) {
+                            if ($.isArray(headers[group]) && headers[group].length) {
+                                var pid = group.match(/^Protocol (\d+)/);
+                                var classname = null;
+
+                                if (pid) {
+                                    classname = 'protocol-' + pid[1] + '-bg';
+                                }
+
+                                var g = $('<th></th>')
+                                    .attr('colspan', headers[group].length)
+                                    .text(group);
+
+                                if (classname) {
+                                    g.addClass(classname);
+                                }
+
+                                groupTr.append(g);
+
+                                $.each(headers[group], function(_, title) {
+                                    var h = $('<th></th>').text(title);
+
+                                    if (classname) {
+                                        h.addClass(classname);
+                                    }
+
+                                    headerTr.append(h);
+                                });
+                            }
+                        });
+
+                        tableHeader.append(groupTr);
+                        tableHeader.append(headerTr);
+
+                        $('#preview').DataTable({
+                            searching: false,
+                            paging:    false,
+                            info:      false,
+                            data:      records.data.slice(1),
+                        });
+
+                        table.removeClass('hide');
+                        spinner.hide();
+                    },
+                });
             },
         });
     });

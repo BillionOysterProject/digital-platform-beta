@@ -56,6 +56,19 @@ h6, .h6 {
   font-size: 12px;
 }
 
+#spinner {
+    display:         flex;
+    flex-direction:  column;
+    justify-content: center;
+    align-items:     center;
+    width:           100%;
+    padding:         2em;
+}
+
+#spinner > * {
+    margin:          0.25em;
+}
+
 /* small and below: Navbar spans top of viewport */
 @media (max-width: 992px) {
     body {

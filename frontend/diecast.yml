@@ -26,100 +26,115 @@ header:
       protocols:
       - name: 'Protocol 1: Site Conditions'
         data:
-        - id:    temerature
-          title: 'Temperature (&deg;C)'
-          field: 'meteorologicalConditions.airTemperatureC'
+        # Weather
+        # ----------------------------------------------------------------------
+        - id:    'meteorologicalConditions.airTemperatureC'
+          title: 'Temperature'
           group: 'weather'
+          unit:  '&deg;C'
 
-        - id:    weather
+        - id:    'meteorologicalConditions.weatherConditions'
           title: 'Weather Conditions'
-          field: 'meteorologicalConditions.weatherConditions'
           group: 'weather'
 
-        - id:    windSpeed
-          title: 'Wind Speed (mph)'
-          field: 'meteorologicalConditions.windSpeedMPH'
+        - id:    'meteorologicalConditions.windSpeedMPH'
+          title: 'Wind Speed'
           group: 'weather'
+          unit:  'mph'
 
-        - id:    windDirection
+        - id:    'meteorologicalConditions.windDirection'
           title: 'Wind direction'
-          field: 'meteorologicalConditions.windDirection'
           group: 'weather'
 
         - id:    humidity
           title: 'Humidity'
           group: 'weather'
 
-        - id:    rainfall_1day
+        - id:    'recentRainfall.rainedIn24Hours'
           title: 'Recent rainfall (past day)'
-          field: 'recentRainfall.rainedIn24Hours'
           group: 'weather'
 
-        - id:    rainfall_3day
+        - id:    'recentRainfall.rainedIn72Hours'
           title: 'Recent rainfall (past 3 days)'
-          field: 'recentRainfall.rainedIn72Hours'
           group: 'weather'
 
-        - id:    rainfall_7day
+        - id:    'recentRainfall.rainedIn7Days'
           title: 'Recent rainfall (past 7 days)'
-          field: 'recentRainfall.rainedIn7Days'
           group: 'weather'
 
-        - id:    tide
-          title: 'Tide'
+        # Tides
+        # ----------------------------------------------------------------------
+        - id:    'tideConditions.referencePoint'
+          title: 'Tide Reference point'
 
-        - id:    referencePoint
-          title: 'Reference point'
-
-        - id:    tidalCurrent
+        - id:    'tideConditions.tidalCurrent'
           title: 'Tidal current'
 
-        - id:    waterConditionPhoto
-          title: 'Water condition photo'
+        - id:    'tideConditions.closestHighTideHeight'
+          title: 'Closest High Tide Height'
 
-        - id:    surfaceCurrentSpeed
+        - id:    'tideConditions.closestHighTide'
+          title: 'Closest High Tide Time'
+
+        - id:    'tideConditions.closestLowTideHeight'
+          title: 'Closest Low Tide Height'
+
+        - id:    'tideConditions.closestLowTide'
+          title: 'Closest Low Tide Time'
+
+        # Land & Water
+        # ----------------------------------------------------------------------
+        - id:    'waterConditions.surfaceCurrentSpeedMPS'
           title: 'Surface current speed'
+          unit:  'm/s'
 
-        - id:    waterColor
-          title: 'Water color'
-
-        - id:    oilSheen
+        - id:    'waterConditions.oilSheen'
           title: 'Oil sheen'
 
-        - id:    garbageWater
+        - id:    'waterConditions.garbage.garbagePresent'
           title: 'Garbage in water'
 
         - id:    pipes
           title: 'Pipes'
 
-        - id:    landConditionPhoto
-          title: 'Land condition photo'
-
-        - id:    shorelineType
+        - id:    'landConditions.shoreLineType'
           title: 'Shoreline type'
 
-        - id:    garbageLand
+        - id:    'landConditions.garbage.garbagePresent'
           title: 'Garbage on land'
 
-        - id:    surfaceCover
-          title: 'Surface cover'
+        - id:    'landConditions.shorelineSurfaceCoverEstPer.imperviousSurfacePer'
+          title: 'Surface Cover (impervious)'
+          unit:  '%'
+
+        - id:    'landConditions.shorelineSurfaceCoverEstPer.perviousSurfacePer'
+          title: 'Surface Cover (permeable)'
+          unit:  '%'
+
+        - id:    'landConditions.shorelineSurfaceCoverEstPer.vegetatedSurfacePer'
+          title: 'Surface Cover (vegitation)'
+          unit:  '%'
+
 
       - name: 'Protocol 2: Oyster Measurements'
         data:
-        - id:    submergedDepth
+        - id:    'depthOfOysterCage.submergedDepthofCageM'
           title: 'Cage submerged depth'
+          unit:  'm'
 
-        - id:    oysterCagePhoto
-          title: 'Oyster cage photo'
-
-        - id:    bioaccumulationOnCage
+        - id:    'conditionOfOysterCage.bioaccumulationOnCage'
           title: 'Cage bioaccumulation'
 
-        - id:    cageDamage
-          title: 'Cage damage'
+        - id:    'conditionOfOysterCage.notesOnDamageToCage'
+          title: 'Cage Damage Notes'
 
-        - id:    oysterMeasurements
-          title: 'Oyster Measurements'
+        - id:    'maximumSizeOfAllLiveOysters'
+          title: 'Largest Oyster Measurement'
+          unit:  'mm'
+
+        - id:    'minimumSizeOfAllLiveOysters'
+          title: 'Smallest Oyster Measurement'
+          unit:  'mm'
 
       - name: 'Protocol 3: Mobile Trap'
         data:

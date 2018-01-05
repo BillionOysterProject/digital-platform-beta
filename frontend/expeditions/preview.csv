@@ -18,62 +18,61 @@ bindings:
     sort:         '{{ qs `sort` }}'
 
 - name:     'stations'
-  resource: ':/api/restoration-stations/{{ . }}'
+  resource: ':/api/restoration-stations'
   params:
+    limit:  10000
     fields: ['name']
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `station`))'
-  on_error: continue
 
 - name:     'teams'
-  resource: ':/api/teams/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `team`))'
-  on_error: continue
+  resource: ':/api/teams'
+  params:
+    limit:  10000
+    fields: ['name', 'schoolOrg']
 
 - name:     'organizations'
-  resource: ':/api/school-orgs/{{ . }}'
+  resource: ':/api/school-orgs'
   params:
+    limit:  10000
     fields: ['name']
-  repeat:   'uniq (flatten (pluck .bindings.teams `schoolOrg._id`))'
-  on_error: continue
 
 - name:     'protocol1'
-  resource: ':/api/protocol-site-conditions/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.siteCondition`))'
-  on_error: continue
+  resource: ':/api/protocol-site-conditions'
+  params:
+    q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.siteCondition`))) `|` }}'
   only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `weather` }}'
 
 - name:     'protocol2'
-  resource: ':/api/protocol-oyster-measurements/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.oysterMeasurement`))'
-  on_error: continue
+  resource: ':/api/protocol-oyster-measurements'
+  params:
+    q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.oysterMeasurement`))) `|` }}'
   only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `measurements` }}'
 
 - name:     'protocol3'
-  resource: ':/api/protocol-mobile-traps/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.mobileTrap`))'
-  on_error: continue
+  resource: ':/api/protocol-mobile-traps'
+  params:
+    q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.mobileTrap`))) `|` }}'
   only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `mobile` }}'
 
 - name:     'protocol4'
-  resource: ':/api/protocol-settlement-tiles/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.settlementTiles`))'
-  on_error: continue
+  resource: ':/api/protocol-settlement-tiles'
+  params:
+    q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.settlementTiles`))) `|` }}'
   only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `settlement` }}'
 
 - name:     'protocol5'
-  resource: ':/api/protocol-water-qualities/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.expeditions `protocols.waterQuality`))'
-  on_error: continue
+  resource: ':/api/protocol-water-qualities'
+  params:
+    q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.waterQuality`))) `|` }}'
   only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `water` }}'
 ---
-{{ var `headers` `EXPEDITION_DATE` `ORGANIZATION` `TEAM` `EXPEDITION` `ORS_NAME` }}
+{{ var `headers` `Expedition - Date` `Expedition - Organization` `Expedition - Team` `Expedition - Name` `Expedition - ORS` }}
 
 {{ $groups := compact (split (qs `groups` ``) `,`) }}
 {{ range $index, $protocol := $.page.protocols }}
 {{   range $protocol.data }}
 {{     if any $groups `all` .group }}
-{{       push `headers` (printf "P%.0f_%v" (add $index 1) (upper (underscore .id))) }}
-{{       push (printf "fields_%.0f" (add $index 1)) (or .field .id) }}
+{{       push `headers` (printf "%v - %v" $protocol.name .title) }}
+{{       push (printf "fields_%.0f" (add $index 1)) .id }}
 {{     end }}
 {{   end }}
 {{ end }}
