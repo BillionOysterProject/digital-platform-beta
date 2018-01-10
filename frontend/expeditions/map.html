@@ -1,0 +1,66 @@
+---
+page:
+    view: Map Explorer
+---
+<section class="content">
+    <div id="mapexplorer"></div>
+</section>
+
+<script type="text/javascript">
+    $(function() {
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZ2hldHplbCIsImEiOiJjajhvdTVvOHYwOGtjMnd1bXUxN2p2eThkIn0.t74BmXxs3SBMGLM1YqIGEg';
+
+        var map = new mapboxgl.Map({
+            container: 'mapexplorer',
+            style: {
+                version: 8,
+                sources: {},
+                layers: [{
+                    "id":     "background",
+                    "type":   "background",
+                    "paint": {
+                        "background-color": "#2C3C56",
+                    }
+                }],
+            },
+            failIfMajorPerformanceCaveat: true,
+            center: [-74.05, 40.7064203],
+            zoom:   13,
+        });
+
+        map.on('load', function() {
+            map.addLayer({
+                "id":     "base-tiles",
+                "type":   "raster",
+                "source": {
+                    "type":  "raster",
+                    "tiles": [
+                        'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/export?F=image&FORMAT=PNG32&TRANSPARENT=true&SIZE=256%2C256&BBOX={bbox-epsg-3857}&BBOXSR=3857&IMAGESR=3857&DPI=90'
+                    ],
+                    "tileSize": 256,
+                },
+                'paint': {}
+            });
+
+            map.addLayer({
+                "id":     "seamarks",
+                "type":   "raster",
+                "source": {
+                    "type":  "raster",
+                    "tiles": [
+                        'https://tiles.marinetraffic.com/ais_helpers/shiptilesingle.aspx?output=png&sat=1&grouping=shiptype&tile_size=256&legends=1&zoom={z}&X={x}&Y={y}',
+                    ],
+                    "tileSize": 256,
+                },
+                'paint': {}
+            });
+        });
+
+        setInterval(function() {
+            var layer = map.getSource('seamarks');
+
+            console.debug(layer)
+                layer.load();
+        }, 15000);
+    });
+</script>

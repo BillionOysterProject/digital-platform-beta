@@ -1500,3 +1500,11 @@ li.loading-dialog {
     cursor: inherit;
     display: block
 }
+
+
+#mapexplorer {
+    position: absolute;
+    top:      0;
+    bottom:   0;
+    width:    calc(100% - 250px);
+}
