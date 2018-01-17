@@ -4,3 +4,4 @@
 /logs
 *.pid
 .DS_Store
+/tmp

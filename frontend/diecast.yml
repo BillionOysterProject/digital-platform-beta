@@ -25,6 +25,16 @@ header:
 
       protocols:
       - name: 'Protocol 1: Site Conditions'
+        groups:
+        - id:   weather
+          name: Weather
+
+        - id:   tides
+          name: Tidal Conditions
+
+        - id:   land-water
+          name: Land and Water Conditions
+
         data:
         # Weather
         # ----------------------------------------------------------------------
@@ -66,57 +76,73 @@ header:
         # ----------------------------------------------------------------------
         - id:    'tideConditions.referencePoint'
           title: 'Tide Reference point'
+          group: 'tides'
 
         - id:    'tideConditions.tidalCurrent'
           title: 'Tidal current'
+          group: 'tides'
 
         - id:    'tideConditions.closestHighTideHeight'
           title: 'Closest High Tide Height'
+          group: 'tides'
 
         - id:    'tideConditions.closestHighTide'
           title: 'Closest High Tide Time'
+          group: 'tides'
 
         - id:    'tideConditions.closestLowTideHeight'
           title: 'Closest Low Tide Height'
+          group: 'tides'
 
         - id:    'tideConditions.closestLowTide'
           title: 'Closest Low Tide Time'
+          group: 'tides'
 
         # Land & Water
         # ----------------------------------------------------------------------
         - id:    'waterConditions.surfaceCurrentSpeedMPS'
           title: 'Surface current speed'
           unit:  'm/s'
+          group: 'land-water'
 
         - id:    'waterConditions.oilSheen'
           title: 'Oil sheen'
+          group: 'land-water'
 
         - id:    'waterConditions.garbage.garbagePresent'
           title: 'Garbage in water'
+          group: 'land-water'
 
         - id:    pipes
           title: 'Pipes'
+          group: 'land-water'
 
         - id:    'landConditions.shoreLineType'
           title: 'Shoreline type'
+          group: 'land-water'
 
         - id:    'landConditions.garbage.garbagePresent'
           title: 'Garbage on land'
+          group: 'land-water'
 
         - id:    'landConditions.shorelineSurfaceCoverEstPer.imperviousSurfacePer'
           title: 'Surface Cover (impervious)'
           unit:  '%'
+          group: 'land-water'
 
         - id:    'landConditions.shorelineSurfaceCoverEstPer.perviousSurfacePer'
           title: 'Surface Cover (permeable)'
           unit:  '%'
+          group: 'land-water'
 
         - id:    'landConditions.shorelineSurfaceCoverEstPer.vegetatedSurfacePer'
           title: 'Surface Cover (vegitation)'
           unit:  '%'
+          group: 'land-water'
 
 
       - name: 'Protocol 2: Oyster Measurements'
+        group: oysters
         data:
         - id:    'depthOfOysterCage.submergedDepthofCageM'
           title: 'Cage submerged depth'
@@ -137,11 +163,13 @@ header:
           unit:  'mm'
 
       - name: 'Protocol 3: Mobile Trap'
+        group: mobile
         data:
         - id:    organism
           title: 'Organisms observed'
 
       - name: 'Protocol 4: Settlement Tiles'
+        group: settlement
         data:
         - id:    description
           title: 'Settlement tile description'
@@ -151,6 +179,7 @@ header:
 
 
       - name: 'Protocol 5: Water Quality'
+        group: waterquality
         data:
         - id:    depth
           title: 'Depth'

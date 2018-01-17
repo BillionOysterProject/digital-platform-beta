@@ -23,7 +23,7 @@ $(function(){
                 try {
                     var st = $(e.currentTarget).attr('data-form-type');
 
-                    if(st === 'traditional') {
+                    if(st === 'traditional' || st === 'custom') {
                         return;
                     }
 

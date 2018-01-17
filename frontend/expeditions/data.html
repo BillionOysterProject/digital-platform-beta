@@ -8,28 +8,28 @@ page:
     </section>
 </section>
 
-<!-- ########################################################################################### -->
-<!-- Step 1: Expedition Filter -->
-<!--         Restrict which expeditions to retrieve data from by any/all of the below criteria. -->
-<!-- ########################################################################################### -->
-<section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#xdata1">
-    <section class="container-fluid">
-        <div id="step1-header" class="blue">
-            <span class="fa-stack fa-3x">
-                <i class="fa fa-circle-o fa-stack-2x"></i>
-                <strong class="fa-stack-1x">1</strong>
-            </span>
+<form name="expeditionData" data-form-type="custom">
+    <!-- ########################################################################################### -->
+    <!-- Step 1: Expedition Filter -->
+    <!--         Restrict which expeditions to retrieve data from by any/all of the below criteria. -->
+    <!-- ########################################################################################### -->
+    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#xdata1">
+        <section class="container-fluid">
+            <div id="step1-header" class="blue">
+                <span class="fa-stack fa-3x">
+                    <i class="fa fa-circle-o fa-stack-2x"></i>
+                    <strong class="fa-stack-1x">1</strong>
+                </span>
 
-            <span>
-                <strong>Filter the expeditions</strong>:
-                Adjust the filters to select a set of published expeditions by time, keyword, ORS, organization, team, or lead.
-            </span>
-        </div>
+                <span>
+                    <strong>Filter the expeditions</strong>:
+                    Adjust the filters to select a set of published expeditions by time, keyword, ORS, organization, team, or lead.
+                </span>
+            </div>
+        </section>
     </section>
-</section>
 
-<section class="content collapse" id="xdata1">
-    <form name="expeditionsFilter">
+    <section class="content collapse" id="xdata1">
         <div class="form-group row">
             <label for="search" class="col-sm-2 col-form-label">Expedition Search</label>
             <div class="col-sm-4">
@@ -131,100 +131,169 @@ page:
                 </div>
             </div>
         </div>
-    </form>
-</section>
-
-
-<!-- ########################################################################################### -->
-<!-- Step 2: Field Selection -->
-<!--         Select which fields should be retrieved. -->
-<!-- ########################################################################################### -->
-<section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#xdata2">
-    <section class="container-fluid">
-        <div id="step2-header" class="blue">
-            <span class="fa-stack fa-3x">
-                <i class="fa fa-circle-o fa-stack-2x"></i>
-                <strong class="fa-stack-1x">2</strong>
-            </span>
-
-            <span>
-                <strong>Select data fields</strong>:
-                Once you select a parameter, the results will show on the screen below.
-            </span>
-        </div>
     </section>
-</section>
 
-<section class="content collapse" id="xdata2">
-    <section class="container-fluid">
-        {{ range $index, $protocol := .page.protocols }}
-            <div class="row" id="select-comparison-parameters">
-                <div class="form-group expeditions-data-substep">
-                    <section data-toggle="collapse" data-target="#xdata2p{{ $index }}">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox">
-                                <b>{{ $protocol.name }}</b>
-                            </label>
-                        </div>
-                    </section>
 
-                    <div class="form-group collapse" id="xdata2p{{ $index }}">
-                        <div class="ml-3">
-                            {{ range $protocol.data }}
+    <!-- ########################################################################################### -->
+    <!-- Step 2: Field Selection -->
+    <!--         Select which fields should be retrieved. -->
+    <!-- ########################################################################################### -->
+    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#xdata2">
+        <section class="container-fluid">
+            <div id="step2-header" class="blue">
+                <span class="fa-stack fa-3x">
+                    <i class="fa fa-circle-o fa-stack-2x"></i>
+                    <strong class="fa-stack-1x">2</strong>
+                </span>
+
+                <span>
+                    <strong>Select data fields</strong>:
+                    Once you select a parameter, the results will show on the screen below.
+                </span>
+            </div>
+        </section>
+    </section>
+
+    <section class="content" id="xdata2">
+        <section class="container-fluid">
+            {{ range $index, $protocol := .page.protocols }}
+                <div class="row" id="select-comparison-parameters">
+                    <div class="expeditions-data-substep">
+                        <section>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="protocol{{ $index }}.{{ .id }}">
-                                    {{ .title }}
+                                    <input type="checkbox" name="groups[{{ or ($protocol.group) (join (pluck $protocol.groups `id`) `,`) }}]">
+                                    <b>{{ $protocol.name }}</b>
+                                </label>
+                            </div>
+                        </section>
+
+                        {{ if $protocol.groups }}
+                        <div class="ml-3">
+                            {{ range $protocol.groups }}
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="groups[{{ .id }}]">
+                                    {{ .name }}
                                 </label>
                             </div>
                             {{ end }}
                         </div>
+                        {{ end }}
                     </div>
                 </div>
-            </div>
-        {{ end }}
+            {{ end }}
+        </section>
     </section>
-</section>
 
 
-<!-- ########################################################################################### -->
-<!-- Step 3: View Report -->
-<!--         Show the report and provide options for exporting to common formats. -->
-<!-- ########################################################################################### -->
-<section class="content shaded expeditions-data-step">
-    <section class="container-fluid">
-        <div id="step3-header" class="blue">
-            <span class="fa-stack fa-3x">
+    <!-- ########################################################################################### -->
+    <!-- Step 3: View Report -->
+    <!--         Show the report and provide options for exporting to common formats. -->
+    <!-- ########################################################################################### -->
+    <section class="content shaded expeditions-data-step">
+        <section class="container-fluid">
+            <div id="step3-header" class="blue">
+                <span class="fa-stack fa-3x">
+                    <i class="fa fa-circle-o fa-stack-2x"></i>
+                    <strong class="fa-stack-1x">3</strong>
+                </span>
+
+                <span>
+                    <strong>Preview or Export</strong>:
+                    Preview the data for the above selected criteria or choose a data export format.
+                </span>
+            </div>
+        </section>
+
+        <section class="container-fluid">
+            <span class="fa-stack fa-3x invisible">
                 <i class="fa fa-circle-o fa-stack-2x"></i>
                 <strong class="fa-stack-1x">3</strong>
             </span>
 
-            <span>
-                <strong>Preview or Export</strong>:
-                Preview the data for the above selected criteria or choose a data export format.
-            </span>
-        </div>
-    </section>
-
-    <section class="container-fluid">
-        <span class="fa-stack fa-3x invisible">
-            <i class="fa fa-circle-o fa-stack-2x"></i>
-            <strong class="fa-stack-1x">3</strong>
-        </span>
-
-        <a class="btn btn-lg btn-primary" target="_blank" href="/expeditions/preview">Preview Data</a>
-
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Export as...
+            <button
+                type="submit"
+                class="btn btn-lg btn-primary"
+            >
+                Preview Data
             </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="#">CSV (comma-separated, Excel friendly)</a>
-                <a class="dropdown-item" href="#">TSV (tab-separated, Excel friendly)</a>
-                <a class="dropdown-item" href="#">Google Sheets</a>
-                <a class="dropdown-item" href="#">PDF (printable)</a>
+
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Export as...
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <a class="dropdown-item" href="#">CSV (comma-separated, Excel friendly)</a>
+                    <a class="dropdown-item" href="#">TSV (tab-separated, Excel friendly)</a>
+                    <a class="dropdown-item" href="#">Google Sheets</a>
+                    <a class="dropdown-item" href="#">PDF (printable)</a>
+                </div>
             </div>
-        </div>
+        </section>
     </section>
-</section>
+</form>
+
+<script type="text/javascript">
+    $(function(){
+        var form = $('form[name="expeditionData"]');
+
+        form.submit(function(e){
+            var el = e.target;
+            e.preventDefault();
+
+            try {
+                var query = [];
+
+                var qs = {
+                    q:      'all',
+                    groups: 'all',
+                };
+
+                $.each(form.serializeArray(), function(i, field) {
+                    if (field.name.match(/^groups\[/) && field.value === 'on') {
+                        if (!$.isArray(qs.groups)) {
+                            qs.groups = [];
+                        }
+
+                        qs.groups.push(field.name.replace('groups[', '').replace(']', ''));
+                    } else if (field.value.length) {
+                        switch (field.name) {
+                        case 'search':
+                            qs.search = field.value;
+                            break;
+                        case 'dateStart':
+                            query.push('date:monitoringStartDate')
+                            query.push('gte:' + moment(field.value).format('YYYY-MM-DD'));
+                            break;
+                        case 'dateEnd':
+                            query.push('date:monitoringStartDate');
+                            query.push('lte:' + moment(field.value).format('YYYY-MM-DD'));
+                            break;
+                        case 'ors':
+                            break;
+                        case 'team':
+                            break;
+                        case 'teamLead':
+                            break;
+                        }
+                    }
+                });
+
+                if (query.length) {
+                    qs['q'] = query.join('/');
+                }
+
+                if ($.isArray(qs.groups)) {
+                    qs.groups = qs.groups.join(',');
+                }
+
+                window.location.href = '/expeditions/preview?' + $.param(qs);
+            } catch (e) {
+                console.error(e);
+            }
+
+            return false;
+        });
+    });
+</script>

@@ -56,6 +56,10 @@ h6, .h6 {
   font-size: 12px;
 }
 
+form label {
+    user-select:     none;
+}
+
 #spinner {
     display:         flex;
     flex-direction:  column;

@@ -11,7 +11,8 @@ bindings:
   resource: ':/api/expeditions'
   fallback: {}
   params:
-    searchString: '{{ qs `q` }}'
+    searchString: '{{ qs `search` }}'
+    q:            '{{ qs `q` }}'
     expand:       false
     limit:        '{{ qs `limit` 10000 }}'
     offset:       '{{ qs `offset` 0 }}'
@@ -39,13 +40,13 @@ bindings:
   resource: ':/api/protocol-site-conditions'
   params:
     q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.siteCondition`))) `|` }}'
-  only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `weather` }}'
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `weather` `tides` `land-water` }}'
 
 - name:     'protocol2'
   resource: ':/api/protocol-oyster-measurements'
   params:
     q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.oysterMeasurement`))) `|` }}'
-  only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `measurements` }}'
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `oysters` }}'
 
 - name:     'protocol3'
   resource: ':/api/protocol-mobile-traps'
@@ -63,7 +64,7 @@ bindings:
   resource: ':/api/protocol-water-qualities'
   params:
     q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.waterQuality`))) `|` }}'
-  only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `water` }}'
+  only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `waterquality` }}'
 ---
 {{ var `headers` `Expedition - Date` `Expedition - Organization` `Expedition - Team` `Expedition - Name` `Expedition - ORS` }}
 
