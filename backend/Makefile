@@ -3,7 +3,7 @@
 all: env deps test
 
 env:
-	virtualenv env
+	pyenv virtualenv env || virtualenv env
 	./env/bin/pip install pytest ipython
 
 deps:

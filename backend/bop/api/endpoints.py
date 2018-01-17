@@ -6,6 +6,7 @@ from collections import OrderedDict
 import pivot.exceptions
 from ..utils import as_bool
 import dpath.util
+import six
 
 
 class Endpoint(FlaskView):
@@ -153,7 +154,7 @@ class CollectionView(Endpoint):
                                     except:
                                         output.append({})
 
-                            elif isinstance(value, (basestring, int)):
+                            elif isinstance(value, six.string_types + (int,)):
                                 # unpack IDs into expanded objects
                                 try:
                                     cache_key = '{}:{}'.format(related_collection, value)

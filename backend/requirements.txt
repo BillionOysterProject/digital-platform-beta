@@ -6,3 +6,4 @@ pytz
 ipython
 pycolorize
 dpath
+six

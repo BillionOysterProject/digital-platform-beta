@@ -4,6 +4,7 @@ from dateutil import tz, parser
 import pytz
 import time
 import re
+import six
 
 RX_PANDAS_TIMESTR = re.compile(
     '(?P<value>\d+)\s*(?P<unit>(?:YEARS?|YRS?|MONTHS?|DAYS?|HOURS?|HRS?|MINUTES?|MINS?|SECONDS?|SECS?|MS|US|NS|[AYMDHTSLUN]))'  # noqa
@@ -104,7 +105,7 @@ class Time(object):
 
         if isinstance(tm, self.NATIVE_DATETIME_TYPES):
             self._parse(tm)
-        elif isinstance(tm, basestring):
+        elif isinstance(tm, six.string_types):
             if '-' in tm and not tm.startswith('-'):
                 self._parse(parser.parse(tm))
             elif tm.startswith('+'):
@@ -221,7 +222,7 @@ class Time(object):
             return Time(self._nanoseconds + other._nanoseconds)
         elif isinstance(other, (int, float, long)):
             return Time(self._nanoseconds + other)
-        elif isinstance(other, (basestring, datetime.datetime, datetime.timedelta)):
+        elif isinstance(other, six.string_types + (datetime.datetime, datetime.timedelta)):
             return Time(self._nanoseconds + Time(other)._nanoseconds)
         else:
             return TypeError("'+' operator not supported for type {}".format(
@@ -233,7 +234,7 @@ class Time(object):
             return Time(self._nanoseconds - other._nanoseconds)
         elif isinstance(other, (int, float, long)):
             return Time(self._nanoseconds - other)
-        elif isinstance(other, (basestring, datetime.datetime, datetime.timedelta)):
+        elif isinstance(other, six.string_types + (datetime.datetime, datetime.timedelta)):
             return Time(self._nanoseconds - Time(other)._nanoseconds)
         else:
             return TypeError("'-' operator not supported for type {}".format(
