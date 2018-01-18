@@ -1,11 +1,13 @@
 --index-url https://pypi.python.org/simple/
+dpath
 Flask
 flask-classy
-python-dateutil
-pytz
+gevent
 ipython
 pycolorize
-dpath
-six
-requests
 pytest
+python-dateutil
+pytz
+requests
+six
+git+https://github.com/ghetzel/pivot.git#subdirectory=lib/python
