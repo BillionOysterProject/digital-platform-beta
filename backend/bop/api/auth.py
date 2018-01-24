@@ -99,3 +99,14 @@ class Sessions(CollectionView):
 class SchoolOrgs(CollectionView):
     route_base      = 'school-orgs'
     collection_name = 'schoolorgs'
+
+    expand_fields   = {
+        'creator': (
+            'users', ['_id', 'name', 'displayName', 'email', 'firstName'],
+        ),
+    }
+
+
+class ProspectiveOrgs(CollectionView):
+    route_base      = 'prospective-orgs'
+    collection_name = 'prospectiveorgs'

@@ -1,1 +1,53 @@
-[]
+[{
+    "name": "schoolorgs",
+    "fields": [{
+        "name": "name",
+        "type": "str",
+        "required": true
+    }, {
+        "name": "organizationType",
+        "type": "str",
+        "required": true
+    }, {
+        "name": "description",
+        "type": "str"
+    }, {
+        "name": "streetAddress",
+        "type": "str",
+        "required": true
+    }, {
+        "name": "neighborhood",
+        "type": "str"
+    }, {
+        "name": "city",
+        "type": "str",
+        "required": true
+    }, {
+        "name": "state",
+        "type": "str",
+        "required": true
+    }, {
+        "name": "zip",
+        "type": "str"
+    }, {
+        "name": "pending",
+        "type": "bool",
+        "default": true
+    }, {
+        "name": "orgLeads",
+        "type": "raw"
+    }, {
+        "name": "sync_id",
+        "type": "str"
+    }, {
+        "name": "creator",
+        "type": "str",
+        "required": true
+    }, {
+        "name": "principal",
+        "type": "str"
+    }, {
+        "name": "principal_phone",
+        "type": "str"
+    }]
+}]
