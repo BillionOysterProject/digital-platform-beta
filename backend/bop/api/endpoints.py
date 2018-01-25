@@ -46,7 +46,10 @@ class CollectionView(Endpoint):
         params = {}
 
         if 'limit' in request.args:
-            params['limit'] = int(request.args['limit'])
+            if request.args['limit'].lower() == 'false':
+                params['limit'] = 4294967295
+            else:
+                params['limit'] = int(request.args['limit'])
 
         if 'offset' in request.args:
             params['offset'] = int(request.args['offset'])

@@ -1,0 +1,48 @@
+---
+bindings:
+- name:     'organizations'
+  resource: ':/api/school-orgs/'
+  params:
+    limit:  10000
+    sort:   ['name']
+---
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{ range .bindings.organizations }}
+        <tr>
+            <td>
+                {{ .organizationType }}
+            </td>
+            <td>
+                {{ .name }}
+            </td>
+            <td>
+                {{ if .streetAddress }}
+                <address>
+                    {{ .streetAddress }}
+                    {{ if .neighborhood }}
+                    <span>, {{ .neighborhood }}</span>
+                    {{ end }}
+                    {{ .city }}, {{ .state }}
+                    {{ if .zip }}
+                    <span>&nbsp;&nbsp;{{ .zip }}</span>
+                    {{ end }}
+                </address>
+                {{ end }}
+            </td>
+            <td>
+                {{ time .created `ymd` }}
+            </td>
+        </tr>
+        {{ end }}
+    </tbody>
+</table>
