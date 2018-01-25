@@ -1,0 +1,123 @@
+[{
+    "name": "schoolorgs",
+
+    "fields": [{
+        "name":       "created",
+        "type":       "date",
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }, {
+        "name":     "name",
+        "type":     "str",
+        "required": true
+    }, {
+        "name":    "organizationType",
+        "type":    "str",
+        "default": "other",
+        "required": true,
+        "validators": {
+            "one-of": [
+                "school",
+                "business",
+                "government",
+                "property owner",
+                "community organization",
+                "other"
+            ]
+        }
+    }, {
+        "name":    "schoolType",
+        "type":    "str",
+        "validators": {
+            "one-of": [
+                "nyc-public",
+                "nyc-charter",
+                "private",
+                "other-public"
+            ]
+        }
+    }, {
+        "name":     "description",
+        "type":     "str",
+        "required": true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name": "photo",
+        "type": "object"
+    }, {
+        "name":     "streetAddress",
+        "type":     "str",
+        "required": true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":     "neighborhood",
+        "type":     "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":     "city",
+        "type":     "str",
+        "required": true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":     "state",
+        "type":     "str",
+        "required": true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":     "zip",
+        "type":     "str",
+        "required": true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name": "latitude",
+        "type": "int"
+    }, {
+        "name": "longitude",
+        "type": "int"
+    }, {
+        "name": "community_board",
+        "type": "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name": "district",
+        "type": "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name": "sync_id",
+        "type": "str"
+    }, {
+        "name": "principal",
+        "type": "str"
+    }, {
+        "name": "principal_phone",
+        "type": "str"
+    }, {
+        "name":     "pending",
+        "type":     "bool",
+        "default":  false,
+        "required": true
+    }, {
+        "name": "creator",
+        "type": "str"
+    }, {
+        "name": "orgLeads",
+        "type": "raw"
+    }]
+}]
