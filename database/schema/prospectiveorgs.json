@@ -1,0 +1,64 @@
+[{
+    "name": "prospectiveorgs",
+
+    "fields": [{
+        "name": "type",
+        "type": "str",
+        "required": true,
+        "validators": {
+            "one-of": [
+                "nyc-public",
+                "nyc-charter",
+                "other"
+            ]
+        }
+    }, {
+        "name": "sync_id",
+        "type": "str",
+        "required": true
+    }, {
+        "name": "name",
+        "type": "str",
+        "required": true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name": "streetAddress",
+        "type": "str",
+        "required": true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name": "neighborhood",
+        "type": "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name": "city",
+        "type": "str",
+        "required": true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name": "state",
+        "type": "str",
+        "required": true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name": "zip",
+        "type": "str",
+        "required": true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name": "properties",
+        "type": "object"
+    }]
+}]

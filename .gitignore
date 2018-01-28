@@ -5,3 +5,4 @@
 *.pid
 .DS_Store
 /tmp
+/database/schema/models/
