@@ -106,6 +106,28 @@ class SchoolOrgs(CollectionView):
     #     ),
     # }
 
+    def index(self):
+        """
+        Retrieve a list of schools/organizations, optionally filtered by various criteria.
+
+        + Parameters
+            + approvedOnly: `false` (bool) -
+                Limit results to only organizations that have been approved.
+        """
+        basequery = request.args.get('q')
+        query = []
+
+        if as_bool(request.args.get('approvedOnly')):
+            query.append('bool:pending/false')
+
+        if basequery:
+            query = [basequery] + query
+
+        if len(query):
+            g.query = '/'.join(query)
+
+        return super(SchoolOrgs, self).index()
+
 
 class ProspectiveOrgs(CollectionView):
     route_base      = 'prospective-orgs'
