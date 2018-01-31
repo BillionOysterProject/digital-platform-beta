@@ -33,7 +33,7 @@
         var spinner = $('#spinner');
 
         $.ajax({
-            url: '/data/preview.tsv?groups={{ qs `groups` `all` }}',
+            url: '/data/preview.csv?groups={{ qs `groups` `all` }}',
             dataType: 'text',
             success: function(data) {
                 Papa.parse(data, {
