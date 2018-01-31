@@ -12,7 +12,7 @@ bindings:
   fallback: {}
   params:
     searchString: '{{ qs `search` }}'
-    q:            '{{ qs `q` }}'
+    q:            '{{ qs `q` `all` }}'
     expand:       false
     limit:        '{{ qs `limit` 10000 }}'
     offset:       '{{ qs `offset` 0 }}'
