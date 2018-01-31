@@ -5,9 +5,16 @@ from bop import API
 import os
 import logging
 from gevent.wsgi import WSGIServer
-
+from flask_cors import CORS
 
 app = API('bop-digital-platform')
+
+CORS(app, resources={
+    r'/api/*': {
+        'origins': '*',
+    },
+})
+
 addr = os.environ.get('HTTP_HOST', '127.0.0.1')
 port = int(os.environ.get('HTTP_PORT', 5000))
 
