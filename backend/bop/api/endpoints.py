@@ -204,8 +204,10 @@ class CollectionView(Endpoint):
 
         for record in results:
             for k, v in record.items():
-                if isinstance(v, (dict, list, tuple)) or k.startswith('__'):
+                if isinstance(v, dict) or k.startswith('__'):
                     continue
+                elif isinstance(v, (list, tuple)):
+                    record[k] = ','.join(['{}'.format(vv) for vv in v])
                 elif isinstance(v, six.string_types):
                     record[k] = v.replace("\n", " ")
 
