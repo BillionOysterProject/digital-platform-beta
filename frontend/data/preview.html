@@ -13,6 +13,14 @@
 ##       icon:  google
 ##       href:  '/expeditions/export?type=google'
 ---
+<section class="content shaded">
+    <div class="row">
+        <div class="col col-sm-12" id="recordStats" hidden>
+            Displaying <span id="recordCount"></span> expeditions.
+        </div>
+    </div>
+</section>
+
 <table id="preview" class="table table-hover expeditions-data-table nowrap hide" cellspacing="0" cellpadding="0">
     <thead class="thead-light">
 
@@ -40,6 +48,9 @@
                     delimiter:     "\t",
                     dynamicTyping: true,
                     complete: function(records) {
+                        $('#recordCount').text(records.data.length - 1);
+                        $('#recordStats').removeAttr('hidden');
+
                         var headerGroups = [];
                         var headers = {};
                         var tableHeader = $('#preview thead');
@@ -96,15 +107,15 @@
                         tableHeader.append(headerTr);
 
                         $('#preview').DataTable({
-                            searching:    false,
-                            paging:       false,
-                            info:         false,
-                            data:         records.data.slice(1),
+                            searching:      false,
+                            paging:         false,
+                            info:           false,
+                            data:           records.data.slice(1),
                             columnDefs:   [{
                                 targets: [0],
                                 visible: false,
                             }, {
-                                targets: [4],
+                                targets: [2],
                                 render: function(data, type, row, meta){
                                     if(type === 'display'){
                                         data = '<a target="_blank" href="/expeditions/view/' + row[0] + '">' + data + '</a>';

@@ -12,61 +12,68 @@ bindings:
   fallback: {}
   params:
     searchString: '{{ qs `search` }}'
-    q:            '{{ qs `q` `all` }}'
+    q:            'status/published{{ if (qs `q`) }}/{{ qs `q` }}{{ end }}'
     expand:       false
-    limit:        '{{ qs `limit` 10000 }}'
+    limit:        '{{ qs `limit` `false` }}'
     offset:       '{{ qs `offset` 0 }}'
     sort:         '{{ qs `sort` }}'
 
 - name:     'stations'
   resource: ':/api/restoration-stations'
   params:
-    limit:  10000
+    limit:  false
     fields: ['name']
+    expand: false
 
 - name:     'teams'
   resource: ':/api/teams'
   params:
-    limit:  10000
-    fields: ['name', 'schoolOrg']
+    limit:  false
+    expand: false
 
 - name:     'organizations'
   resource: ':/api/school-orgs'
   params:
-    limit:  10000
+    limit:  false
     fields: ['name']
+    expand: false
 
 - name:     'protocol1'
   resource: ':/api/protocol-site-conditions'
   params:
-    q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.siteCondition`))) `|` }}'
+    q:     '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.siteCondition`))) `|` }}'
+    limit: false
   only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `weather` `tides` `land-water` }}'
 
 - name:     'protocol2'
   resource: ':/api/protocol-oyster-measurements'
   params:
-    q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.oysterMeasurement`))) `|` }}'
+    q:     '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.oysterMeasurement`))) `|` }}'
+    limit: false
   only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `oysters` }}'
 
 - name:     'protocol3'
   resource: ':/api/protocol-mobile-traps'
   params:
-    q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.mobileTrap`))) `|` }}'
+    q:     '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.mobileTrap`))) `|` }}'
+    limit: false
   only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `mobile` }}'
 
 - name:     'protocol4'
   resource: ':/api/protocol-settlement-tiles'
   params:
-    q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.settlementTiles`))) `|` }}'
+    q:     '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.settlementTiles`))) `|` }}'
+    limit: false
   only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `settlement` }}'
 
 - name:     'protocol5'
   resource: ':/api/protocol-water-qualities'
   params:
-    q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.waterQuality`))) `|` }}'
+    q:     '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.waterQuality`))) `|` }}'
+    limit: false
   only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `waterquality` }}'
 ---
-{{ var `headers` `Expedition - ID` `Expedition - Date` `Expedition - Organization` `Expedition - Team` `Expedition - Name` `Expedition - ORS` }}
+{{ var `headers` `Expedition - ID` `Expedition - Date` `Expedition - Name` `Expedition - Organization` `Expedition - Team` `Expedition - ORS` }}
 
 {{ $groups := compact (split (qs `groups` ``) `,`) }}
 {{ range $index, $protocol := $.page.protocols }}
@@ -80,7 +87,7 @@ bindings:
 
 {{ range $.bindings.expeditions }}
 {{   $team      := firstByKey $.bindings.teams         `_id` .team               }}
-{{   $org       := firstByKey $.bindings.organizations `_id` $team.schoolOrg._id }}
+{{   $org       := firstByKey $.bindings.organizations `_id` $team.schoolOrg }}
 {{   $station   := firstByKey $.bindings.stations      `_id` .station            }}
 {{   $protocol1 := firstByKey $.bindings.protocol1     `_id` .protocols.siteCondition     }}
 {{   $protocol2 := firstByKey $.bindings.protocol2     `_id` .protocols.oysterMeasurement }}
@@ -88,7 +95,7 @@ bindings:
 {{   $protocol4 := firstByKey $.bindings.protocol4     `_id` .protocols.settlementTiles   }}
 {{   $protocol5 := firstByKey $.bindings.protocol5     `_id` .protocols.waterQuality      }}
 
-{{   var `values` ._id (time .monitoringStartDate `ymd`) $org.name $team.name .name $station.name }}
+{{   var `values` ._id (time .monitoringStartDate `ymd`) .name $org.name $team.name $station.name }}
 
 {{   range $.vars.fields_1 }}
 {{     push `values` (get $protocol1 . ``) }}
