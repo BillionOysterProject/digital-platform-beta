@@ -188,7 +188,7 @@ class CollectionView(Endpoint):
 
         return results
 
-    @route('/export')
+    @route('/export.tsv')
     def index_as_csv(self):
         query = g.get('query', request.args.get('q', 'all'))
         params = self.filter_params
