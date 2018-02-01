@@ -206,6 +206,8 @@ class CollectionView(Endpoint):
             for k, v in record.items():
                 if isinstance(v, (dict, list, tuple)) or k.startswith('__'):
                     continue
+                elif isinstance(v, six.string_types):
+                    record[k] = v.replace("\n", " ")
 
                 if k not in fieldnames:
                     fieldnames.append(k)
