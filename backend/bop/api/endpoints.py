@@ -9,7 +9,7 @@ from ..time import Time
 import os
 import dpath.util
 import six
-import csv
+import unicodecsv
 import io
 
 
@@ -191,7 +191,12 @@ class CollectionView(Endpoint):
     @route('/export')
     def index_as_csv(self):
         query = g.get('query', request.args.get('q', 'all'))
-        results = self.collection.query(query, **self.filter_params)
+        params = self.filter_params
+
+        if 'limit' not in params:
+            params['limit'] = False
+
+        results = self.collection.query(query, **params)
         output = io.BytesIO()
         data = []
 
@@ -205,9 +210,11 @@ class CollectionView(Endpoint):
                 if k not in fieldnames:
                     fieldnames.append(k)
 
-            data.append(dict([(k, v) for k, v in record.items() if k in fieldnames]))
+            data.append(dict([
+                (k, v) for k, v in record.items() if k in fieldnames
+            ]))
 
-        writer = csv.DictWriter(output, fieldnames=fieldnames, dialect='excel-tab')
+        writer = unicodecsv.DictWriter(output, fieldnames=fieldnames, dialect='excel-tab')
 
         writer.writeheader()
 
@@ -218,7 +225,7 @@ class CollectionView(Endpoint):
 
         return Response(
             response=output,
-            mimetype='text/tab-separated-values',
+            mimetype='text/tab-separated-values; charset=UTF-8',
             headers={
                 'Content-Disposition': 'attachment; filename={}-{}.tsv'.format(
                     os.path.basename(
