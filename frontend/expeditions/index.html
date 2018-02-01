@@ -46,9 +46,9 @@ bindings:
                         </thead>
                         <tbody>
                             {{ range .bindings.expeditions }}
-                            <tr onclick="location.href='/expeditions/view/{{ ._id }}'">
+                            <tr class="cursor-pointer" onclick="location.href='/expeditions/view/{{ ._id }}'">
                                 <td>
-                                    <h4>{{ .name }}</h4>
+                                    <h4><a href="/expeditions/view/{{ ._id }}">{{ .name }}</a></h4>
                                     <br/>
                                     <p class="text-muted">{{ .team.name }}</p>
                                 </td>

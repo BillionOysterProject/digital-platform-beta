@@ -114,7 +114,7 @@ flags:
             <h2>{{ .page.view }}</h2>
         </section>
         {{ end }}
-        <section class="content-body">
+        <section class="content-body {{ .page.body_class }}">
         {{ template "content" . }}
         </section>
     </section>

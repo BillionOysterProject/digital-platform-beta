@@ -33,7 +33,7 @@
         var spinner = $('#spinner');
 
         $.ajax({
-            url: '/data/preview.tsv?groups={{ qs `groups` `all` }}',
+            url: '/data/preview.tsv?groups={{ qs `groups` `all` }}&limit={{ qs `limit` }}&sort={{ qs `sort` }}',
             dataType: 'text',
             success: function(data) {
                 Papa.parse(data, {
@@ -96,10 +96,23 @@
                         tableHeader.append(headerTr);
 
                         $('#preview').DataTable({
-                            searching: false,
-                            paging:    false,
-                            info:      false,
-                            data:      records.data.slice(1),
+                            searching:    false,
+                            paging:       false,
+                            info:         false,
+                            data:         records.data.slice(1),
+                            columnDefs:   [{
+                                targets: [0],
+                                visible: false,
+                            }, {
+                                targets: [4],
+                                render: function(data, type, row, meta){
+                                    if(type === 'display'){
+                                        data = '<a target="_blank" href="/expeditions/view/' + row[0] + '">' + data + '</a>';
+                                    }
+
+                                    return data;
+                                },
+                            }],
                         });
 
                         table.removeClass('hide');

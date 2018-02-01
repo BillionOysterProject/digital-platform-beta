@@ -66,7 +66,7 @@ bindings:
     q: '_id/is:{{ join (uniq (flatten (pluck .bindings.expeditions `protocols.waterQuality`))) `|` }}'
   only_if:  '{{ any (split (qs `groups` ``) `,`) `all` `waterquality` }}'
 ---
-{{ var `headers` `Expedition - Date` `Expedition - Organization` `Expedition - Team` `Expedition - Name` `Expedition - ORS` }}
+{{ var `headers` `Expedition - ID` `Expedition - Date` `Expedition - Organization` `Expedition - Team` `Expedition - Name` `Expedition - ORS` }}
 
 {{ $groups := compact (split (qs `groups` ``) `,`) }}
 {{ range $index, $protocol := $.page.protocols }}
@@ -88,7 +88,7 @@ bindings:
 {{   $protocol4 := firstByKey $.bindings.protocol4     `_id` .protocols.settlementTiles   }}
 {{   $protocol5 := firstByKey $.bindings.protocol5     `_id` .protocols.waterQuality      }}
 
-{{   var `values` (time .monitoringStartDate `ymd`) $org.name $team.name .name $station.name }}
+{{   var `values` ._id (time .monitoringStartDate `ymd`) $org.name $team.name .name $station.name }}
 
 {{   range $.vars.fields_1 }}
 {{     push `values` (get $protocol1 . ``) }}

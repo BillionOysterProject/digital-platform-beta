@@ -28,6 +28,10 @@ body > header {
     border-radius:   0;
 }
 
+.cursor-pointer {
+    cursor:          pointer;
+}
+
 #main {
     width:           100%;
 }
@@ -177,6 +181,7 @@ form label {
 
     .site-navbar .navbar-nav .nav-link:hover {
         background:  #121B29;
+        color:       #CCC;
     }
 
     .site-navbar .navbar-nav .nav-item.show .nav-link {
