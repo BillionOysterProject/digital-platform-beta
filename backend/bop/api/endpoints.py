@@ -1,12 +1,16 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
-from flask import jsonify, request, g
-from flask_classy import FlaskView
+from flask import jsonify, request, g, Response
+from flask_classy import FlaskView, route
 from collections import OrderedDict
 import pivot.exceptions
 from ..utils import as_bool
+from ..time import Time
+import os
 import dpath.util
 import six
+import csv
+import io
 
 
 class Endpoint(FlaskView):
@@ -183,6 +187,47 @@ class CollectionView(Endpoint):
                 results[i] = result
 
         return results
+
+    @route('/export.tsv')
+    def index_as_csv(self):
+        query = g.get('query', request.args.get('q', 'all'))
+        results = self.collection.query(query, **self.filter_params)
+        output = io.BytesIO()
+        data = []
+
+        fieldnames = ['id']
+
+        for record in results:
+            for k, v in record.items():
+                if isinstance(v, (dict, list, tuple)) or k.startswith('__'):
+                    continue
+
+                if k not in fieldnames:
+                    fieldnames.append(k)
+
+            data.append(dict([(k, v) for k, v in record.items() if k in fieldnames]))
+
+        writer = csv.DictWriter(output, fieldnames=fieldnames, dialect='excel-tab')
+
+        writer.writeheader()
+
+        for record in data:
+            writer.writerow(dict(record))
+
+        output.seek(0)
+
+        return Response(
+            response=output,
+            mimetype='text/tab-separated-values',
+            headers={
+                'Content-Disposition': 'attachment; filename={}-{}.tsv'.format(
+                    os.path.basename(
+                        os.path.dirname(request.path)
+                    ),
+                    Time().isoformat()
+                ),
+            }
+        )
 
     def index(self):
         query = g.get('query', request.args.get('q', 'all'))
