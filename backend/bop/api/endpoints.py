@@ -194,7 +194,7 @@ class CollectionView(Endpoint):
         params = self.filter_params
 
         if 'limit' not in params:
-            params['limit'] = False
+            params['limit'] = 2147483647
 
         results = self.collection.query(query, **params)
         output = io.BytesIO()
