@@ -100,11 +100,11 @@ class SchoolOrgs(CollectionView):
     route_base      = 'school-orgs'
     collection_name = 'schoolorgs'
 
-    # expand_fields   = {
-    #     'creator': (
-    #         'users', ['_id', 'name', 'displayName', 'email', 'firstName'],
-    #     ),
-    # }
+    expand_fields   = {
+        'creator': (
+            'users', ['_id', 'name', 'displayName', 'email', 'firstName'],
+        ),
+    }
 
     def index(self):
         """

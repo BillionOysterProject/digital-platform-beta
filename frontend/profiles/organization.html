@@ -6,10 +6,12 @@ bindings:
     limit:  10000
     sort:   ['name']
 ---
-<table class="table table-sm table-hover">
+<table class="table table-sm table-hover table-striped" id="organizations">
     <thead>
         <tr>
-            <th>Type</th>
+            <th>Org. Type</th>
+            <th>School Type</th>
+            <th>ATS Code</th>
             <th>Name</th>
             <th>Address</th>
             <th>Created At</th>
@@ -21,6 +23,12 @@ bindings:
         <tr>
             <td>
                 {{ .organizationType }}
+            </td>
+            <td>
+                {{ .schoolType }}
+            </td>
+            <td>
+                {{ .syncId }}
             </td>
             <td>
                 {{ .name }}
@@ -46,3 +54,13 @@ bindings:
         {{ end }}
     </tbody>
 </table>
+
+<script type="text/javascript">
+    $(function(){
+        $('#organizations').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>

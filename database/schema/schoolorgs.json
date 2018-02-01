@@ -23,6 +23,7 @@
                 "government",
                 "property owner",
                 "community organization",
+                "college",
                 "other"
             ]
         }
@@ -88,7 +89,7 @@
         "name": "longitude",
         "type": "int"
     }, {
-        "name": "community_board",
+        "name": "communityBoard",
         "type": "str",
         "formatters": {
             "trim-space": true
@@ -100,13 +101,13 @@
             "trim-space": true
         }
     }, {
-        "name": "sync_id",
+        "name": "syncId",
         "type": "str"
     }, {
         "name": "principal",
         "type": "str"
     }, {
-        "name": "principal_phone",
+        "name": "principalPhone",
         "type": "str"
     }, {
         "name":     "pending",
@@ -119,5 +120,14 @@
     }, {
         "name": "orgLeads",
         "type": "raw"
+    }, {
+        "name": "gradesTaught",
+        "type": "raw"
+    }, {
+        "name": "gradeLevels",
+        "type": "str"
+    }, {
+        "name": "locationType",
+        "type": "str"
     }]
 }]

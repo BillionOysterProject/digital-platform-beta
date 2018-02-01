@@ -13,7 +13,7 @@
             ]
         }
     }, {
-        "name": "sync_id",
+        "name": "syncId",
         "type": "str",
         "required": true
     }, {
@@ -60,5 +60,38 @@
     }, {
         "name": "properties",
         "type": "object"
+    }, {
+        "name": "gradesTaught",
+        "type": "raw"
+    }, {
+        "name": "gradeLevels",
+        "type": "str"
+    }, {
+        "name": "locationType",
+        "type": "str"
+    }, {
+        "name": "principal",
+        "type": "str"
+    }, {
+        "name": "principalPhone",
+        "type": "str"
+    }, {
+        "name": "latitude",
+        "type": "float"
+    }, {
+        "name": "longitude",
+        "type": "float"
+    }, {
+        "name": "communityBoard",
+        "type": "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name": "district",
+        "type": "str",
+        "formatters": {
+            "trim-space": true
+        }
     }]
 }]
