@@ -11,6 +11,7 @@ import dpath.util
 import six
 import unicodecsv
 import io
+import logging
 
 
 class Endpoint(FlaskView):
@@ -81,7 +82,7 @@ class CollectionView(Endpoint):
     def single_result_params(self):
         return {}
 
-    def _prepare_query_results(self, results, expand=True):
+    def _prepare_query_results(self, results, expand=True, raw=False):
         if expand:
             data = [
                 self._prepare_single_result(r) for r in self._expand_results(
@@ -93,6 +94,8 @@ class CollectionView(Endpoint):
                 self._prepare_single_result(r) for r in results
             ]
 
+        if raw is True:
+            return data
         if self.results_only:
             return jsonify(data)
         else:
@@ -191,32 +194,88 @@ class CollectionView(Endpoint):
     @route('/export.tsv')
     def index_as_csv(self):
         query = g.get('query', request.args.get('q', 'all'))
+
+        # get filter params from querystring
         params = self.filter_params
+
+        # extract the untouched fields list
+        fields = params.get('fields', [])
+        has_nested_fields = False
+
+        # if fields was specified, pass only the first dot-separated parts
+        # this ensures the the database properly retrieves the FIELDS before
+        # expansion occurs.
+        if 'fields' in params and len(params['fields']):
+            new_fields = []
+
+            for p in params['fields']:
+                if '.' in p:
+                    has_nested_fields = True
+
+                new_fields.append(p.split('.')[0])
+
+            params['fields'] = list(set(new_fields))
+
+        query_results_params = self.query_results_params
+        query_results_params['raw'] = True
+        query_results_params['expand'] = has_nested_fields
 
         if 'limit' not in params:
             params['limit'] = 2147483647
 
         results = self.collection.query(query, **params)
+        results = self._prepare_query_results(results, **query_results_params)
+
         output = io.BytesIO()
         data = []
 
-        fieldnames = ['id']
+        fieldnames = []
 
         for record in results:
-            for k, v in record.items():
-                if isinstance(v, dict) or k.startswith('__'):
+            record = dict(record)
+            fields_to_retrieve = []
+            output_record = {}
+
+            if not len(fields):
+                fields_to_retrieve = record.keys()
+            else:
+                fields_to_retrieve = fields
+
+            if '_id' not in fields_to_retrieve:
+                fields_to_retrieve = ['_id'] + fields_to_retrieve
+
+            # actually pluck the values out of the response, doing a deep-get into
+            # nested result dicts as necessary
+            for field in fields_to_retrieve:
+                if field.startswith('__'):
                     continue
-                elif isinstance(v, (list, tuple)):
-                    record[k] = ','.join(['{}'.format(vv) for vv in v])
-                elif isinstance(v, six.string_types):
-                    record[k] = v.replace("\n", " ")
 
-                if k not in fieldnames:
-                    fieldnames.append(k)
+                try:
+                    value = dpath.util.get(record, field, separator='.')
+                except KeyError:
+                    value = None
 
-            data.append(dict([
-                (k, v) for k, v in record.items() if k in fieldnames
-            ]))
+                if value in [None, '']:
+                    output_record[field] = None
+
+                elif isinstance(value, dict):
+                    continue
+
+                elif isinstance(value, (list, tuple)):
+                    output_record[field] = ','.join(['{}'.format(vv) for vv in value])
+
+                elif isinstance(value, six.string_types):
+                    output_record[field] = value.replace("\n", " ")
+
+                else:
+                    output_record[field] = value
+
+                if field not in fieldnames:
+                    fieldnames.append(field)
+
+            data.append(output_record)
+
+        logging.info(data)
 
         writer = unicodecsv.DictWriter(output, fieldnames=fieldnames, dialect='excel-tab')
 

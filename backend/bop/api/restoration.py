@@ -86,6 +86,16 @@ class RestorationStations(CollectionView):
     collection_name = 'restorationstations'
     results_only    = True
 
+    expand_fields   = {
+        'schoolOrg': (
+            'schoolorgs', ['_id', 'name'],
+        ),
+
+        'teamLead': (
+            'users', ['_id', 'displayName', 'username'],
+        ),
+    }
+
 
 class Sites(CollectionView):
     route_base      = 'sites'

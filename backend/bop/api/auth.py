@@ -75,6 +75,12 @@ class Users(CollectionView):
     route_base      = 'users'
     collection_name = 'users'
 
+    expand_fields   = {
+        'schoolOrg': (
+            'schoolorgs', [],
+        ),
+    }
+
     def me(self):
         return jsonify(None)
 
