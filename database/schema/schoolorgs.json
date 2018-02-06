@@ -129,5 +129,8 @@
     }, {
         "name": "locationType",
         "type": "str"
+    }, {
+        "name": "website",
+        "type": "str"
     }]
 }]
