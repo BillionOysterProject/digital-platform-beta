@@ -6,6 +6,15 @@ all:
 run:
 	procwatch -c scripts/stack.ini
 
+run-db:
+	cd database && pivot -s schema -L debug -Q web
+
+run-backend:
+	cd backend && ./env/bin/python server.py
+
+run-frontend:
+	cd frontend && diecast
+
 tail:
 	tail -f logs/*
 

@@ -6,3 +6,4 @@
 .DS_Store
 /tmp
 /database/schema/models/
+/backend/flask_session/

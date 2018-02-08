@@ -13,3 +13,5 @@ requests
 six
 git+https://github.com/ghetzel/pivot.git#subdirectory=lib/python
 unicodecsv
+flask-login
+Flask-Session

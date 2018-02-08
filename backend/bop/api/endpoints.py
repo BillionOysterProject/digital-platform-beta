@@ -2,10 +2,12 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from flask import jsonify, request, g, Response
 from flask_classy import FlaskView, route
+from flask_login import current_user
 from collections import OrderedDict
 import pivot.exceptions
 from ..utils import as_bool
 from ..time import Time
+from ..user import User
 import os
 import dpath.util
 import six
@@ -19,16 +21,24 @@ class Endpoint(FlaskView):
     strict_slashes = False
     route_prefix = '/api/'
     expand_fields = {}
+    app = None
 
     @classmethod
     def register(cls, app):
-        cls._app = app
+        cls.app = app
         cls.client = app.db
         super(Endpoint, cls).register(app)
 
     @property
     def app(self):
-        return self._app
+        return self.__class__.app
+
+    @property
+    def current_user(self):
+        try:
+            return User.get(current_user['id'])
+        except:
+            return None
 
     @classmethod
     def collection_for(cls, name):
@@ -42,9 +52,13 @@ class CollectionView(Endpoint):
     def register(cls, app):
         super(CollectionView, cls).register(app)
 
+    @classmethod
+    def get_collection(cls):
+        return cls.client.collection(cls.collection_name)
+
     @property
     def collection(self):
-        return self.client.collection(self.collection_name)
+        return self.get_collection()
 
     @property
     def filter_params(self):

@@ -1,16 +1,17 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
-import logging
 import sys
-import urllib
+import os
 import inspect
 import pivot
+from .api import *
 from flask import Flask, jsonify, url_for
 from werkzeug.exceptions import default_exceptions
 from werkzeug.exceptions import HTTPException
 from .api.endpoints import Endpoint, CollectionView
-from .api import *
 from collections import OrderedDict
+from flask_login import LoginManager
+from flask_session import Session
 
 
 def handle_error(e):
@@ -31,6 +32,19 @@ class API(Flask):
         if not hasattr(self, '_db'):
             self._db = pivot.Client()
         return self._db
+
+    def setup_persistent_sessions(self):
+        self.session_manager = Session()
+
+        self.secret_key = os.urandom(32)
+        self.config['SESSION_TYPE'] = 'filesystem'
+        # self.config['SESSION_USE_SIGNER'] = True
+
+        self.session_manager.init_app(self)
+
+    def setup_login_manager(self):
+        self.login_manager = LoginManager()
+        self.login_manager.init_app(self)
 
     def setup_error_intercept(self):
         self.handle_http_exception = handle_error
@@ -81,6 +95,8 @@ class API(Flask):
         return sorted(output, key=lambda v: v.get('url'))
 
     def run(self, *args, **kwargs):
+        self.setup_persistent_sessions()
+        self.setup_login_manager()
         self.setup_error_intercept()
         self.autoregister_routes()
 

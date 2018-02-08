@@ -1,9 +1,9 @@
-<nav class="navbar navbar-toggleable-sm navbar-default user-navbar">
-    <div class="collapse navbar-collapse">
+<nav class="navbar navbar-expand-lg navbar-default user-navbar">
+    <div class="navbar-collapse">
         {{ if .bindings.user }}
         <!-- Authenticated User: {{ .bindings.user._id }} ({{ .bindings.user.username }}: {{ .bindings.user.displayName }} <{{ .bindings.user.email }}>) -->
         <ul class="navbar-nav ml-auto">
-            <li class="loading-dialog" data-http-loading="" style="display: none;">
+            <li class="loading-dialog" id="loading" style="display: none;">
                 <i class="fa fa-spin fa-circle-o-notch red icon"></i>
             </li>
 
@@ -12,6 +12,7 @@
                     <i class="fa fa-question-circle" aria-hidden="true"></i>
                 </a>
             </li>
+
             <li class="nav-item hidden-xs">
                 <a href="http://bop-ccers.tumblr.com" class="nav-link icon" target="_blank"><i class="fa fa-tumblr-square"></i></a>
             </li>
@@ -43,7 +44,7 @@
                         </a>
                     </li>
                     <li class="divider visible-xs"></li>
-                    <li><a href="/api/auth/signout" target="_self">Signout</a></li>
+                    <li><a href="/logout" target="_self">Signout</a></li>
                 </ul>
             </li>
         </ul>
@@ -77,8 +78,8 @@
 </nav>
 
 {{ if isArray .page.userlinks }}
-<nav class="navbar navbar-toggleable-sm navbar-default user-navbar">
-    <div class="collapse navbar-collapse">
+<nav class="navbar navbar-expand-lg navbar-default user-navbar">
+    <div class="navbar-collapse">
         <ul class="navbar-nav">
             {{ range .page.userlinks }}
             <li class="nav-item">

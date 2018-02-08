@@ -1,8 +1,25 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
-from .endpoints import CollectionView
+from .endpoints import Endpoint, CollectionView
 from flask import jsonify, request, g
+from flask_classy import route
+from flask_login import login_user, logout_user
 from ..utils import as_bool
+from ..user import User
+
+
+class Authentication(Endpoint):
+    route_base = 'auth'
+
+    @route('/signin', methods=['POST'])
+    def signin(self):
+        user = User.get('bop-admin')
+        login_user(user)
+        return jsonify(user)
+
+    def signout(self):
+        logout_user()
+        return ('', 204)
 
 
 class TeamRequests(CollectionView):
@@ -71,6 +88,10 @@ class UserActivities(CollectionView):
     collection_name = 'useractivities'
 
 
+def _load_user(id_or_email):
+    return User.get(id_or_email)
+
+
 class Users(CollectionView):
     route_base      = 'users'
     collection_name = 'users'
@@ -81,8 +102,14 @@ class Users(CollectionView):
         ),
     }
 
+    @classmethod
+    def register(cls, app):
+        super(Users, cls).register(app)
+        app.login_manager.user_loader(_load_user)
+        User.collection = cls.get_collection()
+
     def me(self):
-        return jsonify(None)
+        return jsonify(self.current_user)
 
     def teamleads(self):
         basequery = request.args.get('q')
