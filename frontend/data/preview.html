@@ -35,18 +35,44 @@
     <h2>Loading data...</h2>
 </div>
 
+{{- $groups := compact (split (qs `groups` ``) `,`) -}}
+{{- range $index, $protocol := $.page.protocols -}}
+{{-   range $protocol.data -}}
+{{-     if any $groups `all` .group -}}
+{{-       push `headers` (printf "%v - %v" $protocol.name .title) -}}
+{{-       push `fields` (printf "protocols.%s.%s" $protocol.id .id) -}}
+{{-     end -}}
+{{-   end -}}
+{{- end -}}
+
 <script type="text/javascript">
     $(function() {
         var table = $('#preview');
         var spinner = $('#spinner');
+        var exportFields = [
+            '_id',
+            'monitoringStartDate',
+            'name',
+            'team.schoolOrg.name',
+            'team.name',
+            'station.name',
+            {{- range $.vars.fields }}
+            '{{ . }}',
+            {{- end }}
+        ];
 
         $.ajax({
-            url: '/data/preview.tsv?groups={{ qs `groups` `all` }}&limit={{ qs `limit` }}&sort={{ qs `sort` }}',
+            url: '/api/expeditions/export.tsv?' + $.param({
+                limit: 10,
+                sort:  '{{ qs `sort` }}',
+                fields: exportFields.join(','),
+            }),
             dataType: 'text',
             success: function(data) {
                 Papa.parse(data, {
-                    delimiter:     "\t",
-                    dynamicTyping: true,
+                    delimiter:      "\t",
+                    dynamicTyping:  true,
+                    skipEmptyLines: true,
                     complete: function(records) {
                         $('#recordCount').text(records.data.length - 1);
                         $('#recordStats').removeAttr('hidden');
@@ -106,12 +132,17 @@
                         tableHeader.append(groupTr);
                         tableHeader.append(headerTr);
 
+                        console.debug(records.data.slice(1));
+
                         $('#preview').DataTable({
                             searching:      false,
                             paging:         false,
                             info:           false,
                             data:           records.data.slice(1),
                             columnDefs:   [{
+                                targets:        '_all',
+                                defaultContent: '-',
+                            }, {
                                 targets: [0],
                                 visible: false,
                             }, {

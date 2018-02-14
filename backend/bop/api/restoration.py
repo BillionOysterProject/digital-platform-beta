@@ -20,6 +20,9 @@ class Expeditions(CollectionView):
         'team': (
             'teams', ['_id', 'name', 'schoolOrg'],
         ),
+        'team.schoolOrg': (
+            'schoolorgs', ['_id', 'name'],
+        ),
         'station': (
             'restorationstations', ['_id', 'name'],
         ),
@@ -39,19 +42,19 @@ class Expeditions(CollectionView):
             'users', ['_id', 'displayName', 'username', 'profileImageURL'],
         ),
         'protocols.mobileTrap': (
-            'protocolmobiletraps', ['_id', 'status'],
+            'protocolmobiletraps', [],
         ),
         'protocols.oysterMeasurement': (
-            'protocoloystermeasurements', ['_id', 'status'],
+            'protocoloystermeasurements', [],
         ),
         'protocols.settlementTiles': (
-            'protocolsettlementtiles', ['_id', 'status'],
+            'protocolsettlementtiles', [],
         ),
         'protocols.siteCondition': (
-            'protocolsiteconditions', ['_id', 'status'],
+            'protocolsiteconditions', [],
         ),
         'protocols.waterQuality': (
-            'protocolwaterqualities', ['_id', 'status'],
+            'protocolwaterqualities', [],
         ),
     }
 

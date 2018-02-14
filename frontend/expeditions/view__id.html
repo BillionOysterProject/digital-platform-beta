@@ -11,7 +11,7 @@ bindings:
   resource: ':/api/teams/{{ .bindings.expedition.team._id }}'
 
 - name:     'organization'
-  resource: ':/api/school-orgs/{{ .bindings.expedition.team.schoolOrg }}'
+  resource: ':/api/school-orgs/{{ .bindings.expedition.team.schoolOrg._id }}'
 ---
 <section class="content shaded">
     <section class="container">

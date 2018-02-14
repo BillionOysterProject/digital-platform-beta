@@ -24,6 +24,7 @@ header:
 
       protocols:
       - name: 'Protocol 1: Site Conditions'
+        id:   'siteCondition'
         groups:
         - id:   weather
           name: Weather
@@ -141,6 +142,7 @@ header:
 
 
       - name: 'Protocol 2: Oyster Measurements'
+        id:   'oysterMeasurement'
         group: oysters
         data:
         - id:    'depthOfOysterCage.submergedDepthofCageM'
@@ -162,12 +164,14 @@ header:
           unit:  'mm'
 
       - name: 'Protocol 3: Mobile Trap'
+        id:   'mobileTrap'
         group: mobile
         data:
         - id:    organism
           title: 'Organisms observed'
 
       - name: 'Protocol 4: Settlement Tiles'
+        id:   'settlementTiles'
         group: settlement
         data:
         - id:    description
@@ -178,6 +182,7 @@ header:
 
 
       - name: 'Protocol 5: Water Quality'
+        id:   'waterQuality'
         group: waterquality
         data:
         - id:    depth

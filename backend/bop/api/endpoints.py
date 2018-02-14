@@ -139,8 +139,12 @@ class CollectionView(Endpoint):
             # for each result...
             for i, result in enumerate(results):
                 if isinstance(result, dict):
+                    expand_keys = sorted(self.expand_fields.keys())
+
                     # deep get the value from the result
-                    for field, related in self.expand_fields.items():
+                    for field in expand_keys:
+                        related = self.expand_fields[field]
+
                         if isinstance(related, tuple):
                             try:
                                 value = dpath.util.get(dict(result), field, separator='.')
@@ -199,7 +203,9 @@ class CollectionView(Endpoint):
                                 dpath.util.set(result, field, output, separator='.')
 
                         else:
-                            raise TypeError("Expansion rule must be tuple(collection, [fields ..])")
+                            raise TypeError(
+                                "Expansion rule must be tuple(collection, [fields ..])"
+                            )
 
                 results[i] = result
 
@@ -232,7 +238,7 @@ class CollectionView(Endpoint):
 
         query_results_params = self.query_results_params
         query_results_params['raw'] = True
-        query_results_params['expand'] = has_nested_fields
+        query_results_params['expand'] = request.args.get('expand', has_nested_fields)
 
         if 'limit' not in params:
             params['limit'] = 2147483647
@@ -248,7 +254,7 @@ class CollectionView(Endpoint):
         for record in results:
             record = dict(record)
             fields_to_retrieve = []
-            output_record = {}
+            output_record = OrderedDict()
 
             if not len(fields):
                 fields_to_retrieve = record.keys()
@@ -296,7 +302,7 @@ class CollectionView(Endpoint):
         writer.writeheader()
 
         for record in data:
-            writer.writerow(dict(record))
+            writer.writerow(record)
 
         output.seek(0)
 

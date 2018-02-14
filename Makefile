@@ -4,7 +4,13 @@ all:
 	cd backend && make
 
 run:
-	procwatch -c scripts/stack.ini
+	supervisord -c scripts/stack.ini
+
+run-development:
+	PIVOT_ENV=development supervisord -c scripts/stack.ini
+
+run-production:
+	PIVOT_ENV=production supervisord -c scripts/stack.ini
 
 run-db:
 	cd database && pivot -s schema -L debug -Q web
