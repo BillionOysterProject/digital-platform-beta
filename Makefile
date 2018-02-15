@@ -21,6 +21,9 @@ run-backend:
 run-frontend:
 	cd frontend && diecast
 
+run-worker:
+	cd backend && make run-worker
+
 tail:
 	tail -f logs/*
 

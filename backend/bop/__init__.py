@@ -94,10 +94,12 @@ class API(Flask):
 
         return sorted(output, key=lambda v: v.get('url'))
 
-    def run(self, *args, **kwargs):
+    def setup(self):
         self.setup_persistent_sessions()
         self.setup_login_manager()
         self.setup_error_intercept()
         self.autoregister_routes()
 
+    def run(self, *args, **kwargs):
+        self.setup()
         super(API, self).run(*args, **kwargs)

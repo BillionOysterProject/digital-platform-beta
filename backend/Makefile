@@ -19,3 +19,7 @@ debug:
 
 shell:
 	./env/bin/ipython --config=shell.py
+
+
+run-worker:
+	./env/bin/python worker.py
