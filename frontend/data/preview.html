@@ -22,7 +22,7 @@
 </section>
 
 <table id="preview" class="table table-hover expeditions-data-table nowrap hide" cellspacing="0" cellpadding="0">
-    <thead class="thead-light">
+    <thead>
 
     </thead>
 
@@ -61,8 +61,20 @@
             {{- end }}
         ];
 
+        var exportLabels = [
+            'Expedition - ID',
+            'Expedition - Date',
+            'Expedition - Name',
+            'Expedition - Organization',
+            'Expedition - Team',
+            'Expedition - ORS',
+            {{- range $.vars.headers }}
+            '{{ . }}',
+            {{- end }}
+        ];
+
         $.ajax({
-            url: '/api/expeditions/export.tsv?' + $.param({
+            url: '/api/expeditions/report?' + $.param({
                 limit: 10,
                 sort:  '{{ qs `sort` }}',
                 fields: exportFields.join(','),
@@ -82,6 +94,10 @@
                         var tableHeader = $('#preview thead');
 
                         $.each(records.data[0], function(i, value) {
+                            if (i < exportLabels.length) {
+                                value = exportLabels[i];
+                            }
+
                             var parts = value.split(' - ', 2);
 
                             if (headerGroups.indexOf(parts[0]) < 0) {
@@ -131,8 +147,6 @@
 
                         tableHeader.append(groupTr);
                         tableHeader.append(headerTr);
-
-                        console.debug(records.data.slice(1));
 
                         $('#preview').DataTable({
                             searching:      false,

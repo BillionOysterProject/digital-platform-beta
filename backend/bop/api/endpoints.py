@@ -72,14 +72,20 @@ class CollectionView(Endpoint):
 
         if 'offset' in request.args:
             params['offset'] = int(request.args['offset'])
+        else:
+            params['offset'] = 0
 
         if 'fields' in request.args:
             params['fields'] = request.args['fields'].split(',')
+        else:
+            params['fields'] = []
 
         if 'sort' in request.args:
             params['sort'] = request.args['sort'].split(',')
         elif isinstance(self.default_sort, list):
             params['sort'] = self.default_sort
+        else:
+            params['sort'] = None
 
         return params
 
@@ -225,7 +231,7 @@ class CollectionView(Endpoint):
         # if fields was specified, pass only the first dot-separated parts
         # this ensures the the database properly retrieves the FIELDS before
         # expansion occurs.
-        if 'fields' in params and len(params['fields']):
+        if len(params['fields']):
             new_fields = []
 
             for p in params['fields']:

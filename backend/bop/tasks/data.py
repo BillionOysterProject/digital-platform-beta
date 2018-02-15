@@ -3,12 +3,11 @@ from __future__ import unicode_literals
 import logging
 import unicodecsv
 import io
-import os
 import boto3
 import re
 import dpath.util
 from collections import OrderedDict
-from .. import API
+from .. import API, env
 from ..time import Time
 
 SCHOOL_SYNC_SKIP_FIELDS = (
@@ -22,6 +21,7 @@ SCHOOL_SYNC_SKIP_FIELDS = (
     'schoolType',
 )
 
+EXPEDITION_EXPORT_KEY = 'reports/expeditions-full.tsv'
 EXPEDITION_DATA_EXPORT_FIELDS = [
     '_id',
     'monitoringStartDate',
@@ -110,11 +110,7 @@ def generate_batch_expeditions_tsv():
     api.setup()
     s3 = boto3.client('s3')
 
-    if 'BOP_S3_PUBLIC_BUCKET' not in os.environ:
-        raise Exception('Must specify the bucket to put results in with BOP_S3_PUBLIC_BUCKET envvar.')
-
-    # verify the destination bucket exists, or throw an exception before processing
-    bucket = os.environ['BOP_S3_PUBLIC_BUCKET']
+    bucket = env.get_reports_bucket()
     s3.head_bucket(Bucket=bucket)
 
     data = []
@@ -253,7 +249,7 @@ def generate_batch_expeditions_tsv():
     s3.put_object(
         ACL='public-read',
         Bucket=bucket,
-        Key='reports/expeditions-full.tsv',
+        Key=EXPEDITION_EXPORT_KEY,
         ContentType='text/tab-separated-values',
         StorageClass='REDUCED_REDUNDANCY',
         Body=output,

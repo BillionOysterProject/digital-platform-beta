@@ -285,37 +285,43 @@ table.expeditions-data-table {
     margin-bottom:   0 !important;
 }
 
-.expeditions-data-table thead {
+table.expeditions-data-table thead {
     background:      #7094c7;
     color:           #FFFFFF;
 }
 
-.expeditions-data-table thead th {
+table.expeditions-data-table thead th {
     border-color:    #426ca9;
+    background:      #426ca9;
 }
 
-.expeditions-data-table th,
-.expeditions-data-table td {
+table.expeditions-data-table th,
+table.expeditions-data-table td {
     padding:         0.1em 0.4em;
 }
 
 table.expeditions-data-table .protocol-1-bg {
+    background:      #CC9C0C;
     border-color:    #CC9C0C;
 }
 
 table.expeditions-data-table .protocol-2-bg {
+    background:      #482473;
     border-color:    #482473;
 }
 
 table.expeditions-data-table .protocol-3-bg {
+    background:      #00803E;
     border-color:    #00803E;
 }
 
 table.expeditions-data-table .protocol-4-bg {
+    background:      #CC191E;
     border-color:    #CC191E;
 }
 
 table.expeditions-data-table .protocol-5-bg {
+    background:      #0B3E82;
     border-color:    #0B3E82;
 }
 

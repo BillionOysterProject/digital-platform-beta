@@ -1,6 +1,14 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from .endpoints import CollectionView
+from flask import Response, jsonify
+from flask_classy import route
+import requests
+import io
+from .. import env
+from ..time import Time
+import unicodecsv
+from sortedcontainers import SortedList
 
 
 class ExpeditionActivities(CollectionView):
@@ -57,6 +65,61 @@ class Expeditions(CollectionView):
             'protocolwaterqualities', [],
         ),
     }
+
+    @route('/report')
+    def report(self):
+        from ..tasks.data import EXPEDITION_EXPORT_KEY
+
+        bucket = env.get_reports_bucket()
+        params = self.filter_params
+        report = requests.get('https://{}.s3.amazonaws.com/{}'.format(
+            bucket,
+            EXPEDITION_EXPORT_KEY
+        ))
+
+        if report.status_code == 200:
+            data = io.StringIO(report.text)
+            outfields = set()
+            reader = unicodecsv.DictReader(data, dialect='excel-tab')
+            data = SortedList()
+
+            for row in reader:
+                if len(params['fields']):
+                    for k, _ in row.items():
+                        if k not in params['fields']:
+                            del row[k]
+
+                    outfields = params['fields']
+                else:
+                    outfields.update(row.keys())
+
+                data.add(row)
+
+            output = io.BytesIO()
+            writer = unicodecsv.DictWriter(
+                output,
+                fieldnames=list(outfields),
+                dialect='excel-tab'
+            )
+            writer.writeheader()
+
+            for row in data:
+                writer.writerow(row)
+
+            output.seek(0)
+
+            return Response(
+                response=output,
+                mimetype='text/tab-separated-values; charset=UTF-8',
+                headers={
+                    'Content-Disposition': 'attachment; filename=expeditions-{}.tsv'.format(
+                        Time()
+                    ),
+                }
+            )
+
+        else:
+            return None, report.status_code
 
 
 class ProtocolSiteConditions(CollectionView):
