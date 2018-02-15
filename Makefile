@@ -7,10 +7,14 @@ run:
 	supervisord -c scripts/stack.ini
 
 run-development:
-	PIVOT_ENV=development supervisord -c scripts/stack.ini
+	BOP_S3_PUBLIC_BUCKET=digital-platform-dev-files \
+	PIVOT_ENV=development \
+		supervisord -c scripts/stack.ini
 
 run-production:
-	PIVOT_ENV=production supervisord -c scripts/stack.ini
+	BOP_S3_PUBLIC_BUCKET=digital-platform-prod-files \
+	PIVOT_ENV=production \
+		supervisord -c scripts/stack.ini
 
 run-db:
 	cd database && pivot -s schema -L debug -Q web

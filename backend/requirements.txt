@@ -1,18 +1,19 @@
 --index-url https://pypi.python.org/simple/
+boto3
 dpath
 Flask
-flask-cors
 flask-classy
+flask-cors
+flask-login
+Flask-Session
 gevent
+git+https://github.com/ghetzel/pivot.git#subdirectory=lib/python
 ipython
 pycolorize
 pytest
 python-dateutil
 pytz
 requests
-six
-git+https://github.com/ghetzel/pivot.git#subdirectory=lib/python
-unicodecsv
-flask-login
-Flask-Session
 rq
+six
+unicodecsv

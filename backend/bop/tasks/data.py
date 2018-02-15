@@ -3,10 +3,13 @@ from __future__ import unicode_literals
 import logging
 import unicodecsv
 import io
+import os
+import boto3
 import re
 import dpath.util
 from collections import OrderedDict
 from .. import API
+from ..time import Time
 
 SCHOOL_SYNC_SKIP_FIELDS = (
     'created',
@@ -105,6 +108,14 @@ def sync_prospective_to_orgs():
 def generate_batch_expeditions_tsv():
     api = API('bop-worker')
     api.setup()
+    s3 = boto3.client('s3')
+
+    if 'BOP_S3_PUBLIC_BUCKET' not in os.environ:
+        raise Exception('Must specify the bucket to put results in with BOP_S3_PUBLIC_BUCKET envvar.')
+
+    # verify the destination bucket exists, or throw an exception before processing
+    bucket = os.environ['BOP_S3_PUBLIC_BUCKET']
+    s3.head_bucket(Bucket=bucket)
 
     data = []
 
@@ -224,8 +235,7 @@ def generate_batch_expeditions_tsv():
 
         data.append(record)
 
-    # output = io.BytesIO()
-    output = open('/tmp/test.tsv', 'w+b')
+    output = io.BytesIO()
     writer = unicodecsv.DictWriter(
         output,
         fieldnames=EXPEDITION_DATA_EXPORT_FIELDS,
@@ -237,7 +247,17 @@ def generate_batch_expeditions_tsv():
     for record in data:
         writer.writerow(record)
 
-    # output.seek(0)
-    output.close()
+    output.seek(0)
 
-    # TODO: actually write the data somewhere
+    # upload the exported file, overwriting the existing copy
+    s3.put_object(
+        ACL='public-read',
+        Bucket=bucket,
+        Key='reports/expeditions-full.tsv',
+        ContentType='text/tab-separated-values',
+        StorageClass='REDUCED_REDUNDANCY',
+        Body=output,
+        Metadata={
+            'GeneratedAt': '{}'.format(Time()),
+        },
+    )
