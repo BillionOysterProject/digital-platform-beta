@@ -1522,5 +1522,5 @@ li.loading-dialog {
     top:      0;
     bottom:   0;
     width:    calc(100% - 250px);
-    cursor:  crosshair;
+    cursor:  crosshair !important;
 }
