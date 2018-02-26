@@ -1,0 +1,130 @@
+---
+page:
+    view: Map Explorer
+---
+<section class="content">
+    <div id="mapexplorer"></div>
+</section>
+
+<script type="text/javascript">
+    $(function() {
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZ2hldHplbCIsImEiOiJjajhvdTVvOHYwOGtjMnd1bXUxN2p2eThkIn0.t74BmXxs3SBMGLM1YqIGEg';
+
+        var map = new mapboxgl.Map({
+            container: 'mapexplorer',
+            style: 'mapbox://styles/mapbox/light-v9',
+            failIfMajorPerformanceCaveat: true,
+            center: [-73.98, 40.7064203],
+            zoom:   10,
+        });
+
+        map.on('load', function() {
+            $.ajax({
+                url: '/data/test.tsv',
+                dataType: 'text',
+                success: function(data) {
+                    Papa.parse(data, {
+                        delimiter:      "\t",
+                        dynamicTyping:  true,
+                        skipEmptyLines: true,
+                        complete: function(records) {
+                            var layer = {
+                                "id": "sites",
+                                "type": "symbol",
+                                "source": {
+                                    "type": "geojson",
+                                    "data": {
+                                        "type": "FeatureCollection",
+                                        "features": [],
+                                    },
+                                },
+                                "layout": {
+                                    "icon-image": "{icon}-15",
+                                    "text-field": "{title}",
+                                    "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+                                    "text-offset": [0, 0.6],
+                                    "text-anchor": "top",
+                                }
+                            };
+
+                            $.each(records.data.slice(1), function(i, site){
+                                var point = {
+                                    "type": "Feature",
+                                    "properties": {
+                                        "description": "<strong>" + site[0] + "</strong>",
+                                        "icon": "marker",
+                                        "color": "#F7455D",
+                                    },
+                                    "geometry": {
+                                        "type": "Point",
+                                        "coordinates": [
+                                            parseFloat(site[4]),
+                                            parseFloat(site[3]),
+                                        ],
+                                    },
+                                };
+
+                                layer.source.data.features.push(point);
+                            });
+
+                            map.addLayer(layer);
+                        },
+                    });
+                },
+            });
+        });
+
+        var currentPopup = null;
+
+        map.on('mousemove', function(e) {
+            try {
+                var features = map.queryRenderedFeatures(e.point, {
+                    layers: ['sites'],
+                });
+
+                if (!features.length) {
+                    if (currentPopup && currentPopup.isOpen()) {
+                        currentPopup.remove();
+                        currentPopup = null;
+                    };
+
+                    return;
+                }
+
+                var feature = features[0];
+
+                if (!currentPopup) {
+                    currentPopup = new mapboxgl.Popup({ offset: [0, -15] })
+                        .setLngLat(feature.geometry.coordinates)
+                        .setHTML('<p>' + feature.properties.description + '</p>')
+                        .setLngLat(feature.geometry.coordinates)
+                        .addTo(map);
+                }
+            } catch(e) {
+                ;
+            }
+        });
+
+        map.on('click', function(e) {
+            var features = map.queryRenderedFeatures(e.point, {
+                layers: ['sites'],
+            });
+
+            if (!features.length) {
+                if (currentPopup && currentPopup.isOpen()) {
+                    currentPopup.remove();
+                    currentPopup = null;
+                };
+
+                return;
+            }
+
+            var feature = features[0];
+
+            feature.paint = {
+                'icon-color': 'red',
+            };
+        });
+
+    });
+</script>
