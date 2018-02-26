@@ -1525,5 +1525,5 @@ li.loading-dialog {
 }
 
 #mapexplorer canvas {
-    cursor:  default !important;
+    cursor:  pointer !important;
 }
