@@ -12,7 +12,7 @@ page:
 
         var map = new mapboxgl.Map({
             container: 'mapexplorer',
-            style: 'mapbox://styles/mapbox/outdoors-v9',
+            style: 'mapbox://styles/mapbox/{{ qs `style` `outdoors-v9` }}',
             failIfMajorPerformanceCaveat: true,
             center: [-73.98, 40.7064203],
             zoom:   10,
