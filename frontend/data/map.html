@@ -57,7 +57,7 @@ page:
                                 },
                                 "paint": {
                                     "circle-radius": 5,
-                                    "circle-color": "#F7455D",
+                                    "circle-color": "#415980",
                                     "circle-stroke-width": 2,
                                     "circle-stroke-color": "#FFFFFF",
                                 },
@@ -88,56 +88,26 @@ page:
             });
         });
 
-        var currentPopup = null;
-
-        map.on('mousemove', function(e) {
+        map.on('click', function(e) {
             try {
                 var features = map.queryRenderedFeatures(e.point, {
                     layers: ['sites'],
                 });
 
                 if (!features.length) {
-                    if (currentPopup && currentPopup.isOpen()) {
-                        currentPopup.remove();
-                        currentPopup = null;
-                    };
-
                     return;
                 }
 
                 var feature = features[0];
 
-                if (!currentPopup) {
-                    currentPopup = new mapboxgl.Popup({ offset: [0, -15] })
-                        .setLngLat(feature.geometry.coordinates)
-                        .setHTML('<p>' + feature.properties.description + '</p>')
-                        .setLngLat(feature.geometry.coordinates)
-                        .addTo(map);
-                }
+                var currentPopup = new mapboxgl.Popup({ offset: [0, -15] })
+                    .setLngLat(feature.geometry.coordinates)
+                    .setHTML('<p>' + feature.properties.description + '</p>')
+                    .setLngLat(feature.geometry.coordinates)
+                    .addTo(map);
             } catch(e) {
                 ;
             }
-        });
-
-        map.on('click', function(e) {
-            var features = map.queryRenderedFeatures(e.point, {
-                layers: ['sites'],
-            });
-
-            if (!features.length) {
-                if (currentPopup && currentPopup.isOpen()) {
-                    currentPopup.remove();
-                    currentPopup = null;
-                };
-
-                return;
-            }
-
-            var feature = features[0];
-
-            feature.paint = {
-                'icon-color': 'red',
-            };
         });
 
     });
