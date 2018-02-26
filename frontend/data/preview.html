@@ -75,6 +75,7 @@
 
         $.ajax({
             url: '/api/expeditions/report?' + $.param({
+                q:     '{{ or (qs `q`) `all` }}',
                 limit: 10,
                 sort:  '{{ qs `sort` }}',
                 fields: exportFields.join(','),
@@ -86,9 +87,6 @@
                     dynamicTyping:  true,
                     skipEmptyLines: true,
                     complete: function(records) {
-                        $('#recordCount').text(records.data.length - 1);
-                        $('#recordStats').removeAttr('hidden');
-
                         var headerGroups = [];
                         var headers = {};
                         var tableHeader = $('#preview thead');
@@ -148,11 +146,50 @@
                         tableHeader.append(groupTr);
                         tableHeader.append(headerTr);
 
+                        // perform late-stage filtering
+                        var finalResults = [];
+
+                        $.each(records.data.slice(1), function(i, record) {
+                            var search = '{{ qs `search` }}';
+
+                            if (search.length) {
+                                for(var j in record) {
+                                    var cell = record[j];
+
+                                    try {
+                                        parts = search.split(/\s+/);
+                                        var ok = true;
+
+                                        for(var k in parts) {
+                                            var part = parts[k].toString().toLowerCase();
+
+                                            if (cell.toString().toLowerCase().indexOf(part) < 0) {
+                                                ok = false;
+                                                break;
+                                            }
+                                        }
+
+                                        if (ok) {
+                                            finalResults.push(record);
+                                            break;
+                                        }
+                                    }catch(e) {
+                                        ;
+                                    }
+                                }
+                            } else {
+                                finalResults.push(record);
+                            }
+                        });
+
+                        $('#recordCount').text(finalResults);
+                        $('#recordStats').removeAttr('hidden');
+
                         $('#preview').DataTable({
                             searching:      false,
                             paging:         false,
                             info:           false,
-                            data:           records.data.slice(1),
+                            data:           finalResults,
                             columnDefs:   [{
                                 targets:        '_all',
                                 defaultContent: '-',
