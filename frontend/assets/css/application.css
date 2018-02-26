@@ -1523,3 +1523,7 @@ li.loading-dialog {
     bottom:   0;
     width:    calc(100% - 250px);
 }
+
+#mapexplorer canvas {
+    cursor: crosshair;
+}

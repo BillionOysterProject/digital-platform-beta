@@ -1,8 +1,23 @@
 ---
 page:
     view: Map Explorer
+    style: outdoors-v9
 ---
 <section class="content">
+    <nav class="navbar navbar-expand-lg navbar-default user-navbar">
+        <div class="navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item{{ if eqx (qs `style` .page.style) `outdoors-v9` }} active{{ end }}">
+                    <a class="nav-link" href="/data/map?style=outdoors-v9">Color Map</a>
+                </li>
+
+                <li class="nav-item{{ if eqx (qs `style` .page.style) `light-v9` }} active{{ end }}">
+                    <a class="nav-link" href="/data/map?style=light-v9">Grey Map</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div id="mapexplorer"></div>
 </section>
 
@@ -12,7 +27,7 @@ page:
 
         var map = new mapboxgl.Map({
             container: 'mapexplorer',
-            style: 'mapbox://styles/mapbox/{{ qs `style` `outdoors-v9` }}',
+            style: 'mapbox://styles/mapbox/{{ qs `style` .page.style }}',
             failIfMajorPerformanceCaveat: true,
             center: [-73.98, 40.7064203],
             zoom:   10,
@@ -30,7 +45,7 @@ page:
                         complete: function(records) {
                             var layer = {
                                 "id": "sites",
-                                "type": "symbol",
+                                "type": "circle",
                                 "source": {
                                     "type": "geojson",
                                     "data": {
@@ -39,12 +54,13 @@ page:
                                     },
                                 },
                                 "layout": {
-                                    "icon-image": "{icon}-15",
-                                    "text-field": "{title}",
-                                    "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-                                    "text-offset": [0, 0.6],
-                                    "text-anchor": "top",
-                                }
+                                },
+                                "paint": {
+                                    "circle-radius": 5,
+                                    "circle-color": "#F7455D",
+                                    "circle-stroke-width": 2,
+                                    "circle-stroke-color": "#FFFFFF",
+                                },
                             };
 
                             $.each(records.data.slice(1), function(i, site){
@@ -52,8 +68,6 @@ page:
                                     "type": "Feature",
                                     "properties": {
                                         "description": "<strong>" + site[0] + "</strong>",
-                                        "icon": "marker",
-                                        "color": "#F7455D",
                                     },
                                     "geometry": {
                                         "type": "Point",
