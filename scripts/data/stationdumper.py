@@ -25,7 +25,7 @@ for station in stations.all(limit=False, sort=['name']):
             limit=1
         ).records[0]
 
-        date = lastExpedition['fields'].get('published')
+        date = lastExpedition.published
     except IndexError:
         pass
 
@@ -46,4 +46,4 @@ for station in stations.all(limit=False, sort=['name']):
         outputs.append('')
         outputs.append('')
 
-    print('\t'.join(outputs))
+    print('\t'.join([i or '' for i in outputs]))
