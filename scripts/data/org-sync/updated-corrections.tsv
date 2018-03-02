@@ -1,0 +1,319 @@
+BOP_ID	ATS_CODE	Duplicate of	BOP_NAME	DOE_NAME	Org_Type	TYPE_OF_SCHOOL		ADDRESS_1	NEIGHBORHOOD	CITY	STATE	ZIP	COMMUNITY_BOARD	COUNCIL_DISTRICT	PRINCIPAL	PRINCIPAL_PHONE
+586d4b89195c49c15ebeecff	30Q235		Academy for New Americans	Academy for New Americans	School	NYC Public		30-14 30 STREET	Old Astoria	QUEENS	NY	11102	401	22	Betty Cartagena	718-956-4140
+59d29ad3d9e02459790582d7	13K492		Academy of Arts and Letters	Academy of Arts and Letters	School	NYC Public		225 ADELPHI STREET	Fort Greene	BROOKLYN	NY	11205	302	35	John Oreilly	718-222-1605
+5891f39958dc86ad76329ee1	12X341		Accion Academy	Accion Academy	School	NYC Public		1825 PROSPECT AVENUE	East Tremont	BRONX	NY	10457	206	17	Rajendra Jimenez Jailall	718-294-0514
+5834ab46e5b1443821082aea	30Q126		IS 126 ALBERT SHANKER SCHOOL FOR VISUAL AND PERFORMING ARTS	Albert Shanker School for Visual and Performing Arts	School	NYC Public		31-51 21 STREET	Astoria	QUEENS	NY	11106	401	22	ALEXANDER ANGUEIRA	718-274-8316
+582f866a47f5770b28c9c6b6	30Q126	5834ab46e5b1443821082aea	IS 126Q	Albert Shanker School for Visual and Performing Arts	School	NYC Public		31-51 21 STREET	Astoria	QUEENS	NY	11106	401	22	ALEXANDER ANGUEIRA	718-274-8316
+582f867047f5770b28c9c6b8	30Q126	5834ab46e5b1443821082aea	IS 126Q	Albert Shanker School for Visual and Performing Arts	School	NYC Public		31-51 21 STREET	Astoria	QUEENS	NY	11106	401	22	ALEXANDER ANGUEIRA	718-274-8316
+5834ada8e5b1443821082af4	32K554		ALL CITY LEADERSHIP SECONDARY SCHOOL	All City Leadership Secondary School	School	NYC Public		321 PALMETTO STREET	Bushwick North	BROOKLYN	NY	11237	304	37	ELVIS ESTEVEZ	718-246-6500
+57d426f3617bf9c536f37caa	01M696		Bard High School Early College	Bard High School Early College	School	NYC Public		525 EAST HOUSTON STREET	Lower East Side	MANHATTAN	NY	10002	103	2	MICHAEL LERNER	212-995-8479
+5737437f117a5467af679754	02M276		PS/IS 276 Battery Park Community School	Battery Park City School	School	NYC Public		55 BATTERY PLACE	Battery Park City-Lower Manhattan	MANHATTAN	NY	10280	101	1	Theresa Ruyter	212-266-5800
+57d431b7617bf9c536f37d3b	08X537		Bronx Arena High School	Bronx Arena High School	School	NYC Public		1440 STORY AVENUE	Soundview-Castle Hill-Clason Point-Harding Park	BRONX	NY	10473	209	17	Ty Cesene	718-860-5056
+5737437f117a5467af67970b	09X260		Bronx Center for Science and Mathematics	Bronx Center for Science and Mathematics	School	NYC Public		1363 FULTON AVENUE	Claremont-Bathgate	BRONX	NY	10456	203	16	EDWARD TOM	718-992-7089
+57d43130617bf9c536f37d33	10X351		Bronx Collaborative High School	Bronx Collaborative High School	School	NYC Public		100 WEST MOSHOLU PARKWAY SOUTH	Van Cortlandt Village	BRONX	NY	10468	207	11	Brett Schneider	718-543-1023
+5834ad6ee5b1443821082af2	23K664		BROOKLYN ENVIRONMENTAL EXPLORATION SCHOOL (BEES)	Brooklyn Environmental Exploration School (BEES)	School	NYC Public		251 MAC DOUGAL STREET	Ocean Hill	BROOKLYN	NY	11233	316	37	Craig Garber	718-453-3039
+5737437f117a5467af67970a	15K448		Brooklyn School for Collaborative Studies, 448	Brooklyn Secondary School for Collaborative Studies	School	NYC Public		610 HENRY STREET	Carroll Gardens-Columbia Street-Red Hook	BROOKLYN	NY	11231	306	39	Priscilla Chan	718-923-4700
+59a5c93ecf6a2a0607619ca7	84K758		Brooklyn Urban Garden Charter School	Brooklyn Urban Garden Charter School	School	Charter		500 19TH STREET	Windsor Terrace	BROOKLYN	NY	11215	307	38	Linda Rosenbury	718-280-9556
+5737437f117a5467af67970c	04M964		Central Park East 2	Central Park East I	School	NYC Public		1573 MADISON AVENUE	East Harlem South	MANHATTAN	NY	10029	111	8	Feldberg, Gabriel	212-860-5821
+5834ae5ae5b1443821082af6	06M328		M.S. 328 MANHATTAN MIDDLE SCHOOL FOR SCIENTIFIC INQUIRY	Community Math & Science Prep	School	NYC Public		401 WEST 164 STREET	Washington Heights South	MANHATTAN	NY	10032	112	10	Olga Quiles	917-521-2508
+5737437f117a5467af67970e	84K789		Compass Charter School	Compass Charter School	School	Charter		300 ADELPHI STREET	Fort Greene	BROOKLYN	NY	11205	302	35	Brooke Peters	212-437-8372
+5737437f117a5467af679713	31R450		Curtis High School	Curtis High School	School	NYC Public		105 HAMILTON AVENUE	West New Brighton-New Brighton-St. George	STATEN ISLAND	NY	10301	501	49	Gregory Jaenicke	718-390-1800
+5a29e15b1b84717c22f94415	10X440		DeWitt Clinton High School	DeWitt Clinton High School	School	NYC Public		100 WEST MOSHOLU PARKWAY SOUTH	Van Cortlandt Village	BRONX	NY	10468	207	11	Pierre Orbe	718-543-1000
+5737437f117a5467af679717	13K265		Dr. Susan S. McKinney Secondary School of the Arts (13K265)	Dr. Susan S. McKinney Secondary School of the Arts	School	NYC Public		101 PARK AVENUE	Fort Greene	BROOKLYN	NY	11205	302	35	Michael Walker	718-834-6760
+5737437f117a5467af67973a	13K265	5737437f117a5467af679717	McKinney Secondary School of the Arts	Dr. Susan S. McKinney Secondary School of the Arts	School	NYC Public		101 PARK AVENUE	Fort Greene	BROOKLYN	NY	11205	302	35	Michael Walker	718-834-6760
+595eb251b031c81e6e3bdab4	01M364		The Earth School	Earth School	School	NYC Public		600 EAST  6 STREET	Lower East Side	MANHATTAN	NY	10009	103	2	ABBE FUTTERMAN	212-477-1735
+5925a82a551848fd0ebcc6a9	12X271		East Bronx Academy for the Future	East Bronx Academy for the Future	School	NYC Public		1716 SOUTHERN BOULEVARD	Crotona Park East	BRONX	NY	10460	203	17	SARAH SCROGIN	718-861-8641
+5891efbf58dc86ad76329ec5	11X542		Pelham Preparatory Academy	Esperanza Preparatory Academy	School	NYC Public		240 EAST 109 STREET	East Harlem South	MANHATTAN	NY	10029	111	8	Luisa Morales	212-722-6507
+5737437f117a5467af679718	25Q263		Flushing International High School	Flushing International High School	School	NYC Public		144-80 BARCLAY AVENUE	Murray Hill	QUEENS	NY	11355	407	20	Lara Evangelista	718-463-2348
+5912166991cb1f850e448dbc	28Q440		Forest Hills High School	Forest Hills High School	School	NYC Public		67-01 110 STREET	Forest Hills	QUEENS	NY	11375	406	29	BENJAMIN SHERMAN	718-268-3137
+5737437f117a5467af679719	20K490		Fort Hamilton High School	Fort Hamilton High School	School	NYC Public		8301 SHORE ROAD	Bay Ridge	BROOKLYN	NY	11209	310	43	Kaye Houlihan	718-748-1537
+594fee704b16da37d15a040c	20K505		Franklin Delano Roosevelt High School	Franklin Delano Roosevelt High School	School	NYC Public		5800 20 AVENUE	Borough Park	BROOKLYN	NY	11204	312	44	Melanie Katz	718-621-8800
+5a31ef35c6e9f20f9162e2c1	13K605		George Westinghouse High School	George Westinghouse Career and Technical Education High School	School	NYC Public		105 TECH PLACE	DUMBO-Vinegar Hill-Downtown Brooklyn-Boerum Hill	BROOKLYN	NY	11201	302	33	JOEY ARZUAGA	718-625-6130
+586bb6c1195c49c15ebeeca9	27Q333		Goldie Maple Academy	Goldie Maple Academy	School	NYC Public		3-65 BEACH 56 STREET	Hammels-Arverne-Edgemere	QUEENS	NY	11692	414	31	ANGELA LOGAN-SMITH	718-945-3300
+58bd96529e4a962862ed1e69	24Q485		Grover Cleveland High School	Grover Cleveland High School	School	NYC Public		21-27 HIMROD STREET	Ridgewood	QUEENS	NY	11385	405	30	Denise Vittor	718-381-9600
+59775fa4db83c37a9842aae4	06M209		Hamilton Grange Middle School	Hamilton Grange Middle School	School	NYC Public		500 WEST 138 STREET	Manhattanville	MANHATTAN	NY	10031	109	7	BENJAMIN LEV	212-281-6184
+5737437f117a5467af679724	02M534		Harvest Collegiate High School	Harvest Collegiate High School	School	NYC Public		34 WEST  14 STREET	West Village	MANHATTAN	NY	10011	102	3	Catherine Burch	212-242-3384
+59df6b697ab0680f7bf8b047	02M560		City-As-School	High School M560 - City As School	School	NYC Public		16 CLARKSON STREET	West Village	MANHATTAN	NY	10014	102	3	Alan Cheng	212-337-6800
+5737437f117a5467af679721	30Q291		Hunters Point Community Middle School	Hunters Point Community Middle School	School	NYC Public		1-50 51ST AVENUE	Hunters Point-Sunnyside-West Maspeth	QUEENS	NY	11101	402	26	SARAH GOODMAN	718-609-3300
+5737437f117a5467af679729	31R024		IS 24 Myra Barnes	I.S. 024 Myra S. Barnes	School	NYC Public		225 CLEVELAND AVENUE	Great Kills	STATEN ISLAND	NY	10308	503	51	LENNY SANTAMARIA	718-982-4700
+590203452272257a0e858bfd	25Q025		I.S. 25 ADRIEN BLOCK	I.S. 025 Adrien Block	School	NYC Public		34-65 192 STREET	Auburndale	QUEENS	NY	11358	411	19	MARY ELLEN BEIRNE	718-961-3480
+590203e22272257a0e858c01	25Q025	590203452272257a0e858bfd	I.S. 25 ADRIEN BLOCK	I.S. 025 Adrien Block	School	NYC Public		34-65 192 STREET	Auburndale	QUEENS	NY	11358	411	19	MARY ELLEN BEIRNE	718-961-3480
+5876643bd1b4f2e2389723cc	31R051		IS 51 Edwin Markham	I.S. 051 Edwin Markham	School	NYC Public		20 HOUSTON STREET	Port Richmond	STATEN ISLAND	NY	10302	501	50	Nicholas Mele	718-981-0502
+5737437f117a5467af67972e	18K068		IS 68 Isaac Bildersee	I.S. 068 Isaac Bildersee	School	NYC Public		956 EAST  82 STREET	Canarsie	BROOKLYN	NY	11236	318	46	Merve Williams	718-241-4800
+5737437f117a5467af679726	30Q141		IS 141 The Steinway School	I.S. 141 The Steinway	School	NYC Public		37-11 21 AVENUE	Steinway	QUEENS	NY	11105	401	22	MIRANDA PAVLOU	718-278-6403
+5737437f117a5467af679727	30Q145		IS 145 Joseph Pulitzer	I.S. 145 Joseph Pulitzer	School	NYC Public		33-34 80 STREET	Jackson Heights	QUEENS	NY	11372	403	25	IVAN RODRIGUEZ	718-457-1242
+5834ac30e5b1443821082aec	30Q230		I.S. 230	I.S. 230	School	NYC Public		73-10 34 AVENUE	Jackson Heights	JACKSON HEIGHTS	NY	11372	403	25	Ronald Zirin	718-335-7648
+5737437f117a5467af67972a	21K281		IS 281 Joseph Cavallaro	I.S. 281 Joseph B Cavallaro	School	NYC Public		8787 24 AVENUE	Bensonhurst East	BROOKLYN	NY	11214	311	47	Maria Bender	718-996-6706
+5878f1fbcc0ff6e83807f897	14K318		I.S. 318 Eugenio Maria de Hostos	I.S. 318 Eugenio Maria De Hostos	School	NYC Public		101 WALTON STREET	Williamsburg	BROOKLYN	NY	11206	301	33	Leander Windley	718-782-0589
+5924d6a6561569c017258cab	17K340		M.S. 340-North Star Academy	I.S. 340	School	NYC Public		227 STERLING PLACE	Prospect Heights	BROOKLYN	NY	11238	308	35	JEAN WILLIAMS	718-857-5516
+5901fb722272257a0e858bf7	31R049		I.S. 49 BERTA A. DREYFUS	I.S. 49 Berta A. Dreyfus	School	NYC Public		101 WARREN STREET	Stapleton-Rosebank	STATEN ISLAND	NY	10304	501	49	James De Francesco	718-727-6040
+5834abcce5b1443821082aeb	24Q005		I.S. 5 THE WALTER CROWLEY SCHOOL	I.S. 5 - The Walter Crowley Intermediate School	School	NYC Public		50-40 JACOBUS STREET	Elmhurst-Maspeth	QUEENS	NY	11373	404	25	Kelly Nepogoda	718-205-6788
+59b98656afdf4c6a8fa53425	21K098		Bay Academy	I.S. 98 Bay Academy	School	NYC Public		1401 EMMONS AVENUE	Sheepshead Bay-Gerritsen Beach-Manhattan Beach	BROOKLYN	NY	11235	315	48	MARIA TIMO	718-891-9005
+5893e1db58dc86ad76329f7e	02M407		Institute for Collaborative Education	Institute for Collaborative Education	School	NYC Public		345 EAST  15TH STREET	Gramercy	MANHATTAN	NY	10003	106	2	Peter Karp	212-475-7972
+589a05abe417aa3a7b906923	24Q530		International High School at LaGuardia C.C.	International High School at LaGuardia Community College	School	NYC Public		45-35 VAN DAM STREET	Hunters Point-Sunnyside-West Maspeth	QUEENS	NY	11101	402	26	Jaclyn Valane	718-392-3433
+5737437f117a5467af679725	10X342		International School for Liberal Art	International School for Liberal Arts	School	NYC Public		2780 RESERVOIR AVENUE	Van Cortlandt Village	BRONX	NY	10468	207	11	Francine Cruz	718-329-8570
+5737437f117a5467af679770	10X342	5737437f117a5467af679725	The International School for Liberal Arts MS/HS 342	International School for Liberal Arts	School	NYC Public		2780 RESERVOIR AVENUE	Van Cortlandt Village	BRONX	NY	10468	207	11	Francine Cruz	718-329-8570
+59c9072ae3e6892d8be65d54	84M478		Inwood Academy for Leadership Charter School	Inwood Academy for Leadership Charter School	School	Charter		108 COOPER STREET	Marble Hill-Inwood	MANHATTAN	NY	10034	112	10	Christina Reyes	646-665-5570
+59c92001e3e6892d8be65d61	84M478	59c9072ae3e6892d8be65d54	Inwood Academy for Leadership Charter School High School	Inwood Academy for Leadership Charter School	School	Charter		108 COOPER STREET	Marble Hill-Inwood	MANHATTAN	NY	10034	112	10	Christina Reyes	646-665-5570
+58f1715be23a596b0e4e5735	75X754		JM Rapport School for Career Development 754x	J. M. Rapport School Career Development	School	NYC Public		470 JACKSON AVENUE	Mott Haven-Port Morris	BRONX	NY	10455	201	8	DANIEL HOEHN	718-993-5581
+5833503c262e956b0eb38a4b	20K062		Ditmas IS62	J.H.S. 062 Ditmas	School	NYC Public		700 CORTELYOU ROAD	Kensington-Ocean Parkway	BROOKLYN	NY	11218	312	40	BARRY KEVORKIAN	718-941-5450
+5737437f117a5467af679743	15K088		MS 88 The Peter Rouget School	J.H.S. 088 Peter Rouget	School	NYC Public		544 7TH AVENUE	Sunset Park West	BROOKLYN	NY	11215	307	38	AILENE MITCHELL	718-788-4482
+5877e666d1b4f2e23897246f	02M104		MS 104 Simon Baruch	J.H.S. 104 Simon Baruch	School	NYC Public		330 EAST  21 STREET	Gramercy	MANHATTAN	NY	10010	106	2	Rocco Macri	212-674-4545
+599253065025d77159ad7693	11X127		Castle Hill MIddle School 127	J.H.S. 127 The Castle Hill	School	NYC Public		1560 PURDY STREET	Parkchester	BRONX	NY	10462	209	18	HARRY SHERMAN	718-892-8600
+5834ad34e5b1443821082af1	25Q185		J.H.S. 185 EDWARD BLEEKER	J.H.S. 185 Edward Bleeker	School	NYC Public		147-26 25 DRIVE	Murray Hill	QUEENS	NY	11354	407	19	Theresa Mshar	718-445-3232
+59f0996e6cbbb80f9b05ed48	19K218		James P Sinnott, jhs 218	J.H.S. 218 James P. Sinnott	School	NYC Public		370 FOUNTAIN AVENUE	East New York	BROOKLYN	NY	11208	305	42	Lisa ann Hermann	718-647-9050
+5834aab2e5b1443821082ae8	20K220		J.H.S. 220 JOHN J. PERSHING	J.H.S. 220 John J. Pershing	School	NYC Public		4812 9TH AVENUE	Sunset Park East	BROOKLYN	NY	11220	312	38	SHELDON DEMPSTER	718-633-8200
+5834aafbe5b1443821082ae9	22K234		J.H.S. 234 ARTHUR W. CUNNINGHAM	J.H.S. 234 Arthur W. Cunningham	School	NYC Public		1875 EAST  17 STREET	Madison	BROOKLYN	NY	11229	315	48	SUSAN SCHAEFFER	718-645-1334
+58f510b4e23a596b0e4e575a	32K383		Philippa Schuyler Middle School I.S. 383	J.H.S. 383 Philippa Schuyler	School	NYC Public		1300 GREENE AVENUE	Bushwick North	BROOKLYN	NY	11237	304	37	Jeanette Smith	718-574-0390
+5737437f117a5467af67972b	21K540		John Dewey High School	John Dewey High School	School	NYC Public		50 AVENUE X	Gravesend	BROOKLYN	NY	11223	313	47	CONNIE HAMILTON	718-373-6400
+5737437f117a5467af67972c	14K126		John Ericsson Middle School 126, Magnet School of environmental engineering	John Ericsson Middle School 126	School	NYC Public		424 LEONARD STREET	Greenpoint	BROOKLYN	NY	11222	301	33	MARIA ORTEGA	718-782-2527
+5737437f117a5467af67972d	12X316		KAPPA III (12x316)	Kappa III	School	NYC Public		2055 MAPES AVENUE	East Tremont	BRONX	NY	10460	206	15	Jean Colon	718-561-3580
+5834ae96e5b1443821082af7	02M131		M.S. 131	M.S. 131	School	NYC Public		100 HESTER STREET	Chinatown	MANHATTAN	NY	10002	103	1	PHYLLIS TAM	212-219-1204
+5a15aded443e2a444d5db391	03M243		The Center School MS 243	M.S. 243 Center School	School	NYC Public		100 WEST  84 STREET	Upper West Side	MANHATTAN	NY	10024	107	6	ELAINE SCHWARTZ	212-799-1477
+5737437f117a5467af679746	06M319		MS319/FRIENDS OF SHERMAN CREEK/CHILDRENS AID SOCIETY	M.S. 319 - Maria Teresa	School	NYC Public		21 JUMEL PLACE	Washington Heights South	MANHATTAN	NY	10032	112	10	YSIDRO ABREU	212-923-3827
+5737437f117a5467af679740	06M324		MS 324 Patria Mirabal	M.S. 324 - Patria Mirabal	School	NYC Public		21 JUMEL PLACE	Washington Heights South	MANHATTAN	NY	10032	112	10	CARLOS GUZMAN	212-923-4057
+5737437f117a5467af679741	10X390		MS 390	M.S. 390	School	NYC Public		1930 ANDREWS AVENUE	University Heights-Morris Heights	BRONX	NY	10453	205	14	ROBERT MERCEDES	718-583-5501
+5737437f117a5467af679742	15K051		MS 51	M.S. 51 William Alexander	School	NYC Public		350 5 AVENUE	Park Slope-Gowanus	BROOKLYN	NY	11215	306	39	LENORE DILEO BERNER	718-369-7603
+57f7b4b119cc1edc3249efbb	15K839	57f7b4e519cc1edc3249efc1	MS 839	M.S. 839	School	NYC Public		713 CATON AVENUE	Windsor Terrace	BROOKLYN	NY	11218	307	39	MICHAEL PERLBERG	718-686-2730
+57f7b4b319cc1edc3249efbd	15K839	57f7b4e519cc1edc3249efc1	MS 839	M.S. 839	School	NYC Public		713 CATON AVENUE	Windsor Terrace	BROOKLYN	NY	11218	307	39	MICHAEL PERLBERG	718-686-2730
+57f7b4e519cc1edc3249efc1	15K839		MS839	M.S. 839	School	NYC Public		713 CATON AVENUE	Windsor Terrace	BROOKLYN	NY	11218	307	39	MICHAEL PERLBERG	718-686-2730
+5737437f117a5467af67973f	13K266		MS 266 Park Place Community School	M.S. K266 - Park Place Community Middle School	School	NYC Public		62 PARK PLACE	Park Slope-Gowanus	BROOKLYN	NY	11217	306	39	Glenda Esperance	718-245-8766
+59e131ce7ab0680f7bf8db52	03M245		MS 245 The Computer School	M.S. M245 The Computer School	School	NYC Public		100 WEST  77 STREET	Upper West Side	MANHATTAN	NY	10024	107	6	HENRY ZYMECK	917-441-0873
+595e6b99037942769ecd2875	04M435		Manhattan Center for Science and Mathematics	Manhattan Center for Science and Mathematics	School	NYC Public		260 PLEASANT AVENUE	East Harlem North	MANHATTAN	NY	10029	111	8	JOSE JIMENEZ	212-876-4639
+58e3a3c3ec3f74820e7375a7	02M459		The Manhattan International High School	Manhattan International High School	School	NYC Public		317 EAST  67 STREET	Lenox Hill-Roosevelt Island	MANHATTAN	NY	10065	108	5	Gladys Rodriguez	212-517-6728
+5737437f117a5467af679737	31R063		Marsh Avenue Expeditionary Learning School	Marsh Avenue School for Expeditionary Learning	School	NYC Public		100 ESSEX DRIVE	Todt Hill-Emerson Hill-Heartland Village-Lighthouse Hill	STATEN ISLAND	NY	10314	502	51	Cara De Angelo	718-370-6850
+58dbeca6c6f0027a0e28bc58	28Q167		Metropolitan Expeditionary Learning School (MELS)	Metropolitan Expeditionary Learning School	School	NYC Public		91-30 METROPOLITAN AVENUE	Forest Hills	QUEENS	NY	11375	406	29	DAMON MCCORD	718-286-3500
+5737437f117a5467af67973b	23K522		Mott Hall IV	Mott Hall IV	School	NYC Public		1137 HERKIMER STREET	Ocean Hill	BROOKLYN	NY	11233	316	41	Dellie Edwards	718-485-5240
+5737437f117a5467af679745	31R440		New Dorp High School	New Dorp High School	School	NYC Public		465 NEW DORP LANE	New Dorp-Midland Beach	STATEN ISLAND	NY	10306	502	50	DEIRDRE DEANGELIS DALES	718-667-8686
+5737437f117a5467af679747	84X202		New Visions Charter High School For Advanced Math & Science II	New Visions Charter High School for Advanced Math and Science II	School	Charter		900 TINTON AVENUE	Morrisania-Melrose	BRONX	NY	10456	203	17	SPIRIDOULA MANESSIS	718-665-3671
+5737437f117a5467af67974f	02M312		NYC Lab School for Collaborative Studies	New York City Lab Middle School for Collaborative Studies	School	NYC Public		333 WEST  17 STREET	Hudson Yards-Chelsea-Flatiron-Union Square	MANHATTAN	NY	10011	104	3	MEGAN ADAMS	212-691-6119
+5737437f117a5467af67974e	02M376		NYC I School	NYC iSchool	School	NYC Public		131 AVENUE OF THE AMERICAS	SoHo-TriBeCa-Civic Center-Little Italy	MANHATTAN	NY	10013	102	3	Isora Bailey	917-237-7300
+5a537a9c2d30ce1fe0a79089	02M003		PS3	P.S. 003 Charrette School	School	NYC Public		490 HUDSON STREET	West Village	MANHATTAN	NY	10014	102	3	LISA SIEGMAN	212-691-1183
+58786e8ecc0ff6e83807f890	19K007		IS 171 Abraham Lincoln	P.S. 007 Abraham Lincoln	School	NYC Public		858 JAMAICA AVENUE	Cypress Hills-City Line	BROOKLYN	NY	11208	305	37	Carolyn Noel	718-647-3600
+5737437f117a5467af679744	13K008	58a8376c911363392a0a40d6	MS8 The Robert Fulton School	P.S. 008 Robert Fulton	School	NYC Public		37 HICKS STREET	Brooklyn Heights-Cobble Hill	BROOKLYN	NY	11201	302	33	Patricia Peterson	718-834-6740
+58a8376c911363392a0a40d6	13K008		P.S. 8	P.S. 008 Robert Fulton	School	NYC Public		37 HICKS STREET	Brooklyn Heights-Cobble Hill	BROOKLYN	NY	11201	302	33	Patricia Peterson	718-834-6740
+5989de51d317056a6f438b40	30Q011		P.S. 11Q	P.S. 011 Kathryn Phelan	School	NYC Public		54-25 SKILLMAN AVENUE	Woodside	QUEENS	NY	11377	402	26	Elizabeth Pena Jorge	718-779-2090
+5989dda2d317056a6f438b1f	01M015		P. S. 15 M	P.S. 015 Roberto Clemente	School	NYC Public		333 EAST  4 STREET	Lower East Side	MANHATTAN	NY	10009	103	2	IRENE SANCHEZ	212-228-8730
+5a3138aa8330855d15a505e7	31R030		PS 30 SI The Westerleigh School	P.S. 030 Westerleigh	School	NYC Public		200 WARDWELL AVENUE	Westerleigh	STATEN ISLAND	NY	10314	501	50	Alan Ihne	718-442-0462
+5a3139f2c6e9f20f9162d099	31R030	5a3138aa8330855d15a505e7	PS 30 Westerleigh School	P.S. 030 Westerleigh	School	NYC Public		200 WARDWELL AVENUE	Westerleigh	STATEN ISLAND	NY	10314	501	50	Alan Ihne	718-442-0462
+588fdd8758dc86ad76329e16	26Q031		P.S.31Q The Bayside School	P.S. 031 Bayside	School	NYC Public		211-45 46 ROAD	Bayside-Bayside Hills	QUEENS	NY	11361	411	19	TERRI GRAYBOW	718-423-8289
+57d613a9617bf9c536f37ec1	15K032		PS 32 The Samuel Mills Sprole School in Carroll Gardens, Brooklyn	P.S. 032 Samuel Mills Sprole	School	NYC Public		317 HOYT STREET	Carroll Gardens-Columbia Street-Red Hook	BROOKLYN	NY	11231	306	39	DENISE WATSON	718-222-6400
+57d43034617bf9c536f37d29	02M033		PS 33, Chelsea Prep	P.S. 033 Chelsea Prep	School	NYC Public		281 9 AVENUE	Hudson Yards-Chelsea-Flatiron-Union Square	MANHATTAN	NY	10001	104	3	Chingchien Wang	212-244-6426
+5a0f4f02fba5fb2ea0754567	31R045		P.S.45R John Tyler School	P.S. 045 John Tyler	School	NYC Public		58 LAWRENCE AVENUE	New Brighton-Silver Lake	STATEN ISLAND	NY	10310	501	49	Christine Chavez	718-442-6123
+5a15a45e443e2a444d5d931e	31R046		PS 46	P.S. 046 Albert V. Maniscalco	School	NYC Public		41 REID AVENUE	Grasmere-Arrochar-Ft. Wadsworth	STATEN ISLAND	NY	10305	502	50	ANDREA MAFFEO	718-987-5155
+58bd89159e4a962862ed1e32	24Q049		P.S./I.S. 49 DOROTHY BONAWIT KOLE	P.S. 049 Dorothy Bonawit Kole	School	NYC Public		63-60 80th Street	Middle Village	QUEENS	NY	11379	405	30	Thomas Carty	718-326-2111
+57ebd0a7ab5be4f36908eccb	31R052		P.S. 52	P.S. 052 John C. Thompson	School	NYC Public		450 BUEL AVENUE	Old Town-Dongan Hills-South Beach	STATEN ISLAND	NY	10305	502	50	Jane Mccord	718-351-5454
+5a3138e78330855d15a505ee	09X063		PS 63 Author's Academy	P.S. 063 Author's Academy	School	NYC Public		1260 FRANKLIN AVENUE	Morrisania-Melrose	BRONX	NY	10456	203	16	REINALDO DIAZ LENS	718-589-3058
+5737437f117a5467af67975c	08X071		Rose E. Scala P.S.071	P.S. 071 Rose E. Scala	School	NYC Public		3040 ROBERTS AVENUE	Pelham Bay-Country Club-City Island	BRONX	NY	10461	210	13	Margaret Mirando	718-822-5351
+5983a59a0ef47e0fda510bcd	03M076		PS/IS 76	P.S. 076 A. Philip Randolph	School	NYC Public		220 WEST 121 STREET	Central Harlem South	MANHATTAN	NY	10027	110	9	CHARLES DEBERRY	212-678-2865
+5983d3970ef47e0fda510c9a	03M076	5983a59a0ef47e0fda510bcd	PS/IS 76	P.S. 076 A. Philip Randolph	School	NYC Public		220 WEST 121 STREET	Central Harlem South	MANHATTAN	NY	10027	110	9	CHARLES DEBERRY	212-678-2865
+5834aa3ae5b1443821082ae7	24Q102		PS/IS 102	P.S. 102 Bayview	School	NYC Public		55-24 VAN HORN STREET	Elmhurst-Maspeth	QUEENS	NY	11373	404	25	William Ko	718-446-3308
+5989dd71d317056a6f438b0c	27Q104		PS 104 Bayswater School	P.S. 104 The Bays Water	School	NYC Public		26-01 MOTT AVENUE	Far Rockaway-Bayswater	QUEENS	NY	11691	414	31	KATHLEEN GRADY	718-327-1910
+59417d58b909c30f8011fdc6	04M108		Ps108	P.S. 108 Assemblyman Angelo Del Toro Educational Complex	School	NYC Public		1615 MADISON AVENUE	East Harlem South	MANHATTAN	NY	10029	111	8	William Gladstone	212-860-5803
+5737437f117a5467af67973d	02M126		MS 126 Jacob Riis	P.S. 126 Jacob August Riis	School	NYC Public		80 CATHERINE STREET	Chinatown	MANHATTAN	NY	10038	103	1	Carlos Romero	212-962-2188
+58bee4b15d59018870f3b063	01M140		P.S./M.S. 140 NATHAN STRAUS	P.S. 140 Nathan Straus	School	NYC Public		123 RIDGE STREET	Lower East Side	MANHATTAN	NY	10002	103	1	MELISSA RODRIGUEZ	212-677-4680
+594c4505d1aa050fada88925	14K147		PS147	P.S. 147 Isaac Remsen	School	NYC Public		325 BUSHWICK AVENUE	Bushwick South	BROOKLYN	NY	11206	301	34	Sandra Noyola	718-497-0326
+59538e8a5a69e70f93c1c451	14K147	594c4505d1aa050fada88925	PS147	P.S. 147 Isaac Remsen	School	NYC Public		325 BUSHWICK AVENUE	Bushwick South	BROOKLYN	NY	11206	301	34	Sandra Noyola	718-497-0326
+5834acc1e5b1443821082aee	24Q153		P.S. 153 MASPETH ELEMENTARY	P.S. 153 Maspeth Elem	School	NYC Public		60-02 60 LANE	Maspeth	QUEENS	NY	11378	405	30	David Berkowitz	718-821-7850
+5845d7e5f817d9630eb2eea8	24Q153	5834acc1e5b1443821082aee	PS 153 Maspeth Elementary	P.S. 153 Maspeth Elem	School	NYC Public		60-02 60 LANE	Maspeth	QUEENS	NY	11378	405	30	David Berkowitz	718-821-7850
+5a1c882c2cffe6168a41d757	03M166		PS 166	P.S. 166 The Richard Rodgers School of The Arts and Technology	School	NYC Public		132 WEST  89 STREET	Upper West Side	MANHATTAN	NY	10024	107	6	Debra Mastriano	212-678-2829
+5834ac79e5b1443821082aed	27Q183		P.S. 183 DR. RICHARD R. GREEN	P.S. 183 Dr. Richard R. Green	School	NYC Public		2-45 BEACH  79 STREET	Hammels-Arverne-Edgemere	QUEENS	NY	11693	414	31	Jessica Romero	718-634-9459
+5737437f117a5467af67973c	01M188		MS 188 The Island School	P.S. 188 The Island School	School	NYC Public		442 EAST HOUSTON STREET	Lower East Side	NEW YORK	NY	10002	103	2	Suany Ramos	212-677-5710
+5989dddad317056a6f438b2f	29Q195		PS 195Q	P.S. 195 William Haberle	School	NYC Public		253-50 149 AVENUE	Rosedale	QUEENS	NY	11422	413	31	BERYL BAILEY	718-723-0313
+58991cd35841178c42e47fbf	22K207		Fillmore Academy @ PS 207	P.S. 207 Elizabeth G. Leary	School	NYC Public		4011 FILLMORE AVENUE	Georgetown-Marine Park-Bergen Beach-Mill Basin	BROOKLYN	NY	11234	318	46	Terri Contursi	718-645-8667
+59c26d7dc9614c0f833985c0	22K207	58991cd35841178c42e47fbf	P.S. 207 Elizabeth G. Leary	P.S. 207 Elizabeth G. Leary	School	NYC Public		4011 FILLMORE AVENUE	Georgetown-Marine Park-Bergen Beach-Mill Basin	BROOKLYN	NY	11234	318	46	Terri Contursi	718-645-8667
+58bd82c49e4a962862ed1e08	24Q229		P.S. 229 Emanual Kaplan	P.S. 229 Emanuel Kaplan	School	NYC Public		67-25 51 ROAD	Maspeth	QUEENS	NY	11377	405	30	SETH BERGER	718-446-2120
+5989df41d317056a6f438bb0	13K270		Johann Dekalb School/PS270	P.S. 270 Johann DeKalb	School	NYC Public		241 EMERSON PLACE	Clinton Hill	BROOKLYN	NY	11205	302	35	Alyssa Roye	718-623-5280
+5996c447048efd0f93fdd477	18K276		PS 276 Louis Marshall School	P.S. 276 Louis Marshall	School	NYC Public		1070 EAST  83 STREET	Canarsie	BROOKLYN	NY	11236	318	46	Yasmine Fidelia	718-241-5757
+5737437f117a5467af679756	21K288		PS/IS 288 Shirley Tanyhill School	P.S. 288 The Shirley Tanyhill	School	NYC Public		2950 WEST  25 STREET	Seagate-Coney Island	BROOKLYN	NY	11224	313	47	Qadir Dixon	718-382-2100
+58eced1fe23a596b0e4e56eb	22K326		Ps 326	P.S. 326	School	NYC Public		1800 UTICA AVENUE	Flatlands	BROOKLYN	NY	11234	318	45	COLLEEN DUCEY	718-241-4828
+5737437f117a5467af67970f	75K371		371K Lillian Rashkis	P.S. 371 - Lillian L. Rashkis	School	NYC Public		355 37 STREET	Sunset Park West	BROOKLYN	NY	11232	307	38	JOAN ANTONELLI	718-788-7608
+59066a4d91cb1f850e448a62	31R039		PS 39 Francis J. Murphy Jr.	P.S. 39 Francis J. Murphy Jr.	School	NYC Public		71 SAND LANE	Grasmere-Arrochar-Ft. Wadsworth	STATEN ISLAND	NY	10305	502	50	Tracey Wright	718-447-4543
+5989dea1d317056a6f438b49	20K069		PS 69	P.S. 69 Vincent D. Grippo School	School	NYC Public		6302 9TH AVENUE	Sunset Park East	BROOKLYN	NY	11220	310	38	JAYNEMARIE CAPETANAKIS	718-630-3899
+59d65413d93d110f853b82a2	21K090		PS 90 EDNA COHEN SCHOOL	P.S. 90 Edna Cohen School	School	NYC Public		2840 WEST  12 STREET	West Brighton	BROOKLYN	NY	11224	313	47	GRETA HAWKINS	718-787-3333
+589220f058dc86ad76329f48	75K369		P369K Coy L. Cox School	P.S. K369 - Coy L. Cox School	School	NYC Public		383 STATE STREET	DUMBO-Vinegar Hill-Downtown Brooklyn-Boerum Hill	BROOKLYN	NY	11217	302	33	RUDY GIULIANI	718-852-1701
+59aabc00e4df103e95589327	32K045		P.S./I.S.45K	P.S./I.S. 045 Horace E. Greene	School	NYC Public		84 SCHAEFER STREET	Bushwick South	BROOKLYN	NY	11207	304	37	TRACEY LOTT DAVIS	718-642-5360
+58b7364d1a50d18e69dd07e6	24Q087		PS 87	P.S./I.S. 087 Middle Village	School	NYC Public		67-54 80 STREET	Middle Village	QUEENS	NY	11379	405	30	CARYN MICHAELI	718-326-8243
+57f7b5f27a699f1e0a48ae77	20K104		PS/IS 104	P.S./I.S. 104 The Fort Hamilton School	School	NYC Public		9115 5 AVENUE	Bay Ridge	BROOKLYN	NY	11209	310	43	MARIE DIBELLA	718-836-4630
+5a31394a8330855d15a505f8	02M298		Pace high school	Pace High School	School	NYC Public		100 HESTER STREET	Chinatown	MANHATTAN	NY	10002	103	1	Eric Glatz	212-334-4663
+5989dd93d317056a6f438b14	28Q080		PS80Q	PS 80  The Thurgood Marshall Magnet School of Multimedia and Communication	School	NYC Public		171-05 137TH AVENUE	Springfield Gardens North	JAMAICA	NY	11434	412	28	Kersandra Cox	718-528-7070
+5989de56d317056a6f438b43	28Q080	5989dd93d317056a6f438b14	PS80Q	PS 80  The Thurgood Marshall Magnet School of Multimedia and Communication	School	NYC Public		171-05 137TH AVENUE	Springfield Gardens North	JAMAICA	NY	11434	412	28	Kersandra Cox	718-528-7070
+5885462fcc0ff6e83807f9ca	28Q310		Queens Collegiate	Queens Collegiate: A College Board School	School	NYC Public		167-01 GOTHIC DRIVE	Briarwood-Jamaica Hills	JAMAICA	NY	11432	408	24	JAIME DUBEI	718-658-4016
+5988ce859b94f0015f921272	02M422		Quest to Learn	Quest to Learn	School	NYC Public		351 WEST  18 STREET	Hudson Yards-Chelsea-Flatiron-Union Square	MANHATTAN	NY	10011	104	3	Nicholas Jurman	212-488-3645
+59ccf70eaa363b0fa002cc5a	84M433		Renaissance Charter High School for Innovation	Renaissance Charter High School for Innovation	School	Charter		410 EAST 100 STREET	East Harlem South	MANHATTAN	NY	10029	111	8	Terence Joseph	212-722-5871
+5737437f117a5467af679758	02M580		Richard R. Green High School of Teaching	Richard R. Green High School of Teaching	School	NYC Public		7 BEAVER STREET	Battery Park City-Lower Manhattan	MANHATTAN	NY	10004	101	1	Joan Weaver	646-826-8174
+5989dd80d317056a6f438b0f	19K663		School of the Future Brooklyn 19k663	School of the Future Brooklyn	School	NYC Public		574 DUMONT AVENUE	East New York (Pennsylvania Ave)	BROOKLYN	NY	11207	305	42	Sarah Kaufmann	718-345-5190
+587fd425cc0ff6e83807f98d	02M413		School of the Future (M413)	School of the Future High School	School	NYC Public		127 EAST  22 STREET	Gramercy	MANHATTAN	NY	10010	105	2	STACY GOLDSTEIN	212-475-8086
+5737437f117a5467af679763	08X448		Sound view Academy-08X448	Soundview Academy for Culture and Scholarship	School	NYC Public		885 BOLTON AVENUE	Soundview-Castle Hill-Clason Point-Harding Park	BRONX	NY	10473	209	18	WILLIAM FRACKELTON	718-991-4027
+58cc1857e36210700e1c2678	07X221		South Bronx Preparatory	South Bronx Preparatory: A College Board School	School	NYC Public		360 EAST 145 STREET	Mott Haven-Port Morris	BRONX	NY	10454	201	8	ELLEN FLANAGAN	718-292-2211
+597c88d9d4de0002ad5af924	75R025		PS/IS 25R South Richmond H.S.	South Richmond High School I.S./P.S. 25	School	NYC Public		6581 HYLAN BOULEVARD	Annadale-Huguenot-Prince's Bay-Eltingville	STATEN ISLAND	NY	10309	503	51	JAMES MCKEON	718-984-1526
+5737437f117a5467af679769	02M475		Stuyvesant High School	Stuyvesant High School	School	NYC Public		345 CHAMBERS STREET	Battery Park City-Lower Manhattan	MANHATTAN	NY	10282	101	1	Eric Contreras	212-312-4800
+5737437f117a5467af67976a	84K730		Summit Academy	Summit Academy Charter School	School	Charter		27 HUNTINGTON STREET	Carroll Gardens-Columbia Street-Red Hook	BROOKLYN	NY	11231	306	38	Natasha Campbell	718-875-1403
+57f7b48819cc1edc3249efb7	15K667		Sunset Park High School	Sunset Park High School	School	NYC Public		153 35TH STREET	Sunset Park West	BROOKLYN	NY	11232	307	38	Victoria Antonini	718-840-1900
+5737437f117a5467af67976b	15K821		Sunset Park Prep - MS 821	Sunset Park Prep	School	NYC Public		4004 4 AVENUE	Sunset Park West	BROOKLYN	NY	11232	307	38	Jennifer Spalding	718-840-1951
+587506d9195c49c15ebeed9b	30Q300		The 30th Avenue School	The 30th Avenue School (G&T Citywide)	School	NYC Public		28-37 29 STREET	Old Astoria	QUEENS	NY	11102	401	22	VASILIOS BINIARIS	718-726-0501
+591b44cf56bdda430eabb641	32K552		The Academy of Urban Planning	The Academy of Urban Planning and Engineering	School	NYC Public		400 IRVING AVENUE	Bushwick North	BROOKLYN	NY	11237	304	37	Jorge Sandoval	718-381-7100
+58a467b0911363392a0a4085	03M208		PS208/ALLMSES	The Alain L. Locke Magnet School for Environmental Stewardship	School	NYC Public		21 WEST 111 STREET	Central Harlem South	MANHATTAN	NY	10026	110	9	SUSAN GREEN	212-534-9580
+57f7bf1da0481a080d096df1	08X375		Bronx Math Prep	The Bronx Mathematics Preparatory School	School	NYC Public		456 WHITE PLAINS ROAD	Soundview-Castle Hill-Clason Point-Harding Park	BRONX	NY	10473	209	18	Dyon Rozier	718-542-5063
+57f7bf0107232ef20c7310e1	15K146		Brooklyn New School / PS 146	The Brooklyn New School, P.S. 146	School	NYC Public		610 HENRY STREET	Carroll Gardens-Columbia Street-Red Hook	BROOKLYN	NY	11231	306	39	ANNA ALLANBROOK	718-923-4750
+57f7c4818fc301470d44407a	15K146	57f7c4818fc301470d44407a	Brooklyn New School /PS 146	The Brooklyn New School, P.S. 146	School	NYC Public		610 HENRY STREET	Carroll Gardens-Columbia Street-Red Hook	BROOKLYN	NY	11231	306	39	ANNA ALLANBROOK	718-923-4750
+58912b4258dc86ad76329e51	29Q270		PS/IS 270	The Gordon Parks School	School	NYC Public		233-15 MERRICK BOULEVARD	Laurelton	QUEENS	NY	11422	413	31	Chayvonne Harper	718-341-8280
+5737437f117a5467af67971d	31R059		The Harbor View School - PS 59 (31R059)	The Harbor View School	School	NYC Public		300 Richmond Terrace	West New Brighton-New Brighton-St. George	STATEN ISLAND	NY	10301	501	49	Carol Mongiello	718-390-2190
+5891e39358dc86ad76329e9f	04M072		PS72 Lexington Academy	The Lexington Academy	School	NYC Public		131 EAST 104 STREET	East Harlem South	MANHATTAN	NY	10029	111	8	Antonio Hernandez	212-860-5831
+5a3139108330855d15a505f1	12X521		Metropolitan Soundview High School	The Metropolitan Soundview High School	School	NYC Public		1300 BOYNTON AVENUE	West Farms-Bronx River	BRONX	NY	10472	209	18	Emarilix Lopez	718-860-8240
+5737437f117a5467af67973e	10X244		MS 244 New School for Leadership and Journalism	The New School for Leadership and Journalism	School	NYC Public		120 WEST 231 STREET	Van Cortlandt Village	BRONX	NY	10463	208	14	Eduardo Mora	718-601-2869
+5834ae19e5b1443821082af5	10X045		MS 45 THOMAS C. GIORDANO	Thomas C. Giordano Middle School 45	School	NYC Public		2502 LORILLARD PLACE	Belmont	BRONX	NY	10458	206	15	ANNAMARIA PERROTTA	718-584-1660
+5737437f117a5467af67977a	31R455		YABC @ Tottenville High School	Tottenville High School	School	NYC Public		100 LUTEN AVENUE	Annadale-Huguenot-Prince's Bay-Eltingville	STATEN ISLAND	NY	10312	503	51	Joseph Scarmato	718-668-8800
+5737437f117a5467af679775	02M551		Urban Assembly New York Harbor School	Urban Assembly New York Harbor School	School	NYC Public		10 SOUTH STREET, SLIP 7	park-cemetery-etc-Manhattan	MANHATTAN	NY	10004	101	1	JEFFREY CHETIRKO	212-458-0800
+5737437f117a5467af679776	12X372		Urban Assembly School for Wildlife Conservation	Urban Assembly School for Wildlife Conservation	School	NYC Public		2024 MOHEGAN AVENUE	East Tremont	BRONX	NY	10460	206	17	Frank Giaimo	718-823-4130
+5a3138898330855d15a505e2	02M449		Vanguard High School	Vanguard High School	School	NYC Public		317 EAST  67 STREET	Lenox Hill-Roosevelt Island	MANHATTAN	NY	10065	108	5	WILLIAM KLANN	212-517-5175
+5991daad5b05d00f9bb87d43	19K660		WH Maxwell	W. H. Maxwell Career and Technical Education High School	School	NYC Public		145 PENNSYLVANIA AVENUE	East New York (Pennsylvania Ave)	BROOKLYN	NY	11207	305	37	JOCELYN BADETTE	718-345-9100
+5a3403c8e462b066fe175051	03M415		Wadleigh Secondary School for the Perforing and Visual Arts	Wadleigh Secondary School for the Performing & Visual Arts	School	NYC Public		215 WEST 114 STREET	Central Harlem South	MANHATTAN	NY	10026	110	9	Daisy Fontanez	212-749-5800
+58bd91199e4a962862ed1e54	06M348		Washington Heights Expeditionary Learning School (WHEELS)	Washington Heights Expeditionary Learning School	School	NYC Public		511 WEST 182ND STREET	Washington Heights North	MANHATTAN	NY	10033	112	10	Thomas Rochowicz	212-781-0524
+5737437f117a5467af679778	03M291		West End Secondary School	West End Secondary School	School	NYC Public		227-243 WEST 61ST STREET	Lincoln Square	MANHATTAN	NY	10023	107	6	JESSICA JENKINS	212-245-1506
+57d4270b617bf9c536f37cac	14K561		Williamsburg Preparatory High School	Williamsburg Preparatory School	School	NYC Public		257 NORTH  6 STREET	North Side-South Side	BROOKLYN	NY	11211	301	33	Michael Shadrick	718-302-2306
+59e8ded097c577235a4958ec	10X353		World View High School	World View High School	School	NYC Public		100 WEST MOSHOLU PARKWAY SOUTH	Van Cortlandt Village	BRONX	NY	10468	207	11	Martin Hernandez	718-601-0391
+5891e5ea58dc86ad76329ea2	14K614		The Young Women's Leadership School of Brooklyn	Young Women's Leadership School of Brooklyn	School	NYC Public		325 BUSHWICK AVENUE	Bushwick South	BROOKLYN	NY	11206	301	34	Catherine Mitchell	718-387-5641
+5737437f117a5467af679774	30Q286		The Young Women's Leadership School of Astoria	Young Women's Leadership School, Astoria	School	NYC Public		23-15 NEWTOWN AVENUE	Old Astoria	QUEENS	NY	11102	401	22	Allison Persad	718-267-2839
+5737437f117a5467af679707	custom		American Museum of Natural History		Non-profit/Community Organization											
+582c6e58c9c665590e1026c2	custom		Apex for Youth, Inc.		Non-profit/Community Organization											
+5877ab5bd1b4f2e23897242c	custom		Avenues The World School		School	Private										
+589debef6265cd7c5718e878	custom		Barnard College		College/University											
+571f6f3181ab586140097247	custom		Billion Oyster Project		Non-profit/Community Organization											
+58c17c6b5d59018870f3b0d9	custom		BioBus		Non-profit/Community Organization											
+5737437f117a5467af679708	custom		Brooklyn Bridge Park		Non-profit/Community Organization											
+5737437f117a5467af679709	custom		Brooklyn Friends		School	Private										
+5891edb858dc86ad76329ebc	custom		City Parks Foundation		Non-profit/Community Organization											
+57796ba4142d10a9264d6842	custom		Clarkson University		College/University											
+593c3d919114f10f5fdb3402	custom		Cold Spring Harbor High School		School	Other public										
+5737437f117a5467af67970d	custom		Columbia University, Lamont Doherty Earth Observatory		College/University											
+59dfade77ab0680f7bf8c474	custom		Convent of the Sacred Heart		School	Private										
+59fa054660ad0c0faf09f93a	custom	59dfade77ab0680f7bf8c474	Convent of the Sacred Heart		School	Private										
+58790415cc0ff6e83807f8ba	custom		Cooke Center Academy		School	Private										
+58508773f232b5177eb8e4ec	custom		Cornell University		College/University											
+57d4202af4c114790ec33518	custom		Cranbury School		Other public											
+5737437f117a5467af679710	custom		Crave Fishbar		Business											
+5737437f117a5467af679711	custom		Cultural Research Divers		Non-profit/Community Organization											
+58dd098fc6f0027a0e28bce6	custom		CUNY Brooklyn College		College/University											
+5737437f117a5467af679712	custom		CUNY Queens College		College/University											
+5737437f117a5467af679714	custom		DCTV		Non-profit/Community Organization											
+5891c9f958dc86ad76329e84	custom		District 75 STEM Department		School	NYC Public										
+59c9086be3e6892d8be65d58	custom		DNA Learning Center		College/University											
+5737437f117a5467af679715	custom		Edible Manhattan		Business											
+5737437f117a5467af679716	custom		Elmont Memorial High School		School	Other public										
+587cc7ffcc0ff6e83807f8e5	custom		Eltingville Lutheran School		School	Private										
+588bfcc558dc86ad76329d98	custom		Emerald Coastkeeper		Non-profit/Community Organization											
+5737437f117a5467af67971a	custom		Empire Dragon Boat		Non-profit/Community Organization											
+582de80a22c56c842c9ffc7e	custom		Ethical Culture Fieldston School		School	Private										
+58861040cc0ff6e83807f9e0	custom	582de80a22c56c842c9ffc7e	Ethical Culture Fieldston School		School	Private										
+571e1dfe7ff397655dbdc0d6	custom		Fearless		Business											
+58e8da9dec3f74820e73801b	custom		Fire Lotus Temple		Non-profit/Community Organization											
+58eea912e23a596b0e4e56f5	custom	58e8da9dec3f74820e73801b	Fire Lotus Temple		Non-profit/Community Organization											
+57f7be9f7a699f1e0a48aec3	custom		Friends Academy		School	Private										
+57f7bea07a699f1e0a48aec5	custom	57f7be9f7a699f1e0a48aec3	Friends Academy		School	Private										
+587821c0cc0ff6e83807f88a	custom		Friends of Bushwick Park		Non-profit/Community Organization											
+58e5152eec3f74820e7376b2	custom		Gaylen Moore Program Evaluation Services		Business											
+5903948cb1542b585aa6c071	custom		Girl Scouts NY		Non-profit/Community Organization											
+5737437f117a5467af67971b	custom		Good Shepherd Services		Non-profit/Community Organization											
+59b884ff2a8c047c0dd018bf	custom		Grace Church School		School	Private										
+57d426de617bf9c536f37ca7	custom		Greene Hill School		School	Private										
+58bd84329e4a962862ed1e0f	custom		Haitian-Americans United for Progress		Non-profit/Community Organization											
+57640ed88a3ad7c61882da7a	custom		Halawai		Non-profit/Community Organization											
+5737437f117a5467af67971c	custom		Harbor Estuary Program		Non-profit/Community Organization											
+57f7c4f08fc301470d444080	custom		HarborLAB		Non-profit/Community Organization											
+5737437f117a5467af679728	custom		Hastings High School		School	Other public										
+5737437f117a5467af67971e	custom		Home Schoolers of Staten Island		Other											
+5911d9c891cb1f850e448da8	custom		Hudson Montessori		School	Private										
+59ea2b1597c577235a4959c9	custom		Hudson River Community Sailing		Non-profit/Community Organization											
+5737437f117a5467af67971f	custom		Hudson River Park		Non-profit/Community Organization											
+5737437f117a5467af679720	custom		Human Impacts Institute		Non-profit/Community Organization											
+5737437f117a5467af679722	custom		IGY Marinas		Business											
+5737437f117a5467af679723	custom		IKEA Brooklyn		Business											
+5737437f117a5467af67972f	custom		Kings Plaza Marina		Business											
+5737437f117a5467af679730	custom		La Marina Restaurant		Business											
+5737437f117a5467af679731	custom		LIC Community Boathouse		Non-profit/Community Organization											
+5737437f117a5467af679732	custom		Little Red School House & Elisabeth Irwin High School		School	Private										
+5737437f117a5467af679733	custom		Locust Point Yacht Club		Business											
+5737437f117a5467af679734	custom		Lower East Side Ecology Center		Non-profit/Community Organization											
+5737437f117a5467af679735	custom		Manhattan Kayak Company		Business											
+5737437f117a5467af679736	custom		Marina 59		Business											
+59df9ae77ab0680f7bf8ba17	custom		Marine Education Center		Non-profit/Community Organization											
+5737437f117a5467af679738	custom		Miller's Launch		Business											
+5737437f117a5467af679739	custom		Monsignor McClancy Memorial High School		School	Private										
+57b722cec6f128700eb3671b	custom	delete	N6 Pier / Williamsburg		Other											
+57e94214d80e42d064376e14	custom		National Science Foundation		Government Agency											
+5737437f117a5467af679748	custom		New York Academy of Sciences		Non-profit/Community Organization											
+5737437f117a5467af679749	custom		New York City Department of Education		Government Agency											
+5737437f117a5467af67974a	custom		New York Harbor Foundation		Non-profit/Community Organization											
+5737437f117a5467af67974b	custom		New York Restoration Project		Non-profit/Community Organization											
+5a299bf91b84717c22f93fe7	custom		New York State Department of Environmental Conservation		Government Agency											
+589e3331911363392a0a3fa8	custom		New York State Parks		Government Agency											
+58a21ae2911363392a0a3ffb	custom		New York State Parks, Recreation & Historic Preservation		Government Agency											
+5737437f117a5467af67974c	custom		New York University		College/University											
+58791789cc0ff6e83807f8c1	custom		Northport High School		School	Other public										
+5737437f117a5467af67974d	custom		NY State Dept. of Environmental Conservation		Government Agency											
+5a0c6f181101f50f69a986ac	custom		NY Sun Works		Non-profit/Community Organization											
+5737437f117a5467af679750	custom		NYC Parks Department		Government Agency											
+5737437f117a5467af679752	custom		Pace University		College/University											
+59dc0fc57ab0680f7bf8965b	custom	59e8d2b397c577235a4958dc	Packer Collegiate Institute		School	Private										
+59e8d39097c577235a4958e4	custom	59e8d2b397c577235a4958dc	Packer Collegiate Institute		School	Private										
+59aedb1efc0ece31943b88db	custom		PNW BOCES		School	Other public										
+5737437f117a5467af679751	custom		Poly Prep Country Day School		School	Private										
+58892bf5ed5ca7e34e205a0d	custom		Portledge School		School	Private										
+58d4106ec6f0027a0e28b930	custom		PortSide NewYork		Non-profit/Community Organization											
+5737437f117a5467af679755	custom		Princess Bay Marina		Business											
+5737437f117a5467af679753	custom		Protectors of Pine Oak Woods inc.		Non-profit/Community Organization											
+5737437f117a5467af679757	custom		Randalls Island Alliance		Non-profit/Community Organization											
+5737437f117a5467af679759	custom		Richmond County Yacht Club		Business											
+59b05a252a8c047c0dcffe4e	custom		Riverdale Country School		School	Private		76 RIVERDALE AVENUE	Brownsville	BROOKLYN	NY	11212	316	42	Meghan Dunn	718-485-1679
+5737437f117a5467af67975a	custom		Riverdale Yacht Club		Business											
+5737437f117a5467af67975b	custom		Riverside Park Trust		Non-profit/Community Organization											
+5737437f117a5467af67975f	custom		Rockaway Beach Nonprofits (Arts n Parts, Edgemere)		Non-profit/Community Organization											
+5737437f117a5467af67975d	custom		Rockaway Waterfront Alliance		Non-profit/Community Organization											
+59c96501e3e6892d8be663b1	custom		Rocking the Boat		Non-profit/Community Organization											
+5737437f117a5467af67975e	custom		Rye City School District		School	Other public										
+59f230a375b9ac0fa5316832	custom		Sarah Lawrence College Center for the Urban River at Beczak		College/University											
+59a7a4913443040f91f48f0a	custom		School of the Blessed Sacrament		School	Private										
+5737437f117a5467af679760	custom		Sebago Canoe Club		Non-profit/Community Organization											
+589a085de417aa3a7b906927	custom		Seconsett Island Society		Non-profit/Community Organization											
+5737437f117a5467af679761	custom		Sleepy Hollow Middle School		School	Other public										
+58363668e5b1443821082b67	custom		SmartStart Evaluation & Research		Business											
+5737437f117a5467af679762	custom		Solar One		Non-profit/Community Organization											
+5737437f117a5467af679764	custom		South Street Seaport Museum		Non-profit/Community Organization											
+5737437f117a5467af679765	custom		Spence School		School	Private										
+5737437f117a5467af679768	custom		St. Clare's School		School	Private										
+598860ce9b94f0015f920e7b	custom		St. John Villa Academy		School	Private										
+57523100cedba248041998b8	custom		Staten Island Homeschoolers		Other											
+5737437f117a5467af679766	custom		Staten Island Museum		Non-profit/Community Organization											
+5737437f117a5467af679767	custom		Statue Cruises		Business											
+5737437f117a5467af67976c	custom		SUNY Maritime		College/University											
+5737437f117a5467af67976d	custom		The Battery Conservancy, Battery Urban Farm		Non-profit/Community Organization											
+5737437f117a5467af67976e	custom		The Beacon School		School	Private										
+5737437f117a5467af67976f	custom		The Berkeley Carroll School		School	Private										
+59b1b2b02a8c047c0dd007bc	custom		The Brotherhood/Sister Sol		Non-profit/Community Organization											
+57e979cbd80e42d064376e35	custom		The Chapin School		School	Private										
+5899dcf5ff144b7d6e443bda	custom		The East Harlem School		School	Private										
+58b074c50b2debf867885fd2	custom		The Friends of Governors Island		Non-profit/Community Organization											
+57652fbfe7ff550537f2d6d7	custom		The Hewitt School		School	Private										
+58b48381fc2ba0e063cbbf7f	custom		The Masters School		School	Private										
+5899c255ff144b7d6e443bc5	custom		The New School		College/University											
+59e8d2b397c577235a4958dc	custom		The Packer Collegiate Institute		School	Private										
+5737437f117a5467af679772	custom		The River Project		Non-profit/Community Organization											
+57dac50f5d182ae461b49a71	custom		The Waldorf School of Garden City		School	Private										
+57f7bd7f7a699f1e0a48aeba	custom		The WaterFront Center		Non-profit/Community Organization											
+5737437f117a5467af679771	custom		Tottenville Marina		Business											
+5a046fd66257c00f982fbee0	custom		Trevor Day School		School	Private										
+59024c972272257a0e858c21	custom		Trilok Fusion Arts		Non-profit/Community Organization											
+58eab8bfe23a596b0e4e566d	custom		Trinity School		School	Private										
+5722befed3444e216c62bcc1	custom		Unaffiliated/None		Other											
+57f7b4b719cc1edc3249efbf	custom		Uncommon Collegiate Charter High School		School	NYC Charter										
+5737437f117a5467af679773	custom		University of Maryland, Center for Environmental Science		College/University											
+58b050900b2debf867885fc7	custom		Vaughn College of Aeronautics and Tech		College/University											
+5898cb5658dc86ad7632a02d	custom		Villa Maria Academy		School	Private										
+592392019d63f5690ec0b7ca	custom		Wantagh Schools		School	Other public										
+5737437f117a5467af679777	custom		Warby Parker		Business											
+5737437f117a5467af679779	custom		Wildlife Conservation Society, New York Aquarium		Non-profit/Community Organization											
+57d430ff617bf9c536f37d2d	custom		Winston PReparatory School NY		School	Private										
+58d7db39c6f0027a0e28ba66	custom		Xaverian High School		School	Private										
+5737437f117a5467af67977b	custom		YMCA Off-Site: Julia Richman Educational Complex Site Director, Teen Program		Non-profit/Community Organization											
+57f7bdb17a699f1e0a48aebc	custom		Youth Arts New York		Non-profit/Community Organization											
