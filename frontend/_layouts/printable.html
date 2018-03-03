@@ -1,0 +1,21 @@
+---
+page:
+    name:        'Billion Oyster Project'
+    title:       'Billion Oyster Project'
+    description: 'Curriculum Management and Data Collection/Publishing tool for the Billion Oyster Project'
+    url:         'http://platform.bop.nyc'
+
+includes:
+    head:        /_includes/head.html
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{ template "head" . }}
+</head>
+<body>
+    <section class="content-body {{ .page.body_class }}">
+    {{ template "content" . }}
+    </section>
+</body>
+</html>

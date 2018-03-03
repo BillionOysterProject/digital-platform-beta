@@ -1,0 +1,18 @@
+---
+bindings:
+- name:     'lesson'
+  resource: '/api/lessons/{{ param 1 }}'
+  params:
+    full: true
+
+- name:     'lessonStats'
+  resource: '/api/lessons/{{ param 1 }}/tracker-stats'
+  optional:  true
+  fallback:  {}
+---
+{{ $lesson := .binding.lesson }}
+{{ $lessonStats := .binding.lessonStats }}
+
+<section class="content container">
+
+</section>

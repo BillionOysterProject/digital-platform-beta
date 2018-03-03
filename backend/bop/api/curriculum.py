@@ -29,6 +29,20 @@ class Lessons(CollectionView):
     route_base      = 'lessons'
     collection_name = 'lessons'
     results_only    = True
+    expand_fields   = {
+        'user': (
+            'users', ['_id', 'displayName', 'email'],
+        ),
+        'lessonOverview.subjectAreas': (
+            'metasubjectareas', [],
+        ),
+        'unit': (
+            'units', ['_id', 'title', 'color', 'icon'],
+        ),
+        'units': (
+            'units', ['_id', 'title', 'color', 'icon'],
+        ),
+    }
 
 
 class LessonActivities(CollectionView):

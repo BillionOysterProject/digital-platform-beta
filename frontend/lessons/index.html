@@ -1,0 +1,95 @@
+---
+page:
+    view: Lessons
+
+bindings:
+- name:     'units'
+  resource: '/api/units'
+  params:
+    limit:  false
+    expand: false
+    sort:
+    - title
+
+- name:     'lessons'
+  resource: '/api/lessons'
+  fallback: []
+  params:
+    limit: false
+    expand: false
+---
+<section class="content container-fluid lessons-list">
+    {{ range $i, $unit := .bindings.units }}
+    <h2
+        data-toggle="collapse"
+        href="#unit{{ $unit._id }}"
+        role="button"
+        aria-expanded="true"
+    >
+        <i class="fa-fw {{ or $unit.icon `book` }}"></i>
+        {{ $unit.title }}
+    </h2>
+
+    <hr />
+
+    <div class="unit-lessons mb-4" id="unit{{ $unit }}">
+        <div class="card-deck">
+        {{ range $j, $lessonID := $unit.lessons }}
+        {{   $lesson := (firstByKey $.bindings.lessons `_id` $lessonID) }}
+        {{   if $lesson }}
+        <div
+            class="
+                card
+                {{ if eqx $lesson.status `draft` }}
+                text-white bg-info
+                {{ else if eqx $lesson.status `returned` }}
+                border-danger
+                {{ else if eqx $lesson.status `pending` }}
+                border-primary
+                {{ end }}
+            "
+        >
+            <div class="card-header">
+                {{ if and ($lesson.status) (nex $lesson.status `published`) }}
+                <span>[{{ upper $lesson.status }}]</span>
+                {{ end }}
+
+                <a href="/lessons/{{ $lesson._id }}">
+                    <b>{{ $lesson.title }}</b>
+                </a>
+            </div>
+            <div class="card-body pt-1">
+                <p class="text-muted">
+                    {{ if $lesson.lessonOverview.setting }}
+                    <small>
+                        <b>{{ $lesson.lessonOverview.setting }}</b> setting
+                    </small>
+                    {{ end }}
+
+                    {{ if $lesson.lessonOverview.grade }}
+                    <small>&nbsp;&nbsp;|&nbsp;&nbsp;</small>
+                    <small>
+                        <b>{{ $lesson.lessonOverview.grade }}</b> grade
+                    </small>
+                    {{ end }}
+                </p>
+
+                {{ if $lesson.lessonOverview.lessonSummary }}
+                <p>
+                    {{ elide (stripHtml $lesson.lessonOverview.lessonSummary) 150 }}
+                </p>
+                {{ end }}
+
+                {{ if $lesson.featuredImage }}
+                <div class="preview">
+                    <img src="{{ $lesson.featuredImage.path }}">
+                </div>
+                {{ end }}
+            </div>
+        </div>
+        {{ end }}
+        {{ end }}
+        </div>
+    </div>
+    {{ end }}
+</section>

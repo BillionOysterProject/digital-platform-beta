@@ -1,0 +1,91 @@
+---
+layout: printable
+
+bindings:
+- name:     'lesson'
+  resource: '/api/lessons/{{ param 1 }}'
+
+- name:     'lessonStats'
+  resource: '/api/lessons/{{ param 1 }}/tracker-stats'
+  optional:  true
+  fallback:  {}
+
+- name:     'units'
+  resource: '/api/units'
+  fallback: []
+  params:
+    fields:
+    - title
+    - color
+    - icon
+
+postprocessors:
+- prettify-html
+- trim-empty-lines
+---
+{{ $lesson := .bindings.lesson }}
+{{ $lessonStats := .bindings.lessonStats }}
+
+<section class="content container">
+    <div class="lesson-main">
+        <img
+            class="pull-left pr-4"
+            alt="Billion Oyster Project"
+            src="/assets/img/brand/logo.svg"
+            style="
+                width: 100px;
+                height: 128px;
+            "
+        >
+
+        <div>
+            <h2 class="blue">{{ $lesson.title }}</h2>
+            <h5>
+                <b>{{ $lesson.user.displayName }}</b>
+            </h5>
+            <a href="mailto:{{ $lesson.user.email }}">{{ $lesson.user.email }}</a>
+            <div class="text-muted">{{ time $lesson.created "Jan 2, 2006" }}</div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-3">
+                <b>Unit</b>
+                <div>
+                    {{ range $lesson.units }}
+                    <h4 style="color: {{ .color }}">
+                        <i class="{{ .icon }}"></i>
+                        {{ .title }}
+                    </h4>
+                    {{ end }}
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <b>Grade</b>
+                <p>{{ $lesson.lessonOverview.grade }}</p>
+
+            </div>
+            <div class="col-sm-2">
+                <b>Class Periods</b>
+                <p>{{ $lesson.lessonOverview.classPeriods }}</p>
+
+            </div>
+            <div class="col-sm-2">
+                <b>Setting</b>
+                <p>{{ $lesson.lessonOverview.setting }}</p>
+
+            </div>
+            <div class="col-sm-3">
+                <b>Subject Areas</b>
+                <div>
+                    {{ range $lesson.lessonOverview.subjectAreas }}
+                    <span class="badge badge-inverse" style="background-color: {{ .color }}; color: white;">{{ .subject }}</span>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        <div>
+        </div>
+    </div>
+</section>

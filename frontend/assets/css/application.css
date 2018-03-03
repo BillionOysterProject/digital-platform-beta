@@ -32,6 +32,10 @@ body > header {
     cursor:          pointer;
 }
 
+.card-body img {
+    width:           75%;
+}
+
 #main {
     width:           100%;
 }
@@ -234,8 +238,12 @@ form label {
     }
 }
 
+nav + .content {
+    margin-top:          51px;
+}
+
 .content {
-    padding: 15px 15px 15px 15px;
+    padding:             15px 15px 15px 15px;
 }
 
 .content-jumbotron,
@@ -1523,4 +1531,30 @@ li.loading-dialog {
     bottom:   0;
     width:    calc(100% - 250px);
     cursor:  crosshair !important;
+}
+
+.lessons-list {
+    padding:         0 3.4em;
+}
+
+@media (min-width:34em) {
+    .unit-lessons .card-deck {
+        margin-bottom: 4em;
+    }
+
+    .unit-lessons .card-deck > .card {
+        width:       23%;
+        flex-wrap:   wrap;
+        flex:        initial;
+        margin:      1em;
+    }
+
+    .unit-lessons .card-deck > .card:hover {
+        border-color:   #426ca9;
+    }
+
+    .unit-lessons .card-deck > .card .preview {
+        width:       100%;
+        text-align:  center;
+    }
 }
