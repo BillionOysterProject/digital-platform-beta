@@ -113,8 +113,8 @@ class Time(object):
                 self._nanoseconds = (Time() + self.from_pandas_string(tm))._nanoseconds
             else:
                 self._nanoseconds = self.from_pandas_string(tm)._nanoseconds
-        elif isinstance(tm, (int, float, long)):
-            self._nanoseconds = long(tm)
+        elif isinstance(tm, (int, float)):
+            self._nanoseconds = int(tm)
         elif tm is None:
             self._nanoseconds = (time.time() * int(1e9))
         else:
@@ -205,7 +205,7 @@ class Time(object):
             )
 
         elif isinstance(dt, datetime.date):
-            self._nanoseconds = long(Time('{}T00:00:00Z'.format(dt.isoformat())))
+            self._nanoseconds = int(Time('{}T00:00:00Z'.format(dt.isoformat())))
 
         else:
             raise TypeError("Unparsable input type {}".format(dt.__class__))
@@ -216,12 +216,12 @@ class Time(object):
         return int(self._nanoseconds)
 
     def __long__(self):
-        return long(self._nanoseconds)
+        return int(self._nanoseconds)
 
     def __add__(self, other):
         if isinstance(other, Time):
             return Time(self._nanoseconds + other._nanoseconds)
-        elif isinstance(other, (int, float, long)):
+        elif isinstance(other, (int, float, int)):
             return Time(self._nanoseconds + other)
         elif isinstance(other, six.string_types + (datetime.datetime, datetime.timedelta)):
             return Time(self._nanoseconds + Time(other)._nanoseconds)
@@ -233,7 +233,7 @@ class Time(object):
     def __sub__(self, other):
         if isinstance(other, Time):
             return Time(self._nanoseconds - other._nanoseconds)
-        elif isinstance(other, (int, float, long)):
+        elif isinstance(other, (int, float, int)):
             return Time(self._nanoseconds - other)
         elif isinstance(other, six.string_types + (datetime.datetime, datetime.timedelta)):
             return Time(self._nanoseconds - Time(other)._nanoseconds)
@@ -262,7 +262,7 @@ class Time(object):
         return self._pandas_string(largest_unit=unit)
 
     def as_datetime(self):
-        epoch = int(self._nanoseconds / long(1e9))
+        epoch = int(self._nanoseconds / int(1e9))
         ns = float(self._nanoseconds - (epoch * int(1e9)))
 
         result = datetime.datetime.utcfromtimestamp(
@@ -297,51 +297,51 @@ class Time(object):
 
     @classmethod
     def from_nanoseconds(cls, val):
-        return long(val)
+        return int(val)
 
     @classmethod
     def from_microseconds(cls, val):
-        return long(val) * long(1e3)
+        return int(val) * int(1e3)
 
     @classmethod
     def from_milliseconds(cls, val):
-        return long(val) * long(1e6)
+        return int(val) * int(1e6)
 
     @classmethod
     def from_seconds(cls, val):
-        return long(val) * long(1e9)
+        return int(val) * int(1e9)
 
     @classmethod
     def from_minutes(cls, val):
-        return long(val * 60 * cls.from_seconds(1))
+        return int(val * 60 * cls.from_seconds(1))
 
     @classmethod
     def from_hours(cls, val):
-        return long(val * 60 * cls.from_minutes(1))
+        return int(val * 60 * cls.from_minutes(1))
 
     @classmethod
     def from_days(cls, val):
-        return long(val * 24 * cls.from_hours(1))
+        return int(val * 24 * cls.from_hours(1))
 
     @classmethod
     def from_months(cls, val):
-        return long(val * 30 * cls.from_days(1))
+        return int(val * 30 * cls.from_days(1))
 
     @classmethod
     def from_years(cls, val):
-        return long(val * 365 * cls.from_days(1))
+        return int(val * 365 * cls.from_days(1))
 
     @classmethod
     def to_microseconds(cls, nanoseconds):
-        return long(nanoseconds) / 1e3
+        return int(nanoseconds) / 1e3
 
     @classmethod
     def to_milliseconds(cls, nanoseconds):
-        return long(nanoseconds) / 1e6
+        return int(nanoseconds) / 1e6
 
     @classmethod
     def to_seconds(cls, nanoseconds):
-        return long(nanoseconds) / 1e9
+        return int(nanoseconds) / 1e9
 
     @classmethod
     def to_minutes(cls, nanoseconds):

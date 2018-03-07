@@ -42,6 +42,33 @@ class Lessons(CollectionView):
         'units': (
             'units', ['_id', 'title', 'color', 'icon'],
         ),
+        'standards.cclsElaScienceTechnicalSubjects': (
+            'metacclselasciencetechnicalsubjects', [],
+        ),
+        'standards.cclsMathematics': (
+            'metacclsmathematics', [],
+        ),
+        'standards.ngssCrossCuttingConcepts': (
+            'metangsscrosscuttingconcepts', [],
+        ),
+        'standards.ngssDisciplinaryCoreIdeas': (
+            'metangssdisciplinarycoreideas', [],
+        ),
+        'standards.ngssScienceEngineeringPractices': (
+            'metangssscienceengineeringpractices', [],
+        ),
+        'standards.nycsssUnits': (
+            'metanycssunits', [],
+        ),
+        'standards.nysssKeyIdeas': (
+            'metanyssskeyideas', [],
+        ),
+        'standards.nysssMajorUnderstandings': (
+            'metanysssmajorunderstandings', [],
+        ),
+        'standards.nysssMst': (
+            'metanysssmsts', [],
+        ),
     }
 
 
