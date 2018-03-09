@@ -1537,24 +1537,51 @@ li.loading-dialog {
     padding:         0 3.4em;
 }
 
-@media (min-width:34em) {
-    .unit-lessons .card-deck {
-        margin-bottom: 4em;
-    }
 
-    .unit-lessons .card-deck > .card {
-        width:       23%;
-        flex-wrap:   wrap;
-        flex:        initial;
-        margin:      1em;
-    }
+.unit-lessons .card-deck {
+    margin-bottom: 4em;
+}
 
-    .unit-lessons .card-deck > .card:hover {
-        border-color:   #426ca9;
-    }
+.unit-lessons .card-deck .card {
+    flex-wrap:   wrap;
+    flex:        initial;
+    margin:      1em;
+    padding:     0;
+}
 
-    .unit-lessons .card-deck > .card .preview {
-        width:       100%;
-        text-align:  center;
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .unit-lessons .card-deck .card {
+        max-width:   100%;
     }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .unit-lessons .card-deck .card {
+        max-width:   calc(50% - 2em);
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .unit-lessons .card-deck .card {
+        max-width:   calc(33% - 2em);
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1600px) {
+    .unit-lessons .card-deck .card {
+        max-width:   calc(25% - 2em);
+    }
+}
+
+.unit-lessons .card-deck > .card:hover {
+    border-color:   #426ca9;
+}
+
+.unit-lessons .card-deck > .card .preview {
+    width:       100%;
+    text-align:  center;
 }

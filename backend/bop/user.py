@@ -56,9 +56,4 @@ class User(dict):
         return False
 
     def get_id(self):
-        uid = self['id']
-
-        if isinstance(uid, unicode):
-            return uid
-        else:
-            return unicode(uid.encode('utf-8'))
+        return self['id']

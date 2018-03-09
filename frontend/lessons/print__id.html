@@ -93,19 +93,23 @@ postprocessors:
                     {{ sanitize $lesson.lessonOverview.lessonSummary }}
                 </p>
 
+                {{ if $lesson.lessonObjectives }}
                 <h2>Objectives</h2>
                 <!-- =============================================================================================== -->
                 <p>
                     {{ sanitize $lesson.lessonObjectives }}
                 </p>
+                {{ end }}
 
                 <h2>Materials and Resources</h2>
                 <!-- =============================================================================================== -->
 
+                {{ if $lesson.materialsResources.supplies }}
                 <h3>Supplies</h3>
                 <p>
                     {{ sanitize $lesson.materialsResources.supplies }}
                 </p>
+                {{ end }}
 
                 <h3>Handouts</h3>
                 <p>
@@ -120,20 +124,24 @@ postprocessors:
                 <h2>Before you get started</h2>
                 <!-- =============================================================================================== -->
 
+                {{ if $lesson.materialsResources.teacherTips }}
                 <h3>Tips for Teachers</h3>
                 <p>
                     {{ sanitize $lesson.materialsResources.teacherTips }}
                 </p>
+                {{ end }}
 
                 <h3>Preparation</h3>
                 <p>
                     {{ sanitize $lesson.preparation }}
                 </p>
 
+                {{ if $lesson.background }}
                 <h3>Background</h3>
                 <p>
                     {{ sanitize $lesson.background }}
                 </p>
+                {{ end }}
 
                 <h2>Instruction Plan</h2>
                 <!-- =============================================================================================== -->

@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from .endpoints import Endpoint, CollectionView
 from flask import jsonify, request, g
+from werkzeug.exceptions import Unauthorized
 from flask_classy import route
 from flask_login import login_user, logout_user
 from ..utils import as_bool
@@ -13,7 +14,14 @@ class Authentication(Endpoint):
 
     @route('/signin', methods=['POST'])
     def signin(self):
-        user = User.get('bop-admin')
+        if len(request.form):
+            payload = request.form
+        else:
+            payload = request.get_json(force=True)
+
+        print('{}'.format(payload))
+
+        user = User.get(payload['username'])
         login_user(user)
         return jsonify(user)
 
@@ -109,7 +117,10 @@ class Users(CollectionView):
         User.collection = cls.get_collection()
 
     def me(self):
-        return jsonify(self.current_user)
+        if self.current_user:
+            return jsonify(self.current_user)
+        else:
+            raise Unauthorized()
 
     def teamleads(self):
         basequery = request.args.get('q')
