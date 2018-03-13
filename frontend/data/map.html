@@ -1,18 +1,19 @@
 ---
 page:
     view: Map Explorer
-    style: outdoors-v9
+    style: mapbox/outdoors-v9
+    body_class: 'map'
 ---
 <section class="content">
     <nav class="navbar navbar-expand-lg navbar-default user-navbar">
         <div class="navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item{{ if eqx (qs `style` .page.style) `outdoors-v9` }} active{{ end }}">
-                    <a class="nav-link" href="/data/map?style=outdoors-v9">Color Map</a>
+                <li class="nav-item{{ if eqx (qs `style` $.page.style) `mapbox/outdoors-v9` }} active{{ end }}">
+                    <a class="nav-link" href="/data/map?style=mapbox/outdoors-v9">Color Map</a>
                 </li>
 
-                <li class="nav-item{{ if eqx (qs `style` .page.style) `light-v9` }} active{{ end }}">
-                    <a class="nav-link" href="/data/map?style=light-v9">Grey Map</a>
+                <li class="nav-item{{ if eqx (qs `style` $.page.style) `light-v9` }} active{{ end }}">
+                    <a class="nav-link" href="/data/map?style=mapbox/light-v9">Grey Map</a>
                 </li>
             </ul>
         </div>
@@ -27,7 +28,7 @@ page:
 
         var map = new mapboxgl.Map({
             container: 'mapexplorer',
-            style: 'mapbox://styles/mapbox/{{ qs `style` .page.style }}',
+            style: 'mapbox://styles/{{ qs `style` $.page.style }}',
             failIfMajorPerformanceCaveat: true,
             center: [-73.98, 40.7064203],
             zoom:   10,
@@ -35,55 +36,57 @@ page:
 
         map.on('load', function() {
             $.ajax({
-                url: '/data/test.tsv',
-                dataType: 'text',
-                success: function(data) {
-                    Papa.parse(data, {
-                        delimiter:      "\t",
-                        dynamicTyping:  true,
-                        skipEmptyLines: true,
-                        complete: function(records) {
-                            var layer = {
-                                "id": "sites",
-                                "type": "circle",
-                                "source": {
-                                    "type": "geojson",
-                                    "data": {
-                                        "type": "FeatureCollection",
-                                        "features": [],
-                                    },
-                                },
-                                "layout": {
-                                },
-                                "paint": {
-                                    "circle-radius": 5,
-                                    "circle-color": "#415980",
-                                    "circle-stroke-width": 2,
-                                    "circle-stroke-color": "#FFFFFF",
-                                },
-                            };
-
-                            $.each(records.data.slice(1), function(i, site){
-                                var point = {
-                                    "type": "Feature",
-                                    "properties": {
-                                        "description": "<strong>" + site[0] + "</strong>",
-                                    },
-                                    "geometry": {
-                                        "type": "Point",
-                                        "coordinates": [
-                                            parseFloat(site[4]),
-                                            parseFloat(site[3]),
-                                        ],
-                                    },
-                                };
-
-                                layer.source.data.features.push(point);
-                            });
-
-                            map.addLayer(layer);
+                url: '/api/sites?' + $.param({
+                    limit: false,
+                    fields: 'name,bodyOfWater,latitude,longitude,nycParkName',
+                }),
+                success: function(sites) {
+                    var layer = {
+                        "id": "sites",
+                        "type": "circle",
+                        "source": {
+                            "type": "geojson",
+                            "data": {
+                                "type": "FeatureCollection",
+                                "features": [],
+                            },
                         },
+                        "layout": {
+                        },
+                        "paint": {
+                            "circle-radius": 7,
+                            "circle-color": "#415980",
+                            "circle-stroke-width": 2,
+                            "circle-stroke-color": "#FFFFFF",
+                        },
+                    };
+
+                    $.each(sites, function(i, site){
+                        var description = "<strong>" + site.name + ', ' + site.bodyOfWater + "</strong>";
+
+                        if (site.nycParkName && site.nycParkName.length) {
+                            description += "<br>"
+                            description += "<i>NYC Park Name:</i> " + site.nycParkName;
+                        }
+
+                        var point = {
+                            "type": "Feature",
+                            "properties": {
+                                "description": description,
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    parseFloat(site.longitude),
+                                    parseFloat(site.latitude),
+                                ],
+                            },
+                        };
+
+                        layer.source.data.features.push(point);
                     });
+
+                    map.addLayer(layer);
                 },
             });
         });
@@ -110,5 +113,16 @@ page:
             }
         });
 
+        map.on('mousemove', function(e) {
+            var features = map.queryRenderedFeatures(e.point, {
+                layers: ['sites'],
+            })
+
+            if (features.length) {
+                map.getCanvas().style.cursor = 'crosshair';
+            } else {
+                map.getCanvas().style.cursor = 'default';
+            }
+        });
     });
 </script>
