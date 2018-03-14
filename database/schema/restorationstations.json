@@ -1,0 +1,86 @@
+[{
+    "name": "restorationstations",
+    "fields": [{
+        "name":       "name",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":     "siteId",
+        "type":     "str",
+        "required": true
+    }, {
+        "name":     "team",
+        "type":     "str"
+    }, {
+        "name":     "teamLead",
+        "type":     "str",
+        "required": true
+    }, {
+        "name":     "schoolOrg",
+        "type":     "str",
+        "required": true
+    }, {
+        "name":     "latitude",
+        "type":     "float",
+        "required": true
+    }, {
+        "name":     "longitude",
+        "type":     "float",
+        "required": true
+    }, {
+        "name":     "bodyOfWater",
+        "type":     "str"
+    }, {
+        "name":     "boroughCounty",
+        "type":     "str"
+    }, {
+        "name":     "shoreLineType",
+        "type":     "str"
+    }, {
+        "name":     "status",
+        "type":     "str",
+        "required": true,
+        "validators": {
+            "one-of": [
+                "active",
+                "inactive",
+                "damaged-destroyed",
+                "lost",
+                "retired"
+            ]
+        }
+    }, {
+      "name": "statusHistory",
+      "type": "object"
+    }, {
+      "name": "notes",
+      "type": "str"
+    }, {
+      "name": "tagNumber",
+      "type": "str"
+    }, {
+      "name": "photo",
+      "type": "object"
+    }, {
+      "name": "siteCoordinator",
+      "type": "str"
+    }, {
+      "name": "otherSiteCoordinator",
+      "type": "str"
+    }, {
+      "name": "propertyOwner",
+      "type": "str"
+    }, {
+      "name": "otherPropertyOwner",
+      "type": "str"
+    }, {
+      "name": "baselines",
+      "type": "object"
+    }, {
+        "name": "created",
+        "type": "date",
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }]
+}]

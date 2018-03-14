@@ -147,12 +147,21 @@ class ProtocolWaterQualities(CollectionView):
     collection_name = 'protocolwaterqualities'
 
 
+class Sites(CollectionView):
+    route_base      = 'sites'
+    collection_name = 'sites'
+    results_only    = True
+
+
 class RestorationStations(CollectionView):
     route_base      = 'restoration-stations'
     collection_name = 'restorationstations'
     results_only    = True
 
     expand_fields   = {
+        'site': (
+            'sites', ['_id', 'name', 'bodyOfWater', 'latitude', 'longitude', 'boroughCounty', 'state'],
+        ),
         'schoolOrg': (
             'schoolorgs', ['_id', 'name'],
         ),

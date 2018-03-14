@@ -1,0 +1,44 @@
+[{
+    "name": "sites",
+    "fields": [{
+        "name":       "name",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":     "bodyOfWater",
+        "type":     "str",
+        "required": true
+    }, {
+        "name":     "latitude",
+        "type":     "float",
+        "required": true
+    }, {
+        "name":     "longitude",
+        "type":     "float",
+        "required": true
+    }, {
+        "name":     "boroughCounty",
+        "type":     "str"
+    }, {
+        "name":     "state",
+        "type":     "str"
+    }, {
+        "name":     "shoreLineType",
+        "type":     "str"
+    }, {
+        "name":     "nycParkName",
+        "type":     "str"
+    }, {
+        "name":     "nycParkId",
+        "type":     "str"
+    }, {
+        "name":     "propertyOwner",
+        "type":     "str"
+    }, {
+        "name":     "created",
+        "type":     "date",
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }]
+}]

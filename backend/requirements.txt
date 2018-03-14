@@ -18,3 +18,5 @@ rq
 six
 sortedcontainers
 unicodecsv
+pbkdf2
+cryptography
