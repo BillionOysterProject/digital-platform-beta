@@ -156,7 +156,9 @@ class RestorationStations(CollectionView):
         'schoolOrg': (
             'schoolorgs', ['_id', 'name'],
         ),
-
+         'team': (
+            'teams', ['_id', 'name', 'created', 'teamLeads'],
+        ),
         'teamLead': (
             'users', ['_id', 'displayName', 'username'],
         ),

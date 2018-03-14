@@ -1,0 +1,93 @@
+---
+bindings:
+- name:		'site'	
+  resource: '/api/sites/{{ param 1 }}'
+
+- name:     'stations'
+  resource: '/api/restoration-stations'
+  params: 
+    q: 'siteId/{{ param 1 }}'
+
+- name:     'relatedTeams'
+  resource: '/api/teams'
+  params:
+    q: 'teamLeads/{{ join (uniq (pluck $.bindings.stations "teamLead._id")) "|" }}'
+    fields: 'teamLead,teamLeads'
+    expand: false
+---
+
+{{ $site :=     .bindings.site }}
+{{ $stations := .bindings.stations }}
+
+{{ range $i, $relatedTeam := $.bindings.relatedTeams }}
+{{   push "people" $relatedTeam.teamLead }}
+{{   if (isArray $relatedTeam.teamLeads) }}
+{{      range $j, $tl := $relatedTeam.teamLeads }}
+{{        push "people" $tl }}
+{{      end }}
+{{   end }}
+{{ end }}
+
+{{ $people := uniq $.vars.people }}
+
+<div class="container-fluid pt-4">
+	<div class="row">
+		<div class="col">
+			<h1>{{ $site.name }}, {{ $site.bodyOfWater }}</h1>
+			<div>
+				<i class="fa fa-fw fa-map-marker"></i>
+				{{ $site.boroughCounty }},
+				{{ $site.state }}
+			</div>
+		</div>
+		<div class="col-3">
+			map placeholder
+		</div>
+	</div>
+	
+	{{ if $stations }}
+	<h2 class="mt-4 mb-4">Oyster Research Stations</h2>
+
+	<div class="row">
+		{{ range $i, $station := $stations }}
+  		<div class="media col-6 mb-4">
+  			<div class="col-2">
+	  			{{ if $station.photo }}
+	    		<img class="img-fluid" src="{{ $station.photo.path }}" alt="Photo of this ORS">
+	    		{{ else }}
+	    		<img class="img-fluid img-muted" src="assets/img/placeholders/ors.jpg" alt="Placeholder ORS image">
+	    		{{ end }}
+    		</div>
+    		<div class="media-body">
+      			<h3 class="mt-0 mb-1">{{ $station.name }}</h3>
+      			<i class="fa fa-fw fa-building"></i> {{ $station.schoolOrg.name }}
+      			<br/>
+      			<i class="fa fa-fw fa-user"></i>{{ $station.teamLead.displayName }}
+      			<br/>
+    		</div>
+  		</div>
+  		{{ end }}
+  	</div>	
+
+	{{ if $people }}
+	<h2 class="mt-4 mb-4">People</h2>
+	<div class="row">
+		{{ range $i, $personID := $people }}
+  		<div class="media col-6 mb-4">
+  			<div class="col-2">
+	  			{{ $personID }}
+    		</div>
+    		<div class="col-2">
+	  			
+    		</div>
+    	</div>
+    	{{ end }}
+    </div>		
+
+	{{ end }}
+	{{ end }}
+{{ if $site.nycParkName }}
+<!-- Pull in NYC Parks open data -->
+{{ end }}
+
+</div>
