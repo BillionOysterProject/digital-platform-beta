@@ -7,6 +7,7 @@ from flask_classy import route
 from flask_login import login_user, logout_user
 from ..utils import as_bool
 from ..user import User
+import six
 
 
 class Authentication(Endpoint):
@@ -19,11 +20,16 @@ class Authentication(Endpoint):
         else:
             payload = request.get_json(force=True)
 
-        print('{}'.format(payload))
+        if 'password' not in payload or not isinstance(payload['password'], six.string_types):
+            return ('Must specify a password to authenticate.', 400)
 
         user = User.get(payload['username'])
-        login_user(user)
-        return jsonify(user)
+
+        if user.check_password(payload['password']):
+            login_user(user)
+            return jsonify(user)
+        else:
+            return ('Invalid username or password.', 401)
 
     def signout(self):
         logout_user()
