@@ -2,7 +2,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from .endpoints import Endpoint, CollectionView
 from flask import jsonify, request, g
-from werkzeug.exceptions import Unauthorized
+from werkzeug.exceptions import BadRequest, Unauthorized
 from flask_classy import route
 from flask_login import login_user, logout_user
 from ..utils import as_bool
@@ -20,16 +20,22 @@ class Authentication(Endpoint):
         else:
             payload = request.get_json(force=True)
 
-        if 'password' not in payload or not isinstance(payload['password'], six.string_types):
-            return ('Must specify a password to authenticate.', 400)
-
         user = User.get(payload['username'])
+
+        if not user:
+            raise Unauthorized('Invalid username or password.')
+
+        if 'password' not in payload:
+            raise Unauthorized('Invalid username or password.')
+
+        if not isinstance(payload['password'], six.string_types):
+            raise Unauthorized('Invalid username or password.')
 
         if user.check_password(payload['password']):
             login_user(user)
             return jsonify(user)
         else:
-            return ('Invalid username or password.', 401)
+            raise Unauthorized('Invalid username or password.')
 
     def signout(self):
         logout_user()
