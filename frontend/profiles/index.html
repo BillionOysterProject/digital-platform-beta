@@ -1,0 +1,64 @@
+---
+bindings:
+- name:     'me'
+  resource: '/api/users/me'
+
+- name:     'teamsLeading'
+  resource: '/api/teams'
+  params:
+    q: 'teamLeads/{{ $.bindings.me._id }}'
+    limit: false
+    fields:
+    - name
+
+- name:     'teamsOn'
+  resource: '/api/teams'
+  params:
+    q: 'teamMembers/{{ $.bindings.me._id }}'
+    limit: false
+    fields:
+    - name
+---
+{{ $me           := $.bindings.me }}
+{{ $teamsLeading := (uniqByKey $.bindings.teamsLeading "_id") }}
+{{ $teamsOn      := (uniqByKey $.bindings.teamsOn "_id") }}
+<div class="jumbotron">
+    <section class="content">
+        <section class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 box text-center">
+                    <div style="width: 10vmin;" class="text-center mx-auto d-block mt-4 mb-2">
+                        {{ if (hasPrefix $me.profileImageURL `modules/`) }}
+                        <img src="assets/img/profile/avatar-gray.png" class="img-fluid rounded">
+                        {{ else }}
+                        <img src="{{ $me.profileImageURL }}" class="img-fluid rounded">
+                        {{ end }}
+                    </div>
+                    <h1>{{ $me.displayName }}</h1>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+
+<div class="container-fluid mt-4">
+    {{ if $teamsLeading }}
+    <h2>
+        Teams Leading
+        ({{ count $teamsLeading }})
+    </h2>
+    <div class="row collapse" id="teamsLeading">
+        {{ range $i, $team := $teamsLeading }}
+        <div class="media col-12 col-lg-6 col-xl-4 mb-4">
+            <div class="col-2">
+                <img class="img-fluid img-muted" src="assets/img/placeholders/ors.jpg" alt="Placeholder ORS image">
+            </div>
+            <div class="media-body">
+                <h3 class="mt-0 mb-1">{{ $team.name }}</h3>
+                <br/>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+    {{ end }}
+</div>

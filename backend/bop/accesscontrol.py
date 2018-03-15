@@ -6,12 +6,9 @@ import re
 # a set of (METHOD, REGEX) tuples denoting paths that are anonymously
 # accessible.
 ANONYMOUS_ROUTES = (
-    # allow people to login
+    # allow people to login, and know when they are/are not logged in
     # --------------------------------------------------------------------------
     ('POST', re.compile('^/api/auth/signin/?')),
-
-    # allow anyone to discover who they are, or that they aren't logged in
-    # --------------------------------------------------------------------------
     ('GET', re.compile('^/api/users/me/?')),
 
     # permit public access to participating and prospective organizations

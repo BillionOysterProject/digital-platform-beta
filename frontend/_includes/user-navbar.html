@@ -1,50 +1,76 @@
 <nav class="navbar navbar-expand-lg navbar-default user-navbar">
-    <div class="navbar-collapse">
+    <div class="collapse navbar-collapse">
         {{ if .bindings.user }}
         <!-- Authenticated User: {{ .bindings.user._id }} ({{ .bindings.user.username }}: {{ .bindings.user.displayName }} <{{ .bindings.user.email }}>) -->
         <ul class="navbar-nav ml-auto">
-            <li class="loading-dialog" id="loading" style="display: none;">
-                <i class="fa fa-spin fa-circle-o-notch red icon"></i>
+            <li class="nav-item hidden-xs">
+                <a
+                    class="nav-link icon"
+                    href="/feedback"
+                ><i class="fa fa-question-circle"></i></a>
             </li>
 
             <li class="nav-item hidden-xs">
-                <a href="#" ng-click="openFeedback()" class="nav-link icon">
-                    <i class="fa fa-question-circle" aria-hidden="true"></i>
-                </a>
+                <a
+                    class="nav-link icon"
+                    href="http://bop-ccers.tumblr.com"
+                    target="_blank"
+                ><i class="fa fa-tumblr-square"></i></a>
             </li>
 
-            <li class="nav-item hidden-xs">
-                <a href="http://bop-ccers.tumblr.com" class="nav-link icon" target="_blank"><i class="fa fa-tumblr-square"></i></a>
-            </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle user-header-dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
-                    <img alt="{{ .bindings.user.displayName }}" class="header-profile-image" src="assets/img/profile/avatar-gray.png">
-                    <span> {{ .bindings.user.displayName }}</span>
+                <a
+                    class="nav-link dropdown-toggle user-header-dropdown-toggle"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    data-toggle="dropdown"
+                >
+                    <img
+                        alt="{{ .bindings.user.displayName }}"
+                        class="header-profile-image"
+                        src="assets/img/profile/avatar-gray.png"
+                    >
+                    <span>{{ .bindings.user.displayName }}</span>
                     <b class="caret"></b>
                 </a>
+
                 <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="item in accountMenu.items" ng-if="item.shouldRender(authentication.user);">
-                        <a href="/profiles">Profile</a>
-                    </li>
                     <li>
-                        <a href="#" data-toggle="modal" data-target="#modal-about">About the project</a>
+                        <a class="dropdown-item" href="/profiles">Profile</a>
                     </li>
+
                     <li>
-                        <a href="https://docs.google.com/document/d/1QSf1aGG_Vfhhft9gtD0onftOAHPrjqqdzPe622DBtkU/pub" target="_blank">User Guide</a>
+                        <a class="dropdown-item" href="/about">About the project</a>
                     </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="https://docs.google.com/document/d/1QSf1aGG_Vfhhft9gtD0onftOAHPrjqqdzPe622DBtkU/pub"
+                            target="_blank"
+                        >User Guide</a>
+                    </li>
+
                     <li class="divider"></li>
+
                     <li class="visible-xs">
-                        <a href="#" ng-click="openFeedback()">
-                            <i class="fa fa-question-circle" aria-hidden="true"></i> Support
+                        <a class="dropdown-item" href="/feedback">
+                            <i class="fa fa-question-circle"></i> Support
                         </a>
                     </li>
+
                     <li class="visible-xs">
-                        <a href="http://bop-ccers.tumblr.com" target="_blank">
+                        <a class="dropdown-item" href="http://bop-ccers.tumblr.com" target="_blank">
                             <i class="fa fa-tumblr-square"></i> Tumblr
                         </a>
                     </li>
+
                     <li class="divider visible-xs"></li>
-                    <li><a href="/logout" target="_self">Signout</a></li>
+
+                    <li>
+                        <a class="dropdown-item" href="/logout" target="_self">Signout</a>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -53,7 +79,7 @@
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item hidden-xs">
                 <a href="/feedback" class="nav-link icon">
-                    <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    <i class="fa fa-question-circle"></i>
                 </a>
             </li>
             <li class="nav-item hidden-xs">
@@ -69,7 +95,7 @@
             </li>
             <li class="nav-item visible-xs">
                 <a class="nav-link" href="/feedback">
-                    <i class="fa fa-question-circle" aria-hidden="true"></i> Support
+                    <i class="fa fa-question-circle"></i> Support
                 </a>
             </li>
         </ul>
