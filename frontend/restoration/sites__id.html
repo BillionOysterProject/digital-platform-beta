@@ -118,8 +118,10 @@ bindings:
       			<h3 class="mt-0 mb-1">{{ $station.name }}</h3>
       			<i class="fa fa-fw fa-building"></i> {{ $station.schoolOrg.name }}
       			<br/>
+                {{ if $station.teamLead }}
       			<i class="fa fa-fw fa-user"></i>{{ $station.teamLead.displayName }}
       			<br/>
+                {{ end }}
     		</div>
   		</div>
   		{{ end }}
