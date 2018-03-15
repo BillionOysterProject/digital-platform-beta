@@ -1596,3 +1596,7 @@ li.loading-dialog {
 .site-details h3 {
     font-size:   20px;
 }
+
+.site-details #siteMap {
+    min-height:  240px;
+}
