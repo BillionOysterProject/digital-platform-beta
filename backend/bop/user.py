@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+import re
 import pivot.exceptions
 import base64
 from pbkdf2 import PBKDF2
@@ -66,5 +67,18 @@ class User(dict):
     def is_anonymous(self):
         return False
 
+    def has_role(self, role):
+        try:
+            for r in self['roles']:
+                if self._normalize_role(r) == self._normalize_role(role):
+                    return True
+        except KeyError:
+            pass
+
+        return False
+
     def get_id(self):
         return self['id']
+
+    def _normalize_role(self, role):
+        return re.sub(r'[\s\W\_]+', '-', '{}'.format(role)).lower()

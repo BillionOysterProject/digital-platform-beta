@@ -9,6 +9,7 @@ ANONYMOUS_ROUTES = (
     # allow people to login, and know when they are/are not logged in
     # --------------------------------------------------------------------------
     ('POST', re.compile('^/api/auth/signin/?')),
+    ('GET', re.compile('^/api/auth/signout/?')),
     ('GET', re.compile('^/api/users/me/?')),
 
     # permit public access to participating and prospective organizations
@@ -37,20 +38,40 @@ ANONYMOUS_ROUTES = (
     ('GET', re.compile('^/api/events/?')),
 )
 
+ROUTES_BY_GROUP = {
+    # admins can do anything
+    # --------------------------------------------------------------------------
+    'admin': (
+        ('*', re.compile('.*')),
+    ),
+
+    # team leads
+    # --------------------------------------------------------------------------
+    'team-lead': (
+        ('GET', re.compile('^/api/users/?')),
+        ('GET', re.compile('^/api/teams/?')),
+    ),
+}
+
 
 def verify_path_is_authorized(view, request):
-    method = request.method
+    method = request.method.lower()
     path = request.path
 
     # shortcut for anonymous routes
-    for m, rx in ANONYMOUS_ROUTES:
-        if m == method:
-            if rx.match(path):
+    for ruleMethod, rulePath in ANONYMOUS_ROUTES:
+        if ruleMethod.lower() == method or ruleMethod == '*':
+            if rulePath.match(path):
                 return True
 
     user = view.current_user
 
     if user:
-        return True
+        for role, rules in ROUTES_BY_GROUP.items():
+            for ruleMethod, rulePath in rules:
+                if user.has_role(role):
+                    if ruleMethod == method or ruleMethod == '*':
+                        if rulePath.match(path):
+                            return True
 
     raise Forbidden('You are not authorized to access this resource.')

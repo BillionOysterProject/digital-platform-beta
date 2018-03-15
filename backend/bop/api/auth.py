@@ -130,10 +130,11 @@ class Users(CollectionView):
         User.collection = cls.get_collection()
 
     def me(self):
-        if self.current_user:
-            return jsonify(self.current_user)
+        user = self.current_user
+        if user:
+            return jsonify(user)
         else:
-            raise Unauthorized()
+            return jsonify(None)
 
     def teamleads(self):
         basequery = request.args.get('q')
