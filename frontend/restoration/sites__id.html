@@ -50,20 +50,6 @@ bindings:
 		</div>
 	</div>
 
-    <script type="text/javascript">
-        $(function() {
-            mapboxgl.accessToken = 'pk.eyJ1IjoiZ2hldHplbCIsImEiOiJjajhvdTVvOHYwOGtjMnd1bXUxN2p2eThkIn0.t74BmXxs3SBMGLM1YqIGEg';
-
-            var map = new mapboxgl.Map({
-                container: 'mapexplorer',
-                style: 'mapbox://styles/{{ qs `style` $.page.style }}',
-                failIfMajorPerformanceCaveat: true,
-                center: [-73.98, 40.7064203],
-                zoom:   10,
-            });
-        });
-    </script>
-
 	{{ if $stations }}
 	<h2 class="mt-4 mb-4">Oyster Research Stations</h2>
 
