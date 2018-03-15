@@ -203,10 +203,9 @@ class CollectionView(Endpoint):
 
                                     output = self._prepare_single_result(_result_cache[cache_key])
                                 except pivot.exceptions.RecordNotFound:
-                                    output = {}
+                                    output = None
 
-                            if output:
-                                dpath.util.set(result, field, output, separator='.')
+                            dpath.util.set(result, field, output, separator='.')
 
                         else:
                             raise TypeError(
