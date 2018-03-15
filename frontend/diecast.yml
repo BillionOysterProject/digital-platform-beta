@@ -11,6 +11,10 @@ mounts:
 
 header:
   page:
+      mapbox:
+        style: 'ghetzel/cjeq9hzsn553o2rqklsbdhzwc'
+        key:   'pk.eyJ1IjoiZ2hldHplbCIsImEiOiJjajhvdTVvOHYwOGtjMnd1bXUxN2p2eThkIn0.t74BmXxs3SBMGLM1YqIGEg'
+
       labels:
           nycsssUnits:                     'NYC Science Scope & Sequence - Units'
           nysssKeyIdeas:                   'NYS Science Standards - Key Ideas'

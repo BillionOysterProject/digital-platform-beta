@@ -1,7 +1,6 @@
 ---
 page:
     body_class: 'site-details'
-    mapstyle:   'ghetzel/cjeq9hzsn553o2rqklsbdhzwc'
 
 bindings:
 - name:		'site'
@@ -57,11 +56,11 @@ bindings:
 
 <script type="text/javascript">
     $(function() {
-        mapboxgl.accessToken = 'pk.eyJ1IjoiZ2hldHplbCIsImEiOiJjajhvdTVvOHYwOGtjMnd1bXUxN2p2eThkIn0.t74BmXxs3SBMGLM1YqIGEg';
+        mapboxgl.accessToken = '{{ $.page.mapbox.key }}';
 
         var map = new mapboxgl.Map({
             container: 'siteMap',
-            style: 'mapbox://styles/{{ qs `style` $.page.mapstyle }}',
+            style: 'mapbox://styles/{{ qs "style" $.page.mapbox.style }}',
             failIfMajorPerformanceCaveat: true,
             center: [{{ $site.longitude }}, {{ $site.latitude }}],
             zoom:   13,
