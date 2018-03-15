@@ -106,7 +106,6 @@ bindings:
 
 	<div class="row">
 		{{ range $i, $station := $stations }}
-        {{ if $station }}
   		<div class="media col-12 col-lg-6 col-xl-4 mb-4">
   			<div class="col-2">
 	  			{{ if $station.photo }}
@@ -119,13 +118,12 @@ bindings:
       			<h3 class="mt-0 mb-1">{{ $station.name }}</h3>
       			<i class="fa fa-fw fa-building"></i> {{ $station.schoolOrg.name }}
       			<br/>
-                {{ if $station.teamLead }}
+                {{ if count $station.teamLead }}
       			<i class="fa fa-fw fa-user"></i>{{ $station.teamLead.displayName }}
       			<br/>
                 {{ end }}
     		</div>
   		</div>
-        {{ end }}
   		{{ end }}
   	</div>
 
