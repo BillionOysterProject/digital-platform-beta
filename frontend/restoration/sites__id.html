@@ -1,15 +1,20 @@
 ---
+page:
+    body_class: 'site-details'
+
 bindings:
-- name:		'site'	
+- name:		'site'
   resource: '/api/sites/{{ param 1 }}'
 
 - name:     'stations'
   resource: '/api/restoration-stations'
-  params: 
+  fallback: []
+  params:
     q: 'siteId/{{ param 1 }}'
 
 - name:     'relatedTeams'
   resource: '/api/teams'
+  fallback: []
   params:
     q: 'teamLeads/{{ join (uniq (pluck $.bindings.stations "teamLead._id")) "|" }}'
     fields: 'teamLead,teamLeads'
@@ -41,16 +46,29 @@ bindings:
 			</div>
 		</div>
 		<div class="col-3">
-			map placeholder
 		</div>
 	</div>
-	
+
+    <script type="text/javascript">
+        $(function() {
+            mapboxgl.accessToken = 'pk.eyJ1IjoiZ2hldHplbCIsImEiOiJjajhvdTVvOHYwOGtjMnd1bXUxN2p2eThkIn0.t74BmXxs3SBMGLM1YqIGEg';
+
+            var map = new mapboxgl.Map({
+                container: 'mapexplorer',
+                style: 'mapbox://styles/{{ qs `style` $.page.style }}',
+                failIfMajorPerformanceCaveat: true,
+                center: [-73.98, 40.7064203],
+                zoom:   10,
+            });
+        });
+    </script>
+
 	{{ if $stations }}
 	<h2 class="mt-4 mb-4">Oyster Research Stations</h2>
 
 	<div class="row">
 		{{ range $i, $station := $stations }}
-  		<div class="media col-6 mb-4">
+  		<div class="media col-12 col-lg-6 col-xl-4 mb-4">
   			<div class="col-2">
 	  			{{ if $station.photo }}
 	    		<img class="img-fluid" src="{{ $station.photo.path }}" alt="Photo of this ORS">
@@ -67,22 +85,12 @@ bindings:
     		</div>
   		</div>
   		{{ end }}
-  	</div>	
+  	</div>
 
 	{{ if $people }}
 	<h2 class="mt-4 mb-4">People</h2>
-	<div class="row">
-		{{ range $i, $personID := $people }}
-  		<div class="media col-6 mb-4">
-  			<div class="col-2">
-	  			{{ $personID }}
-    		</div>
-    		<div class="col-2">
-	  			
-    		</div>
-    	</div>
-    	{{ end }}
-    </div>		
+	<div class="row" id="sitePeople">
+    </div>
 
 	{{ end }}
 	{{ end }}
@@ -91,3 +99,13 @@ bindings:
 {{ end }}
 
 </div>
+
+{{ if $people }}
+<script type="text/javascript">
+    $(function(){
+        $('#sitePeople').load('/restoration/_sites_people?' + $.param({
+            q: 'id/{{ join $people "|" }}',
+        }));
+    });
+</script>
+{{ end }}

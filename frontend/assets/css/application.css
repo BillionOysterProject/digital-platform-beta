@@ -37,7 +37,7 @@ body > header {
 }
 
 .img-muted {
-    
+
 }
 
 #main {
@@ -1591,4 +1591,8 @@ li.loading-dialog {
 .unit-lessons .card-deck > .card .preview {
     width:       100%;
     text-align:  center;
+}
+
+.site-details h3 {
+    font-size:   20px;
 }

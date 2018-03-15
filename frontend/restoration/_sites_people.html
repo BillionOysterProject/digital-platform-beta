@@ -1,0 +1,27 @@
+---
+bindings:
+- name:     'people'
+  resource: '/api/users'
+  params:
+    q: '{{ qs "q" "all" }}'
+---
+{{ $people := $.bindings.people }}
+
+{{ range $i, $person := $people }}
+<div class="media col-12 col-lg-6 col-xl-4 mb-4">
+    <div class="col-2">
+        {{ if and ($person.profileImageURL) (not (hasSuffix $person.profileImageURL "avatar-gray.png")) }}
+        <img class="img-fluid" src="{{ $person.profileImageURL }}" alt="Photo of User {{ $person.username }}">
+        {{ else }}
+        <img class="img-fluid img-muted" src="assets/img/placeholders/oyster.png" alt="Placeholder User image">
+        {{ end }}
+    </div>
+    <div class="media-body">
+        <h3 class="mt-0 mb-1">{{ $person.displayName }}</h3>
+        <i class="fa fa-fw fa-building"></i> {{ $person.schoolOrg.name }}
+        <br/>
+        <i class="fa fa-fw fa-envelope"></i>{{ $person.email }}
+        <br/>
+    </div>
+</div>
+{{ end }}
