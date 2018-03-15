@@ -147,12 +147,6 @@ class ProtocolWaterQualities(CollectionView):
     collection_name = 'protocolwaterqualities'
 
 
-class Sites(CollectionView):
-    route_base      = 'sites'
-    collection_name = 'sites'
-    results_only    = True
-
-
 class RestorationStations(CollectionView):
     route_base      = 'restoration-stations'
     collection_name = 'restorationstations'
@@ -165,7 +159,7 @@ class RestorationStations(CollectionView):
         'schoolOrg': (
             'schoolorgs', ['_id', 'name'],
         ),
-         'team': (
+        'team': (
             'teams', ['_id', 'name', 'created', 'teamLeads'],
         ),
         'teamLead': (

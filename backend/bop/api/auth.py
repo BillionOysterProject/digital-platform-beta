@@ -57,7 +57,8 @@ class Teams(CollectionView):
             'schoolorgs', ['_id', 'name'],
         ),
         'teamLeads': (
-            'users', [],
+            'users', ['_id', 'username', 'email', 'displayName', 'firstName',
+                      'lastName', 'profileImageURL', 'schoolOrg'],
         )
     }
 

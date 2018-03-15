@@ -5,6 +5,7 @@ from flask_classy import FlaskView, route
 from flask_login import current_user
 from collections import OrderedDict
 import pivot.exceptions
+from ..accesscontrol import verify_path_is_authorized
 from ..utils import as_bool
 from ..time import Time
 from ..user import User
@@ -43,6 +44,13 @@ class Endpoint(FlaskView):
     @classmethod
     def collection_for(cls, name):
         return cls.client.collection(name)
+
+    # !! IMPORTANT !! FOOTGUN ALERT !! IMPORTANT !!
+    # ----------------------------------------------------------------------------------------------
+    # This is where ALL user authorization checks are performed.  Changing this
+    # can accidentally expose all data to h@ckerz.
+    def before_request(self, *args, **kwargs):
+        verify_path_is_authorized(self, request)
 
 
 class CollectionView(Endpoint):
@@ -186,7 +194,14 @@ class CollectionView(Endpoint):
                                             _result_cache[cache_key]
                                         ))
                                     except:
-                                        output.append({})
+                                        logging.warning('{}/{}: Field {} contains reference to missing record: {}/{}'.format(
+                                            self.collection.name,
+                                            result.id,
+                                            field,
+                                            related_collection,
+                                            expand_id
+                                        ))
+                                        continue
 
                             elif isinstance(value, six.string_types + (int,)):
                                 # unpack IDs into expanded objects
@@ -246,7 +261,7 @@ class CollectionView(Endpoint):
         query_results_params['expand'] = request.args.get('expand', has_nested_fields)
 
         if 'limit' not in params:
-            params['limit'] = 2147483647
+            params['limit'] = False
 
         results = self.collection.query(query, **params)
         results = self._prepare_query_results(results, **query_results_params)
