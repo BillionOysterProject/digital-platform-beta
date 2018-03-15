@@ -1,9 +1,20 @@
 ---
+page:
+    body_class: 'sites-list'
+
 bindings:
 - name:     'sites'
   resource: '/api/sites'
   params:
     limit: false
+
+flags:
+    viewSitesMap:  '{{ any (qs "v" ) "map" "" }}'
+    viewSitesList: '{{ eqx (qs "v") "list" }}'
+
+includes:
+    sitesMap:  '/restoration/sites_map.html'
+    sitesList: '/restoration/sites_list.html'
 ---
 <section class="content shaded">
     <div class="row">
@@ -13,18 +24,28 @@ bindings:
     </div>
 </section>
 
-<ul class="list-unstyled m-4">
-    {{ range $i, $site := $.bindings.sites }}
-    <li class="media mb-2">
-        <img class="img-fluid img-muted" src="assets/img/placeholders/oyster.png" alt="BOP Logo">
-        <div class="media-body">
-            <h3 class="m-3">
-                <a href="/restoration/sites/{{ $site._id }}">
-                    {{ $site.name }}
-                </a>
-            </h3>
-        </div>
-    </div>
-  </li>
-  {{ end }}
+<ul class="nav nav-tabs mt-2 pl-1 pr-1">
+    <li class="nav-item">
+        <a class="nav-link{{ if $.flags.viewSitesMap }} active{{ end }}" href="/restoration/sites?v=map">
+            <i class="fa fa-map-o"></i>
+            Map
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link{{ if $.flags.viewSitesList }} active{{ end }}" href="/restoration/sites?v=list">
+            <i class="fa fa-list"></i>
+            List
+        </a>
+    </li>
 </ul>
+
+<section class="content sites-list-view">
+    {{ if $.flags.viewSitesMap }}
+    {{   template "sitesMap" . }}
+    {{ else if $.flags.viewSitesList }}
+    {{   template "sitesList" . }}
+    {{ else }}
+    <h2>Invalid view "{{ qs "v" }}"</h2>
+    {{ end }}
+</section>

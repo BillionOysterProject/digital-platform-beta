@@ -1,32 +1,11 @@
----
-page:
-    view: Map Explorer
-    body_class: 'map'
----
-<section class="content">
-    <nav class="navbar navbar-expand-lg navbar-default user-navbar">
-        <div class="navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item{{ if eqx (qs `style` $.page.mapbox.style) `mapbox/outdoors-v9` }} active{{ end }}">
-                    <a class="nav-link" href="/data/map?style=mapbox/outdoors-v9">Color Map</a>
-                </li>
-
-                <li class="nav-item{{ if eqx (qs `style` $.page.mapbox.style) `light-v9` }} active{{ end }}">
-                    <a class="nav-link" href="/data/map?style=mapbox/light-v9">Grey Map</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div id="mapexplorer"></div>
-</section>
+<div id="map"></div>
 
 <script type="text/javascript">
     $(function() {
         mapboxgl.accessToken = '{{ $.page.mapbox.key }}';
 
         var map = new mapboxgl.Map({
-            container: 'mapexplorer',
+            container: 'map',
             style: 'mapbox://styles/{{ qs `style` $.page.mapbox.style }}',
             failIfMajorPerformanceCaveat: true,
             center: [-73.98, 40.7064203],
@@ -61,12 +40,20 @@ page:
                     };
 
                     $.each(sites, function(i, site){
-                        var description = "<strong>" + site.name + ', ' + site.bodyOfWater + "</strong>";
+                        var description = "<h1>" + site.name + ', ' + site.bodyOfWater + "</h1>";
 
                         if (site.nycParkName && site.nycParkName.length) {
-                            description += "<br>"
+                            description += "<br>";
                             description += "<i>NYC Park Name:</i> " + site.nycParkName;
                         }
+
+                        description += "<br>";
+                        description += "<center>";
+                        description += '<a href="/restoration/sites/' + site._id + '" class="btn btn-sm btn-primary mt-2">';
+                        description += '<i class="fa fa-fw fa-map-marker"></i>'
+                        description += 'View Site';
+                        description += '</a>';
+                        description += "</center>";
 
                         var point = {
                             "type": "Feature",

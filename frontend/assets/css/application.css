@@ -42,6 +42,7 @@ body > header {
 
 #main {
     width:           100%;
+    height:          calc(100% - 50px);
 }
 
 h1, .h1 {
@@ -1532,14 +1533,6 @@ li.loading-dialog {
     padding: 0;
 }
 
-#mapexplorer {
-    position: absolute;
-    top:      0;
-    bottom:   0;
-    width:    calc(100% - 220px);
-    cursor:  crosshair !important;
-}
-
 .lessons-list {
     padding:         0 3.4em;
 }
@@ -1599,4 +1592,33 @@ li.loading-dialog {
 
 .site-details #siteMap {
     min-height:  240px;
+}
+
+.sites-list {
+    display:         flex;
+    flex-direction:  column;
+    height:          100%;
+}
+
+.sites-list .sites-list-view {
+    flex:        1;
+    display:     flex;
+    align-items: stretch;
+    padding:     0;
+}
+
+.sites-list .sites-list-view #map {
+    flex:        1;
+}
+
+.mapboxgl-popup-content {
+    -webkit-box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.33);
+    -moz-box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.33);
+    box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.33);
+    border-radius:   8px;
+}
+
+.mapboxgl-popup-content h1 {
+    font-size:       11pt;
+    font-weight:     bold;
 }
