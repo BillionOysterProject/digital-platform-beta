@@ -20,9 +20,9 @@ Furthermore, storing GIS data in a way that is easy for GIS-aware systems to acc
 
 #### Some places where you can store GIS data, and then retrieve it later:
 
-- *PostGIS*: self-hosted, a PostgreSQL extension that adds GIS storage capabilities to a SQL server.  This is far and away the most popular option for storing and querying GIS data on your own computers.
+- **PostGIS**: self-hosted, a PostgreSQL extension that adds GIS storage capabilities to a SQL server.  This is far and away the most popular option for storing and querying GIS data on your own computers.
 
-- *WMTS*: A _Web Mapping Tile Service_ is a website that provides access to _their_ stored GIS content in a standard way.  Many organizations run their own services, and most of them use a handful of common protocols and standards for accessing the data.  One of the most popular options for storing, curating, and sourcing GIS data is the [ArcGIS WMTS](https://enterprise.arcgis.com/en/server/latest/publish-services/linux/wmts-services.htm).
+- **WMTS**: A _Web Mapping Tile Service_ is a website that provides access to _their_ stored GIS content in a standard way.  Many organizations run their own services, and most of them use a handful of common protocols and standards for accessing the data.  One of the most popular options for storing, curating, and sourcing GIS data is the [ArcGIS WMTS](https://enterprise.arcgis.com/en/server/latest/publish-services/linux/wmts-services.htm).
 
 ### 3. Serve your own maps
 
@@ -30,14 +30,14 @@ Furthermore, storing GIS data in a way that is easy for GIS-aware systems to acc
 
 If you opt to run your own servers to serve GIS data you are storing, you have options.
 
-- [*MapServer*](http://mapserver.org): Open source, written in C.  A very popular high-performance server that can do basically anything you need it to with respect to serving GIS data.
+- [**MapServer**](http://mapserver.org): Open source, written in C.  A very popular high-performance server that can do basically anything you need it to with respect to serving GIS data.
 
-- [*Tegola*](http://tegola.io): Open source, written in Golang.  New on the scene, very lean but has a promising architecture.  Specifically used in this project to serve GIS data stored in a PostGIS database in the [Mapbox Vector Tile Format](https://www.mapbox.com/vector-tiles/).
+- [**Tegola**](http://tegola.io): Open source, written in Golang.  New on the scene, very lean but has a promising architecture.  Specifically used in this project to serve GIS data stored in a PostGIS database in the [Mapbox Vector Tile Format](https://www.mapbox.com/vector-tiles/).
 
 #### Client Software for consuming WMTS/map server data and presenting it to users
 
 The other half of the serving equation is the client side-- actually putting something on a screen for your users to see and play with.  Within the context of web applications, this is almost exclusively the domain of various JavaScript libraries and projects.
 
-- [*Mapbox GL JS*](https://www.mapbox.com/mapbox-gl-js/api/): The preferred library for this project, Mapbox GL JS integrates very cleanly with their open style format, as well as their [map style design Studio](https://www.mapbox.com/mapbox-studio/), and plays nicely with existing web mapping standards.
+- [**Mapbox GL JS**](https://www.mapbox.com/mapbox-gl-js/api/): The preferred library for this project, Mapbox GL JS integrates very cleanly with their open style format, as well as their [map style design Studio](https://www.mapbox.com/mapbox-studio/), and plays nicely with existing web mapping standards.
 
-- [*Leaflet*](http://leafletjs.com): Another very high quality option with different semantics.  Takes more effort to consume Mapbox-styled maps, but provides a much richer ecosystem for consuming a larger array of existing GIS data systems and formats.
+- [**Leaflet**](http://leafletjs.com): Another very high quality option with different semantics.  Takes more effort to consume Mapbox-styled maps, but provides a much richer ecosystem for consuming a larger array of existing GIS data systems and formats.
