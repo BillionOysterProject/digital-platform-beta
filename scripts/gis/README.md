@@ -2,7 +2,7 @@
 
 Files, configs, and useful information for working with and actually using Geographic Information Systems (GIS); e.g.: "Custom maps on the Internet".
 
-## Map Server
+## Serving Maps to Users
 
 The ability to view maps online is made possible by a complex pile of software that breaks down the complex pile of tasks necessary for turning lists of numbers (e.g.: coordinates and what's _at_ those coordinates) into something visual that you can interact with.
 
