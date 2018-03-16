@@ -38,6 +38,6 @@ If you opt to run your own servers to serve GIS data you are storing, you have o
 
 The other half of the serving equation is the client side-- actually putting something on a screen for your users to see and play with.  Within the context of web applications, this is almost exclusively the domain of various JavaScript libraries and projects.
 
-- [**Mapbox GL JS**](https://www.mapbox.com/mapbox-gl-js/api/): The preferred library for this project, Mapbox GL JS integrates very cleanly with their open style format, as well as their [map style design Studio](https://www.mapbox.com/mapbox-studio/), and plays nicely with existing web mapping standards.
+- [**Mapbox GL JS**](https://www.mapbox.com/mapbox-gl-js/api/): The preferred library for this project, Mapbox GL JS integrates very cleanly with their [open style format](https://www.mapbox.com/mapbox-gl-js/style-spec/), as well as their [map style design Studio](https://www.mapbox.com/mapbox-studio/), and plays nicely with existing web mapping standards.
 
 - [**Leaflet**](http://leafletjs.com): Another very high quality option with different semantics.  Takes more effort to consume Mapbox-styled maps, but provides a much richer ecosystem for consuming a larger array of existing GIS data systems and formats.
