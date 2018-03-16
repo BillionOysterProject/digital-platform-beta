@@ -7,3 +7,6 @@
 /tmp
 /database/schema/models/
 /backend/flask_session/
+*.cache
+/scripts/gis/cache
+/scripts/gis/db

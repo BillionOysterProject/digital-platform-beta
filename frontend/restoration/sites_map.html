@@ -13,6 +13,26 @@
         });
 
         map.on('load', function() {
+            // map.addLayer({
+            //     "id": "seamarks",
+            //     "type": "circle",
+            //     "source": {
+            //         "type": "vector",
+            //         "tiles": [
+            //             "http://localhost:9090/maps/seamarks/manmade/{z}/{x}/{y}.vector.pbf",
+            //         ],
+            //         // "minzoom": 1,
+            //         // "maxzoom": 18
+            //     },
+            //     "source-layer": "manmade",
+            //     "paint": {
+            //         "circle-radius": 3,
+            //         "circle-color": "#FF0000",
+            //         "circle-stroke-width": 1,
+            //         "circle-stroke-color": "#FFFFFF",
+            //     },
+            // });
+
             $.ajax({
                 url: '/api/sites?' + $.param({
                     limit: false,
@@ -28,8 +48,6 @@
                                 "type": "FeatureCollection",
                                 "features": [],
                             },
-                        },
-                        "layout": {
                         },
                         "paint": {
                             "circle-radius": 7,
@@ -80,7 +98,7 @@
         map.on('click', function(e) {
             try {
                 var features = map.queryRenderedFeatures(e.point, {
-                    layers: ['sites'],
+                    layers: ['sites', 'seamarks'],
                 });
 
                 if (!features.length) {
@@ -88,6 +106,20 @@
                 }
 
                 var feature = features[0];
+
+                console.debug('ft.', feature);
+
+                if (!feature.properties.description) {
+                    feature.properties.description = '';
+
+                    if (feature.properties.name) {
+                        feature.properties.description += '<h1>' + feature.properties.name + '</h1>';
+                    }
+
+                    if (feature.properties.type) {
+                        feature.properties.description += '<strong>' + feature.properties.type + '</strong>';
+                    }
+                }
 
                 var currentPopup = new mapboxgl.Popup({ offset: [0, -15] })
                     .setLngLat(feature.geometry.coordinates)

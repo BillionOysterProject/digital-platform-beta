@@ -1,0 +1,90 @@
+[webserver]
+port = ":9090"              # port to bind the web server to. defaults ":8080"
+
+[cache]
+type = "file"
+basepath = "cache"
+
+[[providers]]
+name = "postgis"       # provider name is referenced from map layers (required)
+type = "postgis"       # the type of data provider. currently only supports postgis (required)
+host = "localhost"     # postgis database host (required)
+port = 5432            # postgis database port (required)
+database = "gis"       # postgis database name (required)
+user = "gis"           # postgis database user (required)
+password = "gis"       # postgis database password (required)
+srid = 3857            # The default srid for this provider. Defaults to WebMercator (3857) (optional)
+max_connections = 50   # The max connections to maintain in the connection pool. Default is 100. (optional)
+
+    [[providers.layers]]
+    name               = "waterways"
+    tablename          = "osm_waterways"
+    geometry_fieldname = "geometry"
+    id_fieldname       = "id"
+    fields             = [ "name", "type" ]
+
+    [[providers.layers]]
+    name               = "buoys"
+    geometry_fieldname = "geometry"
+    id_fieldname       = "id"
+    tablename          = "osm_buoys"
+    fields             = [
+        "type",
+        "seamark:name",
+        "seamark:buoy_lateral:shape",
+        "seamark:buoy_lateral:category",
+        "seamark:buoy_lateral:colour",
+        "seamark:buoy_lateral:colour_pattern",
+        "seamark:buoy_safe_water:shape",
+        "seamark:buoy_safe_water:colour",
+        "seamark:buoy_safe_water:colour_pattern",
+        "seamark:buoy_cardinal:shape",
+        "seamark:buoy_cardinal:category",
+        "seamark:buoy_cardinal:colour",
+        "seamark:buoy_cardinal:colour_pattern",
+        "seamark:buoy_isolated_danger:shape",
+        "seamark:buoy_isolated_danger:colour",
+        "seamark:buoy_isolated_danger:colour_pattern",
+        "seamark:buoy_special_purpose:shape",
+        "seamark:buoy_special_purpose:colour",
+        "seamark:topmark:shape",
+        "seamark:topmark:colour",
+    ]
+
+    [[providers.layers]]
+    name               = "manmade"
+    tablename          = "osm_manmade"
+    geometry_fieldname = "geometry"
+    id_fieldname       = "id"
+    fields             = [ "name", "type" ]
+
+    [[providers.layers]]
+    name               = "water_bodies"
+    tablename          = "osm_waterareas"
+    geometry_fieldname = "geometry"
+    id_fieldname       = "id"
+    fields             = [ "name", "type" ]
+
+[[maps]]
+name = "seamarks"
+center = [-74.051996, 40.673823, 6.0]
+
+    [[maps.layers]]
+    name = "waterways"
+    provider_layer = "postgis.waterways"
+    min_zoom = 8
+    max_zoom = 16
+
+    [[maps.layers]]
+    name = "buoys"
+    provider_layer = "postgis.buoys"
+
+    [[maps.layers]]
+    name = "manmade"
+    provider_layer = "postgis.manmade"
+
+    # [[maps.layers]]
+    # name = "water_bodies"
+    # provider_layer = "postgis.water_bodies"
+    # min_zoom = 1
+    # max_zoom = 16
