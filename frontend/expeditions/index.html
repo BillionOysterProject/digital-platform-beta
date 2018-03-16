@@ -1,8 +1,10 @@
 ---
-page:
-    view: My Expeditions
-
 bindings:
+- name:     'userCheck'
+  resource: '/api/users/me'
+  if_status:
+    401:    '/authentication/signin'
+
 - name:     'expeditions'
   resource: ':/api/expeditions'
   params:
@@ -16,6 +18,8 @@ bindings:
   params:
     byMember: true
 ---
+<h1>My Expeditions</h1>
+
 <section class="content">
     <section class="container-fluid">
         <div>

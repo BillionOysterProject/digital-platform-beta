@@ -1,5 +1,10 @@
 ---
 bindings:
+- name:     'userCheck'
+  resource: '/api/users/me'
+  if_status:
+    401:    '/authentication/signin'
+
 - name:     'teamsLeading'
   resource: ':/api/teams/'
   optional: true
@@ -52,7 +57,6 @@ bindings:
 ---
 <section class="content shaded" id="dashboard">
     <section class="container-fluid">
-        {{ if .bindings.user }}
         <div class="page-header">
             <div class="row">
                 <h2 class="col-md-3">Dashboard</h2>
@@ -157,7 +161,7 @@ bindings:
                     </div>
                     <div class="panel-body">
                         <table class="table table-hover">
-                            {{ range $expedition := .bindings.publishedExpeditions.expeditions }}
+                            {{ range $expedition := $.bindings.publishedExpeditions.expeditions }}
                             <tr onclick="window.location='/expeditions/{{ ._id }}'">
                                 <td>
                                     {{ .name }}
@@ -501,8 +505,5 @@ bindings:
             </div>
             <!-- END My ORS -->
         </div>
-        {{ else }}
-            <h3>Unauthenticated</h3>
-        {{ end }}
     </section>
 </section>

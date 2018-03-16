@@ -6,11 +6,26 @@
         </div>
         <div class="row">
             <div class="col-sm-10 offset-sm-1">
-                <p class="lead">Learn and practice restoration ecology in New York Harbor by sharing data, curriculum, research, and more through the BOP-CCERS Digital Platform!</p>
+                <p class="lead">
+                    Learn and practice restoration ecology in New York Harbor by sharing data,
+                    curriculum, research, and more through the BOP-CCERS Digital Platform!
+                </p>
                 <h6 class="blue">How it works</h6>
-                <p>Every school gets their own waterfront Oyster Research Station to collect and publish data. Students conduct their own field research projects using the digital platform, then present to professional scientists and policy makers at the Annual BOP Symposium. Teachers use the platform to collaborate on BOP curriculum, share resources, register for events, and more. The Billion Oyster Project is a curriculum and community enterprise for restoration science. Students are at the center. Help them learn to restore, restore to learn!</p>
-                <a class="btn btn-lg btn-danger" ui-sref="authentication.signup" ng-hide="authentication.user" href="/authentication/signup">Join the program <i class="fa fa-angle-right"></i></a>
-                <br><br>
+                <p>
+                    Every school gets their own waterfront Oyster Research Station to collect and
+                    publish data. Students conduct their own field research projects using the
+                    digital platform, then present to professional scientists and policy makers at
+                    the Annual BOP Symposium. Teachers use the platform to collaborate on BOP
+                    curriculum, share resources, register for events, and more. The Billion Oyster
+                    Project is a curriculum and community enterprise for restoration science.
+                    Students are at the center. Help them learn to restore, restore to learn!
+                </p>
+                <a class="btn btn-lg btn-danger" href="/authentication/signup">
+                    Join the program
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                <br>
+                <br>
             </div>
         </div>
         <div class="row text-center">
@@ -18,28 +33,28 @@
                 <h2 class="white"><i class="fa fa-user"></i></h2>
                 <h6 class="white">Team Members</h6>
                 <hr>
-                <h1 class="text-caps ng-binding">{{ .bindings.basicMetrics.teamMemberCount }}</h1>
+                <h1 class="text-caps">{{ $.bindings.basicMetrics.teamMemberCount }}</h1>
                 <br>
             </div>
             <div class="col-sm-3">
                 <h2 class="white"><i class="fa fa-user"></i></h2>
                 <h6 class="white">Team Leads</h6>
                 <hr>
-                <h1 class="text-caps ng-binding">{{ .bindings.basicMetrics.teamLeadCount }}</h1>
+                <h1 class="text-caps">{{ $.bindings.basicMetrics.teamLeadCount }}</h1>
                 <br>
             </div>
             <div class="col-sm-3">
                 <h2 class="white"><i class="fa fa-users"></i></h2>
                 <h6 class="white">Teams</h6>
                 <hr>
-                <h1 class="text-caps ng-binding">{{ .bindings.basicMetrics.teamCount }}</h1>
+                <h1 class="text-caps">{{ $.bindings.basicMetrics.teamCount }}</h1>
                 <br>
             </div>
             <div class="col-sm-3">
                 <h2 class="white"><i class="fa fa-building"></i></h2>
                 <h6 class="white">Organizations</h6>
                 <hr>
-                <h1 class="text-caps ng-binding">{{ .bindings.basicMetrics.orgCount }}</h1>
+                <h1 class="text-caps">{{ $.bindings.basicMetrics.orgCount }}</h1>
             </div>
         </div>
     </section>

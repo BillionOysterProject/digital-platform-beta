@@ -36,18 +36,10 @@ bindings:
 {{ $people     := uniq $.vars.people }}
 {{ $schoolOrgs := (uniqByKey (filterByKey (pluck $.bindings.stations "schoolOrg") "name" "{{ not (hasPrefix (lower .) `unaffiliated`) }}") "name") }}
 
-<section class="content shaded">
-    <div class="row">
-        <div class="col col-sm-6">
-            <h2>{{ $site.name }}, {{ $site.bodyOfWater }}</h2>
-
-			<div>
-				<i class="fa fa-fw fa-map-marker"></i>
-				{{ $site.boroughCounty }},
-				{{ $site.state }}
-			</div>
-        </div>
-    </div>
+<h1 class="text-left pb-0">{{ $site.name }}, {{ $site.bodyOfWater }}</h1>
+<section class="content shaded pt-1">
+    <i class="fa fa-fw fa-map-marker"></i>
+    {{ $site.boroughCounty }}, {{ $site.state }}
 </section>
 
 <div>

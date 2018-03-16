@@ -134,7 +134,7 @@ class Users(CollectionView):
         if user:
             return jsonify(user)
         else:
-            return jsonify(None)
+            raise Unauthorized('Not logged in.')
 
     def teamleads(self):
         basequery = request.args.get('q')

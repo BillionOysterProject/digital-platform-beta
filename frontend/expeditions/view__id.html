@@ -1,8 +1,4 @@
 ---
-page:
-    view:       Expedition
-    body_class: 'mt-0'
-
 bindings:
 - name:     'expedition'
   resource: ':/api/expeditions/{{ param 1 }}'
@@ -13,52 +9,45 @@ bindings:
 - name:     'organization'
   resource: ':/api/school-orgs/{{ .bindings.expedition.team.schoolOrg._id }}'
 ---
+{{ $expedition := $.bindings.expedition }}
+<h1>{{ $expedition.name }}</h1>
+
 <section class="content shaded">
-    <section class="container">
-        <div class="row">
-            <div class="col col-sm-6">
-                <h2 id="expedition-view">{{ .bindings.expedition.name }}</h2>
-            </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <h6>Team</h6>
+
+            <p>
+                <a href="/profiles/team-view/{{ .bindings.team._id }}">
+                  <b>{{ $expedition.name }}</b>
+                </a>
+                <br/>
+                <a href="/profiles/organization-view/{{ .bindings.organization._id }}">
+                  {{ .bindings.organization.name }}
+                </a>
+            </p>
         </div>
 
-        <hr />
-
-        <div class="row">
-            <div class="col-sm-3">
-                <h6>Team</h6>
-
-                <p>
-                    <a href="/profiles/team-view/{{ .bindings.team._id }}">
-                      <b>{{ .bindings.expedition.name }}</b>
-                    </a>
-                    <br/>
-                    <a href="/profiles/organization-view/{{ .bindings.organization._id }}">
-                      {{ .bindings.organization.name }}
-                    </a>
-                </p>
-            </div>
-
-            {{ if .bindings.team.teamLeads }}
-            <div class="col-sm-3">
-                <h6>Team Lead{{ if gt (count .bindings.team.teamLeads) 1 }}s{{ end }}</h6>
-                {{ range .bindings.team.teamLeads }}
-                <p>
-                    <a ng-click="vm.openViewUserModal(teamLead)">{{ .displayName }}</a>
-                </p>
-                {{ end }}
-            </div>
+        {{ if .bindings.team.teamLeads }}
+        <div class="col-sm-3">
+            <h6>Team Lead{{ if gt (count .bindings.team.teamLeads) 1 }}s{{ end }}</h6>
+            {{ range .bindings.team.teamLeads }}
+            <p>
+                <a ng-click="vm.openViewUserModal(teamLead)">{{ .displayName }}</a>
+            </p>
             {{ end }}
-            <div class="col-sm-3">
-                <h6>Date &amp; Location</h6>
-                <p>
-                    <i class="glyphicon glyphicon-calendar gray"></i> <b>{{ .bindings.expedition.monitoringStartDate }}, timerange</b><br/>
-                    <i class="glyphicon glyphicon-map-marker gray"></i> {{ .bindings.expedition.station.name }}
-                </p>
-            </div>
-            <div class="col-sm-3">
-                <h6>Notes</h6>
-                <p>{{ .bindings.expedition.notes }}</p>
-            </div>
         </div>
-    </section>
+        {{ end }}
+        <div class="col-sm-3">
+            <h6>Date &amp; Location</h6>
+            <p>
+                <i class="glyphicon glyphicon-calendar gray"></i> <b>{{ $expedition.monitoringStartDate }}, timerange</b><br/>
+                <i class="glyphicon glyphicon-map-marker gray"></i> {{ $expedition.station.name }}
+            </p>
+        </div>
+        <div class="col-sm-3">
+            <h6>Notes</h6>
+            <p>{{ $expedition.notes }}</p>
+        </div>
+    </div>
 </section>

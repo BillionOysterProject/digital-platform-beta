@@ -1,9 +1,32 @@
+@font-face {
+    font-family: 'Roboto';
+    src:         url('/assets/fonts/Roboto-Regular-webfont.eot');
+    src:         url('/assets/fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+                 url('/assets/fonts/Roboto-Regular-webfont.woff')       format('woff'),
+                 url('/assets/fonts/Roboto-Regular-webfont.ttf')        format('truetype'),
+                 url('/assets/fonts/Roboto-Regular-webfont.svg')        format('svg');
+    font-weight: 400;
+    font-style:  normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src:         url('/assets/fonts/Roboto-Bold-webfont.eot');
+    src:         url('/assets/fonts/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+                 url('/assets/fonts/Roboto-Bold-webfont.woff')       format('woff'),
+                 url('/assets/fonts/Roboto-Bold-webfont.ttf')        format('truetype'),
+                 url('/assets/fonts/Roboto-Bold-webfont.svg')        format('svg');
+    font-weight: 700;
+    font-style:  normal;
+}
+
 html, body {
+    width:  100vw;
     height: 100%;
 }
 
 body {
-    font-family:     Roboto, 'Source Sans Pro', 'Helvetica Neue', Helvetica, Calibri, Arial, sans-serif;
+    font-family:     'Roboto', 'Helvetica Neue', 'Helvetica', 'Calibri', 'Arial', sans-serif;
     background:      #fff;
     color:           #2c3c56;
 
@@ -86,6 +109,13 @@ form label {
     margin:          0.25em;
 }
 
+/* tiny: Hide nav items */
+@media (max-width: 768px) {
+    .site-navbar .navbar-nav {
+        visibility: hidden;
+    }
+}
+
 /* small and below: Navbar spans top of viewport */
 @media (max-width: 992px) {
     body {
@@ -101,10 +131,20 @@ form label {
         width:           100%;
         padding:         0;
         height:          54px;
+        display:         flex;
+        flex-direction:  row;
+        justify-content: space-between;
     }
 
     .site-navbar > * {
         margin:          0 10px;
+    }
+
+    .site-navbar .navbar-nav {
+        display:         flex;
+        flex-direction:  row;
+        flex:            1;
+        justify-content: space-between;
     }
 
     .site-navbar .navbar-brand {
@@ -183,7 +223,6 @@ form label {
     }
 
     .site-navbar .navbar-nav .nav-link {
-        color:       #FFFFFF;
         user-select: none;
         padding:     10px 30px 10px 30px;
     }
@@ -243,12 +282,29 @@ form label {
     }
 }
 
+.site-navbar .navbar-nav .nav-link {
+    color:       #FFFFFF;
+}
+
 nav + .content {
     margin-top:          51px;
 }
 
 .content {
-    padding:             15px 15px 15px 15px;
+    padding:             15px;
+}
+
+.content-body {
+
+}
+
+.content-body > h1 {
+    background-color: #f4f7f8;
+    width:            100%;
+    padding:          15px;
+    text-align:       center;
+    font-size:        30px;
+    margin:           0;
 }
 
 .content-jumbotron,
