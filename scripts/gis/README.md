@@ -16,7 +16,9 @@ This part is very complicated in its own right, but basically boils down to disc
 
 As hinted at in the first step, GIS data comes in many formats.  These formats are standardized in one way or another, and one of the most complicated, time consuming, and resource-intensive tasks in working with GIS data is largely to do with converting data sources from their original format into a different format that best suits your needs.
 
-Furthermore, storing GIS data in a way that is easy for GIS-aware systems to access requires special software and databases.  This is because it is not enough to be able to "select" data; the questions you are regularly asking GIS databases are _spatial_ in nature (e.g.: "What is at these coordinates?" or "How can I drive from here to there?").  And to muddy the waters even more, your coordinates are generally referring to a flat (X, Y) plane, but you live on something closely resembling a sphere.  These special databases, services, and the standards that support them describe _how_ to do all that math and then do it for you.
+Furthermore, storing GIS data in a way that is easy for GIS-aware systems to access requires special software and databases.  This is because it is not enough to be able to "select" data; the questions you are regularly asking GIS databases are _spatial_ in nature (e.g.: "What is at these coordinates?" or "How can I drive from here to there?").
+
+And to muddy the waters even more, your coordinates are generally referring to a flat (X, Y) plane, but you live on something closely resembling a sphere.  These special databases, services, and the standards that support them describe _how_ to do all that math and then do it for you.
 
 #### Some places where you can store GIS data, and then retrieve it later:
 
