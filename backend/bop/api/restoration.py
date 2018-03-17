@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
-from .endpoints import CollectionView
+from .endpoints import CollectionView, GeoCollectionView
 from flask import Response, jsonify
 from flask_classy import route
 import requests
@@ -147,7 +147,7 @@ class ProtocolWaterQualities(CollectionView):
     collection_name = 'protocolwaterqualities'
 
 
-class RestorationStations(CollectionView):
+class RestorationStations(GeoCollectionView):
     route_base      = 'restoration-stations'
     collection_name = 'restorationstations'
     results_only    = True
@@ -168,7 +168,7 @@ class RestorationStations(CollectionView):
     }
 
 
-class Sites(CollectionView):
+class Sites(GeoCollectionView):
     route_base      = 'sites'
     collection_name = 'sites'
     results_only    = True

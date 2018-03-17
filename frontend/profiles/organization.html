@@ -1,66 +1,47 @@
 ---
+page:
+    body_class: 'orgs-list fill-content'
+
 bindings:
 - name:     'organizations'
-  resource: ':/api/school-orgs/'
+  resource: '/api/school-orgs/'
+  only_if:  '{{ eqx (qs "v") "list" }}'
   params:
-    limit:  10000
+    limit:  false
     sort:   ['name']
+
+flags:
+    viewOrgsMap:  '{{ any (qs "v" ) "map" "" }}'
+    viewOrgsList: '{{ eqx (qs "v") "list" }}'
+
+includes:
+    orgsMap:  '/profiles/organization_map.html'
+    orgsList: '/profiles/organization_list.html'
 ---
-<table class="table table-sm table-hover table-striped" id="organizations">
-    <thead>
-        <tr>
-            <th>Org. Type</th>
-            <th>School Type</th>
-            <th>ATS Code</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Created At</th>
-        </tr>
-    </thead>
+<h1>Organizations</h1>
 
-    <tbody>
-        {{ range .bindings.organizations }}
-        <tr>
-            <td>
-                {{ .organizationType }}
-            </td>
-            <td>
-                {{ .schoolType }}
-            </td>
-            <td>
-                {{ .syncId }}
-            </td>
-            <td>
-                {{ .name }}
-            </td>
-            <td>
-                {{ if .streetAddress }}
-                <address>
-                    {{ .streetAddress }}
-                    {{ if .neighborhood }}
-                    <span>, {{ .neighborhood }}</span>
-                    {{ end }}
-                    {{ .city }}, {{ .state }}
-                    {{ if .zip }}
-                    <span>&nbsp;&nbsp;{{ .zip }}</span>
-                    {{ end }}
-                </address>
-                {{ end }}
-            </td>
-            <td>
-                {{ time .created `ymd` }}
-            </td>
-        </tr>
-        {{ end }}
-    </tbody>
-</table>
+<ul class="nav nav-tabs mt-2 pl-1 pr-1">
+    <li class="nav-item">
+        <a class="nav-link{{ if $.flags.viewOrgsMap }} active{{ end }}" href="/profiles/organization?v=map">
+            <i class="fa fa-map-o"></i>
+            Map
+        </a>
+    </li>
 
-<script type="text/javascript">
-    $(function(){
-        $('#organizations').DataTable({
-            searching:      true,
-            paging:         false,
-            info:           false,
-        });
-    });
-</script>
+    <li class="nav-item">
+        <a class="nav-link{{ if $.flags.viewOrgsList }} active{{ end }}" href="/profiles/organization?v=list">
+            <i class="fa fa-list"></i>
+            List
+        </a>
+    </li>
+</ul>
+
+<section class="content orgs-list-view">
+    {{ if $.flags.viewOrgsMap }}
+    {{   template "orgsMap" . }}
+    {{ else if $.flags.viewOrgsList }}
+    {{   template "orgsList" . }}
+    {{ else }}
+    <h2>Invalid view "{{ qs "v" }}"</h2>
+    {{ end }}
+</section>

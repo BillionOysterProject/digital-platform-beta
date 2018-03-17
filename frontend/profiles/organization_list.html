@@ -1,0 +1,58 @@
+<table class="table table-sm table-hover table-striped" id="organizations">
+    <thead>
+        <tr>
+            <th>Org. Type</th>
+            <th>School Type</th>
+            <th>ATS Code</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{ range .bindings.organizations }}
+        <tr>
+            <td>
+                {{ .organizationType }}
+            </td>
+            <td>
+                {{ .schoolType }}
+            </td>
+            <td>
+                {{ .syncId }}
+            </td>
+            <td>
+                {{ .name }}
+            </td>
+            <td>
+                {{ if .streetAddress }}
+                <address>
+                    {{ .streetAddress }}
+                    {{ if .neighborhood }}
+                    <span>, {{ .neighborhood }}</span>
+                    {{ end }}
+                    {{ .city }}, {{ .state }}
+                    {{ if .zip }}
+                    <span>&nbsp;&nbsp;{{ .zip }}</span>
+                    {{ end }}
+                </address>
+                {{ end }}
+            </td>
+            <td>
+                {{ time .created `ymd` }}
+            </td>
+        </tr>
+        {{ end }}
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(function(){
+        $('#organizations').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>

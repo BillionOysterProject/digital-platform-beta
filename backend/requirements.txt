@@ -20,3 +20,4 @@ sortedcontainers
 unicodecsv
 pbkdf2
 cryptography
+geojson>=2.3.0

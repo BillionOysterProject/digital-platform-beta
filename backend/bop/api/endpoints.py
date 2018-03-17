@@ -1,20 +1,21 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
-from flask import jsonify, request, g, Response
-from flask_classy import FlaskView, route
-from flask_login import current_user
-from collections import OrderedDict
-import pivot.exceptions
-from ..accesscontrol import verify_path_is_authorized
-from ..utils import as_bool
-from ..time import Time
-from ..user import User
 import os
 import dpath.util
 import six
 import unicodecsv
 import io
 import logging
+import pivot.exceptions
+from flask import jsonify, request, g, Response
+from flask_classy import FlaskView, route
+from flask_login import current_user
+from collections import OrderedDict
+from ..accesscontrol import verify_path_is_authorized
+from geojson import Feature, Point, FeatureCollection
+from ..utils import as_bool
+from ..time import Time
+from ..user import User
 
 
 class Endpoint(FlaskView):
@@ -74,7 +75,7 @@ class CollectionView(Endpoint):
 
         if 'limit' in request.args:
             if request.args['limit'].lower() == 'false':
-                params['limit'] = 2147483647
+                params['limit'] = False
             else:
                 params['limit'] = int(request.args['limit'])
 
@@ -359,3 +360,50 @@ class CollectionView(Endpoint):
 
     def delete(self):
         pass
+
+class GeoCollectionView(CollectionView):
+    latitude_field = 'latitude'
+    longitude_field = 'longitude'
+    results_only = True
+
+    @property
+    def geo_filter_params(self):
+        params = super(GeoCollectionView, self).filter_params
+
+        if len(params['fields']):
+            if not self.latitude_field in params['fields']:
+                params['fields'].append(self.latitude_field)
+
+            if not self.longitude_field in params['fields']:
+                params['fields'].append(self.longitude_field)
+
+        if 'limit' not in params:
+            params['limit'] = False
+
+        return params
+
+    @route('/export.geojson')
+    def index_as_geojson(self):
+        query = g.get('query', request.args.get('q', 'all'))
+        qrp = self.query_results_params
+        qrp['raw'] = True
+
+        results = self.collection.query(query, **self.geo_filter_params)
+        results = self._prepare_query_results(results, **qrp)
+
+        features = []
+
+        for result in results:
+            lng = result.get(self.longitude_field)
+            lat = result.get(self.latitude_field)
+
+            if lat is not None and lng is not None:
+                point = Point((float(lng), float(lat)))
+                result = dict(result)
+
+                del result[self.latitude_field]
+                del result[self.longitude_field]
+
+                features.append(Feature(geometry=point, properties=result))
+
+        return jsonify(FeatureCollection(features))

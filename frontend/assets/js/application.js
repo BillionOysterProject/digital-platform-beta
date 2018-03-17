@@ -148,6 +148,56 @@ $(function(){
                 });
             }.bind(this));
         },
+
+        genericMapClickHandler: function(map, layers) {
+            return function(e) {
+                try {
+                    var features = map.queryRenderedFeatures(e.point, {
+                        "layers": layers,
+                    });
+
+                    if (!features.length) {
+                        return;
+                    }
+
+                    var feature = features[0];
+
+                    if (!feature.properties.description) {
+                        feature.properties.description = '';
+
+                        if (feature.properties.name) {
+                            feature.properties.description += '<h1>' + feature.properties.name + '</h1>';
+                        }
+
+                        if (feature.properties.type) {
+                            feature.properties.description += '<strong>' + feature.properties.type + '</strong>';
+                        }
+                    }
+
+                    var currentPopup = new mapboxgl.Popup({ offset: [0, -15] })
+                        .setLngLat(feature.geometry.coordinates)
+                        .setHTML('<p>' + feature.properties.description + '</p>')
+                        .setLngLat(feature.geometry.coordinates)
+                        .addTo(map);
+                } catch(e) {
+                    ;
+                }
+            }
+        },
+
+        genericMapHoverHandler: function(map, layers) {
+            return function(e) {
+                var features = map.queryRenderedFeatures(e.point, {
+                    "layers": layers,
+                })
+
+                if (features.length) {
+                    map.getCanvas().style.cursor = 'crosshair';
+                } else {
+                    map.getCanvas().style.cursor = 'default';
+                }
+            };
+        },
     });
 
     window.bop = new App();

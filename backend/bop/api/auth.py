@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
-from .endpoints import Endpoint, CollectionView
+from .endpoints import Endpoint, CollectionView, GeoCollectionView
 from flask import jsonify, request, g
 from werkzeug.exceptions import BadRequest, Unauthorized
 from flask_classy import route
@@ -154,7 +154,7 @@ class Sessions(CollectionView):
     collection_name = 'sessions'
 
 
-class SchoolOrgs(CollectionView):
+class SchoolOrgs(GeoCollectionView):
     route_base      = 'school-orgs'
     collection_name = 'schoolorgs'
 
@@ -181,6 +181,6 @@ class SchoolOrgs(CollectionView):
         return super(SchoolOrgs, self).index()
 
 
-class ProspectiveOrgs(CollectionView):
+class ProspectiveOrgs(GeoCollectionView):
     route_base      = 'prospective-orgs'
     collection_name = 'prospectiveorgs'

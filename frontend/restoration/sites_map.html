@@ -34,20 +34,16 @@
             // });
 
             $.ajax({
-                url: '/api/sites?' + $.param({
-                    limit: false,
+                url: '/api/sites/export.geojson?' + $.param({
                     fields: 'name,bodyOfWater,latitude,longitude,nycParkName',
                 }),
-                success: function(sites) {
+                success: function(collection) {
                     var layer = {
                         "id": "sites",
                         "type": "circle",
                         "source": {
                             "type": "geojson",
-                            "data": {
-                                "type": "FeatureCollection",
-                                "features": [],
-                            },
+                            "data": collection,
                         },
                         "paint": {
                             "circle-radius": 7,
@@ -57,37 +53,25 @@
                         },
                     };
 
-                    $.each(sites, function(i, site){
-                        var description = "<h1>" + site.name + ', ' + site.bodyOfWater + "</h1>";
+                    $.each(collection.features, function(i, site){
+                        var props = site.properties;
 
-                        if (site.nycParkName && site.nycParkName.length) {
+                        var description = "<h1>" + props.name + ', ' + props.bodyOfWater + "</h1>";
+
+                        if (props.nycParkName && props.nycParkName.length) {
                             description += "<br>";
-                            description += "<i>NYC Park Name:</i> " + site.nycParkName;
+                            description += "<i>NYC Park Name:</i> " + props.nycParkName;
                         }
 
                         description += "<br>";
                         description += "<center>";
-                        description += '<a href="/restoration/sites/' + site._id + '" class="btn btn-sm btn-primary mt-2">';
+                        description += '<a href="/restoration/sites/' + props._id + '" class="btn btn-sm btn-primary mt-2">';
                         description += '<i class="fa fa-fw fa-map-marker"></i>'
                         description += 'View Site';
                         description += '</a>';
                         description += "</center>";
 
-                        var point = {
-                            "type": "Feature",
-                            "properties": {
-                                "description": description,
-                            },
-                            "geometry": {
-                                "type": "Point",
-                                "coordinates": [
-                                    parseFloat(site.longitude),
-                                    parseFloat(site.latitude),
-                                ],
-                            },
-                        };
-
-                        layer.source.data.features.push(point);
+                        collection.features[i].properties.description = description;
                     });
 
                     map.addLayer(layer);
@@ -95,52 +79,7 @@
             });
         });
 
-        map.on('click', function(e) {
-            try {
-                var features = map.queryRenderedFeatures(e.point, {
-                    layers: ['sites', 'seamarks'],
-                });
-
-                if (!features.length) {
-                    return;
-                }
-
-                var feature = features[0];
-
-                console.debug('ft.', feature);
-
-                if (!feature.properties.description) {
-                    feature.properties.description = '';
-
-                    if (feature.properties.name) {
-                        feature.properties.description += '<h1>' + feature.properties.name + '</h1>';
-                    }
-
-                    if (feature.properties.type) {
-                        feature.properties.description += '<strong>' + feature.properties.type + '</strong>';
-                    }
-                }
-
-                var currentPopup = new mapboxgl.Popup({ offset: [0, -15] })
-                    .setLngLat(feature.geometry.coordinates)
-                    .setHTML('<p>' + feature.properties.description + '</p>')
-                    .setLngLat(feature.geometry.coordinates)
-                    .addTo(map);
-            } catch(e) {
-                ;
-            }
-        });
-
-        map.on('mousemove', function(e) {
-            var features = map.queryRenderedFeatures(e.point, {
-                layers: ['sites'],
-            })
-
-            if (features.length) {
-                map.getCanvas().style.cursor = 'crosshair';
-            } else {
-                map.getCanvas().style.cursor = 'default';
-            }
-        });
+        map.on('click', bop.genericMapClickHandler(map, ['sites']));
+        map.on('mousemove', bop.genericMapHoverHandler(map, ['sites']));
     });
 </script>

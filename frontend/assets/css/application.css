@@ -1649,21 +1649,21 @@ li.loading-dialog {
     min-height:  240px;
 }
 
-.sites-list {
+.fill-content {
     display:         flex;
     flex-direction:  column;
     height:          100%;
 }
 
-.sites-list .sites-list-view {
+.fill-content #map {
+    flex:        1;
+}
+
+.fill-content .content:last-child {
     flex:        1;
     display:     flex;
     align-items: stretch;
     padding:     0;
-}
-
-.sites-list .sites-list-view #map {
-    flex:        1;
 }
 
 .mapboxgl-popup-content {
