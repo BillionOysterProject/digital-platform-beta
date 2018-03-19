@@ -154,7 +154,7 @@ class RestorationStations(GeoCollectionView):
 
     expand_fields   = {
         'siteId': (
-            'sites', ['_id', 'name', 'bodyOfWater', 'latitude', 'longitude', 'boroughCounty', 'state'],
+            'sites', [],
         ),
         'schoolOrg': (
             'schoolorgs', ['_id', 'name'],
