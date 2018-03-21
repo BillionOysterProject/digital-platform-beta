@@ -1,10 +1,11 @@
 ---
 page:
-    view: Expedition Data
+    view: View Data
 ---
 <section class="content">
     <section class="container-fluid">
-        <h3 class="text-muted">To view, download, or compare expedition data, follow the 3 steps below.</h3>
+        <h3 class="text-muted">To view or download data, follow the steps below.</h3> 
+        <h4 class="text-muted">(You can skip these steps and view or download ALL data by clicking on the buttons at the bottom of the page.)</h2>
     </section>
 </section>
 
@@ -23,19 +24,19 @@ page:
 
                 <span>
                     <strong>Filter the expeditions</strong>:
-                    Adjust the filters to select a set of published expeditions by time, keyword, ORS, organization, team, or lead.
+                    Click to filter published expeditions by keyword, time, ORS, organization, team, or lead.
                 </span>
             </div>
         </section>
     </section>
 
-    <section class="content" id="xdata1">
+    <section class="content collapse" id="xdata1">
         <div class="form-group row">
-            <label for="search" class="col-sm-2 col-form-label">Expedition Search</label>
+            <label for="search" class="col-sm-2 col-form-label">Keyword Search</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" name="search" autofocus>
                 <small class="form-text text-muted">
-                    Enter a search query to filter expeditions by keywords.
+                    Enter a search term to filter expeditions by keywords.
                 </small>
             </div>
         </div>
@@ -62,14 +63,6 @@ page:
                 >
                 <small class="form-text text-muted">
                     End of date range.
-                </small>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-sm-10 offset-sm-2">
-                <small class="form-text text-muted">
-                    Select a start and end date to restrict data to a specific range of dates the expedition occurred on.
                 </small>
             </div>
         </div>
@@ -157,8 +150,8 @@ page:
                 </span>
 
                 <span>
-                    <strong>Select data fields</strong>:
-                    Once you select a parameter, the results will show on the screen below.
+                    <strong>Select protocols and parameters</strong>:
+                    Click to select specific protocols and/or parameters.
                 </span>
             </div>
         </section>
@@ -166,7 +159,7 @@ page:
 
     <section class="content collapse" id="xdata2">
         <section class="container-fluid">
-            {{ range $index, $protocol := .page.protocols }}
+            {{ range $i, $protocol := .page.protocols }}
                 <div class="row" id="select-comparison-parameters">
                     <div class="expeditions-data-substep">
                         <section>
@@ -210,8 +203,8 @@ page:
                 </span>
 
                 <span>
-                    <strong>Preview or Export</strong>:
-                    Preview the data for the above selected criteria or choose a data export format.
+                    <strong>View or Export</strong>:
+                    View the data in your browser or choose a data export format.
                 </span>
             </div>
         </section>
@@ -226,7 +219,7 @@ page:
                 type="submit"
                 class="btn btn-lg btn-primary"
             >
-                Preview Data
+                View Data
             </button>
 
             <div class="btn-group" role="group">
