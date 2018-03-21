@@ -1,10 +1,12 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from .endpoints import CollectionView, GeoCollectionView
-from flask import Response, jsonify
+from flask import Response, jsonify, request
 from flask_classy import route
 import requests
+import dpath.util
 import io
+import logging
 from .. import env
 from ..time import Time
 import unicodecsv
@@ -120,6 +122,94 @@ class Expeditions(CollectionView):
 
         else:
             return None, report.status_code
+
+    def photos(self):
+        expeditions = self._get_query_results(
+            request.args.get('q'),
+            params={
+                'fields': 'protocols',
+            },
+            raw=True,
+            expand=False
+        )
+
+        images = []
+        protoTables = {
+            'protocolsiteconditions':     set(),
+            'protocoloystermeasurements': set(),
+            'protocolmobiletraps':        set(),
+            'protocolsettlementtiles':    set(),
+            'protocolwaterqualities':     set(),
+        }
+
+        protoImageFields = {
+            'protocolsiteconditions':     (
+                'landConditions.landConditionPhoto.path',
+                'protocolsiteconditions.waterConditions.waterConditionPhoto.path',
+            ),
+            'protocoloystermeasurements': (
+                'measuringOysterGrowth.substrateShells.*.innerSidePhoto.path',
+                'measuringOysterGrowth.substrateShells.*.outerSidePhoto.path',
+                'conditionOfOysterCage.oysterCagePhoto.path',
+            ),
+            'protocolmobiletraps':        (
+                'mobileOrganisms.*.sketchphoto.path',
+            ),
+            'protocolsettlementtiles':    (
+                'settlementTiles.*.tilePhoto.path',
+            ),
+            'protocolwaterqualities':     tuple(),
+        }
+
+        for e in expeditions:
+            try:
+                if 'siteCondition' in e['protocols'] and e['protocols']['siteCondition']:
+                    protoTables['protocolsiteconditions'].add(
+                        e['protocols']['siteCondition']
+                    )
+
+                if 'oysterMeasurement' in e['protocols'] and e['protocols']['oysterMeasurement']:
+                    protoTables['protocoloystermeasurements'].add(
+                        e['protocols']['oysterMeasurement']
+                    )
+
+                if 'mobileTrap' in e['protocols'] and e['protocols']['mobileTrap']:
+                    protoTables['protocolmobiletraps'].add(
+                        e['protocols']['mobileTrap']
+                    )
+
+                if 'settlementTiles' in e['protocols'] and e['protocols']['settlementTiles']:
+                    protoTables['protocolsettlementtiles'].add(
+                        e['protocols']['settlementTiles']
+                    )
+
+                if 'waterQuality' in e['protocols'] and e['protocols']['waterQuality']:
+                    protoTables['protocolwaterqualities'].add(
+                        e['protocols']['waterQuality']
+                    )
+
+            except KeyError:
+                continue
+
+        for table, idset in protoTables.items():
+            if len(idset):
+                for record in self.client.collection(table).query(
+                    '_id/{}'.format('|'.join(list(idset))),
+                    limit=False
+                ):
+                    for field in protoImageFields[table]:
+                        try:
+                            values = dpath.util.values(dict(record), field, separator='.')
+                        except KeyError:
+                            continue
+
+                        for v in values:
+                            images.append({
+                                'from': table,
+                                'url':  v,
+                            })
+
+        return jsonify(images)
 
 
 class ProtocolSiteConditions(CollectionView):

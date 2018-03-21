@@ -1,18 +1,228 @@
 ---
+layout:     '{{ qs "layout" "default" }}'
+
 bindings:
 - name:     'lesson'
   resource: '/api/lessons/{{ param 1 }}'
-  params:
-    full: true
 
 - name:     'lessonStats'
   resource: '/api/lessons/{{ param 1 }}/tracker-stats'
   optional:  true
   fallback:  {}
+
+- name:     'units'
+  resource: '/api/units'
+  fallback: []
+  params:
+    fields:
+    - title
+    - color
+    - icon
+
+postprocessors:
+- trim-empty-lines
 ---
-{{ $lesson := .binding.lesson }}
-{{ $lessonStats := .binding.lessonStats }}
+{{ $lesson := $.bindings.lesson }}
+{{ $lessonStats := $.bindings.lessonStats }}
 
 <section class="content container">
+    <div class="lesson-main">
+        <img
+            class="pull-left pr-4"
+            alt="Billion Oyster Project"
+            src="/assets/img/brand/logo.svg"
+            style="
+                width: 100px;
+                height: 128px;
+            "
+        >
 
+        <div>
+            <h1 class="blue">{{ $lesson.title }}</h1>
+            <div>
+                <b>{{ $lesson.user.displayName }}</b>
+                <br/>
+                <a href="mailto:{{ $lesson.user.email }}">{{ $lesson.user.email }}</a>
+                {{ if $lesson.created }}
+                <div class="text-muted">{{ time $lesson.created "Jan 2, 2006" }}</div>
+                {{ end }}
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-3">
+                <b>Unit</b>
+                <div>
+                    {{ range $lesson.units }}
+                    <h4 style="color: {{ .color }}">
+                        <i class="{{ .icon }}"></i>
+                        {{ .title }}
+                    </h4>
+                    {{ end }}
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <b>Grade</b>
+                <p>{{ $lesson.lessonOverview.grade }}</p>
+
+            </div>
+            <div class="col-sm-2">
+                <b>Class Periods</b>
+                <p>{{ $lesson.lessonOverview.classPeriods }}</p>
+
+            </div>
+            <div class="col-sm-2">
+                <b>Setting</b>
+                <p>{{ $lesson.lessonOverview.setting }}</p>
+
+            </div>
+            <div class="col-sm-3">
+                <b>Subject Areas</b>
+                <div>
+                    {{ range $lesson.lessonOverview.subjectAreas }}
+                    <span class="badge badge-inverse" style="background-color: {{ .color }}; color: white;">{{ .subject }}</span>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+        <hr/>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Summary</h2>
+                <!-- =============================================================================================== -->
+                <p>
+                    {{ sanitize $lesson.lessonOverview.lessonSummary }}
+                </p>
+
+                {{ if $lesson.lessonObjectives }}
+                <h2>Objectives</h2>
+                <!-- =============================================================================================== -->
+                <p>
+                    {{ sanitize $lesson.lessonObjectives }}
+                </p>
+                {{ end }}
+
+                <h2>Materials and Resources</h2>
+                <!-- =============================================================================================== -->
+
+                {{ if $lesson.materialsResources.supplies }}
+                <h3>Supplies</h3>
+                <p>
+                    {{ sanitize $lesson.materialsResources.supplies }}
+                </p>
+                {{ end }}
+
+                <h3>Handouts</h3>
+                <p>
+                    placeholder for handout 1
+                </p>
+
+                <h3>Teacher Resources</h3>
+                <p>
+                    placeholder for teacher resources
+                </p>
+
+                <h2>Before you get started</h2>
+                <!-- =============================================================================================== -->
+
+                {{ if $lesson.materialsResources.teacherTips }}
+                <h3>Tips for Teachers</h3>
+                <p>
+                    {{ sanitize $lesson.materialsResources.teacherTips }}
+                </p>
+                {{ end }}
+
+                <h3>Preparation</h3>
+                <p>
+                    {{ sanitize $lesson.preparation }}
+                </p>
+
+                {{ if $lesson.background }}
+                <h3>Background</h3>
+                <p>
+                    {{ sanitize $lesson.background }}
+                </p>
+                {{ end }}
+
+                <h2>Instruction Plan</h2>
+                <!-- =============================================================================================== -->
+
+                {{ if $lesson.instructionPlan.engage }}
+                <h3>Engage</h3>
+                <p>
+                    {{ sanitize $lesson.instructionPlan.engage }}
+                </p>
+                {{ end }}
+
+                {{ if $lesson.instructionPlan.explore }}
+                <h3>Explore</h3>
+                <p>
+                    {{ sanitize $lesson.instructionPlan.explore }}
+                </p>
+                {{ end }}
+
+                {{ if $lesson.instructionPlan.explain }}
+                <h3>Explain</h3>
+                <p>
+                    {{ sanitize $lesson.instructionPlan.explain }}
+                </p>
+                {{ end }}
+
+                {{ if $lesson.instructionPlan.elaborate }}
+                <h3>Elaborate</h3>
+                <p>
+                    {{ sanitize $lesson.instructionPlan.elaborate }}
+                </p>
+                {{ end }}
+
+                {{ if $lesson.instructionPlan.evaluate }}
+                <h3>Evaluate</h3>
+                <p>
+                    {{ sanitize $lesson.instructionPlan.evaluate }}
+                </p>
+                {{ end }}
+
+                {{ if $lesson.instructionPlan.extend }}
+                <h3>Extend</h3>
+                <p>
+                    {{ sanitize $lesson.instructionPlan.extend }}
+                </p>
+                {{ end }}
+
+                {{ if $lesson.standards }}
+                <h2>Standards</h2>
+                <!-- =============================================================================================== -->
+                    <!-- Loop through all "Standards Labels" as defined in diecast.yml -->
+                    {{ range $standard, $standardName := $.page.labels }}
+                    <!-- 1. Get the standard we're working on from the lesson -->
+                    <!-- 2. Remove empty results -->
+                    <!-- 3. Group the standard aspects by their headers -->
+                    {{   $aspectGroups := groupBy (compact (get $lesson.standards $standard)) `header` }}
+
+                    <!-- If the group has any items in it... -->
+                    {{   if $aspectGroups }}
+                    <h3>{{ $standardName }}</h3>
+
+                    <ul>
+                        <!-- Loop through each header -->
+                        {{ range $header, $aspects := $aspectGroups }}
+                        <li>
+                            <h4>{{ $header }}</h4>
+                            <ul>
+                                <!-- Output all aspects as sub-items under the current header -->
+                                {{ range $k, $aspect := $aspects }}
+                                <li>{{ $aspect.description }}</li>
+                                {{ end }}
+                            </ul>
+                        </li>
+                        {{ end }}
+                    </ul>
+                    {{   end }}
+                    {{ end }}
+                {{ end }}
+            </div>
+        </div>
+    </div>
 </section>
+

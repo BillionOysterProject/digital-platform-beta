@@ -2,6 +2,8 @@
 bindings:
 - name:     'me'
   resource: '/api/users/me'
+  if_status:
+    401:    '/authentication/signin'
 
 - name:     'teamsLeading'
   resource: '/api/teams'

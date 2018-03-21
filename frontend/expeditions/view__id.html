@@ -8,11 +8,20 @@ bindings:
 
 - name:     'organization'
   resource: ':/api/school-orgs/{{ .bindings.expedition.team.schoolOrg._id }}'
+
+- name:     'photos'
+  resource: '/api/expeditions/photos'
+  optional: true
+  fallback: []
+  params:
+    q: '_id/{{ param 1}}'
 ---
 {{ $expedition := $.bindings.expedition }}
+{{ $photos     := $.bindings.photos }}
+
 <h1>{{ $expedition.name }}</h1>
 
-<section class="content shaded">
+<section class="content shaded pb-0">
     <div class="row">
         <div class="col-sm-3">
             <h6>Team</h6>
@@ -48,6 +57,37 @@ bindings:
         <div class="col-sm-3">
             <h6>Notes</h6>
             <p>{{ $expedition.notes }}</p>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs nav-justified w-100 mt-4">
+    {{ range $i, $protocol := $.page.protocols }}
+    <li class="nav-item">
+        <a class="nav-link{{ if eqx (qs `p` `1`) (add $i 1) }} active{{ end }}" href="/expeditions/view/{{ param 1 }}?p={{ add $i 1 }}" style="
+                border-bottom-color: {{ $protocol.color }};
+                border-bottom-width: 0.5vh;
+        ">
+            {{ ltrim $protocol.name `Protocol ` }}
+        </a>
+    </li>
+    {{ end }}
+    </ul>
+</section>
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col">
+            {{ if eqx (qs `p` `1`) 1 }}
+                Protocol 1
+            {{ else if eqx (qs `p`) 2 }}
+                Protocol 2
+            {{ else if eqx (qs `p`) 3 }}
+                Protocol 3
+            {{ else if eqx (qs `p`) 4 }}
+                Protocol 4
+            {{ else if eqx (qs `p`) 5 }}
+                Protocol 5
+            {{ end }}
         </div>
     </div>
 </section>

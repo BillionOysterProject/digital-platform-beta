@@ -341,9 +341,7 @@ class CollectionView(Endpoint):
         )
 
     def index(self):
-        query = g.get('query', request.args.get('q', 'all'))
-        results = self.collection.query(query, **self.filter_params)
-        return self._prepare_query_results(results, **self.query_results_params)
+        return self._get_query_results(request.args.get('q', 'all'))
 
     def get(self, record_id):
         result = self.collection.get(record_id)
@@ -360,6 +358,25 @@ class CollectionView(Endpoint):
 
     def delete(self):
         pass
+
+    def _get_query_results(self, query=None, params=None, raw=None, expand=None):
+        query = g.get('query', (query or 'all'))
+        qrp = self.query_results_params
+
+        if isinstance(raw, bool):
+            qrp['raw'] = raw
+
+        if isinstance(expand, bool):
+            qrp['expand'] = expand
+
+        filters = self.filter_params
+
+        if isinstance(params, dict):
+            filters.update(params)
+
+        results = self.collection.query(query, **filters)
+        return self._prepare_query_results(results, **qrp)
+
 
 class GeoCollectionView(CollectionView):
     latitude_field = 'latitude'
@@ -384,12 +401,11 @@ class GeoCollectionView(CollectionView):
 
     @route('/export.geojson')
     def index_as_geojson(self):
-        query = g.get('query', request.args.get('q', 'all'))
-        qrp = self.query_results_params
-        qrp['raw'] = True
-
-        results = self.collection.query(query, **self.geo_filter_params)
-        results = self._prepare_query_results(results, **qrp)
+        results = self._get_query_results(
+            request.args.get('q'),
+            params=self.geo_filter_params,
+            raw=True
+        )
 
         features = []
 

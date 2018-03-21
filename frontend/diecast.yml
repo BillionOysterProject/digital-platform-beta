@@ -28,6 +28,7 @@ header:
 
       protocols:
       - name: 'Protocol 1: Site Conditions'
+        color: '#E6B00D'
         id:   'siteCondition'
         groups:
         - id:   weather
@@ -146,6 +147,7 @@ header:
 
 
       - name: 'Protocol 2: Oyster Measurements'
+        color: '#5B2E91'
         id:   'oysterMeasurement'
         group: oysters
         data:
@@ -169,6 +171,7 @@ header:
 
       - name: 'Protocol 3: Mobile Trap'
         id:   'mobileTrap'
+        color: '#00984A'
         group: mobile
         data:
         - id:    organism
@@ -176,6 +179,7 @@ header:
 
       - name: 'Protocol 4: Settlement Tiles'
         id:   'settlementTiles'
+        color: '#EE1D23'
         group: settlement
         data:
         - id:    description
@@ -187,6 +191,7 @@ header:
 
       - name: 'Protocol 5: Water Quality'
         id:   'waterQuality'
+        color: '#0D4DA1'
         group: waterquality
         data:
         - id:    depth

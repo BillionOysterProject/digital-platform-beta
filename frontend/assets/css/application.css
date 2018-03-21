@@ -44,6 +44,23 @@ body > header {
     background:      transparent;
 }
 
+.drop-area {
+    text-align:      center;
+    border:          4px dashed #CCC;
+    border-radius:   2vmin;
+    background:      #EEE;
+    color:           #666;
+    padding:         4vmin;
+    width:           100%;
+    height:          48px;
+    display:         flex;
+    flex-direction:  column;
+    justify-content: center;
+    align-content:   center;
+    margin-bottom:   2em;
+    margin-top:      0.5em;
+}
+
 .navbar-default {
     background:      #FFFFFF;
     box-shadow:      none;
@@ -72,7 +89,7 @@ h1, .h1 {
 }
 
 h2, .h2 {
-  font-size: 30px;
+  font-size: 28px;
 }
 
 h3, .h3 {
@@ -93,6 +110,22 @@ h6, .h6 {
 
 form label {
     user-select:     none;
+}
+
+.custom-radio .custom-control-label {
+    font-weight:     normal;
+    padding:         0 0.5em;
+    border-radius:   0.25em;
+}
+
+.custom-radio:hover .custom-control-label {
+    background:      #EEE;
+}
+
+.custom-radio .custom-control-label > span {
+    display:         inline-block;
+    width:           7em;
+    font-weight:     700;
 }
 
 #spinner {
@@ -1647,6 +1680,16 @@ li.loading-dialog {
 
 .site-details #siteMap {
     min-height:  240px;
+}
+
+.carousel {
+    background:      #444;
+}
+
+.carousel .carousel-item img {
+    width:       auto;
+    height:      240px;
+    object-fit:  cover;
 }
 
 .fill-content {

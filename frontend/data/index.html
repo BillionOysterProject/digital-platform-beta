@@ -29,7 +29,7 @@ page:
         </section>
     </section>
 
-    <section class="content collapse" id="xdata1">
+    <section class="content" id="xdata1">
         <div class="form-group row">
             <label for="search" class="col-sm-2 col-form-label">Expedition Search</label>
             <div class="col-sm-4">
@@ -43,13 +43,23 @@ page:
         <div class="form-group row">
             <label for="date" class="col-sm-2 col-form-label">Expedition Date</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" name="dateStart" placeholder="1/1/2017">
+                <input
+                    type="date"
+                    class="form-control"
+                    name="dateStart"
+                    value="{{ time (ago `1y`) `ymd` }}"
+                >
                 <small class="form-text text-muted">
                     Start of date range.
                 </small>
             </div>
             <div class="col-sm-2">
-                <input type="text" class="form-control" name="dateEnd" placeholder="12/31/2017">
+                <input
+                    type="date"
+                    class="form-control"
+                    name="dateEnd"
+                    value="{{ now `ymd` }}"
+                >
                 <small class="form-text text-muted">
                     End of date range.
                 </small>

@@ -55,7 +55,7 @@ bindings:
                     <span>[{{ upper $lesson.status }}]</span>
                     {{ end }}
 
-                    <a href="/lessons/print/{{ $lesson._id }}">
+                    <a href="/lessons/{{ $lesson._id }}">
                         <b>{{ rxreplace $lesson.title (printf "^%s" $unit.title) "" }}</b>
                     </a>
                 </div>

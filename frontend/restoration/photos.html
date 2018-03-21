@@ -1,0 +1,27 @@
+---
+bindings:
+- name:     'photos'
+  resource: '/api/expeditions/photos'
+---
+{{ $photos := $.bindings.photos }}
+
+<div class="row ml-2 mr-2">
+    {{ range $i, $photo := $photos }}
+    <div class="col-4" style="padding: 1vmin;">
+        <div class="card">
+            <div class="card-body">
+                <img
+                    style="height: 45vh; object-fit: cover; image-orientation: from-image;"
+                    class="d-block w-100 img-fluid"
+                    src="{{ rxreplace $photo.url `^http:` `https:` }}"
+                    alt="Third slide"
+                >
+
+                <h5>
+                    {{ $photo.url }}
+                </h5>
+            </div>
+        </div>
+    </div>
+    {{ end }}
+</div>

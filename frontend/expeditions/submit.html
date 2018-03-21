@@ -1,0 +1,140 @@
+<h1>Expedition Quick Upload</h1>
+
+<form class="form mt-4">
+    <section class="container">
+        <div class="form-group">
+            <label for="monitoringStartDate">Expedition Date</label>
+            <input
+                class="form-control"
+                type="datetime-local"
+                name="monitoringStartDate"
+                value="{{ now `ymd` }}"
+                autofocus
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="name">Expedition Name</label>
+            <input class="form-control" type="text" name="name">
+        </div>
+
+        <div class="form-group">
+            <label for="station">Oyster Research Station</label>
+            <div class="input-group">
+                <input
+                    type="text"
+                    class="form-control typeahead w-100"
+                    name="station"
+                    data-typeahead-url="/api/restoration-stations?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
+                    data-typeahead-field="name"
+                >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="team">Team</label>
+            <div class="input-group">
+                <input
+                    type="text"
+                    class="form-control typeahead w-100"
+                    name="team"
+                    data-typeahead-url="/api/teams?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
+                    data-typeahead-field="name"
+                >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="data-upload">Data Upload</label>
+            <div class="drop-area">
+                Drag a file here or click to upload expedition data.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button
+                type="submit"
+                class="btn btn-primary w-100"
+            >Upload Expedition Data</button>
+        </div>
+
+        <hr class="mt-4" />
+        <h2>Additional Data (Optional)</h2>
+        <p>
+            Everything in this section is optional.  You can submit an expedition without entering data into these fields.
+        </p>
+
+        <div class="form-group mt-4">
+            <label for="notes">Expedition Notes</label>
+            <textarea
+                class="form-control"
+                type="text"
+                name="notes"
+            ></textarea>
+        </div>
+
+        <div class="form-group mt-4">
+            <label for="notes">Bioaccumulation on Cage</label>
+
+            <div class="custom-control custom-radio">
+                <input
+                    type="radio"
+                    name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                    id="ba1"
+                    class="custom-control-input"
+                >
+                <label class="custom-control-label w-100" for="ba1">
+                    <span>None/clean</span> No macroalgae or animals present
+                </label>
+            </div>
+
+            <div class="custom-control custom-radio">
+                <input
+                    type="radio"
+                    name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                    class="custom-control-input"
+                    id="ba2"
+                >
+                <label class="custom-control-label w-100" for="ba2">
+                    <span>Light</span> Macroalgae or minimal animals present that do not encroach on mesh openings
+                </label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input
+                    type="radio"
+                    name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                    class="custom-control-input"
+                    id="ba3"
+                >
+                <label class="custom-control-label w-100" for="ba3">
+                    <span>Medium</span> Some encrusting macroalgae/animals reducing size of mesh opening up to 25%
+                </label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input
+                    type="radio"
+                    name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                    class="custom-control-input"
+                    id="ba4"
+                >
+                <label class="custom-control-label w-100" for="ba4">
+                    <span>Heavy</span> Encrusting macroalgae/animals reducing mesh opening by over 50%
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="date">Expedition Photos</label>
+            <div class="drop-area">
+                Drag files here or click to upload photos from this expedition.
+            </div>
+            <!--
+            Photo types:
+                - Expedition Photo
+                - Oyster cage
+                - Substrate shell (front)
+                - Substrate shell (back)
+            -->
+        </div>
+    </section>
+</form>
