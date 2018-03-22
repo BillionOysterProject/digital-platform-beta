@@ -13,23 +13,35 @@
         });
 
         map.on('load', function() {
+            // map.addSource("shipfriend", {
+            //     "type":     "raster",
+            //     "tiles": [
+            //         "https://tiles.marinetraffic.com/ais_helpers/shiptilesingle.aspx?output=png&sat=1&grouping=shiptype&tile_size=256&legends=1&zoom={z}&X={x}&Y={y}",
+            //     ],
+            //     "tileSize": 256,
+            // });
+
             // map.addLayer({
-            //     "id": "seamarks",
-            //     "type": "circle",
+            //     "id":     "boats",
+            //     "type":   "raster",
+            //     "source": "shipfriend",
+            // });
+
+            // map.addLayer({
+            //     "id": "waterways",
+            //     "type": "line",
             //     "source": {
             //         "type": "vector",
             //         "tiles": [
-            //             "http://localhost:9090/maps/seamarks/manmade/{z}/{x}/{y}.vector.pbf",
+            //             "http://localhost:9090/maps/seamarks/waterways/{z}/{x}/{y}.vector.pbf",
             //         ],
             //         // "minzoom": 1,
             //         // "maxzoom": 18
             //     },
-            //     "source-layer": "manmade",
+            //     "source-layer": "waterways",
             //     "paint": {
-            //         "circle-radius": 3,
-            //         "circle-color": "#FF0000",
-            //         "circle-stroke-width": 1,
-            //         "circle-stroke-color": "#FFFFFF",
+            //         "line-color": "#FF0000",
+            //         "line-width": 1,
             //     },
             // });
 

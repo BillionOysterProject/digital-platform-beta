@@ -76,7 +76,9 @@ bindings:
                     <img
                         class="d-block w-100"
                         src="{{ rxreplace $photo.url `^http:` `https:` }}"
-                        alt="Third slide"
+                        alt="Image Not Found"
+                        id="photo_{{ $i }}"
+                        onerror="$('#photo_{{ $i }}').remove()"
                     >
                 </div>
                 {{ end }}
