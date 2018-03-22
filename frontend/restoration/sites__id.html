@@ -25,7 +25,7 @@ bindings:
   resource: '/api/expeditions'
   not_if:   '{{ isEmpty $.bindings.stations }}'
   params:
-    q:      'station/{{ join (pluck $.bindings.stations "_id") "|" }}'
+    q:      'station/{{ join (pluck $.bindings.stations "_id") "|" }}/status/published'
     sort:   '-monitoringStartDate'
     expand: false
     limit:  100
