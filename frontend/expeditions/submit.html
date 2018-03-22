@@ -1,4 +1,4 @@
-<h1>Expedition Quick Upload</h1>
+<h1>Enter Data</h1>
 
 <form class="form mt-4">
     <section class="container">
@@ -19,7 +19,7 @@
         </div>
 
         <div class="form-group">
-            <label for="station">Oyster Research Station</label>
+            <label for="station">Oyster Research Station (ORS)</label>
             <div class="input-group">
                 <input
                     type="text"
@@ -28,6 +28,10 @@
                     data-typeahead-url="/api/restoration-stations?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
                     data-typeahead-field="name"
                 >
+
+                <small class="form-text mb-3">
+                    Don't see your ORS? You can add one on our <a class="font-weight-bold" href="#">Register an ORS</a> page.
+                </small>
             </div>
         </div>
 
@@ -44,18 +48,62 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="data-upload">Data Upload</label>
-            <div class="drop-area">
-                Drag a file here or click to upload expedition data.
+        <div class="form-group mt-4">
+            <h2>Oyster Measurement Data</h2>
+            <small class="form-text mb-3">
+                You can enter oyster measurement data in two ways- in the table below, or by uploading a spreadsheet.
+                In the first column, enter in the substrate shell number.  In the second column, enter the length (in millimeters) of
+                each <strong>live</strong> oyster on that substrate shell.  Make sure to only enter one number per cell!
+            </small>
+
+            <div class="row">
+                <div class="col mb-4">
+                    <label for="data-upload">Type it in...</label>
+                    <small class="form-text mb-3">
+                        Begin entering data into the sheet below to record oyster measurements for
+                        your ten tagged substrate shells.  Rows will automatically be added
+                        as you enter data.
+                    </small>
+
+                    <div id="dataEntry" class="w-100"></div>
+                    <div class="alert alert-info form-text mt-4" role="alert">
+                        <small>
+                        If you see a red background in a cell, check your numbers!  The substrate shell column accepts values from 1-10,
+                        and the oyster measurements column accepts values from 1-250.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="col-1 d-none d-xl-block vcenter">
+                </div>
+
+                <div class="col mb-4">
+                    <label for="data-upload">...or upload a spreadsheet</label>
+                    <small class="form-text mb-3">
+                        Upload your oyster measurements from an existing spreadsheet. See the
+                        <a href="#">spreadsheet upload guidelines</a> for formatting details, or
+                        use our <a href="#">Oyster Measurement Data</a> template to add your data.
+                    </small>
+
+                    <div class="drop-area">
+                        Drag a file here or click to upload expedition data.
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <button
-                type="submit"
-                class="btn btn-primary w-100"
-            >Upload Expedition Data</button>
+        <div class="form-group mt-4">
+            <div class="row">
+                <button
+                    type="submit"
+                    class="btn btn-primary ml-auto mr-2"
+                >Save Expedition</button>
+
+                <button
+                    type="submit"
+                    class="btn btn-success ml-2"
+                >Save &amp; Publish Expedition</button>
+            </div>
         </div>
 
         <hr class="mt-4" />
@@ -125,6 +173,10 @@
 
         <div class="form-group">
             <label for="date">Expedition Photos</label>
+            <small class="form-text mb-3">
+                Upload a photo of your ORS, inner and outer oyster substrate shell photos, and/or any other photos
+                from your expedition that you'd like to share.
+            </small>
             <div class="drop-area">
                 Drag files here or click to upload photos from this expedition.
             </div>
@@ -136,5 +188,84 @@
                 - Substrate shell (back)
             -->
         </div>
+
+        <div class="form-group mt-4">
+            <div class="row">
+                <button
+                    type="submit"
+                    class="btn btn-primary ml-auto mr-2"
+                >Save Expedition</button>
+
+                <button
+                    type="submit"
+                    class="btn btn-success ml-2"
+                >Save &amp; Publish Expedition</button>
+            </div>
+        </div>
     </section>
 </form>
+
+<script type="text/javascript">
+    $(function(){
+        var dataObject = [];
+
+        var validatePositive = function(checkvalue) {
+            return function(value, callback){
+                try {
+                    if ($.isNumeric(value) && checkvalue(value)) {
+                        callback(true);
+                        return;
+                    }
+                } catch(e) {
+                    ;
+                }
+
+                callback(false);
+            }
+        }
+
+        Handsontable.validators.registerValidator('valid-settlement-tile', validatePositive(function(v){
+            return (v > 0) && (v <= 10) && Math.floor(v) == v;
+        }));
+
+        Handsontable.validators.registerValidator('valid-oyster', validatePositive(function(v) {
+            return (v > 0) && (v < 250);
+        }));
+
+        var el = document.querySelector('#dataEntry');
+        var table = new Handsontable(el, {
+            stretchH:          'all',
+            autoWrapRow:       true,
+            minSpareRows:       5,
+            startRows:          5,
+            maxRows:            100,
+            manualRowResize:    true,
+            manualColumnResize: true,
+            contextMenu:        true,
+            rowHeaders:         true,
+
+            columns: [{
+                data:      'substrateShellNumber',
+                type:      'numeric',
+                validator: 'valid-settlement-tile',
+                width:     40,
+            }, {
+                data:      'oysterLength',
+                type:      'numeric',
+                validator: 'valid-oyster',
+                width:     40,
+                numericFormat: {
+                    pattern: '0.00',
+                    culture: 'en-US',
+                },
+            }],
+            width: function(){
+                return $('#dataEntry').width();
+            },
+            colHeaders: [
+                'Substrate Shell No.',
+                'Oyster Length (mm)',
+            ],
+        });
+    })
+</script>
