@@ -24,6 +24,12 @@ class Endpoint(FlaskView):
     route_prefix = '/api/'
     expand_fields = {}
     app = None
+    aggregateFns = (
+        'sum',
+        'average',
+        'minimum',
+        'maximum',
+    )
 
     @classmethod
     def register(cls, app):
@@ -231,6 +237,25 @@ class CollectionView(Endpoint):
                 results[i] = result
 
         return results
+
+    @route('/metrics')
+    def metrics(self):
+        query = g.get('query', request.args.get('q', 'all'))
+
+        output = {
+            'count': self.collection.count(query),
+        }
+
+        for pair in request.args.get('fn', '').split(','):
+            parts = pair.split(':', 2)
+
+            if len(parts) == 2:
+                fn, field = parts
+
+                if  fn in self.aggregateFns:
+                    output[fn] = getattr(self.collection, fn)(field, query)
+
+        return jsonify(output)
 
     @route('/export.tsv')
     def index_as_csv(self):
