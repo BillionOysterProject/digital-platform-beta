@@ -31,10 +31,7 @@ postprocessors:
             class="pull-left pr-4"
             alt="Billion Oyster Project"
             src="/assets/img/brand/logo.svg"
-            style="
-                width: 100px;
-                height: 128px;
-            "
+            height="128"
         >
 
         <div>
@@ -210,7 +207,10 @@ postprocessors:
                         <!-- Loop through each header -->
                         {{ range $header, $aspects := $aspectGroups }}
                         <li>
+                            {{ if autotype $header }}
                             <h4>{{ $header }}</h4>
+                            {{ end }}
+
                             <ul>
                                 <!-- Output all aspects as sub-items under the current header -->
                                 {{ range $k, $aspect := $aspects }}
