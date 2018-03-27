@@ -133,10 +133,12 @@ postprocessors:
                 </p>
                 {{ end }}
 
+                {{ if $lesson.preparation }}
                 <h3>Preparation</h3>
                 <p>
                     {{ sanitize $lesson.preparation }}
                 </p>
+                {{ end }}
 
                 {{ if $lesson.background }}
                 <h3>Background</h3>
