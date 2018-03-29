@@ -46,6 +46,17 @@ postprocessors:
                     {{ if $lesson.created }}
                     <div class="text-muted">{{ time $lesson.created "Jan 2, 2006" }}</div>
                     {{ end }}
+
+                    {{ if nex (qs "renderer") "pdf" }}
+                    <a
+                        class="btn btn-success float-right"
+                        href="/lessons/{{ param 1 }}?layout=print&renderer=pdf"
+                        download="{{ $lesson.title }}.pdf"
+                    >
+                        <i class="fa fa-download"></i>
+                        Download PDF
+                    </a>
+                    {{ end }}
                 </div>
             </div>
         </div>
