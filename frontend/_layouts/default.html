@@ -13,8 +13,10 @@ includes:
 bindings:
 - name:     'user'
   resource: ':/api/users/me'
-  optional: true
+  not_if:   '{{ eqx .request.url.path `/authentication/signin` }}'
   fallback: {}
+  if_status:
+    401:    '/authentication/signin'
 
 flags:
     admin:             '{{ has `admin` .bindings.user.roles }}'
