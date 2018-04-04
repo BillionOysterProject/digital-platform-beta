@@ -15,7 +15,8 @@ test:
 debug:
 	PYTHONPATH=$(PWD) ./env/bin/python server.py
 
-# run:
+run:
+	WSGI=1 PYTHONPATH=$(PWD) ./env/bin/python server.py
 
 shell:
 	./env/bin/ipython --config=shell.py

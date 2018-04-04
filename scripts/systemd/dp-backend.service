@@ -5,6 +5,9 @@ Description=BOP Digital Platform: Python Middleware
 Type=simple
 ExecStart=/home/ubuntu/platform/backend/env/bin/python server.py
 Environment="HOME=/home/ubuntu"
+Environment="AWS_PROFILE=bop"
+Environment="WSGI=1"
+Environment="BOP_S3_PUBLIC_BUCKET=digital-platform-prod-files"
 User=ubuntu
 WorkingDirectory=/home/ubuntu/platform/backend
 Restart=always
