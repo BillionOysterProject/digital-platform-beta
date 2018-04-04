@@ -101,5 +101,4 @@ class API(Flask):
         self.autoregister_routes()
 
     def run(self, *args, **kwargs):
-        self.setup()
         super(API, self).run(*args, **kwargs)
