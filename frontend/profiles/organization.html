@@ -11,8 +11,8 @@ bindings:
     sort:   ['name']
 
 flags:
-    viewOrgsMap:  '{{ any (qs "v" ) "map" "" }}'
-    viewOrgsList: '{{ eqx (qs "v") "list" }}'
+    viewOrgsMap:  '{{ eqx (qs "v" "map") "map" }}'
+    viewOrgsList: '{{ eqx (qs "v" "map") "list" }}'
 
 includes:
     orgsMap:  '/profiles/organization_map.html'

@@ -9,8 +9,8 @@ bindings:
     limit: false
 
 flags:
-    viewSitesMap:  '{{ any (qs "v" ) "map" "" }}'
-    viewSitesList: '{{ eqx (qs "v") "list" }}'
+    viewSitesMap:  '{{ eqx (qs "v" "map") "map" }}'
+    viewSitesList: '{{ eqx (qs "v" "map") "list" }}'
 
 includes:
     sitesMap:  '/restoration/sites_map.html'
