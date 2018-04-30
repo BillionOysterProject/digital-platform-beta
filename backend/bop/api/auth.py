@@ -32,7 +32,7 @@ class Authentication(Endpoint):
             raise Unauthorized('Invalid username or password.')
 
         if user.check_password(payload['password']):
-            login_user(user)
+            login_user(user, remember=True)
             return jsonify(user)
         else:
             raise Unauthorized('Invalid username or password.')
