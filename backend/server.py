@@ -22,6 +22,7 @@ app = API('bop-digital-platform')
 
 # setup Sentry error reporting (only works if SENTRY_DSN envvar is set)
 sentry = Sentry(app, logging=True, level=logging.WARNING)
+app.sentry = sentry
 
 # setup CORS headers
 CORS(app, resources={
@@ -38,18 +39,22 @@ port = int(os.environ.get('HTTP_PORT', 5000))
 app.setup()
 
 if __name__ == '__main__':
-    wsgi_mode = int(os.environ.get('WSGI', '0'))
+    try:
+        wsgi_mode = int(os.environ.get('WSGI', '0'))
 
-    if not wsgi_mode:
-        logging.warning('DEBUGGING {} on http://{}:{}'.format(app.name, addr, port))
-        debug_mode = (os.environ.get('DEBUG', '').lower() == 'true')
+        if not wsgi_mode:
+            logging.warning('DEBUGGING {} on http://{}:{}'.format(app.name, addr, port))
+            debug_mode = (os.environ.get('DEBUG', '').lower() == 'true')
 
-        app.run(
-            debug=debug_mode,
-            host=addr,
-            port=port
-        )
-    else:
-        logging.info('Running {} on {}:{}'.format(app.name, addr, port))
-        http_server = WSGIServer((addr, port), app.wsgi_app)
-        http_server.serve_forever()
+            app.run(
+                debug=debug_mode,
+                host=addr,
+                port=port
+            )
+        else:
+            logging.info('Running {} on {}:{}'.format(app.name, addr, port))
+            http_server = WSGIServer((addr, port), app.wsgi_app)
+            http_server.serve_forever()
+    except:
+        sentry.captureException()
+        raise

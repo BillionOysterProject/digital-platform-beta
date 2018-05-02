@@ -7,6 +7,8 @@ from pbkdf2 import PBKDF2
 
 
 class User(dict):
+    SENTRY_USER_ATTRS = ['username', 'email']
+
     def __init__(self, data):
         super(User, self).__init__(data)
 
