@@ -84,7 +84,10 @@ $(function(){
 
                     location.href = redirectTo;
                 }.bind(this),
-                error: this.showResponseError.bind(this),
+                error: function(data) {
+                    console.error('Form Error:', data);
+                    this.showResponseError(data);
+                }.bind(this),
             })
         },
 
