@@ -43,7 +43,7 @@ if __name__ == '__main__':
         wsgi_mode = int(os.environ.get('WSGI', '0'))
 
         if not wsgi_mode:
-            logging.warning('DEBUGGING {} on http://{}:{}'.format(app.name, addr, port))
+            logging.warning('DEBUGGING: {} on http://{}:{}'.format(app.name, addr, port))
             debug_mode = (os.environ.get('DEBUG', '').lower() == 'true')
 
             app.run(
@@ -52,7 +52,7 @@ if __name__ == '__main__':
                 port=port
             )
         else:
-            logging.info('Running {} on {}:{}'.format(app.name, addr, port))
+            logging.warning('STARTED: Running {} on {}:{}'.format(app.name, addr, port))
             http_server = WSGIServer((addr, port), app.wsgi_app)
             http_server.serve_forever()
     except:
