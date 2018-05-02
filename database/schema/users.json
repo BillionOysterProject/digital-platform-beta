@@ -17,6 +17,10 @@
         "type":     "str",
         "required": true
     }, {
+        "name":     "username",
+        "type":     "str",
+        "required": true
+    }, {
         "name":     "password",
         "type":     "str",
         "required": true
