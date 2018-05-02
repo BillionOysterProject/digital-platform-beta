@@ -1,18 +1,18 @@
 'use strict';
 
-Raven.config('https://5f7fe95584dc40f8adfd06ead1d1748c@sentry.io/1199998').install()
+// return whether the input is null OR undefined
+window.isEmpty = function(v) {
+    if(v === null || v === undefined) {
+        return true;
+    }
 
-Raven.context(function() {
-    // return whether the input is null OR undefined
-    window.isEmpty = function(v) {
-        if(v === null || v === undefined) {
-            return true;
-        }
+    return false;
+};
 
-        return false;
-    };
+$(function(){
+    Raven.config('https://5f7fe95584dc40f8adfd06ead1d1748c@sentry.io/1199998').install();
 
-    $(function(){
+    Raven.context(function() {
         var App = Stapes.subclass({
             constructor: function() {
                 this.setupFormIntercept();

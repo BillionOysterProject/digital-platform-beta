@@ -49,6 +49,14 @@ flags:
         {{ template "content" . }}
         </section>
     </section>
-</body>
 
+    {{ if $.flags.loggedIn }}
+    <script type="text/javascript">
+        Raven.setUserContext({
+            id:       '{{ $.bindings.user._id }}',
+            username: '{{ $.bindings.user.username }}',
+        });
+    </script>
+    {{ end }}
+</body>
 </html>
