@@ -24,7 +24,8 @@ def handle_error(e):
 
         code = e.code
 
-    logging.warning(e)
+    if code not in [401, 403, 404]:
+        logging.warning(e)
     return jsonify(error=str(e)), code
 
 
