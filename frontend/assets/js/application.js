@@ -15,8 +15,19 @@ $(function(){
     Raven.context(function() {
         var App = Stapes.subclass({
             constructor: function() {
+                this.setupAjaxIntercept();
                 this.setupFormIntercept();
                 this.setupTypeaheadHandlers();
+            },
+
+            setupAjaxIntercept: function() {
+                $(document).ajaxError(function(res, xhr, settings) {
+                    Raven.captureMessage('HTTP ' + res.status, {
+                        'status':   res.status,
+                        'payload':  (res.responseJSON || res.responseText),
+                        'settings': settings,
+                    });
+                });
             },
 
             setupFormIntercept: function() {
