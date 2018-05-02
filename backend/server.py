@@ -8,7 +8,6 @@ import logging
 from gevent.wsgi import WSGIServer
 from flask_cors import CORS
 from gevent import monkey
-from raven.contrib.flask import Sentry
 
 
 # apply gevent patches, which is always precarious and weird but Python ¯\_(ツ)_/¯
@@ -19,10 +18,6 @@ logging.getLogger('').setLevel(logging.INFO)
 
 # instantiate the application
 app = API('bop-digital-platform')
-
-# setup Sentry error reporting (only works if SENTRY_DSN envvar is set)
-sentry = Sentry(app, logging=True, level=logging.WARNING)
-app.sentry = sentry
 
 # setup CORS headers
 CORS(app, resources={

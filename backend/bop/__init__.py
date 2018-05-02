@@ -12,6 +12,7 @@ from .api.endpoints import Endpoint, CollectionView
 from collections import OrderedDict
 from flask_login import LoginManager
 from flask_session import Session
+from raven.contrib.flask import Sentry
 
 
 def handle_error(e):
@@ -23,6 +24,7 @@ def handle_error(e):
 
         code = e.code
 
+    logging.warning(e)
     return jsonify(error=str(e)), code
 
 
@@ -32,6 +34,10 @@ class API(Flask):
         if not hasattr(self, '_db'):
             self._db = pivot.Client()
         return self._db
+
+    def setup_sentry_reporting(self):
+        # setup Sentry error reporting (only works if SENTRY_DSN envvar is set)
+        self.sentry = Sentry(self, logging=True, level=logging.WARNING)
 
     def setup_persistent_sessions(self):
         self.session_manager = Session()
@@ -95,6 +101,7 @@ class API(Flask):
         return sorted(output, key=lambda v: v.get('url'))
 
     def setup(self):
+        self.setup_sentry_reporting()
         self.setup_persistent_sessions()
         self.setup_login_manager()
         self.setup_error_intercept()
