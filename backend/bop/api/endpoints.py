@@ -43,13 +43,8 @@ class Endpoint(FlaskView):
 
     @property
     def current_user(self):
-        token = request.args.get('token')
-
         try:
-            if token:
-                return User.get_by_token(token)
-            else:
-                return User.get(token or current_user['id'])
+            return User.get(current_user['id'])
         except:
             return None
 

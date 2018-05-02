@@ -42,19 +42,6 @@ class User(dict):
         # default to nothing
         return None
 
-    @classmethod
-    def get_by_token(cls, token):
-        try:
-            users = cls.collection.query('tokens/{}'.format(token))
-
-            if len(users) == 1:
-                return User(users.records[0])
-
-        except pivot.exceptions.RecordNotFound:
-            pass
-
-        return None
-
     def check_password(self, password):
         salt = base64.b64decode(self['salt'])
         pwhash = base64.b64decode(self['password'])
