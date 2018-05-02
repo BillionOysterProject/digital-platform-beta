@@ -22,6 +22,7 @@ $(function(){
 
             setupAjaxIntercept: function() {
                 $(document).ajaxError(function(res, xhr, settings) {
+                    console.debug('args', arguments)
                     Raven.captureMessage('HTTP ' + res.status, {
                         'status':   res.status,
                         'payload':  (res.responseJSON || res.responseText),
