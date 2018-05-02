@@ -1,5 +1,5 @@
 [{
-    "name": "sites",
+    "name": "users",
     "fields": [{
         "name":       "displayName",
         "type":       "str",
