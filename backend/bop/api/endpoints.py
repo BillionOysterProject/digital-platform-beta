@@ -23,7 +23,7 @@ class Endpoint(FlaskView):
     strict_slashes = False
     route_prefix = '/api/'
     expand_fields = {}
-    app = None
+    _app = None
     aggregateFns = (
         'sum',
         'average',
@@ -33,18 +33,23 @@ class Endpoint(FlaskView):
 
     @classmethod
     def register(cls, app):
-        cls.app = app
+        cls._app = app
         cls.client = app.db
         super(Endpoint, cls).register(app)
 
     @property
     def app(self):
-        return self.__class__.app
+        return self.__class__._app
 
     @property
     def current_user(self):
+        token = request.args.get('token')
+
         try:
-            return User.get(current_user['id'])
+            if token:
+                return User.get_by_token(token)
+            else:
+                return User.get(token or current_user['id'])
         except:
             return None
 

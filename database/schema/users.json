@@ -1,0 +1,53 @@
+[{
+    "name": "sites",
+    "fields": [{
+        "name":       "displayName",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":     "firstName",
+        "type":     "str",
+        "required": true
+    }, {
+        "name":     "lastName",
+        "type":     "str",
+        "required": true
+    }, {
+        "name":     "email",
+        "type":     "str",
+        "required": true
+    }, {
+        "name":     "password",
+        "type":     "str",
+        "required": true
+    },  {
+        "name":     "salt",
+        "type":     "str",
+        "required": true
+    }, {
+        "name":     "pending",
+        "type":     "bool",
+        "required": true,
+        "default":  false
+    }, {
+        "name":     "profileImageURL",
+        "type":     "str"
+    }, {
+        "name":     "provider",
+        "type":     "str",
+        "required": true,
+        "default":  "local"
+    }, {
+        "name":     "researchInterests",
+        "type":     "str"
+    }, {
+        "name":     "roles",
+        "type":     "raw"
+    }, {
+        "name":     "created",
+        "type":     "date",
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }]
+}]
