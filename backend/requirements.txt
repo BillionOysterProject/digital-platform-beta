@@ -21,3 +21,5 @@ rq
 six
 sortedcontainers
 unicodecsv
+raven
+raven[flask]
