@@ -21,12 +21,12 @@ $(function(){
             },
 
             setupAjaxIntercept: function() {
-                $(document).ajaxError(function(res, xhr, settings) {
+                $(document).ajaxError(function(e, res, xhr) {
                     console.debug('args', arguments)
                     Raven.captureMessage('HTTP ' + res.status, {
                         'status':   res.status,
                         'payload':  (res.responseJSON || res.responseText),
-                        'settings': settings,
+                        'request':  xhr,
                     });
                 });
             },
