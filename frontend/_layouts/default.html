@@ -53,8 +53,8 @@ flags:
     {{ if $.flags.loggedIn }}
     <script type="text/javascript">
         Raven.setUserContext({
-            id:       '{{ $.bindings.user.id }}',
-            username: '{{ $.bindings.user.username }}',
+            id:    '{{ $.bindings.user.id }}',
+            email: '{{ $.bindings.user.email }}',
         });
     </script>
     {{ end }}
