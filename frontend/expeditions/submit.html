@@ -2,10 +2,27 @@
 
 
 <form class="form mt-4">
-    <section class="container">
-        <h2>
-        First, tell us about your expedition:
-        </h2>
+    <!-- ########################################################################################### -->
+    <!-- Step 1: Enter Expedition Metadata-->
+    <!--         Enter information (like date and location) about the expedition. -->
+    <!-- ########################################################################################### -->
+    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#enterdata1">
+        <section class="container-fluid">
+            <div id="step1-header" class="blue">
+                <span class="fa-stack fa-3x">
+                    <i class="fa fa-circle-o fa-stack-2x"></i>
+                    <strong class="fa-stack-1x">1</strong>
+                </span>
+
+                <span>
+                    <strong>Tell us about your expedition</strong>.
+                    (Required) Click to enter metadata about your expedition like time and location.
+                </span>
+            </div>
+        </section>
+    </section>
+
+    <section class="content collapse" id="enterdata1">
         <div class="form-group">
             <label for="monitoringStartDate">Expedition Date</label>
             <input
@@ -16,7 +33,6 @@
                 autofocus
             >
         </div>
-
         <div class="form-group">
             <label for="name">Expedition Name</label>
             <input class="form-control" type="text" name="name">
@@ -68,7 +84,7 @@
                     Other Reef
                 </label>
             </div>
-             <div class="custom-control custom-radio">
+            <div class="custom-control custom-radio">
                 <input
                     type="radio"
                     name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
@@ -119,23 +135,34 @@
             <label for="name">Number of adults</label>
             <input class="form-control" type="text" name="numberAdults">
         </div>
-          <div class="form-group">
+        <div class="form-group">
             <label for="name">Number of students</label>
             <input class="form-control" type="text" name="numberStudents">
         </div>
+    </section>
 
-        <h2>
-            Next, click on a protocol below to enter data. You'll be able to upload all of your photos at 
-            once at the bottom of this page.
-        </h2>
-        <p>
-            NOTE: You only need to enter data for one protocol in order to publish your expedition.
-        </p>
+    <!-- ########################################################################################### -->
+    <!-- Step 2: Enter protocol data-->
+    <!--          -->
+    <!-- ########################################################################################### -->
+    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#enterdata2">
+        <section class="container-fluid">
+            <div id="step1-header" class="blue">
+                <span class="fa-stack fa-3x">
+                    <i class="fa fa-circle-o fa-stack-2x"></i>
+                    <strong class="fa-stack-1x">2</strong>
+                </span>
 
-        
+                <span>
+                    <strong>Enter the data you collected.</strong>
+                    (Includes required and optional fields.) Click to open the protocol data entry forms.
+                </span>
+            </div>
+        </section>
+    </section>
 
+    <section class="content collapse" id="enterdata2">
         <div id="accordion">
-            
             <!-- BEGIN Baseline -->
             <div class="card border-0">
                 <div class="card-header" id="addBaseline">
@@ -147,16 +174,16 @@
                             </div>
                         </section>
                     </section>
-                </div>    
+                </div>
                 <div id="baseline" class="collapse" aria-labelledby="addBaseline" data-parent="#accordion">
                     <div class="card-body">
                         <h3>Baselines</h3>
                         <h4>Oyster baselines</h4>
                         <p>
-                            Fill this section out when you first get a batch of oysters.  You won't 
+                            Fill this section out when you first get a batch of oysters.  You won't
                             need to fill it out again unless you get new oysters.
                         </p>
-                        
+
                         <p>
                             Placeholder for spreadsheet view with four columns:
                             -Substrate Shell No- -Set Date- -# of Live Oysters- -Weight-
@@ -167,10 +194,10 @@
                         <h4>Site baselines</h4>
                         <p>
                             Fill this section out when you first visit your site.  You won't need to
-                            fill it out again unless you move to a new site (or there are big 
+                            fill it out again unless you move to a new site (or there are big
                             changes like construction at your site).
                         </p>
-                        
+
                         <div class="form-group mt-4">
                         <label for="CSO">Are there any marked Combined Sewer Overflow (CSO) pipes?</label>
 
@@ -243,7 +270,7 @@
                             </ul>
                         </p>
                     </div>
-                </div> 
+                </div>
             </div>
             <!-- END Baseline -->
 
@@ -258,7 +285,7 @@
                             </div>
                         </section>
                     </section>
-                </div>    
+                </div>
 
                 <div id="oysterMeasurement" class="collapse" aria-labelledby="addOysterMeasurements" data-parent="#accordion">
                     <div class="card-body">
@@ -386,14 +413,14 @@
                             </div>
                         </section>
                     </section>
-                </div>    
+                </div>
                 <div id="siteConditions" class="collapse" aria-labelledby="addSiteConditions" data-parent="#accordion">
                     <div class="card-body">
                         <h3>Site Conditions</h3>
                         <p>Has it rained in the last 72 hours?
                         </p>
                     </div>
-                </div> 
+                </div>
             </div>
             <!-- END Protocol 2 -->
 
@@ -408,14 +435,14 @@
                             </div>
                         </section>
                     </section>
-                </div>    
+                </div>
                 <div id="mobileOrganisms" class="collapse" aria-labelledby="addMobileOrganisms" data-parent="#accordion">
                     <div class="card-body">
                         <h3>Mobile Organisms</h3>
-                        <p>What mobile organisms have you found?                        
+                        <p>What mobile organisms have you found?
                         </p>
                     </div>
-                </div> 
+                </div>
             </div>
             <!-- END Protocol 3 -->
 
@@ -430,14 +457,14 @@
                             </div>
                         </section>
                     </section>
-                </div>    
+                </div>
                 <div id="sessileOrganisms" class="collapse" aria-labelledby="addSessileOrganisms" data-parent="#accordion">
                     <div class="card-body">
                         <h3>Sessile Organisms</h3>
-                        <p>What sessile organisms have you found?                        
+                        <p>What sessile organisms have you found?
                         </p>
                     </div>
-                </div> 
+                </div>
             </div>
             <!-- END Protocol 4 -->
 
@@ -452,14 +479,14 @@
                             </div>
                         </section>
                     </section>
-                </div>    
+                </div>
                 <div id="waterQuality" class="collapse" aria-labelledby="addWaterQuality" data-parent="#accordion">
                     <div class="card-body">
                         <h3>Water Quality</h3>
-                        <p>What were the results of your water quality tests?                        
+                        <p>What were the results of your water quality tests?
                         </p>
                     </div>
-                </div> 
+                </div>
             </div>
             <!-- END Protocol 5 -->
 
@@ -474,26 +501,43 @@
                             </div>
                         </section>
                     </section>
-                </div>    
+                </div>
                 <div id="wildOysters" class="collapse" aria-labelledby="addWildOysters" data-parent="#accordion">
                     <div class="card-body">
                         <h3>Wild Oyster Survey</h3>
-                        <p>Did you find any wild oysters?                        
+                        <p>Did you find any wild oysters?
                         </p>
                     </div>
-                </div> 
+                </div>
             </div>
             <!-- END Protocol 6 -->
 
 
         </div>
+    </section>
 
-        
-        <br/>
+    <!-- ########################################################################################### -->
+    <!-- Step 3: Upload photos-->
+    <!--          -->
+    <!-- ########################################################################################### -->
+    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#enterdata3">
+        <section class="container-fluid">
+            <div id="step1-header" class="blue">
+                <span class="fa-stack fa-3x">
+                    <i class="fa fa-circle-o fa-stack-2x"></i>
+                    <strong class="fa-stack-1x">3</strong>
+                </span>
+
+                <span>
+                    <strong>Upload and tag any photos you took.</strong>
+                    (Optional.) Click to open the photo uploader.
+                </span>
+            </div>
+        </section>
+    </section>
+
+    <section class="content collapse" id="enterdata3">
         <div class="form-group">
-            <h2>
-                Finish by uploading and tagging any photos you took.
-            </h2>
             <label for="date">Expedition Photos</label>
             <small class="form-text mb-3">
                 Upload a photo of your ORS, inner and outer oyster substrate shell photos, and/or any other photos
@@ -510,12 +554,14 @@
                 - Substrate shell (back)
             -->
         </div>
+    </section>
 
+    <section class="content">
         <div class="form-group mt-4">
-            <div class="row">
+            <div class="text-right">
                 <button
                     type="submit"
-                    class="btn btn-primary ml-auto mr-2"
+                    class="btn btn-primary mr-2"
                 >Save Expedition</button>
 
                 <button

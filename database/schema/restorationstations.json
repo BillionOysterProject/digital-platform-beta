@@ -50,37 +50,51 @@
             ]
         }
     }, {
-      "name": "statusHistory",
-      "type": "object"
+        "name":     "structureType",
+        "type":     "str",
+        "default": "research-station",
+        "required": true,
+        "validators": {
+            "one-of": [
+                "research-station",
+                "community-reef",
+                "oyster-tank",
+                "reef",
+                "other"
+            ]
+        }
     }, {
-      "name": "notes",
-      "type": "str"
+        "name": "statusHistory",
+        "type": "object"
     }, {
-      "name": "tagNumber",
-      "type": "str"
+        "name": "notes",
+        "type": "str"
     }, {
-      "name": "photo",
-      "type": "object"
+        "name": "tagNumber",
+        "type": "str"
     }, {
-      "name": "siteCoordinator",
-      "type": "str"
+        "name": "photo",
+        "type": "object"
     }, {
-      "name": "otherSiteCoordinator",
-      "type": "str"
+        "name": "siteCoordinator",
+        "type": "str"
     }, {
-      "name": "propertyOwner",
-      "type": "str"
+        "name": "otherSiteCoordinator",
+        "type": "str"
     }, {
-      "name": "otherPropertyOwner",
-      "type": "str"
+        "name": "propertyOwner",
+        "type": "str"
     }, {
-      "name": "baselines",
-      "type": "object"
+        "name": "otherPropertyOwner",
+        "type": "str"
+    }, {
+        "name": "baselines",
+        "type": "object"
     }, {
         "name": "created",
         "type": "date",
         "formatters": {
             "current-time-if-unset": true
         }
-    }]
+    }, ]
 }]
