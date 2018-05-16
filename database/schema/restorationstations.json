@@ -96,5 +96,5 @@
         "formatters": {
             "current-time-if-unset": true
         }
-    }, ]
+    }]
 }]
