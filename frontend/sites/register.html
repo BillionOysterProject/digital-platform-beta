@@ -15,7 +15,7 @@
                 <span>
                     <strong>Enter information about this structure</strong>.
                     (Required) Click to enter metadata about your oyster research structure
-                    like type (ORS, Community Reef, Oyster Tank, etc.) and location.
+                    like type and location.
                 </span>
             </div>
         </section>
@@ -38,6 +38,27 @@
                     id="name"
                 />
             </div>
+
+        <div class="col-sm-12">
+        <div class="form-group mt-4">
+            <label>Select a structure type</label>
+
+            {{ range $i, $structureType := $.page.structureTypes }}
+            <div class="custom-control custom-radio">
+                <input
+                    type="radio"
+                    id="structure{{ $i }}"
+                    class="custom-control-input"
+                >
+                <label class="custom-control-label w-100" for="structure{{ $i }}">
+                    {{ $structureType.label }}
+                </label>
+            </div>
+            {{ end }}
+        </div>
+        </div>
+
+<!--TODO: if user selects "oyster tank," create a new site using the org address-->
 
         <div class="form-group col-sm-8">
             <label for="site">Site Name</label>
@@ -73,7 +94,7 @@
             <label>Notes</label>
 
         </div>
-        <hr/>
+
     </div>
     </section>
     <!-- ########################################################################################### -->
@@ -256,7 +277,7 @@
                                 class="required"
                                 for="pipeDiameter"
                             >
-                                What's the approximate diameter of the pipe?
+                                What's the approximate diameter of the pipe (cm)?
                             </label>
                             <input
                                 type="text"
@@ -317,6 +338,18 @@
                 - Substrate shell (front)
                 - Substrate shell (back)
             -->
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="form-group mt-4">
+            <div class="text-right">
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                >Submit Baselines
+                </button>
+            </div>
         </div>
     </section>
 </form>
