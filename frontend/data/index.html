@@ -4,7 +4,7 @@ page:
 ---
 <section class="content">
     <section class="container-fluid">
-        <h3 class="text-muted">To view or download data, follow the steps below.</h3> 
+        <h3 class="text-muted">To view or download data, follow the steps below.</h3>
         <h4 class="text-muted">(You can skip these steps and view or download ALL data by clicking on the buttons at the bottom of the page.)</h2>
     </section>
 </section>
@@ -69,7 +69,7 @@ page:
 
         <div class="form-group row">
             <label for="date" class="col-sm-2 col-form-label">
-                ORS Name
+                Structure Name
             </label>
             <div class="col-sm-4">
                 <div class="input-group">
@@ -83,6 +83,43 @@ page:
                 </div>
             </div>
         </div>
+
+<!--    TODO: Create a "Site Name" search field
+        <div class="form-group row">
+            <label for="date" class="col-sm-2 col-form-label">
+                Site Name
+            </label>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <input
+                        type="text"
+                        class="form-control typeahead w-100"
+                        name="ors"
+                        data-typeahead-url="/api/restoration-stations?fields=name&amp;q=str:name/contains:{}"
+                        data-typeahead-field="name"
+                    >
+                </div>
+            </div>
+        </div>
+
+        TODO: Rework this code from the enter data page to allow users to select a structure type
+        <div class="form-group mt-4">
+            <label>Select a structure type</label>
+
+            {{ range $i, $structureType := $.page.structureTypes }}
+            <div class="custom-control custom-radio">
+                <input
+                    type="radio"
+                    id="structure{{ $i }}"
+                    class="custom-control-input"
+                >
+                <label class="custom-control-label w-100" for="structure{{ $i }}">
+                    {{ $structureType.label }}
+                </label>
+            </div>
+            {{ end }}
+        </div>
+-->
 
         <div class="form-group row">
             <label for="date" class="col-sm-2 col-form-label">
@@ -134,6 +171,7 @@ page:
                 </div>
             </div>
         </div>
+
     </section>
 
 

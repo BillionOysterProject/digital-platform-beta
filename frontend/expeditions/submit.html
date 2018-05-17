@@ -26,7 +26,7 @@
         <div class="form-group">
             <label for="monitoringStartDate">Expedition Date</label>
             <input
-                class="form-control"
+                class="form-control col-4"
                 type="datetime-local"
                 name="monitoringStartDate"
                 value="{{ now `ymd` }}"
@@ -38,68 +38,55 @@
             <input class="form-control" type="text" name="name">
         </div>
 
-        <div class="form-group mt-4">
-            <label>Select a structure</label>
-
+        <!--
+            This next section is about selecting structures (like an ORS, Community Reef, or Oyster Tank).
+            The goal is for users to be able to select from several different kinds of structures
+            OR to choose "no structure" and report data about water quality or biodiversity that is tied
+            to a site instead of a structure. If a user is entering data for a structure, the "Structure Name"
+            list pops up.  If a user is not entering data for a structure, the "Sites" list should pop up instead.
+            Selecting "no structure" will create an expedition with a dummy ORS with a structure type of "null."
+            This is a limitation of the legacy platform. When we have fully moved to the new platform we can get
+            rid of the dummy ORS.
+        -->
+        <div class="form-group">
+            <label>Are you reporting data related to a structure, like an Oyster Research Station (ORS)?</label>
             <div class="custom-control custom-radio">
                 <input
                     type="radio"
-                    id="structure1"
+                    id="yesStructure"
+                    name="hasStructure"
                     class="custom-control-input"
+                    value="true"
                 >
-                <label class="custom-control-label w-100" for="structure1">
-                    Oyster Research Station (ORS)
-                </label>
-            </div>
-
-            <div class="custom-control custom-radio">
-                <input
-                    type="radio"
-                    class="custom-control-input"
-                    id="ba2"
+                <label
+                    class="custom-control-label"
+                    for="yesStructure"
                 >
-                <label class="custom-control-label w-100" for="ba2">
-                    Community Reef
-                </label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input
-                    type="radio"
-                    name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
-                    class="custom-control-input"
-                    id="ba3"
-                >
-                <label class="custom-control-label w-100" for="ba3">
-                    Classroom Oyster Tank
+                    <strong>YES</strong>.   I'm following BOP's protocols to enter data for an ORS, Community Reef, Oyster Tank,
+                    or other reef structure.
                 </label>
             </div>
             <div class="custom-control custom-radio">
                 <input
                     type="radio"
-                    name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                    id="noStructure"
+                    name="hasStructure"
                     class="custom-control-input"
-                    id="ba4"
+                    value="false"
                 >
-                <label class="custom-control-label w-100" for="ba4">
-                    Other Reef
-                </label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input
-                    type="radio"
-                    name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
-                    class="custom-control-input"
-                    id="ba4"
+                <label
+                    class="custom-control-label"
+                    for="noStructure"
                 >
-                <label class="custom-control-label w-100" for="ba4">
-                    No structure
+                    <strong>NO</strong>.    I'm entering data that isn't associated with a structure. (For example: reporting
+                    the results of a <a href="https://www.nationalgeographic.org/projects/bioblitz/" target="_blank">BioBlitz</a> or fish count.)
                 </label>
             </div>
         </div>
 
-        <!--If user selected "ORS" above -->
+<!-- "Structure Name" field displays if user answers "YES" to "Are you reporting data related to a structure, like an Oyster Research Station (ORS)?"-->
         <div class="form-group">
-            <label for="station">Oyster Research Station (ORS)</label>
+            <label for="station">Structure Name</label>
             <div class="input-group">
                 <input
                     type="text"
@@ -110,8 +97,22 @@
                 >
 
                 <small class="form-text mb-3">
-                    Don't see your ORS? You can add one on our <a class="font-weight-bold" href="#">Register an ORS</a> page.
+                    Don't see your structure? You can add one on our <a class="font-weight-bold" href="#">Register a Structure</a> page.
                 </small>
+            </div>
+        </div>
+
+<!-- "Site Name" field displays if user answers "NO" to "Are you reporting data related to a structure, like an Oyster Research Station (ORS)?"-->
+        <div class="form-group">
+            <label for="site">Site Name</label>
+            <div class="input-group">
+                <input
+                    type="text"
+                    class="form-control typeahead w-100"
+                    name="site"
+                    data-typeahead-url="/api/sites?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
+                    data-typeahead-field="name"
+                >
             </div>
         </div>
 
@@ -133,11 +134,11 @@
 
         <div class="form-group">
             <label for="name">Number of adults</label>
-            <input class="form-control" type="text" name="numberAdults">
+            <input class="form-control col-2" type="text" name="numberAdults">
         </div>
         <div class="form-group">
             <label for="name">Number of students</label>
-            <input class="form-control" type="text" name="numberStudents">
+            <input class="form-control col-2" type="text" name="numberStudents">
         </div>
     </section>
 
@@ -163,7 +164,7 @@
 
     <section class="content collapse" id="enterdata2">
         <div id="accordion">
-            <!-- BEGIN Baseline -->
+            <!-- BEGIN Baseline
             <div class="card border-0">
                 <div class="card-header" id="addBaseline">
                     <section class="shaded" data-toggle="collapse" data-target="#baseline">
@@ -181,14 +182,38 @@
                         <h4>Oyster baselines</h4>
                         <p>
                             Fill this section out when you first get a batch of oysters.  You won't
-                            need to fill it out again unless you get new oysters.
+                            need to fill out this section again unless you get new oysters.
                         </p>
 
-                        <p>
-                            Placeholder for spreadsheet view with four columns:
-                            -Substrate Shell No- -Set Date- -# of Live Oysters- -Weight-
-                            (fill out substrate shell no for them)
-                        </p>
+                        <ul class="nav nav-tabs">
+                            {{ range $i, $shell := sequence 10 }}
+                            <li class="nav-item{{ if eq $shell 0}} active{{ end }}">
+                                <a class="nav-link" href="#">
+                                    Shell {{ add $shell 1 }}
+                                </a>
+                            </li>
+                            {{ end }}
+                        </ul>
+
+                        <div class="form-group mt-4">
+                            <label>Source</label>
+
+                            {{ range $i, $oysterSource := $.page.oysterSources }}
+                            <div class="custom-control custom-radio">
+                                <input
+                                    type="radio"
+                                    name="baselineOysterSource"
+                                    id="oysterSource{{ $i }}"
+                                    class="custom-control-input"
+                                >
+                                <label class="custom-control-label w-100" for="oysterSource{{ $i }}">
+                                    {{ $oysterSource.label }}
+                                </label>
+                            </div>
+                            {{ end }}
+                        </div>
+
+
 
                         <hr/>
                         <h4>Site baselines</h4>
@@ -272,7 +297,7 @@
                     </div>
                 </div>
             </div>
-            <!-- END Baseline -->
+           END Baseline -->
 
             <!-- BEGIN Protocol 1 -->
             <div class="card border-0">

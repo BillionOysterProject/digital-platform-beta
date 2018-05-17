@@ -13,21 +13,21 @@ flags:
     viewSitesList: '{{ eqx (qs "v" "map") "list" }}'
 
 includes:
-    sitesMap:  '/restoration/sites_map.html'
-    sitesList: '/restoration/sites_list.html'
+    sitesMap:  '/sites/sites_map.html'
+    sitesList: '/sites/sites_list.html'
 ---
 <h1>Research Sites</h1>
 
 <ul class="nav nav-tabs mt-2 pl-1 pr-1">
     <li class="nav-item">
-        <a class="nav-link{{ if $.flags.viewSitesMap }} active{{ end }}" href="/restoration/sites?v=map">
+        <a class="nav-link{{ if $.flags.viewSitesMap }} active{{ end }}" href="/sites?v=map">
             <i class="fa fa-map-o"></i>
             Map
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link{{ if $.flags.viewSitesList }} active{{ end }}" href="/restoration/sites?v=list">
+        <a class="nav-link{{ if $.flags.viewSitesList }} active{{ end }}" href="/sites?v=list">
             <i class="fa fa-list"></i>
             List
         </a>

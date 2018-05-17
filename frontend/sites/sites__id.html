@@ -258,7 +258,7 @@ bindings:
 <script type="text/javascript">
     $(function(){
         $.ajax({
-            url: '/restoration/_sites_people?' + $.param({
+            url: '/sites/_sites_people?' + $.param({
                 q: 'id/{{ join $people "|" }}',
             }),
             success: function(data) {
@@ -276,7 +276,7 @@ bindings:
         <div class="col">
            <ul>
                 <li>
-                    <strong>For a huge range of information in one map:</strong> the <strong><a href="http://www.oasisnyc.net/map.aspx">OASIS map.</a></strong> Find nearby stewardship groups, CSOs, public waterfront access points, wetlands, and almost any other kind of publicly available data about your site you can imagine. 
+                    <strong>For a huge range of information in one map:</strong> the <strong><a href="http://www.oasisnyc.net/map.aspx">OASIS map.</a></strong> Find nearby stewardship groups, CSOs, public waterfront access points, wetlands, and almost any other kind of publicly available data about your site you can imagine.
                 </li>
                 <br/>
                 <li><strong>Find environmental information from government agencies:</strong></li>
@@ -288,7 +288,7 @@ bindings:
                             <strong><a href="https://www3.epa.gov/myenv/MYENVIEW2.html?minx=-73.91134&miny=40.618196&maxx=-73.85734&maxy=40.646196">EPA's MyEnvironment.</a></strong> A snapshot of environmental conditions at your site.
                         </li>
                         <li>
-                            <strong><a href="https://nysdec.maps.arcgis.com/apps/webappviewer/index.html?id=53dd7bd66b4643db9f326bd1b821dacd">DECinfo Locator.</a></strong> The New York State Department of Environmental Conservation is the agency charged with protecting the environment in the state of New York.  DECinfo Locator is a map that links out to "documents and public data pertaining to the environmental quality of specific sites in New York State."  
+                            <strong><a href="https://nysdec.maps.arcgis.com/apps/webappviewer/index.html?id=53dd7bd66b4643db9f326bd1b821dacd">DECinfo Locator.</a></strong> The New York State Department of Environmental Conservation is the agency charged with protecting the environment in the state of New York.  DECinfo Locator is a map that links out to "documents and public data pertaining to the environmental quality of specific sites in New York State."
                         </li>
                     </ul>
                     <br/>
@@ -298,13 +298,13 @@ bindings:
                             <strong><a href="https://welikia.org/m-map.php">Welikia map.</a></strong> What did this site look like in 1609? This map will tell you about the landscape, plants, animals, and people who lived in NYC pre-colonization.
                         </li>
                          <li>
-                            <strong><a href="https://www.oldnyc.org/">Old NYC map.</a></strong> Find old photographs of places near this site from the New York Public Library's <a href="https://digitalcollections.nypl.org/collections/photographic-views-of-new-york-city-1870s-1970s-from-the-collections-of-the-ne-2#/?tab=about">"Photographic Views of New York City, 1870s-1970s"</a> collection.   
+                            <strong><a href="https://www.oldnyc.org/">Old NYC map.</a></strong> Find old photographs of places near this site from the New York Public Library's <a href="https://digitalcollections.nypl.org/collections/photographic-views-of-new-york-city-1870s-1970s-from-the-collections-of-the-ne-2#/?tab=about">"Photographic Views of New York City, 1870s-1970s"</a> collection.
                         </li>
                         <li>
                             <strong><a href="http://80s.nyc/">80s NYC map.</a></strong> See what this site looked like in the 1980s in this Google Streetview-like map of 1980s tax lot photos from the <a href="http://nycma.lunaimaging.com/luna/servlet">New York City Municipal Archives</a>.
                         </li>
-                    </ul>  
-                    <br/>  
+                    </ul>
+                    <br/>
                 <li><strong>Get land use information:</strong></li>
                     <ul>
                         <li>
@@ -314,7 +314,7 @@ bindings:
                         </li>
                         <li>
                             <strong><a href="http://www.urbanreviewer.org/#map=12/40.7401/-73.9462">Urban Reviewer map.</a></strong> Decades ago, city officials demolished large parts of the city in order to improve them, and they called this process "Urban Renewal."  But they didn't always consult the people who lived there, and they didn't always rebuild neighborhoods after they destroyed them.  Find urban renewal projects near this site and see what happened to them- or share your story about it.
-                            </li> 
+                            </li>
                     </ul>
 
            </ul>

@@ -1,0 +1,322 @@
+<h1>Register a Structure</h1>
+<form class="form mt-4">
+<!-- ########################################################################################### -->
+    <!-- Step 1: Enter Structure Metadata-->
+    <!--         Enter information (like structure type and site) about the structure. -->
+    <!-- ########################################################################################### -->
+    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#enterBaselineData1">
+        <section class="container-fluid">
+            <div id="step1-header" class="blue">
+                <span class="fa-stack fa-3x">
+                    <i class="fa fa-circle-o fa-stack-2x"></i>
+                    <strong class="fa-stack-1x">1</strong>
+                </span>
+
+                <span>
+                    <strong>Enter information about this structure</strong>.
+                    (Required) Click to enter metadata about your oyster research structure
+                    like type (ORS, Community Reef, Oyster Tank, etc.) and location.
+                </span>
+            </div>
+        </section>
+    </section>
+
+    <section class="content collapse" id="enterBaselineData1">
+
+    <div class="col-sm-12">
+            <div class="form-group col-sm-6">
+                <label
+                    class="required"
+                    for="name"
+                >
+                    Structure Name
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="name"
+                    id="name"
+                />
+            </div>
+
+        <div class="form-group col-sm-8">
+            <label for="site">Site Name</label>
+            <div class="input-group">
+                <input
+                    type="text"
+                    class="form-control typeahead w-100"
+                    name="site"
+                    data-typeahead-url="/api/sites?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
+                    data-typeahead-field="name"
+                >
+            </div>
+        </div>
+
+
+        <div class="form-group col-sm-4">
+            <label
+                class="required"
+                for="status"
+            >
+                Status
+            </label>
+
+        </div>
+
+        <div class="form-group col-sm-2">
+            <label for="tagNumber">Tag #</label>
+
+        </div>
+
+
+        <div class="form-group col-sm-8">
+            <label>Notes</label>
+
+        </div>
+        <hr/>
+    </div>
+    </section>
+    <!-- ########################################################################################### -->
+    <!-- Step 2: Enter baseline data-->
+    <!--          -->
+    <!-- ########################################################################################### -->
+    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#enterBaselineData2">
+        <section class="container-fluid">
+            <div id="step1-header" class="blue">
+                <span class="fa-stack fa-3x">
+                    <i class="fa fa-circle-o fa-stack-2x"></i>
+                    <strong class="fa-stack-1x">2</strong>
+                </span>
+
+                <span>
+                    <strong>Enter baseline data for this structure</strong>.
+                    (Required) Click to enter oyster measurement and site baselines.
+                </span>
+            </div>
+        </section>
+    </section>
+
+    <section class="content collapse" id="enterBaselineData2">
+        <div class="col-sm-12">
+                        <h3>Oyster baselines</h3>
+                        <p>
+                            Fill this section out when you first get a batch of oysters.  You won't
+                            need to fill out this section again unless you get new oysters.
+                        </p>
+
+                        <ul class="nav nav-tabs">
+                            {{ range $i, $shell := sequence 10 }}
+                            <li class="nav-item{{ if eq $shell 0}} active{{ end }}">
+                                <a class="nav-link" href="#">
+                                    Shell {{ add $shell 1 }}
+                                </a>
+                            </li>
+                            {{ end }}
+                        </ul>
+                        <br/>
+                        <div class="form-check form-check-inline">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="inlineCheckbox1"
+                                value="option1">
+                            <label
+                                class="form-check-label"
+                                for="inlineCheckbox1"
+                            >
+                                Apply Set Date and Source to all 10 substrate shells
+                            </label>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="form-group">
+                            <label for="setDate">Set Date</label>
+                            <input
+                                class="form-control col-4"
+                                type="datetime-local"
+                                name="monitoringSetDate"
+                                value="{{ now `ymd` }}"
+                                autofocus
+                            >
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <label>Source</label>
+
+                            {{ range $i, $oysterSource := $.page.oysterSources }}
+                            <div class="custom-control custom-radio">
+                                <input
+                                    type="radio"
+                                    name="baselineOysterSource"
+                                    id="oysterSource{{ $i }}"
+                                    class="custom-control-input"
+                                >
+                                <label class="custom-control-label w-100" for="oysterSource{{ $i }}">
+                                    {{ $oysterSource.label }}
+                                </label>
+                            </div>
+                            {{ end }}
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label
+                                class="required"
+                                for="numberOfOysters"
+                            >
+                                Total number of live oysters on shell at baseline
+                            </label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="numberOfOysters"
+                                id="numberOfOysters"
+                            />
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label
+                                class="required"
+                                for="massOfOysters"
+                            >
+                                Total mass of substrate shell at baseline (grams)
+                            </label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="massOfOysters"
+                                id="massOfOysters"
+                            />
+                        </div>
+
+
+                        <hr/>
+                        <h3>Site baselines</h3>
+                        <p>
+                            Fill this section out when you first visit your site.  You won't need to
+                            fill it out again unless you move to a new site (or there are big
+                            changes like construction at your site).
+                        </p>
+
+                        <div class="form-group mt-4">
+                        <label for="CSO">Are there any marked Combined Sewer Overflow (CSO) pipes?</label>
+
+                            <div class="custom-control custom-radio">
+                                <input
+                                    type="radio"
+                                    name="yesCSO"
+                                    id="yesCSO"
+                                    class="custom-control-input"
+                                >
+                                <label class="custom-control-label w-100" for="yesCSO">
+                                    Yes
+                                </label>
+                            </div>
+
+                            <div class="custom-control custom-radio">
+                                <input
+                                    type="radio"
+                                    name="noCSO"
+                                    class="custom-control-input"
+                                    id="noCSO"
+                                >
+                                <label class="custom-control-label w-100" for="noCSO">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-4">
+                        <label for="otherPipes">Are there any unmarked or other outfall pipes?</label>
+
+                            <div class="custom-control custom-radio">
+                                <input
+                                    type="radio"
+                                    name="yesPipes"
+                                    id="yesPipes"
+                                    class="custom-control-input"
+                                >
+                                <label class="custom-control-label w-100" for="ba1">
+                                    Yes
+                                </label>
+                            </div>
+
+                            <div class="custom-control custom-radio">
+                                <input
+                                    type="radio"
+                                    name="noPipes"
+                                    class="custom-control-input"
+                                    id="noPipes"
+                                >
+                                <label class="custom-control-label w-100" for="ba2">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-6">
+                            <label
+                                class="required"
+                                for="pipeDiameter"
+                            >
+                                What's the approximate diameter of the pipe?
+                            </label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="pipeDiameter"
+                                id="pipeDiameter"
+                            />
+                        </div>
+
+                        <p>
+                            What kinds of surfaces are on the adjacent shoreline (about 100 x 100 feet)? Estimate the percentage of each type of surface cover.
+
+                            <ul>
+                                <li>Impervious Surface (concrete/asphalt paths, roads, buildings, etc.)</li>
+
+                                <li>Pervious Surface (dirt, gravel, wood chips, etc.)</li>
+
+                                <li>Vegetated surface (grass, shrubs, trees, etc.)</li>
+                            </ul>
+                        </p>
+        </div>
+    </section>
+
+        <!-- ########################################################################################### -->
+    <!-- Step 3: Upload photos-->
+    <!--          -->
+    <!-- ########################################################################################### -->
+    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#enterBaselineData3">
+        <section class="container-fluid">
+            <div id="step1-header" class="blue">
+                <span class="fa-stack fa-3x">
+                    <i class="fa fa-circle-o fa-stack-2x"></i>
+                    <strong class="fa-stack-1x">3</strong>
+                </span>
+
+                <span>
+                    <strong>Upload and tag any photos you took.</strong>
+                    (Optional.) Click to open the photo uploader.
+                </span>
+            </div>
+        </section>
+    </section>
+
+    <section class="content collapse" id="enterBaselineData3">
+        <div class="form-group">
+            <label for="date">Baseline Photos</label>
+            <small class="form-text mb-3">
+                Upload a photo of your structure, the substrate shells, the site
+                and/or any other photos from your baseline that you'd like to share.
+            </small>
+            <div class="drop-area">
+                Drag files here or click to upload photos.
+            </div>
+            <!--
+            Photo types:
+                - Expedition Photo
+                - Oyster cage
+                - Substrate shell (front)
+                - Substrate shell (back)
+            -->
+        </div>
+    </section>
+</form>
