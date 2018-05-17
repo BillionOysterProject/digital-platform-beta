@@ -40,6 +40,18 @@ header:
       - id:    'other'
         label: 'Other'
 
+      structureStatuses:
+      - id:    'active'
+      - label: 'Active'
+      - id:    'inactive'
+      - label: 'Inactive'
+      - id:    'damaged-destroyed'
+      - label: 'Damaged/Destroyed'
+      - id:    'lost'
+      - label: 'Lost'
+      - id:    'retired'
+      - label: 'Retired'
+
       oysterSources:
       - id:    'muscongus'
         label: 'Muscongus Bay, Maine'

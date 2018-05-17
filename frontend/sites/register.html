@@ -1,5 +1,7 @@
 <h1>Register a Structure</h1>
+
 <form class="form mt-4">
+
 <!-- ########################################################################################### -->
     <!-- Step 1: Enter Structure Metadata-->
     <!--         Enter information (like structure type and site) about the structure. -->
@@ -11,10 +13,9 @@
                     <i class="fa fa-circle-o fa-stack-2x"></i>
                     <strong class="fa-stack-1x">1</strong>
                 </span>
-
                 <span>
                     <strong>Enter information about this structure</strong>.
-                    (Required) Click to enter metadata about your oyster research structure
+                    (Required) Click to enter data about your oyster research structure
                     like type and location.
                 </span>
             </div>
@@ -22,44 +23,42 @@
     </section>
 
     <section class="content collapse" id="enterBaselineData1">
-
-    <div class="col-sm-12">
-            <div class="form-group col-sm-6">
-                <label
-                    class="required"
-                    for="name"
-                >
-                    Structure Name
-                </label>
-                <input
-                    type="text"
-                    class="form-control"
-                    name="name"
-                    id="name"
-                />
-            </div>
+        <div class="form-group col-sm-6">
+            <label
+                class="required"
+                for="name"
+            >
+                Structure Name
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+            />
+        </div>
 
         <div class="col-sm-12">
-        <div class="form-group mt-4">
-            <label>Select a structure type</label>
-
-            {{ range $i, $structureType := $.page.structureTypes }}
-            <div class="custom-control custom-radio">
-                <input
-                    type="radio"
-                    id="structure{{ $i }}"
-                    class="custom-control-input"
-                >
-                <label class="custom-control-label w-100" for="structure{{ $i }}">
-                    {{ $structureType.label }}
+            <div class="form-group mt-4">
+                <label>
+                    Select a structure type
                 </label>
+                {{ range $i, $structureType := $.page.structureTypes }}
+                <div class="custom-control custom-radio">
+                    <input
+                        type="radio"
+                        id="structure{{ $i }}"
+                        class="custom-control-input"
+                    >
+                    <label class="custom-control-label w-100" for="structure{{ $i }}">
+                        {{ $structureType.label }}
+                    </label>
+                </div>
+                {{ end }}
             </div>
-            {{ end }}
-        </div>
         </div>
 
-<!--TODO: if user selects "oyster tank," create a new site using the org address-->
-
+        <!--TODO: if user selects "oyster tank," create a new site using the org address-->
         <div class="form-group col-sm-8">
             <label for="site">Site Name</label>
             <div class="input-group">
@@ -72,7 +71,6 @@
                 >
             </div>
         </div>
-
 
         <div class="form-group col-sm-4">
             <label
@@ -95,7 +93,7 @@
 
         </div>
 
-    </div>
+
     </section>
     <!-- ########################################################################################### -->
     <!-- Step 2: Enter baseline data-->
