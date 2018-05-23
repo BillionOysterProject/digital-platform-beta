@@ -173,86 +173,93 @@
                             total mass for each of the 10 substrate shells.
                         </p>
 
-                        <ul class="nav nav-tabs">
-                            {{ range $i, $shell := sequence 10 }}
-                            <li class="nav-item{{ if eq $shell 0}} active{{ end }}">
-                                <a class="nav-link" href="#">
-                                    Shell {{ add $shell 1 }}
-                                </a>
-                            </li>
-                            {{ end }}
-                        </ul>
-                        <br/>
-                        <div class="form-check form-check-inline">
-                            <input
-                                class="form-check-input"
-                                type="checkbox"
-                                id="inlineCheckbox1"
-                                value="option1">
-                            <label
-                                class="form-check-label"
-                                for="inlineCheckbox1"
-                            >
-                                Apply Set Date and Source to all 10 substrate shells
-                            </label>
-                        </div>
-                        <br/>
-                        <br/>
-                        <div class="form-group">
-                            <label for="setDate">Set Date</label>
-                            <input
-                                class="form-control col-4"
-                                type="datetime-local"
-                                name="monitoringSetDate"
-                                value="{{ now `ymd` }}"
-                                autofocus
-                            >
-                        </div>
-
-                        <div class="form-group mt-4">
-                            <label>Source</label>
-
-                            {{ range $i, $oysterSource := $.page.oysterSources }}
-                            <div class="custom-control custom-radio">
-                                <input
-                                    type="radio"
-                                    name="baselineOysterSource"
-                                    id="oysterSource{{ $i }}"
-                                    class="custom-control-input"
-                                >
-                                <label class="custom-control-label w-100" for="oysterSource{{ $i }}">
-                                    {{ $oysterSource.label }}
-                                </label>
+                        <div class="card text-left">
+                            <div class="card-header">
+                                <ul class="nav nav-tabs">
+                                    {{ range $i, $shell := sequence 10 }}
+                                    <li class="nav-item{{ if eq $shell 0}} active{{ end }}">
+                                        <a class="nav-link" href="#">
+                                            Shell {{ add $shell 1 }}
+                                        </a>
+                                    </li>
+                                    {{ end }}
+                                </ul>
                             </div>
-                            {{ end }}
-                        </div>
-                        <div class="form-group col-sm-4">
-                            <label
-                                class="required"
-                                for="numberOfOysters"
-                            >
-                                Total number of live oysters on shell at baseline
-                            </label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="numberOfOysters"
-                                id="numberOfOysters"
-                            />
-                        </div>
-                        <div class="form-group col-sm-4">
-                            <label
-                                class="required"
-                                for="massOfOysters"
-                            >
-                                Total mass of substrate shell at baseline (grams)
-                            </label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="massOfOysters"
-                                id="massOfOysters"
-                            />
+
+                            <div class="card-body">
+                                <br/>
+                                <div class="form-check form-check-inline">
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        id="inlineCheckbox1"
+                                        value="option1">
+                                    <label
+                                        class="form-check-label"
+                                        for="inlineCheckbox1"
+                                    >
+                                        Apply Set Date and Source to all 10 substrate shells
+                                    </label>
+                                </div>
+                                <br/>
+                                <br/>
+                                <div class="form-group">
+                                    <label for="setDate">Set Date</label>
+                                    <input
+                                        class="form-control col-4"
+                                        type="datetime-local"
+                                        name="monitoringSetDate"
+                                        value="{{ now `ymd` }}"
+                                        autofocus
+                                    >
+                                </div>
+
+                                <div class="form-group mt-4">
+                                    <label>Source</label>
+
+                                    {{ range $i, $oysterSource := $.page.oysterSources }}
+                                    <div class="custom-control custom-radio">
+                                        <input
+                                            type="radio"
+                                            name="baselineOysterSource"
+                                            id="oysterSource{{ $i }}"
+                                            class="custom-control-input"
+                                        >
+                                        <label class="custom-control-label w-100" for="oysterSource{{ $i }}">
+                                            {{ $oysterSource.label }}
+                                        </label>
+                                    </div>
+                                    {{ end }}
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label
+                                        class="required"
+                                        for="numberOfOysters"
+                                    >
+                                        Total number of live oysters on shell at baseline
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="numberOfOysters"
+                                        id="numberOfOysters"
+                                    />
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label
+                                        class="required"
+                                        for="massOfOysters"
+                                    >
+                                        Total mass of substrate shell at baseline (grams)
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="massOfOysters"
+                                        id="massOfOysters"
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -319,7 +326,7 @@
                                     id="yesPipes"
                                     class="custom-control-input"
                                 >
-                                <label class="custom-control-label w-100" for="ba1">
+                                <label class="custom-control-label w-100" for="yesPipes">
                                     Yes
                                 </label>
                             </div>
@@ -330,7 +337,7 @@
                                     class="custom-control-input"
                                     id="noPipes"
                                 >
-                                <label class="custom-control-label w-100" for="ba2">
+                                <label class="custom-control-label w-100" for="noPipes">
                                     No
                                 </label>
                             </div>
@@ -344,13 +351,55 @@
                                 What's the approximate diameter of the pipe (cm)?
                             </label>
                             <input
-                                type="text"
-                                class="form-control col-sm-8"
+                                type="number"
+                                min="0"
+                                class="form-control col-xl-4"
                                 name="pipeDiameter"
                                 id="pipeDiameter"
                             />
                         </div>
 
+                        <div class="form-group">
+                            <label
+                                class="required"
+                                for="surfacePercent"
+                            >
+                                What kinds of surfaces are on the adjacent shoreline (about 100 x 100 feet)?
+                                Estimate the percentage of each type of surface cover.
+                            </label>
+                        </div>
+
+                        <div class="input-group col-xl-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="min-width:11em; text-align:center">Impervious Surface</span>
+                            </div>
+                            <input type="number" class="form-control" aria-label="Impervious Surface" min="0" max="100" step="1">
+                            <div class="input-group-append">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group col-xl-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="min-width:11em; text-align:center">Pervious Surface</span>
+                            </div>
+                            <input type="number" class="form-control" aria-label="Pervious Surface" min="0" max="100" step="1">
+                            <div class="input-group-append">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group col-xl-4 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="min-width:11em; text-align:center">Vegetated Surface</span>
+                            </div>
+                            <input type="number" class="form-control" aria-label="Vegetated Surface" min="0" max="100" step="1">
+                            <div class="input-group-append">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+
+                        <!--TODO: Add hover/tooltip with explanations below of "impervious," "pervious," "vegetated"
                         <p>
                             What kinds of surfaces are on the adjacent shoreline (about 100 x 100 feet)? Estimate the percentage of each type of surface cover.
 
@@ -362,6 +411,7 @@
                                 <li>Vegetated surface (grass, shrubs, trees, etc.)</li>
                             </ul>
                         </p>
+                        -->
                     </div>
                 </div>
             </div>
