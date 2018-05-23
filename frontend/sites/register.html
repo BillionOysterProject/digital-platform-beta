@@ -36,6 +36,9 @@
                 name="name"
                 id="name"
             />
+            <small class="form-text mb-3">
+                Give your structure a unique name that you'll remember easily.
+            </small>
         </div>
 
         <div class="col-sm-12">
@@ -70,31 +73,63 @@
                     data-typeahead-field="name"
                 >
             </div>
+            <small class="form-text mb-3">
+                Start typing your site's name in the field above to pull up your site.
+            </small>
         </div>
 
-        <div class="form-group col-sm-4">
+        <div class="col-sm-12">
+            <div class="form-group mt-4">
+                <label>
+                    Status
+                </label>
+                {{ range $i, $structureStatus := $.page.structureStatuses }}
+                <div class="custom-control custom-radio">
+                    <input
+                        type="radio"
+                        id="structureStatus{{ $i }}"
+                        class="custom-control-input"
+                    >
+                    <label class="custom-control-label w-100" for="structureStatus{{ $i }}">
+                        {{ $structureStatus.label }}
+                    </label>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="form-group col-sm-6">
             <label
                 class="required"
-                for="status"
+                for="tagNumber"
             >
-                Status
+                Tag Number
             </label>
-
+            <input
+                type="text"
+                class="form-control"
+                name="tagNumber"
+                id="tagNumber"
+            />
+            <small class="form-text mb-3">
+                For Oyster Research Stations, BOP should have given you a tag with a number to attach to your ORS.
+                Contact bop.digital.platform@nyharbor.org if you did not receive a tag for your ORS.
+            </small>
         </div>
-
-        <div class="form-group col-sm-2">
-            <label for="tagNumber">Tag #</label>
-
-        </div>
-
 
         <div class="form-group col-sm-8">
-            <label>Notes</label>
-
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea
+                    class="form-control"
+                    id="notes"
+                    rows="5"
+                >
+                </textarea>
+            </div>
         </div>
-
-
     </section>
+
     <!-- ########################################################################################### -->
     <!-- Step 2: Enter baseline data-->
     <!--          -->
@@ -116,11 +151,26 @@
     </section>
 
     <section class="content collapse" id="enterBaselineData2">
-        <div class="col-sm-12">
-                        <h3>Oyster baselines</h3>
+        <div id="accordion">
+            <div class="card border-0">
+                <div class="card-header" id="addOysterBaselines">
+                    <section class="shaded" data-toggle="collapse" data-target="#oysterBaselines">
+                        <section class="container-fluid">
+                            <div id="step1-header" class="blue">
+                                <i class="fa fa-anchor fa-2x"></i>
+                                <strong>Oyster Baselines</strong>:
+                                Click to fill this section out when you first get a batch of oysters.
+                                You won't need to fill this out again unless you get new oysters.
+                            </div>
+                        </section>
+                    </section>
+                </div>
+
+                <div id="oysterBaselines" class="collapse" aria-labelledby="addOysterBaselines" data-parent="#accordion">
+                    <div class="card-body">
                         <p>
-                            Fill this section out when you first get a batch of oysters.  You won't
-                            need to fill out this section again unless you get new oysters.
+                            Click on the tabs below to enter the set date, source, # of live oysters, and
+                            total mass for each of the 10 substrate shells.
                         </p>
 
                         <ul class="nav nav-tabs">
@@ -204,18 +254,33 @@
                                 id="massOfOysters"
                             />
                         </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="card border-0">
+                <div class="card-header" id="addSiteBaselines">
+                    <section class="shaded" data-toggle="collapse" data-target="#siteBaselines">
+                        <section class="container-fluid">
+                            <div id="step1-header" class="blue">
+                                <i class="fa fa-anchor fa-2x"></i>
+                                <strong>Site Baselines</strong>:
+                                Click to fill this section out when you first visit your site.
+                                You won't need to fill it out again unless you move to a new site (or there are big
+                                changes like construction at your site).
+                            </div>
+                        </section>
+                    </section>
+                </div>
 
-                        <hr/>
-                        <h3>Site baselines</h3>
-                        <p>
-                            Fill this section out when you first visit your site.  You won't need to
-                            fill it out again unless you move to a new site (or there are big
-                            changes like construction at your site).
-                        </p>
-
+                <div id="siteBaselines" class="collapse" aria-labelledby="addSiteBaselines" data-parent="#accordion">
+                    <div class="card-body">
                         <div class="form-group mt-4">
-                        <label for="CSO">Are there any marked Combined Sewer Overflow (CSO) pipes?</label>
+                            <label
+                                for="CSO"
+                            >
+                                Are there any marked Combined Sewer Overflow (CSO) pipes?
+                            </label>
 
                             <div class="custom-control custom-radio">
                                 <input
@@ -224,7 +289,10 @@
                                     id="yesCSO"
                                     class="custom-control-input"
                                 >
-                                <label class="custom-control-label w-100" for="yesCSO">
+                                <label
+                                    class="custom-control-label w-100"
+                                    for="yesCSO"
+                                >
                                     Yes
                                 </label>
                             </div>
@@ -243,8 +311,7 @@
                         </div>
 
                         <div class="form-group mt-4">
-                        <label for="otherPipes">Are there any unmarked or other outfall pipes?</label>
-
+                            <label for="otherPipes">Are there any unmarked or other outfall pipes?</label>
                             <div class="custom-control custom-radio">
                                 <input
                                     type="radio"
@@ -256,7 +323,6 @@
                                     Yes
                                 </label>
                             </div>
-
                             <div class="custom-control custom-radio">
                                 <input
                                     type="radio"
@@ -270,7 +336,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-sm-6">
+                        <div class="form-group">
                             <label
                                 class="required"
                                 for="pipeDiameter"
@@ -279,7 +345,7 @@
                             </label>
                             <input
                                 type="text"
-                                class="form-control"
+                                class="form-control col-sm-8"
                                 name="pipeDiameter"
                                 id="pipeDiameter"
                             />
@@ -296,6 +362,9 @@
                                 <li>Vegetated surface (grass, shrubs, trees, etc.)</li>
                             </ul>
                         </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 

@@ -42,15 +42,15 @@ header:
 
       structureStatuses:
       - id:    'active'
-      - label: 'Active'
+        label: 'Active'
       - id:    'inactive'
-      - label: 'Inactive'
+        label: 'Inactive'
       - id:    'damaged-destroyed'
-      - label: 'Damaged/Destroyed'
+        label: 'Damaged/Destroyed'
       - id:    'lost'
-      - label: 'Lost'
+        label: 'Lost'
       - id:    'retired'
-      - label: 'Retired'
+        label: 'Retired'
 
       oysterSources:
       - id:    'muscongus'
