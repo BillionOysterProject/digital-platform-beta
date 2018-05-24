@@ -36,6 +36,9 @@
         <div class="form-group">
             <label for="name">Expedition Name</label>
             <input class="form-control" type="text" name="name">
+            <small class="form-text mb-3">
+                Give your expedition a unique name.
+            </small>
         </div>
 
         <!--
@@ -97,7 +100,7 @@
                 >
 
                 <small class="form-text mb-3">
-                    Don't see your structure? You can add one on our <a class="font-weight-bold" href="#">Register a Structure</a> page.
+                    Start typing your structure's name in the field above, then select it from the dropdown list.  Don't see your structure? You can add one on our <a class="font-weight-bold" href="#">Register a Structure</a> page.
                 </small>
             </div>
         </div>
@@ -113,6 +116,9 @@
                     data-typeahead-url="/api/sites?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
                     data-typeahead-field="name"
                 >
+                <small class="form-text mb-3">
+                    Start typing your site's name in the field above, then select it from the dropdown list.
+                </small>
             </div>
         </div>
 
@@ -126,6 +132,9 @@
                     data-typeahead-url="/api/teams?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
                     data-typeahead-field="name"
                 >
+                <small class="form-text mb-3">
+                    Start typing your team's name in the field above, then select it from the dropdown list.
+                </small>
             </div>
         </div>
 
@@ -134,11 +143,11 @@
 
         <div class="form-group">
             <label for="name">Number of adults</label>
-            <input class="form-control col-2" type="text" name="numberAdults">
+            <input class="form-control col-2" type="number" min="0" name="numberAdults">
         </div>
         <div class="form-group">
             <label for="name">Number of students</label>
-            <input class="form-control col-2" type="text" name="numberStudents">
+            <input class="form-control col-2" type="number" min="0" name="numberStudents">
         </div>
     </section>
 
