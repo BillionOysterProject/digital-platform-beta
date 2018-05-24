@@ -1,5 +1,7 @@
 <h1>Register a Structure</h1>
+
 <form class="form mt-4">
+
 <!-- ########################################################################################### -->
     <!-- Step 1: Enter Structure Metadata-->
     <!--         Enter information (like structure type and site) about the structure. -->
@@ -11,10 +13,9 @@
                     <i class="fa fa-circle-o fa-stack-2x"></i>
                     <strong class="fa-stack-1x">1</strong>
                 </span>
-
                 <span>
                     <strong>Enter information about this structure</strong>.
-                    (Required) Click to enter metadata about your oyster research structure
+                    (Required) Click to enter data about your oyster research structure
                     like type and location.
                 </span>
             </div>
@@ -22,44 +23,45 @@
     </section>
 
     <section class="content collapse" id="enterBaselineData1">
-
-    <div class="col-sm-12">
-            <div class="form-group col-sm-6">
-                <label
-                    class="required"
-                    for="name"
-                >
-                    Structure Name
-                </label>
-                <input
-                    type="text"
-                    class="form-control"
-                    name="name"
-                    id="name"
-                />
-            </div>
+        <div class="form-group col-sm-6">
+            <label
+                class="required"
+                for="name"
+            >
+                Structure Name
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+            />
+            <small class="form-text mb-3">
+                Give your structure a unique name that you'll remember easily.
+            </small>
+        </div>
 
         <div class="col-sm-12">
-        <div class="form-group mt-4">
-            <label>Select a structure type</label>
-
-            {{ range $i, $structureType := $.page.structureTypes }}
-            <div class="custom-control custom-radio">
-                <input
-                    type="radio"
-                    id="structure{{ $i }}"
-                    class="custom-control-input"
-                >
-                <label class="custom-control-label w-100" for="structure{{ $i }}">
-                    {{ $structureType.label }}
+            <div class="form-group mt-4">
+                <label>
+                    Select a structure type
                 </label>
+                {{ range $i, $structureType := $.page.structureTypes }}
+                <div class="custom-control custom-radio">
+                    <input
+                        type="radio"
+                        id="structure{{ $i }}"
+                        class="custom-control-input"
+                    >
+                    <label class="custom-control-label w-100" for="structure{{ $i }}">
+                        {{ $structureType.label }}
+                    </label>
+                </div>
+                {{ end }}
             </div>
-            {{ end }}
-        </div>
         </div>
 
-<!--TODO: if user selects "oyster tank," create a new site using the org address-->
-
+        <!--TODO: if user selects "oyster tank," create a new site using the org address-->
         <div class="form-group col-sm-8">
             <label for="site">Site Name</label>
             <div class="input-group">
@@ -71,32 +73,63 @@
                     data-typeahead-field="name"
                 >
             </div>
+            <small class="form-text mb-3">
+                Start typing your site's name in the field above to pull up your site.
+            </small>
         </div>
 
+        <div class="col-sm-12">
+            <div class="form-group mt-4">
+                <label>
+                    Status
+                </label>
+                {{ range $i, $structureStatus := $.page.structureStatuses }}
+                <div class="custom-control custom-radio">
+                    <input
+                        type="radio"
+                        id="structureStatus{{ $i }}"
+                        class="custom-control-input"
+                    >
+                    <label class="custom-control-label w-100" for="structureStatus{{ $i }}">
+                        {{ $structureStatus.label }}
+                    </label>
+                </div>
+                {{ end }}
+            </div>
+        </div>
 
-        <div class="form-group col-sm-4">
+        <div class="form-group col-sm-6">
             <label
                 class="required"
-                for="status"
+                for="tagNumber"
             >
-                Status
+                Tag Number
             </label>
-
+            <input
+                type="text"
+                class="form-control"
+                name="tagNumber"
+                id="tagNumber"
+            />
+            <small class="form-text mb-3">
+                For Oyster Research Stations, BOP should have given you a tag with a number to attach to your ORS.
+                Contact bop.digital.platform@nyharbor.org if you did not receive a tag for your ORS.
+            </small>
         </div>
-
-        <div class="form-group col-sm-2">
-            <label for="tagNumber">Tag #</label>
-
-        </div>
-
 
         <div class="form-group col-sm-8">
-            <label>Notes</label>
-
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea
+                    class="form-control"
+                    id="notes"
+                    rows="5"
+                >
+                </textarea>
+            </div>
         </div>
-
-    </div>
     </section>
+
     <!-- ########################################################################################### -->
     <!-- Step 2: Enter baseline data-->
     <!--          -->
@@ -118,106 +151,153 @@
     </section>
 
     <section class="content collapse" id="enterBaselineData2">
-        <div class="col-sm-12">
-                        <h3>Oyster baselines</h3>
-                        <p>
-                            Fill this section out when you first get a batch of oysters.  You won't
-                            need to fill out this section again unless you get new oysters.
-                        </p>
-
-                        <ul class="nav nav-tabs">
-                            {{ range $i, $shell := sequence 10 }}
-                            <li class="nav-item{{ if eq $shell 0}} active{{ end }}">
-                                <a class="nav-link" href="#">
-                                    Shell {{ add $shell 1 }}
-                                </a>
-                            </li>
-                            {{ end }}
-                        </ul>
-                        <br/>
-                        <div class="form-check form-check-inline">
-                            <input
-                                class="form-check-input"
-                                type="checkbox"
-                                id="inlineCheckbox1"
-                                value="option1">
-                            <label
-                                class="form-check-label"
-                                for="inlineCheckbox1"
-                            >
-                                Apply Set Date and Source to all 10 substrate shells
-                            </label>
-                        </div>
-                        <br/>
-                        <br/>
-                        <div class="form-group">
-                            <label for="setDate">Set Date</label>
-                            <input
-                                class="form-control col-4"
-                                type="datetime-local"
-                                name="monitoringSetDate"
-                                value="{{ now `ymd` }}"
-                                autofocus
-                            >
-                        </div>
-
-                        <div class="form-group mt-4">
-                            <label>Source</label>
-
-                            {{ range $i, $oysterSource := $.page.oysterSources }}
-                            <div class="custom-control custom-radio">
-                                <input
-                                    type="radio"
-                                    name="baselineOysterSource"
-                                    id="oysterSource{{ $i }}"
-                                    class="custom-control-input"
-                                >
-                                <label class="custom-control-label w-100" for="oysterSource{{ $i }}">
-                                    {{ $oysterSource.label }}
-                                </label>
+        <div id="accordion">
+            <div class="card border-0">
+                <div class="card-header" id="addOysterBaselines">
+                    <section class="shaded" data-toggle="collapse" data-target="#oysterBaselines">
+                        <section class="container-fluid">
+                            <div id="step1-header" class="blue">
+                                <i class="fa fa-anchor fa-2x"></i>
+                                <strong>Oyster Baselines</strong>:
+                                Click to fill this section out when you first get a batch of oysters.
+                                You won't need to fill this out again unless you get new oysters.
                             </div>
-                            {{ end }}
-                        </div>
-                        <div class="form-group col-sm-4">
-                            <label
-                                class="required"
-                                for="numberOfOysters"
-                            >
-                                Total number of live oysters on shell at baseline
-                            </label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="numberOfOysters"
-                                id="numberOfOysters"
-                            />
-                        </div>
-                        <div class="form-group col-sm-4">
-                            <label
-                                class="required"
-                                for="massOfOysters"
-                            >
-                                Total mass of substrate shell at baseline (grams)
-                            </label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="massOfOysters"
-                                id="massOfOysters"
-                            />
-                        </div>
+                        </section>
+                    </section>
+                </div>
 
-
-                        <hr/>
-                        <h3>Site baselines</h3>
+                <div id="oysterBaselines" class="collapse" aria-labelledby="addOysterBaselines" data-parent="#accordion">
+                    <div class="card-body">
                         <p>
-                            Fill this section out when you first visit your site.  You won't need to
-                            fill it out again unless you move to a new site (or there are big
-                            changes like construction at your site).
+                            Click on the tabs below to enter the set date, source, # of live oysters, and
+                            total mass for each of the 10 substrate shells.
                         </p>
 
+                        <div class="card text-left">
+                            <div class="card-header">
+                                <ul class="nav nav-tabs card-header-tabs" id="baselineSubstrates">
+                                    {{ range $i, $shell := sequence 10 }}
+                                    <li class="nav-item">
+                                        <a class="nav-link{{ if eq $shell 0}} active{{ end }}" onclick="
+                                            $('#baselineSubstrates .nav-link').removeClass('active');
+                                            $(this).addClass('active')
+                                            return false;
+                                        ">
+                                            Shell {{ add $shell 1 }}
+                                        </a>
+                                    </li>
+                                    {{ end }}
+                                </ul>
+                            </div>
+
+                            <div class="card-body">
+                                <br/>
+                                <div class="form-check form-check-inline">
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        id="inlineCheckbox1"
+                                        value="option1">
+                                    <label
+                                        class="form-check-label"
+                                        for="inlineCheckbox1"
+                                    >
+                                        Apply Set Date and Source to all 10 substrate shells
+                                    </label>
+                                </div>
+                                <br/>
+                                <br/>
+                                <div class="form-group">
+                                    <label for="setDate">Set Date</label>
+                                    <input
+                                        class="form-control col-4"
+                                        type="datetime-local"
+                                        name="monitoringSetDate"
+                                        value="{{ now `ymd` }}"
+                                        autofocus
+                                    >
+                                </div>
+
+                                <div class="form-group mt-4">
+                                    <label>Source</label>
+
+                                    {{ range $i, $oysterSource := $.page.oysterSources }}
+                                    <div class="custom-control custom-radio">
+                                        <input
+                                            type="radio"
+                                            name="baselineOysterSource"
+                                            id="oysterSource{{ $i }}"
+                                            class="custom-control-input"
+                                        >
+                                        <label class="custom-control-label w-100" for="oysterSource{{ $i }}">
+                                            {{ $oysterSource.label }}
+                                        </label>
+                                    </div>
+                                    {{ end }}
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xl-4">
+                                        <label
+                                            class="required"
+                                            for="numberOfOysters"
+                                        >
+                                            Total number of live oysters on shell at baseline
+                                        </label>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            class="form-control"
+                                            name="numberOfOysters"
+                                            id="numberOfOysters"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xl-4">
+                                        <label
+                                            class="required"
+                                            for="massOfOysters"
+                                        >
+                                            Total mass of substrate shell at baseline (g)
+                                        </label>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            class="form-control"
+                                            name="massOfOysters"
+                                            id="massOfOysters"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0">
+                <div class="card-header" id="addSiteBaselines">
+                    <section class="shaded" data-toggle="collapse" data-target="#siteBaselines">
+                        <section class="container-fluid">
+                            <div id="step1-header" class="blue">
+                                <i class="fa fa-anchor fa-2x"></i>
+                                <strong>Site Baselines</strong>:
+                                Click to fill this section out when you first visit your site.
+                                You won't need to fill it out again unless you move to a new site (or there are big
+                                changes like construction at your site).
+                            </div>
+                        </section>
+                    </section>
+                </div>
+
+                <div id="siteBaselines" class="collapse" aria-labelledby="addSiteBaselines" data-parent="#accordion">
+                    <div class="card-body">
                         <div class="form-group mt-4">
-                        <label for="CSO">Are there any marked Combined Sewer Overflow (CSO) pipes?</label>
+                            <label
+                                for="CSO"
+                            >
+                                Are there any marked Combined Sewer Overflow (CSO) pipes?
+                            </label>
 
                             <div class="custom-control custom-radio">
                                 <input
@@ -226,7 +306,10 @@
                                     id="yesCSO"
                                     class="custom-control-input"
                                 >
-                                <label class="custom-control-label w-100" for="yesCSO">
+                                <label
+                                    class="custom-control-label w-100"
+                                    for="yesCSO"
+                                >
                                     Yes
                                 </label>
                             </div>
@@ -245,8 +328,7 @@
                         </div>
 
                         <div class="form-group mt-4">
-                        <label for="otherPipes">Are there any unmarked or other outfall pipes?</label>
-
+                            <label for="otherPipes">Are there any unmarked or other outfall pipes?</label>
                             <div class="custom-control custom-radio">
                                 <input
                                     type="radio"
@@ -254,11 +336,10 @@
                                     id="yesPipes"
                                     class="custom-control-input"
                                 >
-                                <label class="custom-control-label w-100" for="ba1">
+                                <label class="custom-control-label w-100" for="yesPipes">
                                     Yes
                                 </label>
                             </div>
-
                             <div class="custom-control custom-radio">
                                 <input
                                     type="radio"
@@ -266,13 +347,13 @@
                                     class="custom-control-input"
                                     id="noPipes"
                                 >
-                                <label class="custom-control-label w-100" for="ba2">
+                                <label class="custom-control-label w-100" for="noPipes">
                                     No
                                 </label>
                             </div>
                         </div>
 
-                        <div class="form-group col-sm-6">
+                        <div class="form-group">
                             <label
                                 class="required"
                                 for="pipeDiameter"
@@ -280,13 +361,55 @@
                                 What's the approximate diameter of the pipe (cm)?
                             </label>
                             <input
-                                type="text"
-                                class="form-control"
+                                type="number"
+                                min="0"
+                                class="form-control col-xl-4"
                                 name="pipeDiameter"
                                 id="pipeDiameter"
                             />
                         </div>
 
+                        <div class="form-group">
+                            <label
+                                class="required"
+                                for="surfacePercent"
+                            >
+                                What kinds of surfaces are on the adjacent shoreline (about 100 x 100 feet)?
+                                Estimate the percentage of each type of surface cover.
+                            </label>
+                        </div>
+
+                        <div class="input-group col-xl-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="min-width:11em; text-align:center">Impervious Surface</span>
+                            </div>
+                            <input type="number" class="form-control" aria-label="Impervious Surface" min="0" max="100" step="1">
+                            <div class="input-group-append">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group col-xl-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="min-width:11em; text-align:center">Pervious Surface</span>
+                            </div>
+                            <input type="number" class="form-control" aria-label="Pervious Surface" min="0" max="100" step="1">
+                            <div class="input-group-append">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group col-xl-4 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="min-width:11em; text-align:center">Vegetated Surface</span>
+                            </div>
+                            <input type="number" class="form-control" aria-label="Vegetated Surface" min="0" max="100" step="1">
+                            <div class="input-group-append">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+
+                        <!--TODO: Add hover/tooltip with explanations below of "impervious," "pervious," "vegetated"
                         <p>
                             What kinds of surfaces are on the adjacent shoreline (about 100 x 100 feet)? Estimate the percentage of each type of surface cover.
 
@@ -298,6 +421,10 @@
                                 <li>Vegetated surface (grass, shrubs, trees, etc.)</li>
                             </ul>
                         </p>
+                        -->
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 

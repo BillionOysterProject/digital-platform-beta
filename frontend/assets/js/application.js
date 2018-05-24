@@ -18,6 +18,7 @@ $(function(){
                 this.setupAjaxIntercept();
                 this.setupFormIntercept();
                 this.setupTypeaheadHandlers();
+                this.updateActiveMenuItem();
             },
 
             setupAjaxIntercept: function() {
@@ -216,6 +217,22 @@ $(function(){
                         map.getCanvas().style.cursor = 'default';
                     }
                 };
+            },
+
+            updateActiveMenuItem: function() {
+                var pathComponents = window.location.pathname.split('/');
+
+                $("[data-menu-triggers] .dropdown-menu").removeClass('show');
+                $("[data-menu-triggers]").removeClass('show');
+
+                console.debug(pathComponents);
+
+                if (pathComponents.length > 1) {
+                    var expandSelector = "[data-menu-triggers~='" + pathComponents[1] + "']";
+
+                    $(expandSelector + ' .dropdown-menu').addClass('show');
+                    $(expandSelector).addClass('show');
+                }
             },
         });
 
