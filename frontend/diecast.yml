@@ -70,6 +70,24 @@ header:
       - id:    'other'
         label: 'Other'
 
+      weatherConditions:
+      - id:    'sunny'
+        label: 'Sunny'
+      - id:    'partly-cloudy'
+        label: 'Partly Cloudy'
+      - id:    'cloudy'
+        label: 'Cloudy'
+      - id:    'rain'
+        label: 'Rain'
+      - id:    'fog'
+        label: 'Fog'
+      - id:    'snow'
+        label: 'Snow'
+      - id:    'hail'
+        label: 'Hail'
+      - id:    'thunderstorm'
+        label: 'Thunderstorm'
+
       protocols:
       - name: 'Protocol 1: Site Conditions'
         color: '#E6B00D'

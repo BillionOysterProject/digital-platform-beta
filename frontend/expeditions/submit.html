@@ -15,8 +15,8 @@
                 </span>
 
                 <span>
-                    <strong>Tell us about your expedition</strong>.
-                    (Required) Click to enter metadata about your expedition like time and location.
+                    <strong>Enter information about your expedition</strong>.
+                    (Required) Click to enter your expedition's name, date, location, and participants.
                 </span>
             </div>
         </section>
@@ -24,7 +24,14 @@
 
     <section class="content collapse" id="enterdata1">
         <div class="form-group">
-            <label for="monitoringStartDate">Expedition Date</label>
+            <label for="name">Expedition Name</label>
+            <input class="form-control" type="text" name="name">
+            <small class="form-text mb-3">
+                Give your expedition a unique name.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="monitoringStartDate">Expedition Date and Time</label>
             <input
                 class="form-control col-4"
                 type="datetime-local"
@@ -33,13 +40,7 @@
                 autofocus
             >
         </div>
-        <div class="form-group">
-            <label for="name">Expedition Name</label>
-            <input class="form-control" type="text" name="name">
-            <small class="form-text mb-3">
-                Give your expedition a unique name.
-            </small>
-        </div>
+
 
         <!--
             This next section is about selecting structures (like an ORS, Community Reef, or Oyster Tank).
@@ -315,7 +316,7 @@
                         <section class="container-fluid">
                             <div id="step1-header" class="blue">
                                 <i class="fa fa-anchor fa-2x"></i>
-                                <strong>Add Oyster Measurement data</strong>
+                                <strong>Add Oyster Measurement data (Protocol # )</strong>
                             </div>
                         </section>
                     </section>
@@ -443,16 +444,37 @@
                         <section class="container-fluid">
                             <div id="step2-header" class="blue">
                                 <i class="fa fa-building fa-2x"></i>
-                                <strong>Add Site Conditions data</strong>
+                                <strong>Add Site Conditions data (Protocol # )</strong>
                             </div>
                         </section>
                     </section>
                 </div>
                 <div id="siteConditions" class="collapse" aria-labelledby="addSiteConditions" data-parent="#accordion">
                     <div class="card-body">
-                        <h3>Site Conditions</h3>
-                        <p>Has it rained in the last 72 hours?
-                        </p>
+                        <h3>Meteorological Conditions
+                        </h3>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="weatherConditions">Weather Conditions</label>
+                                    <br/>
+                                    <div class="btn-group btn-group-toggle">
+                                        {{ range $i, $weatherCondition := $.page.weatherConditions }}
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="weatherConditions"
+                                            >
+                                            {{ $weatherCondition.label }}
+                                        </label>
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -465,7 +487,7 @@
                         <section class="container-fluid">
                             <div id="step2-header" class="blue">
                                 <i class="fa fa-bug fa-2x"></i>
-                                <strong>Add Mobile Organisms data</strong>
+                                <strong>Add Mobile Organisms data (Protocol # )</strong>
                             </div>
                         </section>
                     </section>
@@ -487,7 +509,7 @@
                         <section class="container-fluid">
                             <div id="step2-header" class="blue">
                                 <i class="fa fa-th fa-2x"></i>
-                                <strong>Add Sessile Organisms data</strong>
+                                <strong>Add Sessile Organisms data (Protocol # )</strong>
                             </div>
                         </section>
                     </section>
@@ -509,7 +531,7 @@
                         <section class="container-fluid">
                             <div id="step2-header" class="blue">
                                 <i class="fa fa-flask fa-2x"></i>
-                                <strong>Add Water Quality data</strong>
+                                <strong>Add Water Quality data (Protocol # )</strong>
                             </div>
                         </section>
                     </section>
