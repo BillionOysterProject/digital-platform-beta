@@ -120,6 +120,16 @@ header:
       - id:    'dark-brown'
         label: 'Dark Brown'
 
+      pipeFlows:
+      - id:    'trickle'
+        label: 'Trickle'
+      - id:    'light-stream'
+        label: 'Light Stream'
+      - id:    'steady-stream'
+        label: 'Steady Stream'
+      - id:    'full-flow'
+        label: 'Full Flow'
+
       protocols:
       - name: 'Protocol 1: Site Conditions'
         color: '#E6B00D'

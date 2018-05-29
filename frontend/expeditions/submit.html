@@ -722,6 +722,60 @@
                             </div>
                         </div>
 
+                        <p>placeholder for water garbage</p>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="CSOPipeFlow">
+                                        Is there any flow through the Combined Sewer Overflow (CSO) pipes?
+                                    </label>
+                                    <br/>
+                                    <div class="btn-group btn-group-toggle">
+                                        {{ range $i, $pipeFlow := $.page.pipeFlows }}
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="CSOPipeFlow"
+                                            >
+                                            {{ $pipeFlow.label }}
+                                        </label>
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="otherPipeFlow">
+                                        Is there any flow through the unmarked or other outfall pipes?
+                                    </label>
+                                    <br/>
+                                    <div class="btn-group btn-group-toggle">
+                                        {{ range $i, $pipeFlow := $.page.pipeFlows }}
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="otherPipeFlow"
+                                            >
+                                            {{ $pipeFlow.label }}
+                                        </label>
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr/>
+                        <h3>Land Conditions</h3>
+                        <p>placeholder for land garbage</p>
+
 
 
 
