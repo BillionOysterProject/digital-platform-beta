@@ -36,7 +36,7 @@ body {
 }
 
 body > header {
-{{ if (contains $.request.url.host `bop.nyc`) }}
+{{ if (contains $.request.host `bop.nyc`) }}
     background:      #2C3C56;
 {{ else }}
     background:      #70140e;
