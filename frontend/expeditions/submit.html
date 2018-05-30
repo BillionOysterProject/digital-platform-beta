@@ -1,3 +1,12 @@
+---
+bindings:
+-   name:     'mobileOrganisms'
+    resource: '/api/mobile-organisms/'
+    params:
+        sort: commonName
+
+---
+
 <h1>Enter Data</h1>
 
 
@@ -337,7 +346,7 @@
                         </p>
 
                         <div class="row">
-                            <div id="dataEntry" class="w-100"></div>
+                            <div id="oysterMeasurementsTable" class="w-100"></div>
                         </div>
 
                         <div class="alert alert-info form-text mt-4" role="alert">
@@ -798,11 +807,10 @@
                 </div>
                 <div id="mobileOrganisms" class="collapse" aria-labelledby="addMobileOrganisms" data-parent="#accordion">
                     <div class="card-body">
-                        <h3>Mobile Organisms</h3>
-                        <p>What mobile organisms have you found?
+                        <p>Enter in the number of each type of organism you found in the table below.
                         </p>
                         <div class="row">
-                            <div id="dataEntry" class="w-100"></div>
+                            <div id="mobileOrganismsTable" class="w-100"></div>
                         </div>
                     </div>
                 </div>
@@ -963,8 +971,12 @@
             return (v > 0) && (v < 250);
         }));
 
-        var el = document.querySelector('#dataEntry');
-        var table = new Handsontable(el, {
+        Handsontable.validators.registerValidator('valid-species-count', validatePositive(function(v) {
+            return (v >= 0);
+        }));
+
+
+        var oysterMeasurementsTable = new Handsontable(document.querySelector('#oysterMeasurementsTable'), {
             stretchH:          'all',
             autoWrapRow:       true,
             minSpareRows:       5,
@@ -994,6 +1006,44 @@
                 'Substrate Shell No.',
                 'Oyster Length (mm)',
             ],
+        });
+
+        var mobileOrganismsTable = new Handsontable(document.querySelector('#mobileOrganismsTable'), {
+            stretchH:          'all',
+            autoWrapRow:       true,
+            startRows:          5,
+            maxRows:            100,
+            manualRowResize:    true,
+            manualColumnResize: true,
+            contextMenu:        true,
+            rowHeaders:         true,
+            preventOverflow:    'horizontal',
+            columns: [{
+                data:      'commonName',
+                editor:    false,
+                width:     25,
+            },
+            {
+                data:      'latinName',
+                editor:    false,
+                width:     25
+            },
+            {
+                data:      'countOfSpecies',
+                type:      'numeric',
+                validator: 'valid-species-count',
+                width:     25,
+                numericFormat: {
+                    pattern: '0',
+                    culture: 'en-US',
+                },
+            }],
+            colHeaders: [
+                'Species Name',
+                'Latin Name',
+                '# of Organisms',
+            ],
+            data: JSON.parse({{ jsonify $.bindings.mobileOrganisms }}),
         });
     })
 </script>
