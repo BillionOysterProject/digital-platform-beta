@@ -1726,3 +1726,21 @@ li.loading-dialog {
     font-size:       11pt;
     font-weight:     bold;
 }
+
+.btn-group-toggle .btn {
+  background: white;
+  border: 1px solid #888;
+  color: black !important;
+  z-index: inherit !important;
+}
+
+.btn-group-toggle .btn.active {
+   background-color: #426ca9 !important;
+   border-color: black !important;
+   color: white !important;
+}
+
+.btn-group-toggle .btn:active {
+   background-color: #2c3c56 !important;
+   color: white !important;
+}
