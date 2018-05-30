@@ -475,6 +475,310 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="temperature">Air temperature (C)</label>
+                                    <input
+                                        class="form-control"
+                                        name="temperature"
+                                        type="number"
+                                        step="0.1"
+                                        min="-40"
+                                        max="50"
+
+                                    />
+                                    <span class="help-block">
+                                        <p>Fahrenheit: &deg;F</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="windSpeed">Wind speed (mph)</label>
+                                    <input
+                                        class="form-control"
+                                        type="number"
+                                        min="0"
+                                        name="windSpeed"
+                                    />
+                                    <span class="help-block">Method: Anemometer</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="windDirection">Wind Direction</label>
+                                    <br/>
+                                    <div class="btn-group btn-group-toggle">
+                                        {{ range $i, $windDirection := $.page.windDirections }}
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="windDirection"
+                                            >
+                                            {{ $windDirection.label }}
+                                        </label>
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="humidity">Humidity (%)</label>
+                                    <input
+                                        class="form-control"
+                                        type="number"
+                                        min="0"
+                                        name="humidity"
+                                    />
+                                    <span class="help-block">Method: Sling Psychrometer</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr/>
+                        <h3>Recent Rainfall
+                        </h3>
+                        <div class="form-group">
+                            <label>Has it rained in the past <span class="blue">7</span> days?</label>
+                            <br/>
+                            <div class ="btn-group btn-group-toggle">
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="recentRainfall.rainedIn7Days"
+                                    >
+                                    Yes
+                                </label>
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="recentRainfall.rainedIn7Days"
+                                    >
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Has it rained in the past <span class="blue">72</span> hours?</label>
+                            <br/>
+                            <div class ="btn-group btn-group-toggle">
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="recentRainfall.rainedIn72Hours"
+                                    >
+                                    Yes
+                                </label>
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="recentRainfall.rainedIn72Hours"
+                                    >
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Has it rained in the past <span class="blue">24</span> hours?</label>
+                            <br/>
+                            <div class ="btn-group btn-group-toggle">
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="recentRainfall.rainedIn24Hours"
+                                    >
+                                    Yes
+                                </label>
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="recentRainfall.rainedIn24Hours"
+                                    >
+                                    No
+                                </label>
+                            </div>
+                        </div>
+
+                        <hr/>
+                        <h3>Water Conditions</h3>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="surfaceCurrentSpeedMPS">
+                                        Surface current speed (meters/second)
+                                    </label>
+                                    <input
+                                        class="form-control"
+                                        type="number"
+                                        min="0"
+                                        name="surfaceCurrentSpeedMPS"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="waterColor">Describe the water color</label>
+                                    <br/>
+                                    <div class="btn-group btn-group-toggle">
+                                        {{ range $i, $waterColor := $.page.waterColors }}
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="waterColor"
+                                            >
+                                            {{ $waterColor.label }}
+                                        </label>
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Is there an oil sheen present?</label>
+                                    <br/>
+                                    <div class="btn-group btn-group-toggle">
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="waterConditions.oilSheen"
+                                            >
+                                            Yes
+                                        </label>
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="waterConditions.oilSheen"
+                                            >
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Is there any garbage in the water?</label>
+                                    <br/>
+                                    <div class="btn-group btn-group-toggle">
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="garbage.garbagePresent"
+                                            >
+                                            Yes
+                                        </label>
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="garbage.garbagePresent"
+                                            >
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p>placeholder for water garbage</p>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="CSOPipeFlow">
+                                        Is there any flow through the Combined Sewer Overflow (CSO) pipes?
+                                    </label>
+                                    <br/>
+                                    <div class="btn-group btn-group-toggle">
+                                        {{ range $i, $pipeFlow := $.page.pipeFlows }}
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="CSOPipeFlow"
+                                            >
+                                            {{ $pipeFlow.label }}
+                                        </label>
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="otherPipeFlow">
+                                        Is there any flow through the unmarked or other outfall pipes?
+                                    </label>
+                                    <br/>
+                                    <div class="btn-group btn-group-toggle">
+                                        {{ range $i, $pipeFlow := $.page.pipeFlows }}
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="otherPipeFlow"
+                                            >
+                                            {{ $pipeFlow.label }}
+                                        </label>
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr/>
+                        <h3>Land Conditions</h3>
+                        <p>placeholder for land garbage</p>
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -497,6 +801,9 @@
                         <h3>Mobile Organisms</h3>
                         <p>What mobile organisms have you found?
                         </p>
+                        <div class="row">
+                            <div id="dataEntry" class="w-100"></div>
+                        </div>
                     </div>
                 </div>
             </div>

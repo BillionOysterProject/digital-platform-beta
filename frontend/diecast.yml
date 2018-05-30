@@ -88,6 +88,48 @@ header:
       - id:    'thunderstorm'
         label: 'Thunderstorm'
 
+      windDirections:
+      - id:    'north'
+        label: 'North'
+      - id:    'north-east'
+        label: 'North East'
+      - id:    'north-west'
+        label: 'North West'
+      - id:    'south'
+        label: 'South'
+      - id:    'south-east'
+        label: 'South East'
+      - id:    'south-west'
+        label: 'South West'
+      - id:    'east'
+        label: 'East'
+      - id:    'west'
+        label: 'West'
+
+      waterColors:
+      - id:    'light-blue'
+        label: 'Light Blue'
+      - id:    'dark-blue'
+        label: 'Dark Blue'
+      - id:    'light-green'
+        label: 'Light Green'
+      - id:    'dark-green'
+        label: 'Dark Green'
+      - id:    'light-brown'
+        label: 'Light Brown'
+      - id:    'dark-brown'
+        label: 'Dark Brown'
+
+      pipeFlows:
+      - id:    'trickle'
+        label: 'Trickle'
+      - id:    'light-stream'
+        label: 'Light Stream'
+      - id:    'steady-stream'
+        label: 'Steady Stream'
+      - id:    'full-flow'
+        label: 'Full Flow'
+
       protocols:
       - name: 'Protocol 1: Site Conditions'
         color: '#E6B00D'
