@@ -8,7 +8,9 @@ bindings:
 ---
 
 <h1>Enter Data</h1>
-
+<p>
+    Click on each step below to fill out each section.
+</p>
 
 <form class="form mt-4">
     <!-- ########################################################################################### -->
@@ -25,7 +27,6 @@ bindings:
 
                 <span>
                     <strong>Enter information about your expedition</strong>.
-                    (Required) Click to enter your expedition's name, date, location, and participants.
                 </span>
             </div>
         </section>
@@ -807,7 +808,7 @@ bindings:
                 </div>
                 <div id="mobileOrganisms" class="collapse" aria-labelledby="addMobileOrganisms" data-parent="#accordion">
                     <div class="card-body">
-                        <p>Enter in the number of each type of organism you found in the table below.
+                        <p>Count how many of each type of mobile organism you found, then enter the number in the table below.
                         </p>
                         <div class="row">
                             <div id="mobileOrganismsTable" class="w-100"></div>
@@ -853,9 +854,12 @@ bindings:
                 </div>
                 <div id="waterQuality" class="collapse" aria-labelledby="addWaterQuality" data-parent="#accordion">
                     <div class="card-body">
-                        <h3>Water Quality</h3>
-                        <p>What were the results of your water quality tests?
+                        <p>For every water quality parameter you'd like to submit, select the method and then enter
+                            the three measurements in the table below.
                         </p>
+                        <div class="row">
+                            <div id="waterQualityTable" class="w-100"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1021,27 +1025,75 @@ bindings:
             columns: [{
                 data:      'commonName',
                 editor:    false,
-                width:     25,
-            },
-            {
+                width:     20,
+            }, {
                 data:      'latinName',
                 editor:    false,
-                width:     25
-            },
-            {
+                width:     20,
+            }, {
                 data:      'countOfSpecies',
                 type:      'numeric',
                 validator: 'valid-species-count',
-                width:     25,
+                width:      20,
                 numericFormat: {
                     pattern: '0',
                     culture: 'en-US',
                 },
+            }, {
+                data:       'notes',
+                width:       20,
             }],
             colHeaders: [
-                'Species Name',
-                'Latin Name',
+                'Common Name',
+                'Scientific Name',
                 '# of Organisms',
+                'Notes',
+            ],
+            data: JSON.parse({{ jsonify $.bindings.mobileOrganisms }}),
+        });
+
+        var waterQualityTable = new Handsontable(document.querySelector('#waterQualityTable'), {
+            stretchH:          'all',
+            autoWrapRow:       true,
+            startRows:          5,
+            maxRows:            100,
+            manualRowResize:    true,
+            manualColumnResize: true,
+            contextMenu:        true,
+            rowHeaders:         true,
+            preventOverflow:    'horizontal',
+            columns: [{
+                data:      'waterQualityParameter',
+                editor:    false,
+                width:     10,
+            }, {
+                data:      'method',
+                editor:    false,
+                width:     10,
+                type: 'dropdown',
+            }, {
+                data:      'unit',
+                width:      10,
+            }, {
+                data:       'result1',
+                width:      10,
+                type:      'numeric',
+            }, {
+                data:       'result2',
+                width:      10,
+                type:      'numeric',
+            }, {
+                data:       'result3',
+                width:      10,
+                type:      'numeric',
+            }],
+            colHeaders: [
+                'Water Quality Parameter',
+                'Method',
+                'Unit',
+                'Result #1',
+                'Result #2',
+                'Result #3',
             ],
             data: JSON.parse({{ jsonify $.bindings.mobileOrganisms }}),
         });

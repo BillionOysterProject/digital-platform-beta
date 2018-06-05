@@ -131,6 +131,22 @@ header:
       - id:    'full-flow'
         label: 'Full Flow'
 
+      waterQualityParameters:
+      - id:    'water-temperature'
+        label: 'Water Temperature'
+      - id:    'dissolved-oxygen'
+        label: 'Dissolved Oxygen'
+      - id:    'salinity'
+        label: 'Salinity'
+      - id:    'pH'
+        label: 'pH'
+      - id:    'turbidity'
+        label: 'Turbidity'
+      - id:    'ammonia'
+        label: 'Ammonia'
+      - id:    'nitrates'
+        label: 'Nitrates'
+
       protocols:
       - name: 'Protocol 1: Site Conditions'
         color: '#E6B00D'
