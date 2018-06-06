@@ -1,3 +1,6 @@
+---
+layout: none
+---
 @font-face {
     font-family: 'Roboto';
     src:         url('/assets/fonts/Roboto-Regular-webfont.eot');
@@ -33,7 +36,11 @@ body {
 }
 
 body > header {
+{{ if (contains $.request.host `bop.nyc`) }}
     background:      #2C3C56;
+{{ else }}
+    background:      #70140e;
+{{ end }}
 }
 
 .pre {
@@ -1743,4 +1750,26 @@ li.loading-dialog {
 .btn-group-toggle .btn:active {
    background-color: #2c3c56 !important;
    color: white !important;
+}
+
+/* fix Handsontable height issues (see: https://github.com/handsontable/handsontable/issues/3432#issuecomment-218442750) */
+.wtHolder {
+  width: auto !important;
+  height: auto !important;
+}
+
+.wtHider {
+  padding: 0 5px 5px 0;
+}
+
+.ht_clone_top {
+  width: auto !important;
+}
+
+.ht_clone_left {
+  height: auto !important;
+}
+
+.ht_clone_top, .ht_clone_left, .ht_clone_top_left_corner {
+  z-index: 1 !important;
 }

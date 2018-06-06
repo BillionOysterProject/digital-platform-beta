@@ -8,7 +8,9 @@ bindings:
 ---
 
 <h1>Enter Data</h1>
-
+<p>
+    Click on the steps below to enter your information.  (Need help? Check out the wiki!)
+</p>
 
 <form class="form mt-4">
     <!-- ########################################################################################### -->
@@ -24,8 +26,7 @@ bindings:
                 </span>
 
                 <span>
-                    <strong>Enter information about your expedition</strong>.
-                    (Required) Click to enter your expedition's name, date, location, and participants.
+                    <strong>Enter information about your expedition.</strong>
                 </span>
             </div>
         </section>
@@ -61,6 +62,29 @@ bindings:
             This is a limitation of the legacy platform. When we have fully moved to the new platform we can get
             rid of the dummy ORS.
         -->
+
+        <div class="form-group mt-4">
+            <label>
+                Select your structure type
+            </label>
+            <p>
+                (Note: if you're entering data that isn't associated with an oyster research structure, like
+                    the results of a <a href="https://www.nationalgeographic.org/projects/bioblitz/" target="_blank">BioBlitz</a> or fish count, select "No structure.")
+            </p>
+            {{ range $i, $structureType := $.page.structureTypes }}
+            <div class="custom-control custom-radio">
+                <input
+                    type="radio"
+                    id="structure{{ $i }}"
+                    class="custom-control-input"
+                >
+                <label class="custom-control-label w-100" for="structure{{ $i }}">
+                    {{ $structureType.label }}
+                </label>
+            </div>
+            {{ end }}
+        </div>
+<!--
         <div class="form-group">
             <label>Are you reporting data related to a structure, like an Oyster Research Station (ORS)?</label>
             <div class="custom-control custom-radio">
@@ -96,7 +120,7 @@ bindings:
                 </label>
             </div>
         </div>
-
+-->
 <!-- "Structure Name" field displays if user answers "YES" to "Are you reporting data related to a structure, like an Oyster Research Station (ORS)?"-->
         <div class="form-group">
             <label for="station">Structure Name</label>
@@ -175,157 +199,34 @@ bindings:
 
                 <span>
                     <strong>Enter the data you collected.</strong>
-                    (Includes required and optional fields.) Click to open the protocol data entry forms.
                 </span>
             </div>
         </section>
     </section>
 
     <section class="content collapse" id="enterdata2">
+        <p>
+            Click on a section below to enter data.  All fields are optional, but try to submit
+            as much data as you can!
+        </p>
+
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" value="" id="test1">
+                            <label class="form-check-label" for="test1">
+                                Allow all team members to edit all protocols.
+                            </label>
+                        </div>
+
         <div id="accordion">
-            <!-- BEGIN Baseline
-            <div class="card border-0">
-                <div class="card-header" id="addBaseline">
-                    <section class="shaded" data-toggle="collapse" data-target="#baseline">
-                        <section class="container-fluid">
-                            <div class="blue">
-                                <i class="fa fa-plus fa-2x"></i>
-                                <strong>Add Baseline data (fill this out ONCE for each site and each batch of oysters)</strong>
-                            </div>
-                        </section>
-                    </section>
-                </div>
-                <div id="baseline" class="collapse" aria-labelledby="addBaseline" data-parent="#accordion">
-                    <div class="card-body">
-                        <h3>Baselines</h3>
-                        <h4>Oyster baselines</h4>
-                        <p>
-                            Fill this section out when you first get a batch of oysters.  You won't
-                            need to fill out this section again unless you get new oysters.
-                        </p>
 
-                        <ul class="nav nav-tabs">
-                            {{ range $i, $shell := sequence 10 }}
-                            <li class="nav-item{{ if eq $shell 0}} active{{ end }}">
-                                <a class="nav-link" href="#">
-                                    Shell {{ add $shell 1 }}
-                                </a>
-                            </li>
-                            {{ end }}
-                        </ul>
-
-                        <div class="form-group mt-4">
-                            <label>Source</label>
-
-                            {{ range $i, $oysterSource := $.page.oysterSources }}
-                            <div class="custom-control custom-radio">
-                                <input
-                                    type="radio"
-                                    name="baselineOysterSource"
-                                    id="oysterSource{{ $i }}"
-                                    class="custom-control-input"
-                                >
-                                <label class="custom-control-label w-100" for="oysterSource{{ $i }}">
-                                    {{ $oysterSource.label }}
-                                </label>
-                            </div>
-                            {{ end }}
-                        </div>
-
-
-
-                        <hr/>
-                        <h4>Site baselines</h4>
-                        <p>
-                            Fill this section out when you first visit your site.  You won't need to
-                            fill it out again unless you move to a new site (or there are big
-                            changes like construction at your site).
-                        </p>
-
-                        <div class="form-group mt-4">
-                        <label for="CSO">Are there any marked Combined Sewer Overflow (CSO) pipes?</label>
-
-                            <div class="custom-control custom-radio">
-                                <input
-                                    type="radio"
-                                    name="yesCSO"
-                                    id="yesCSO"
-                                    class="custom-control-input"
-                                >
-                                <label class="custom-control-label w-100" for="yesCSO">
-                                    Yes
-                                </label>
-                            </div>
-
-                            <div class="custom-control custom-radio">
-                                <input
-                                    type="radio"
-                                    name="noCSO"
-                                    class="custom-control-input"
-                                    id="noCSO"
-                                >
-                                <label class="custom-control-label w-100" for="noCSO">
-                                    No
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group mt-4">
-                        <label for="otherPipes">Are there any unmarked or other outfall pipes?</label>
-
-                            <div class="custom-control custom-radio">
-                                <input
-                                    type="radio"
-                                    name="yesPipes"
-                                    id="yesPipes"
-                                    class="custom-control-input"
-                                >
-                                <label class="custom-control-label w-100" for="ba1">
-                                    Yes
-                                </label>
-                            </div>
-
-                            <div class="custom-control custom-radio">
-                                <input
-                                    type="radio"
-                                    name="noPipes"
-                                    class="custom-control-input"
-                                    id="noPipes"
-                                >
-                                <label class="custom-control-label w-100" for="ba2">
-                                    No
-                                </label>
-                            </div>
-                        </div>
-
-                        <p>
-                            What's the approximate diameter of the pipe (cm)?
-                        </p>
-
-                        <p>
-                            What kinds of surfaces are on the adjacent shoreline (about 100 x 100 feet)? Estimate the percentage of each type of surface cover.
-
-                            <ul>
-                                <li>Impervious Surface (concrete/asphalt paths, roads, buildings, etc.)</li>
-
-                                <li>Pervious Surface (dirt, gravel, wood chips, etc.)</li>
-
-                                <li>Vegetated surface (grass, shrubs, trees, etc.)</li>
-                            </ul>
-                        </p>
-                    </div>
-                </div>
-            </div>
-           END Baseline -->
-
-            <!-- BEGIN Protocol 1 -->
+            <!-- BEGIN Oyster Measurements -->
             <div class="card border-0">
                 <div class="card-header" id="addOysterMeasurements">
                     <section class="shaded" data-toggle="collapse" data-target="#oysterMeasurement">
                         <section class="container-fluid">
                             <div id="step1-header" class="blue">
-                                <i class="fa fa-anchor fa-2x"></i>
-                                <strong>Add Oyster Measurement data (Protocol # )</strong>
+                                <i class="fa fa-plus fa-2x"></i>
+                                <strong>Oyster Measurements</strong>
                             </div>
                         </section>
                     </section>
@@ -333,8 +234,37 @@ bindings:
 
                 <div id="oysterMeasurement" class="collapse" aria-labelledby="addOysterMeasurements" data-parent="#accordion">
                     <div class="card-body">
-                        <p><strong>Required Oyster Measurement Data</strong></p>
                         <p class="form-text mb-3">
+                            <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6 form-group">
+                                        <label>Invite team members to enter data for this protocol:</label>
+                                        <input type="text" class="form-control">
+                                        <br />
+                                        <button tyle="button" class="btn btn-primary">
+                                            <i class="fa fa-envelope"></i>
+                                            Send Invite
+                                        </button>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-6 form-group">
+                                        <label>Team members who can edit this protocol:</label>
+
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                Johnny Userface
+                                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <i>Sally Shrimphead (has not accepted)</i>
+                                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p><strong>Oyster Measurements</strong></p>
                             Enter the measurements of each live oyster on each substrate shell in the table below.
                             <ul>
                                 <li>In the first column, enter the substrate shell number (#1-10).</li>
@@ -345,8 +275,8 @@ bindings:
                             (Rows will automatically be added to the end of the table as you type.)
                         </p>
 
-                        <div class="row">
-                            <div id="oysterMeasurementsTable" class="w-100"></div>
+                        <div class="w-100" style="overflow: hidden;">
+                            <div id="oysterMeasurementsTable"></div>
                         </div>
 
                         <div class="alert alert-info form-text mt-4" role="alert">
@@ -354,40 +284,6 @@ bindings:
                             Note: If you see a red background in a cell, check your numbers!  The substrate shell column accepts values from 1-10,
                             and the oyster length column accepts values from 1-250.
                             </small>
-                        </div>
-                            <!--
-                            <div class="col-1 d-none d-xl-block vcenter">
-                            </div>
-
-                            <div class="col mb-4">
-                                <label for="data-upload">...or upload a spreadsheet</label>
-                                <small class="form-text mb-3">
-                                    Upload your oyster measurements from an existing spreadsheet. See the
-                                    <a href="#">spreadsheet upload guidelines</a> for formatting details, or
-                                    use our <a href="#">Oyster Measurement Data</a> template to add your data.
-                                </small>
-
-                                <div class="drop-area">
-                                    Drag a file here or click to upload expedition data.
-                                </div>
-                            </div>
-                        </div>
-                        -->
-
-                        <hr class="mt-4" />
-                        <p><strong>Optional Oyster Measurement Data</strong></p>
-                        <p>
-                            Everything in this section is optional.  You can submit an expedition without entering data into these fields.
-                        </p>
-
-                        <div class="form-group mt-4">
-                            <label for="notes">Oyster Measurement Notes</label>
-                            <textarea
-                                class="form-control"
-                                type="text"
-                                name="notes"
-                                maxlength="16536"
-                            ></textarea>
                         </div>
 
                         <div class="form-group mt-4">
@@ -441,25 +337,37 @@ bindings:
                                 </label>
                             </div>
                         </div>
+
+                        <div class="form-group mt-4">
+                            <label for="notes">Oyster Measurement Notes</label>
+                            <textarea
+                                class="form-control"
+                                type="text"
+                                name="notes"
+                                maxlength="16536"
+                            ></textarea>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <!-- END Protocol 1 -->
+            <!-- END Oyster Measurements -->
 
-            <!-- BEGIN Protocol 2 -->
+            <!-- BEGIN Site Conditions -->
             <div class="card border-0">
                 <div class="card-header" id="addSiteConditions">
                     <section class="shaded" data-toggle="collapse" data-target="#siteConditions">
                         <section class="container-fluid">
                             <div id="step2-header" class="blue">
-                                <i class="fa fa-building fa-2x"></i>
-                                <strong>Add Site Conditions data (Protocol # )</strong>
+                                <i class="fa fa-plus fa-2x"></i>
+                                <strong>Site Conditions</strong>
                             </div>
                         </section>
                     </section>
                 </div>
                 <div id="siteConditions" class="collapse" aria-labelledby="addSiteConditions" data-parent="#accordion">
                     <div class="card-body">
+                        <p>-->Assign to another user.</p>
                         <h3>Meteorological Conditions
                         </h3>
 
@@ -785,83 +693,136 @@ bindings:
                         <h3>Land Conditions</h3>
                         <p>placeholder for land garbage</p>
 
-
+                        <div class="form-group mt-4">
+                            <label for="notes">Site Conditions Notes</label>
+                            <textarea
+                                class="form-control"
+                                type="text"
+                                name="notes"
+                                maxlength="16536"
+                            ></textarea>
+                        </div>
 
 
                     </div>
                 </div>
             </div>
-            <!-- END Protocol 2 -->
+            <!-- END Site Conditions -->
 
-            <!-- BEGIN Protocol 3 -->
+            <!-- BEGIN Mobile Organisms -->
             <div class="card border-0">
                 <div class="card-header" id="addMobileOrganisms">
                     <section class="shaded" data-toggle="collapse" data-target="#mobileOrganisms">
                         <section class="container-fluid">
                             <div id="step2-header" class="blue">
-                                <i class="fa fa-bug fa-2x"></i>
-                                <strong>Add Mobile Organisms data (Protocol # )</strong>
+                                <i class="fa fa-plus fa-2x"></i>
+                                <strong>Mobile Organisms</strong>
                             </div>
                         </section>
                     </section>
                 </div>
                 <div id="mobileOrganisms" class="collapse" aria-labelledby="addMobileOrganisms" data-parent="#accordion">
                     <div class="card-body">
-                        <p>Enter in the number of each type of organism you found in the table below.
+                        <p>-->Assign to another user.</p>
+                        <p><strong>Mobile Organism Identifications</strong></p>
+                        <p>Count how many of each type of mobile organism you found, then enter the number in the table below.
                         </p>
-                        <div class="row">
-                            <div id="mobileOrganismsTable" class="w-100"></div>
+                        <p>
+                            You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
+                        </p>
+                        <div class="w-100" style="overflow: hidden;">
+                            <div id="mobileOrganismsTable"></div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <label for="notes">Mobile Organisms Notes</label>
+                            <textarea
+                                class="form-control"
+                                type="text"
+                                name="notes"
+                                maxlength="16536"
+                            ></textarea>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- END Protocol 3 -->
+            <!-- END Mobile Organisms -->
 
-            <!-- BEGIN Protocol 4 -->
+            <!-- BEGIN Sessile Organisms -->
             <div class="card border-0">
                 <div class="card-header" id="addSessileOrganisms">
                     <section class="shaded" data-toggle="collapse" data-target="#sessileOrganisms">
                         <section class="container-fluid">
                             <div id="step2-header" class="blue">
-                                <i class="fa fa-th fa-2x"></i>
-                                <strong>Add Sessile Organisms data (Protocol # )</strong>
+                                <i class="fa fa-plus fa-2x"></i>
+                                <strong>Sessile Organisms</strong>
                             </div>
                         </section>
                     </section>
                 </div>
                 <div id="sessileOrganisms" class="collapse" aria-labelledby="addSessileOrganisms" data-parent="#accordion">
                     <div class="card-body">
-                        <h3>Sessile Organisms</h3>
-                        <p>What sessile organisms have you found?
+                        <p>-->Assign to another user.</p>
+                        <p><strong>Sessile Organism Identifications</strong></p>
+                        <p>In the table below, select the sessile organism you found in the middle of each cross hatch.
+                            (See this diagram for help!)
                         </p>
+                        <div class="w-100" style="overflow: hidden;">
+                            <div id="sessileOrganismsTable"></div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <label for="notes">Sessile Organisms Notes</label>
+                            <textarea
+                                class="form-control"
+                                type="text"
+                                name="notes"
+                                maxlength="16536"
+                            ></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- END Protocol 4 -->
+            <!-- END Sessile Organisms -->
 
-            <!-- BEGIN Protocol 5 -->
+            <!-- BEGIN Water Quality -->
             <div class="card border-0">
                 <div class="card-header" id="addWaterQuality">
                     <section class="shaded" data-toggle="collapse" data-target="#waterQuality">
                         <section class="container-fluid">
                             <div id="step2-header" class="blue">
-                                <i class="fa fa-flask fa-2x"></i>
-                                <strong>Add Water Quality data (Protocol # )</strong>
+                                <i class="fa fa-plus fa-2x"></i>
+                                <strong>Water Quality</strong>
                             </div>
                         </section>
                     </section>
                 </div>
                 <div id="waterQuality" class="collapse" aria-labelledby="addWaterQuality" data-parent="#accordion">
                     <div class="card-body">
-                        <h3>Water Quality</h3>
-                        <p>What were the results of your water quality tests?
+                        <p>-->Assign to another user.</p>
+                        <p><strong>Water Quality Parameter Measurements</strong></p>
+                        <p>For every water quality parameter you'd like to submit, select the method and then enter
+                            the three measurements in the table below.
                         </p>
+                        <p>
+                            You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
+                        </p>
+                        <div style="overflow: hidden;" class="w-100"></div>
+                            <div id="waterQualityTable"></div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <label for="notes">Water Quality Notes</label>
+                            <textarea
+                                class="form-control"
+                                type="text"
+                                name="notes"
+                                maxlength="16536"
+                            ></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- END Protocol 5 -->
+            <!-- END Water Quality -->
 
-            <!-- BEGIN Protocol 6 -->
+            <!-- BEGIN Report a Wild Oyster -->
             <div class="card border-0">
                 <div class="card-header" id="addWildOysters">
                     <section class="shaded" data-toggle="collapse" data-target="#wildOysters">
@@ -875,15 +836,22 @@ bindings:
                 </div>
                 <div id="wildOysters" class="collapse" aria-labelledby="addWildOysters" data-parent="#accordion">
                     <div class="card-body">
-                        <h3>Wild Oyster Survey</h3>
+                        <p>-->Assign to another user.</p>
                         <p>Did you find any wild oysters?
                         </p>
+                        <div class="form-group mt-4">
+                            <label for="notes">Wild Oyster Notes</label>
+                            <textarea
+                                class="form-control"
+                                type="text"
+                                name="notes"
+                                maxlength="16536"
+                            ></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- END Protocol 6 -->
-
-
+            <!-- END Report a Wild Oyster -->
         </div>
     </section>
 
@@ -901,7 +869,6 @@ bindings:
 
                 <span>
                     <strong>Upload and tag any photos you took.</strong>
-                    (Optional.) Click to open the photo uploader.
                 </span>
             </div>
         </section>
@@ -991,12 +958,12 @@ bindings:
                 data:      'substrateShellNumber',
                 type:      'numeric',
                 validator: 'valid-settlement-tile',
-                width:     40,
+                width:     30,
             }, {
                 data:      'oysterLength',
                 type:      'numeric',
                 validator: 'valid-oyster',
-                width:     40,
+                width:     30,
                 numericFormat: {
                     pattern: '0.00',
                     culture: 'en-US',
@@ -1011,6 +978,7 @@ bindings:
         var mobileOrganismsTable = new Handsontable(document.querySelector('#mobileOrganismsTable'), {
             stretchH:          'all',
             autoWrapRow:       true,
+            minSpareRows:       5,
             startRows:          5,
             maxRows:            100,
             manualRowResize:    true,
@@ -1018,32 +986,103 @@ bindings:
             contextMenu:        true,
             rowHeaders:         true,
             preventOverflow:    'horizontal',
+            renderAllRows:      true,
             columns: [{
                 data:      'commonName',
                 editor:    false,
-                width:     25,
-            },
-            {
+                width:     20,
+            }, {
                 data:      'latinName',
                 editor:    false,
-                width:     25
-            },
-            {
+                width:     20,
+            }, {
                 data:      'countOfSpecies',
                 type:      'numeric',
                 validator: 'valid-species-count',
-                width:     25,
+                width:      20,
                 numericFormat: {
                     pattern: '0',
                     culture: 'en-US',
                 },
+            }, {
+                data:       'notes',
+                width:       20,
             }],
             colHeaders: [
-                'Species Name',
-                'Latin Name',
+                'Common Name',
+                'Scientific Name',
                 '# of Organisms',
+                'Notes',
             ],
             data: JSON.parse({{ jsonify $.bindings.mobileOrganisms }}),
+        });
+
+        var sessileOrganismsTable = new Handsontable(document.querySelector('#sessileOrganismsTable'), {
+            stretchH:           'all',
+            autoWrapRow:        true,
+            minSpareRows:       1,
+            startRows:          25,
+            maxRows:            100,
+            manualRowResize:    true,
+            manualColumnResize: true,
+            contextMenu:        true,
+            rowHeaders:         true,
+            preventOverflow:    'horizontal',
+            renderAllRows:      true,
+            columns: [{
+                data:      'commonName',
+                editor:    false,
+                width:     20,
+                type:      'dropdown',
+            }, {
+                data:       'notes',
+                width:       20,
+            }],
+            colHeaders: [
+                'Common Name',
+                'Notes',
+            ],
+        });
+
+        var waterQualityTable = new Handsontable(document.querySelector('#waterQualityTable'), {
+            stretchH:          'all',
+            autoWrapRow:       true,
+            minSpareRows:       1,
+            startRows:          5,
+            maxRows:            100,
+            manualRowResize:    true,
+            manualColumnResize: true,
+            contextMenu:        true,
+            rowHeaders:         true,
+            preventOverflow:    'horizontal',
+            renderAllRows:      true,
+            columns: [{
+                data:      'waterQualityParameter',
+                editor:    false,
+            }, {
+                data:      'method',
+                editor:    false,
+                type: 'dropdown',
+            }, {
+                data:      'unit',
+            }, {
+                data:       'result1',
+                type:      'numeric',
+            }, {
+                data:       'result2',
+                type:      'numeric',
+            }, {
+                data:       'result3',
+                type:      'numeric',
+            }],
+            colHeaders: [
+                'Water Quality Parameter',
+                'Method',
+                'Unit',
+                'Result #1',
+                'Result #2',
+                'Result #3',
+            ],
         });
     })
 </script>

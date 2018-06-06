@@ -2,6 +2,7 @@
 bindingPrefix: 'http://127.0.0.1:5000/'
 patterns:
   - '*.html'
+  - '/assets/css/application.css'
 mounts:
 - mount: '/api'
   to:    'http://127.0.0.1:5000/api'
@@ -37,8 +38,8 @@ header:
         label: 'Reef'
       - id:    'nursery'
         label: 'Oyster Nursery'
-      - id:    'other'
-        label: 'Other'
+      - id:    'none'
+        label: 'No structure'
 
       structureStatuses:
       - id:    'active'
@@ -129,6 +130,22 @@ header:
         label: 'Steady Stream'
       - id:    'full-flow'
         label: 'Full Flow'
+
+      waterQualityParameters:
+      - id:    'water-temperature'
+        label: 'Water Temperature'
+      - id:    'dissolved-oxygen'
+        label: 'Dissolved Oxygen'
+      - id:    'salinity'
+        label: 'Salinity'
+      - id:    'pH'
+        label: 'pH'
+      - id:    'turbidity'
+        label: 'Turbidity'
+      - id:    'ammonia'
+        label: 'Ammonia'
+      - id:    'nitrates'
+        label: 'Nitrates'
 
       protocols:
       - name: 'Protocol 1: Site Conditions'
