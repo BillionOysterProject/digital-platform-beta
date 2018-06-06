@@ -38,8 +38,8 @@ header:
         label: 'Reef'
       - id:    'nursery'
         label: 'Oyster Nursery'
-      - id:    'other'
-        label: 'Other'
+      - id:    'none'
+        label: 'No structure'
 
       structureStatuses:
       - id:    'active'
