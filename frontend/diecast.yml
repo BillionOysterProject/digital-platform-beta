@@ -122,6 +122,8 @@ header:
         label: 'Dark Brown'
 
       pipeFlows:
+      - id:    'no-flow'
+        label: 'No Flow'
       - id:    'trickle'
         label: 'Trickle'
       - id:    'light-stream'

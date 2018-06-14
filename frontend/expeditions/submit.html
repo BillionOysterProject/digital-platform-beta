@@ -3,13 +3,23 @@ bindings:
 -   name:     'mobileOrganisms'
     resource: '/api/mobile-organisms/'
     params:
-        sort: commonName
+        sort:   commonName
+        limit:  false
+        fields: 'commonName,latinName'
+
+-   name:       'sessileOrganisms'
+    resource:   '/api/sessile-organisms/'
+    params:
+        sort:   commonName
+        limit:  false
+        fields: 'commonName,latinName'
 
 ---
 
 <h1>Enter Data</h1>
 <p>
-    Click on the steps below to enter your information.  (Need help? Check out the wiki!)
+    Click on the steps below to expand each section and enter your information.
+    <!--(Need help? Check out the wiki!)-->
 </p>
 
 <form class="form mt-4">
@@ -84,43 +94,7 @@ bindings:
             </div>
             {{ end }}
         </div>
-<!--
-        <div class="form-group">
-            <label>Are you reporting data related to a structure, like an Oyster Research Station (ORS)?</label>
-            <div class="custom-control custom-radio">
-                <input
-                    type="radio"
-                    id="yesStructure"
-                    name="hasStructure"
-                    class="custom-control-input"
-                    value="true"
-                >
-                <label
-                    class="custom-control-label"
-                    for="yesStructure"
-                >
-                    <strong>YES</strong>.   I'm following BOP's protocols to enter data for an ORS, Community Reef, Oyster Tank,
-                    or other reef structure.
-                </label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input
-                    type="radio"
-                    id="noStructure"
-                    name="hasStructure"
-                    class="custom-control-input"
-                    value="false"
-                >
-                <label
-                    class="custom-control-label"
-                    for="noStructure"
-                >
-                    <strong>NO</strong>.    I'm entering data that isn't associated with a structure. (For example: reporting
-                    the results of a <a href="https://www.nationalgeographic.org/projects/bioblitz/" target="_blank">BioBlitz</a> or fish count.)
-                </label>
-            </div>
-        </div>
--->
+
 <!-- "Structure Name" field displays if user answers "YES" to "Are you reporting data related to a structure, like an Oyster Research Station (ORS)?"-->
         <div class="form-group">
             <label for="station">Structure Name</label>
@@ -139,7 +113,7 @@ bindings:
             </div>
         </div>
 
-<!-- "Site Name" field displays if user answers "NO" to "Are you reporting data related to a structure, like an Oyster Research Station (ORS)?"-->
+<!-- "Site Name" field displays if user answers "NO" to "Are you reporting data related to a structure, like an Oyster Research Station (ORS)?"
         <div class="form-group">
             <label for="site">Site Name</label>
             <div class="input-group">
@@ -155,6 +129,7 @@ bindings:
                 </small>
             </div>
         </div>
+-->
 
         <div class="form-group">
             <label for="team">Team</label>
@@ -210,13 +185,14 @@ bindings:
             as much data as you can!
         </p>
 
-                        <div class="form-check mb-4">
-                            <input class="form-check-input" type="checkbox" value="" id="test1">
-                            <label class="form-check-label" for="test1">
-                                Allow all team members to edit all protocols.
-                            </label>
-                        </div>
-
+<!--
+        <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" value="" id="test1">
+            <label class="form-check-label" for="test1">
+                Allow all team members to edit all protocols.
+            </label>
+        </div>
+-->
         <div id="accordion">
 
             <!-- BEGIN Oyster Measurements -->
@@ -235,6 +211,7 @@ bindings:
                 <div id="oysterMeasurement" class="collapse" aria-labelledby="addOysterMeasurements" data-parent="#accordion">
                     <div class="card-body">
                         <p class="form-text mb-3">
+                            <!--
                             <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 form-group">
@@ -263,7 +240,7 @@ bindings:
                                     </div>
                                 </div>
                             </div>
-
+                            -->
                             <p><strong>Oyster Measurements</strong></p>
                             Enter the measurements of each live oyster on each substrate shell in the table below.
                             <ul>
@@ -367,7 +344,6 @@ bindings:
                 </div>
                 <div id="siteConditions" class="collapse" aria-labelledby="addSiteConditions" data-parent="#accordion">
                     <div class="card-body">
-                        <p>-->Assign to another user.</p>
                         <h3>Meteorological Conditions
                         </h3>
 
@@ -407,10 +383,24 @@ bindings:
 
                                     />
                                     <span class="help-block">
-                                        <p>Fahrenheit: &deg;F</p>
+                                        <p>Fahrenheit: <span id="temperatureF"></span>&deg;F</p>
                                     </span>
                                 </div>
                             </div>
+
+                            <script>
+                            $(function(){
+                                $('input[name="temperature"]').on('change', function(e){
+                                    var el = $(e.target);
+
+                                    if (el.val()) {
+                                        var degF = parseFloat(el.val()) * (9/5) + 32;
+
+                                        $('#temperatureF').text(degF);
+                                    }
+                                });
+                            });
+                            </script>
                         </div>
 
                         <div class="row">
@@ -639,8 +629,6 @@ bindings:
                             </div>
                         </div>
 
-                        <p>placeholder for water garbage</p>
-
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
@@ -689,9 +677,11 @@ bindings:
                             </div>
                         </div>
 
+                        <!--
                         <hr/>
                         <h3>Land Conditions</h3>
                         <p>placeholder for land garbage</p>
+                        -->
 
                         <div class="form-group mt-4">
                             <label for="notes">Site Conditions Notes</label>
@@ -723,13 +713,22 @@ bindings:
                 </div>
                 <div id="mobileOrganisms" class="collapse" aria-labelledby="addMobileOrganisms" data-parent="#accordion">
                     <div class="card-body">
-                        <p>-->Assign to another user.</p>
-                        <p><strong>Mobile Organism Identifications</strong></p>
-                        <p>Count how many of each type of mobile organism you found, then enter the number in the table below.
+                            <p><strong>Mobile Organism Identifications</strong></p>
+                            In the table below, enter each mobile organism species you identified and a count of how many you found.
+                            <ul>
+                                <li>In the first column, start typing either the commmon or scientific name of the mobile organism, then select it
+                                    from the dropdown menu.</li>
+                                <li>In the second column, enter in how many of that species you found.</li>
+                                <li>(Optional) In the third column, enter any notes or questions you have about what you found.</li>
+                            </ul>
+                            You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
+                            (Rows will automatically be added to the end of the table as you type.)
                         </p>
+                        <!--
                         <p>
                             You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
                         </p>
+                        -->
                         <div class="w-100" style="overflow: hidden;">
                             <div id="mobileOrganismsTable"></div>
                         </div>
@@ -761,11 +760,13 @@ bindings:
                 </div>
                 <div id="sessileOrganisms" class="collapse" aria-labelledby="addSessileOrganisms" data-parent="#accordion">
                     <div class="card-body">
-                        <p>-->Assign to another user.</p>
                         <p><strong>Sessile Organism Identifications</strong></p>
-                        <p>In the table below, select the sessile organism you found in the middle of each cross hatch.
-                            (See this diagram for help!)
+                        <p>In the table below, enter the sessile organism you identified in the middle of each cross hatch.
                         </p>
+                        <!--
+                        <p>(See this diagram for help!)
+                        </p>
+                        -->
                         <div class="w-100" style="overflow: hidden;">
                             <div id="sessileOrganismsTable"></div>
                         </div>
@@ -797,14 +798,15 @@ bindings:
                 </div>
                 <div id="waterQuality" class="collapse" aria-labelledby="addWaterQuality" data-parent="#accordion">
                     <div class="card-body">
-                        <p>-->Assign to another user.</p>
                         <p><strong>Water Quality Parameter Measurements</strong></p>
                         <p>For every water quality parameter you'd like to submit, select the method and then enter
                             the three measurements in the table below.
                         </p>
+                        <!--
                         <p>
                             You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
                         </p>
+                        -->
                         <div style="overflow: hidden;" class="w-100"></div>
                             <div id="waterQualityTable"></div>
                         </div>
@@ -836,7 +838,6 @@ bindings:
                 </div>
                 <div id="wildOysters" class="collapse" aria-labelledby="addWildOysters" data-parent="#accordion">
                     <div class="card-body">
-                        <p>-->Assign to another user.</p>
                         <p>Did you find any wild oysters?
                         </p>
                         <div class="form-group mt-4">
@@ -988,12 +989,14 @@ bindings:
             preventOverflow:    'horizontal',
             renderAllRows:      true,
             columns: [{
-                data:      'commonName',
-                editor:    false,
-                width:     20,
-            }, {
-                data:      'latinName',
-                editor:    false,
+                type:      'autocomplete',
+                strict:    false,
+                source:    [
+                {{ range $i, $organism := $.bindings.mobileOrganisms }}
+                    '{{ $organism.commonName }}',
+                    '{{ $organism.latinName }}',
+                {{ end }}
+                ],
                 width:     20,
             }, {
                 data:      'countOfSpecies',
@@ -1009,12 +1012,10 @@ bindings:
                 width:       20,
             }],
             colHeaders: [
-                'Common Name',
-                'Scientific Name',
+                'Common OR Latin Name',
                 '# of Organisms',
                 'Notes',
             ],
-            data: JSON.parse({{ jsonify $.bindings.mobileOrganisms }}),
         });
 
         var sessileOrganismsTable = new Handsontable(document.querySelector('#sessileOrganismsTable'), {
@@ -1030,10 +1031,15 @@ bindings:
             preventOverflow:    'horizontal',
             renderAllRows:      true,
             columns: [{
-                data:      'commonName',
-                editor:    false,
+                type:      'autocomplete',
+                strict:    false,
+                source:    [
+                {{ range $i, $organism := $.bindings.sessileOrganisms }}
+                    '{{ $organism.commonName }}',
+                    '{{ $organism.latinName }}',
+                {{ end }}
+                ],
                 width:     20,
-                type:      'dropdown',
             }, {
                 data:       'notes',
                 width:       20,
