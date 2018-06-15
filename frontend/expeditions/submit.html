@@ -1,4 +1,8 @@
 ---
+page:
+    body_class: 'container mt-1'
+    view:       'Enter Data'
+
 bindings:
 -   name:     'mobileOrganisms'
     resource: '/api/mobile-organisms/'
@@ -16,7 +20,6 @@ bindings:
 
 ---
 
-<h1>Enter Data</h1>
 <p>
     Click on the steps below to expand each section and enter your information.
     <!--(Need help? Check out the wiki!)-->
@@ -27,9 +30,9 @@ bindings:
     <!-- Step 1: Enter Expedition Metadata-->
     <!--         Enter information (like date and location) about the expedition. -->
     <!-- ########################################################################################### -->
-    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#enterdata1">
+    <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#enterdata1">
         <section class="container-fluid">
-            <div id="step1-header" class="blue">
+            <div class="blue">
                 <span class="fa-stack fa-3x">
                     <i class="fa fa-circle-o fa-stack-2x"></i>
                     <strong class="fa-stack-1x">1</strong>
@@ -40,6 +43,10 @@ bindings:
                 </span>
             </div>
         </section>
+
+        <div class="step-toggle">
+            <i class="fa"></i>
+        </div>
     </section>
 
     <section class="content collapse" id="enterdata1">
@@ -164,9 +171,9 @@ bindings:
     <!-- Step 2: Enter protocol data-->
     <!--          -->
     <!-- ########################################################################################### -->
-    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#enterdata2">
+    <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#enterdata2">
         <section class="container-fluid">
-            <div id="step1-header" class="blue">
+            <div id="step2-header" class="blue">
                 <span class="fa-stack fa-3x">
                     <i class="fa fa-circle-o fa-stack-2x"></i>
                     <strong class="fa-stack-1x">2</strong>
@@ -177,6 +184,10 @@ bindings:
                 </span>
             </div>
         </section>
+
+        <div class="step-toggle">
+            <i class="fa"></i>
+        </div>
     </section>
 
     <section class="content collapse" id="enterdata2">
@@ -200,7 +211,7 @@ bindings:
                 <div class="card-header" id="addOysterMeasurements">
                     <section class="shaded" data-toggle="collapse" data-target="#oysterMeasurement">
                         <section class="container-fluid">
-                            <div id="step1-header" class="blue">
+                            <div class="blue">
                                 <i class="fa fa-plus fa-2x"></i>
                                 <strong>Oyster Measurements</strong>
                             </div>
@@ -860,9 +871,9 @@ bindings:
     <!-- Step 3: Upload photos-->
     <!--          -->
     <!-- ########################################################################################### -->
-    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#enterdata3">
+    <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#enterdata3">
         <section class="container-fluid">
-            <div id="step1-header" class="blue">
+            <div class="blue">
                 <span class="fa-stack fa-3x">
                     <i class="fa fa-circle-o fa-stack-2x"></i>
                     <strong class="fa-stack-1x">3</strong>
@@ -873,6 +884,10 @@ bindings:
                 </span>
             </div>
         </section>
+
+        <div class="step-toggle">
+            <i class="fa"></i>
+        </div>
     </section>
 
     <section class="content collapse" id="enterdata3">
