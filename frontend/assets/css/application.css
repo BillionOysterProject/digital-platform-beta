@@ -375,19 +375,40 @@ form label {
     font-weight:     bold;
 }
 
-.expeditions-data-step {
-    border-bottom:   1px solid rgba(66, 108, 169, 0.5);
+.process-step {
+    border:          1px solid rgba(66, 108, 169, 0.5);
+    margin:          1em 0;
+    border-radius:   8px;
+    position:        relative;
 }
 
-.expeditions-data-step .step-toggle {
-    text-align:      center;
-    color:           #666666;
+.process-step > section {
+    padding:         15px;
+}
+
+.process-step .step-toggle {
+    position:         absolute;
+    top:              calc(50% - 9pt);
+    bottom:           calc(50% - 9pt);
+    right:            1em;
+    display:          inline-block;
+    text-align:       center;
+    /* background-color: #426CA9; */
+}
+
+.process-step .step-toggle i.fa {
+    color:           #426CA9;
     font-family:     FontAwesome;
-    content:         '\f077';
+    font-size:       18pt;
 }
 
-.expeditions-data-step.collapsed .step-toggle i.fa {
-    content:         '\f078';
+.process-step .step-toggle i.fa::after {
+    content:         '\f068';
+
+}
+
+.process-step.collapsed .step-toggle i.fa::after {
+    content:         '\f067';
 }
 
 .expeditions-data-table {
