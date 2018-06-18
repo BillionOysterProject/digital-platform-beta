@@ -21,7 +21,7 @@ class Metrics(Endpoint):
         return jsonify({
             'userCount':                users.count(),
             'teamCount':                teams.count(),
-            'teamLeadCount':            users.count('roles/team lead|team lead pending'),
+            'teamLeadCount':            users.count('roles/team lead|team lead pending|admin'),
             'teamMemberCount':          users.count('roles/team member|team member pending'),
             'teacherCount':             users.count('teamLeadType/teacher'),
             'orgCount':                 orgs.count(),

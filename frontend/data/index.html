@@ -1,5 +1,6 @@
 ---
 page:
+    body_class: 'container mt-1'
     view: View Data
 ---
 <section class="content">
@@ -14,7 +15,7 @@ page:
     <!-- Step 1: Expedition Filter -->
     <!--         Restrict which expeditions to retrieve data from by any/all of the below criteria. -->
     <!-- ########################################################################################### -->
-    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#xdata1">
+    <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#xdata1">
         <section class="container-fluid">
             <div id="step1-header" class="blue">
                 <span class="fa-stack fa-3x">
@@ -28,6 +29,10 @@ page:
                 </span>
             </div>
         </section>
+
+        <div class="step-toggle">
+            <i class="fa"></i>
+        </div>
     </section>
 
     <section class="content collapse" id="xdata1">
@@ -179,7 +184,7 @@ page:
     <!-- Step 2: Field Selection -->
     <!--         Select which fields should be retrieved. -->
     <!-- ########################################################################################### -->
-    <section class="content shaded expeditions-data-step" data-toggle="collapse" data-target="#xdata2">
+    <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#xdata2">
         <section class="container-fluid">
             <div id="step2-header" class="blue">
                 <span class="fa-stack fa-3x">
@@ -193,6 +198,10 @@ page:
                 </span>
             </div>
         </section>
+
+        <div class="step-toggle">
+            <i class="fa"></i>
+        </div>
     </section>
 
     <section class="content collapse" id="xdata2">
@@ -232,7 +241,7 @@ page:
     <!-- Step 3: View Report -->
     <!--         Show the report and provide options for exporting to common formats. -->
     <!-- ########################################################################################### -->
-    <section class="content shaded expeditions-data-step">
+    <section class="content shaded process-step collapsed">
         <section class="container-fluid">
             <div id="step3-header" class="blue">
                 <span class="fa-stack fa-3x">
