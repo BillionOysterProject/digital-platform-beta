@@ -348,7 +348,6 @@ nav + .content {
     width:            100%;
     padding:          15px;
     text-align:       center;
-    font-size:        30px;
     margin:           0;
 }
 
@@ -376,30 +375,42 @@ form label {
 }
 
 .process-step {
-    border:          1px solid rgba(66, 108, 169, 0.5);
-    margin:          1em 0;
+    border:          1px solid #37547B;
+    margin:          0.5em 0;
     border-radius:   8px;
     position:        relative;
+    padding:         0;
 }
 
 .process-step > section {
-    padding:         15px;
+    padding:         8px;
 }
 
-.process-step .step-toggle {
+.process-step h2 {
+    display: inline;
+    font-size:   1.4rem;
+    font-weight: bold;
+    color:      #37547B !important;
+}
+
+.step-toggle {
     position:         absolute;
     top:              calc(50% - 9pt);
     bottom:           calc(50% - 9pt);
     right:            1em;
     display:          inline-block;
     text-align:       center;
-    /* background-color: #426CA9; */
+}
+
+.process-step i.fa,
+.process-step .fa-stack,
+.process-step .fa-stack > * {
+    color:      #37547B;
 }
 
 .process-step .step-toggle i.fa {
-    color:           #426CA9;
     font-family:     FontAwesome;
-    font-size:       18pt;
+    font-size:       16pt;
 }
 
 .process-step .step-toggle i.fa::after {
@@ -409,6 +420,25 @@ form label {
 
 .process-step.collapsed .step-toggle i.fa::after {
     content:         '\f067';
+}
+
+.form .card-header h3 {
+    display: inline;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.form .card-header h3,
+.form .card-header i.fa {
+    color:      #37547B;
+}
+
+.form h4 {
+    font-size: 1.125rem;
+    font-weight: bold;
+    color:      #37547B;
+    width: 100%;
+    margin-bottom: 1em;
 }
 
 .expeditions-data-table {

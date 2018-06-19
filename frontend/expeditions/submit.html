@@ -20,11 +20,6 @@ bindings:
 
 ---
 
-<p>
-    Click on the steps below to expand each section and enter your information.
-    <!--(Need help? Check out the wiki!)-->
-</p>
-
 <form class="form mt-4">
     <!-- ########################################################################################### -->
     <!-- Step 1: Enter Expedition Metadata-->
@@ -32,16 +27,14 @@ bindings:
     <!-- ########################################################################################### -->
     <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#enterdata1">
         <section class="container-fluid">
-            <div class="blue">
-                <span class="fa-stack fa-3x">
-                    <i class="fa fa-circle-o fa-stack-2x"></i>
-                    <strong class="fa-stack-1x">1</strong>
-                </span>
+            <span class="fa-stack fa-3x">
+                <i class="fa fa-circle-o fa-stack-2x"></i>
+                <strong class="fa-stack-1x">1</strong>
+            </span>
 
-                <span>
-                    <strong>Enter information about your expedition.</strong>
-                </span>
-            </div>
+            <span>
+                <h2>Enter information about your expedition.</h2>
+            </span>
         </section>
 
         <div class="step-toggle">
@@ -173,16 +166,14 @@ bindings:
     <!-- ########################################################################################### -->
     <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#enterdata2">
         <section class="container-fluid">
-            <div id="step2-header" class="blue">
-                <span class="fa-stack fa-3x">
-                    <i class="fa fa-circle-o fa-stack-2x"></i>
-                    <strong class="fa-stack-1x">2</strong>
-                </span>
+            <span class="fa-stack fa-3x">
+                <i class="fa fa-circle-o fa-stack-2x"></i>
+                <strong class="fa-stack-1x">2</strong>
+            </span>
 
-                <span>
-                    <strong>Enter the data you collected.</strong>
-                </span>
-            </div>
+            <span>
+                <h2>Enter the data you collected.</h2>
+            </span>
         </section>
 
         <div class="step-toggle">
@@ -210,58 +201,59 @@ bindings:
             <div class="card border-1 mb-2">
                 <div class="card-header" id="addOysterMeasurements">
                     <section class="shaded" data-toggle="collapse" data-target="#oysterMeasurement">
-                        <section class="container-fluid">
-                            <div class="blue">
-                                <i class="fa fa-plus fa-2x"></i>
-                                <strong>Oyster Measurements</strong>
-                            </div>
-                        </section>
+                        <h3>Oyster Measurements</h3>
+
+                        <div class="step-toggle">
+                            <i class="fa fa-plus"></i>
+                        </div>
                     </section>
                 </div>
 
                 <div id="oysterMeasurement" class="collapse" aria-labelledby="addOysterMeasurements" data-parent="#accordion">
                     <div class="card-body">
-                        <p class="form-text mb-3">
-                            <!--
-                            <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6 form-group">
-                                        <label>Invite team members to enter data for this protocol:</label>
-                                        <input type="text" class="form-control">
-                                        <br />
-                                        <button tyle="button" class="btn btn-primary">
-                                            <i class="fa fa-envelope"></i>
-                                            Send Invite
-                                        </button>
-                                    </div>
+                        <!--
+                        <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 form-group">
+                                    <label>Invite team members to enter data for this protocol:</label>
+                                    <input type="text" class="form-control">
+                                    <br />
+                                    <button tyle="button" class="btn btn-primary">
+                                        <i class="fa fa-envelope"></i>
+                                        Send Invite
+                                    </button>
+                                </div>
 
-                                    <div class="col-sm-12 col-md-6 form-group">
-                                        <label>Team members who can edit this protocol:</label>
+                                <div class="col-sm-12 col-md-6 form-group">
+                                    <label>Team members who can edit this protocol:</label>
 
-                                        <ul class="list-group">
-                                            <li class="list-group-item">
-                                                Johnny Userface
-                                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <i>Sally Shrimphead (has not accepted)</i>
-                                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            Johnny Userface
+                                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <i>Sally Shrimphead (has not accepted)</i>
+                                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                            -->
-                            <p><strong>Oyster Measurements</strong></p>
-                            Enter the measurements of each live oyster on each substrate shell in the table below.
-                            <ul>
-                                <li>In the first column, enter the substrate shell number (#1-10).</li>
-                                <li>In the second column, enter the length (in millimeters) of
-                                each <strong>live</strong> oyster on that substrate shell.</li>
-                            </ul>
-                            You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
-                            (Rows will automatically be added to the end of the table as you type.)
+                        </div>
+                        -->
+                        <p>
+                            <strong>Measure Each Live Oyster</strong>
                         </p>
+
+                        Enter the measurements of each live oyster on each substrate shell in the table below.
+
+                        <ul>
+                            <li>In the first column, enter the substrate shell number (#1-10).</li>
+                            <li>In the second column, enter the length (in millimeters) of
+                            each <strong>live</strong> oyster on that substrate shell.</li>
+                        </ul>
+                        You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
+                        (Rows will automatically be added to the end of the table as you type.)
 
                         <div class="w-100" style="overflow: hidden;">
                             <div id="oysterMeasurementsTable"></div>
@@ -345,23 +337,21 @@ bindings:
             <div class="card border-1 mb-2">
                 <div class="card-header" id="addSiteConditions">
                     <section class="shaded" data-toggle="collapse" data-target="#siteConditions">
-                        <section class="container-fluid">
-                            <div id="step2-header" class="blue">
-                                <i class="fa fa-plus fa-2x"></i>
-                                <strong>Site Conditions</strong>
-                            </div>
-                        </section>
+                        <h3>Site Conditions</h3>
+
+                        <div class="step-toggle">
+                            <i class="fa fa-plus"></i>
+                        </div>
                     </section>
                 </div>
                 <div id="siteConditions" class="collapse" aria-labelledby="addSiteConditions" data-parent="#accordion">
                     <div class="card-body">
-                        <h3>Meteorological Conditions
-                        </h3>
+                        <h4>Meteorological Conditions</h4>
 
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="weatherConditions">Weather Conditions</label>
+                                    <label for="weatherConditions">Weather</label>
                                     <br/>
                                     <div class="btn-group btn-group-toggle">
                                         {{ range $i, $weatherCondition := $.page.weatherConditions }}
@@ -371,6 +361,7 @@ bindings:
                                             <input
                                                 type="radio"
                                                 name="weatherConditions"
+                                                value="{{ $weatherCondition.id }}"
                                             >
                                             {{ $weatherCondition.label }}
                                         </label>
@@ -442,6 +433,7 @@ bindings:
                                             <input
                                                 type="radio"
                                                 name="windDirection"
+                                                value="{{ $windDirection.id }}"
                                             >
                                             {{ $windDirection.label }}
                                         </label>
@@ -479,6 +471,7 @@ bindings:
                                     <input
                                         type="radio"
                                         name="recentRainfall.rainedIn7Days"
+                                        value="true"
                                     >
                                     Yes
                                 </label>
@@ -488,6 +481,7 @@ bindings:
                                     <input
                                         type="radio"
                                         name="recentRainfall.rainedIn7Days"
+                                        value="false"
                                     >
                                     No
                                 </label>
@@ -503,6 +497,7 @@ bindings:
                                     <input
                                         type="radio"
                                         name="recentRainfall.rainedIn72Hours"
+                                        value="true"
                                     >
                                     Yes
                                 </label>
@@ -512,6 +507,7 @@ bindings:
                                     <input
                                         type="radio"
                                         name="recentRainfall.rainedIn72Hours"
+                                        value="false"
                                     >
                                     No
                                 </label>
@@ -527,6 +523,7 @@ bindings:
                                     <input
                                         type="radio"
                                         name="recentRainfall.rainedIn24Hours"
+                                        value="true"
                                     >
                                     Yes
                                 </label>
@@ -536,6 +533,7 @@ bindings:
                                     <input
                                         type="radio"
                                         name="recentRainfall.rainedIn24Hours"
+                                        value="false"
                                     >
                                     No
                                 </label>
@@ -573,6 +571,7 @@ bindings:
                                             <input
                                                 type="radio"
                                                 name="waterColor"
+                                                value="{{ $waterColor.id }}"
                                             >
                                             {{ $waterColor.label }}
                                         </label>
@@ -594,6 +593,7 @@ bindings:
                                             <input
                                                 type="radio"
                                                 name="waterConditions.oilSheen"
+                                                value="true"
                                             >
                                             Yes
                                         </label>
@@ -603,6 +603,7 @@ bindings:
                                             <input
                                                 type="radio"
                                                 name="waterConditions.oilSheen"
+                                                value="false"
                                             >
                                             No
                                         </label>
@@ -623,6 +624,7 @@ bindings:
                                             <input
                                                 type="radio"
                                                 name="garbage.garbagePresent"
+                                                value="true"
                                             >
                                             Yes
                                         </label>
@@ -632,6 +634,7 @@ bindings:
                                             <input
                                                 type="radio"
                                                 name="garbage.garbagePresent"
+                                                value="false"
                                             >
                                             No
                                         </label>
@@ -655,6 +658,7 @@ bindings:
                                             <input
                                                 type="radio"
                                                 name="CSOPipeFlow"
+                                                value="{{ $pipeFlow.id }}"
                                             >
                                             {{ $pipeFlow.label }}
                                         </label>
@@ -679,6 +683,7 @@ bindings:
                                             <input
                                                 type="radio"
                                                 name="otherPipeFlow"
+                                                value="{{ $pipeFlow.id }}"
                                             >
                                             {{ $pipeFlow.label }}
                                         </label>
@@ -715,10 +720,8 @@ bindings:
                 <div class="card-header" id="addMobileOrganisms">
                     <section class="shaded" data-toggle="collapse" data-target="#mobileOrganisms">
                         <section class="container-fluid">
-                            <div id="step2-header" class="blue">
-                                <i class="fa fa-plus fa-2x"></i>
-                                <strong>Mobile Organisms</strong>
-                            </div>
+                            <i class="fa fa-plus fa-2x"></i>
+                            <strong>Mobile Organisms</strong>
                         </section>
                     </section>
                 </div>
@@ -762,10 +765,8 @@ bindings:
                 <div class="card-header" id="addSessileOrganisms">
                     <section class="shaded" data-toggle="collapse" data-target="#sessileOrganisms">
                         <section class="container-fluid">
-                            <div id="step2-header" class="blue">
-                                <i class="fa fa-plus fa-2x"></i>
-                                <strong>Sessile Organisms</strong>
-                            </div>
+                            <i class="fa fa-plus fa-2x"></i>
+                            <h3>Sessile Organisms</h3>
                         </section>
                     </section>
                 </div>
@@ -778,9 +779,32 @@ bindings:
                         <p>(See this diagram for help!)
                         </p>
                         -->
-                        <div class="w-100" style="overflow: hidden;">
-                            <div id="sessileOrganismsTable"></div>
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="collapse" href="#settlementTile0">Settlement Tile 1</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="collapse" href="#settlementTile1">Settlement Tile 2</a>
+                            </li>
+                        </ul>
+
+                        <div class="w-100" style="overflow: hidden;" class="collapse" id="settlementTile0">
+                            <div id="sessileOrganismsTable_0"></div>
                         </div>
+
+                        <div class="w-100" style="overflow: hidden;" class="collapse" id="settlementTile1">
+                            <div id="sessileOrganismsTable_1"></div>
+                        </div>
+
+                        <div class="w-100" style="overflow: hidden;" class="collapse" id="settlementTile2">
+                            <div id="sessileOrganismsTable_2"></div>
+                        </div>
+
+                        <div class="w-100" style="overflow: hidden;" class="collapse" id="settlementTile3">
+                            <div id="sessileOrganismsTable_3"></div>
+                        </div>
+
                         <div class="form-group mt-4">
                             <label for="notes">Sessile Organisms Notes</label>
                             <textarea
@@ -800,10 +824,8 @@ bindings:
                 <div class="card-header" id="addWaterQuality">
                     <section class="shaded" data-toggle="collapse" data-target="#waterQuality">
                         <section class="container-fluid">
-                            <div id="step2-header" class="blue">
-                                <i class="fa fa-plus fa-2x"></i>
-                                <strong>Water Quality</strong>
-                            </div>
+                            <i class="fa fa-plus fa-2x"></i>
+                            <h3>Water Quality</h3>
                         </section>
                     </section>
                 </div>
@@ -840,10 +862,8 @@ bindings:
                 <div class="card-header" id="addWildOysters">
                     <section class="shaded" data-toggle="collapse" data-target="#wildOysters">
                         <section class="container-fluid">
-                            <div id="step2-header" class="blue">
-                                <i class="fa fa-bullhorn fa-2x"></i>
-                                <strong>Report a wild oyster sighting</strong>
-                            </div>
+                            <i class="fa fa-bullhorn fa-2x"></i>
+                            <h3>Report a wild oyster sighting</h3>
                         </section>
                     </section>
                 </div>
@@ -873,16 +893,14 @@ bindings:
     <!-- ########################################################################################### -->
     <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#enterdata3">
         <section class="container-fluid">
-            <div class="blue">
-                <span class="fa-stack fa-3x">
-                    <i class="fa fa-circle-o fa-stack-2x"></i>
-                    <strong class="fa-stack-1x">3</strong>
-                </span>
+            <span class="fa-stack fa-3x">
+                <i class="fa fa-circle-o fa-stack-2x"></i>
+                <strong class="fa-stack-1x">3</strong>
+            </span>
 
-                <span>
-                    <strong>Upload and tag any photos you took.</strong>
-                </span>
-            </div>
+            <span>
+                <h2>Upload and tag any photos you took.</h2>
+            </span>
         </section>
 
         <div class="step-toggle">
@@ -1033,37 +1051,39 @@ bindings:
             ],
         });
 
-        var sessileOrganismsTable = new Handsontable(document.querySelector('#sessileOrganismsTable'), {
-            stretchH:           'all',
-            autoWrapRow:        true,
-            minSpareRows:       1,
-            startRows:          25,
-            maxRows:            100,
-            manualRowResize:    true,
-            manualColumnResize: true,
-            contextMenu:        true,
-            rowHeaders:         true,
-            preventOverflow:    'horizontal',
-            renderAllRows:      true,
-            columns: [{
-                type:      'autocomplete',
-                strict:    false,
-                source:    [
-                {{ range $i, $organism := $.bindings.sessileOrganisms }}
-                    '{{ $organism.commonName }}',
-                    '{{ $organism.latinName }}',
-                {{ end }}
+        window.createSessileOrganismsTable = function(index) {
+            new Handsontable(document.querySelector('#sessileOrganismsTable_' + index), {
+                stretchH:           'all',
+                autoWrapRow:        true,
+                minSpareRows:       1,
+                startRows:          25,
+                maxRows:            100,
+                manualRowResize:    true,
+                manualColumnResize: true,
+                contextMenu:        true,
+                rowHeaders:         true,
+                preventOverflow:    'horizontal',
+                renderAllRows:      true,
+                columns: [{
+                    type:      'autocomplete',
+                    strict:    false,
+                    source:    [
+                    {{ range $i, $organism := $.bindings.sessileOrganisms }}
+                        '{{ $organism.commonName }}',
+                        '{{ $organism.latinName }}',
+                    {{ end }}
+                    ],
+                    width:     20,
+                }, {
+                    data:       'notes',
+                    width:       20,
+                }],
+                colHeaders: [
+                    'Common Name',
+                    'Notes',
                 ],
-                width:     20,
-            }, {
-                data:       'notes',
-                width:       20,
-            }],
-            colHeaders: [
-                'Common Name',
-                'Notes',
-            ],
-        });
+            });
+        };
 
         var waterQualityTable = new Handsontable(document.querySelector('#waterQualityTable'), {
             stretchH:          'all',
@@ -1105,5 +1125,10 @@ bindings:
                 'Result #3',
             ],
         });
+
+        createSessileOrganismsTable(0);
+        createSessileOrganismsTable(1);
+        createSessileOrganismsTable(2);
+        createSessileOrganismsTable(3);
     })
 </script>

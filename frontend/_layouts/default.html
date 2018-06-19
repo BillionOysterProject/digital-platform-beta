@@ -42,7 +42,7 @@ flags:
         {{ template "user-navbar" . }}
         {{ if and .page.view (not .page.notitle) }}
         <section class="content shaded text-center">
-            <h2>{{ .page.view }}</h2>
+            <h1>{{ .page.view }}</h1>
         </section>
         {{ end }}
         <section class="content-body {{ .page.body_class }}">

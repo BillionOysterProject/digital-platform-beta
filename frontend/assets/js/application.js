@@ -1,51 +1,129 @@
 'use strict';
 
 // return whether the input is null OR undefined
-window.isEmpty = function(v) {
-    if(v === null || v === undefined) {
+window.isEmpty = function (v) {
+    if (v === null || v === undefined) {
         return true;
     }
 
     return false;
 };
 
-$(function(){
+window.qs = function() {
+    var queries = {};
+
+    $.each(document.location.search.substr(1).split('&'),function(c,q){
+        var i = q.split('=', 2);
+
+        if (i.length == 2) {
+            queries[i[0].toString()] = i[1].toString();
+        }
+    });
+
+    return queries;
+};
+
+$(function () {
     Raven.config('https://5f7fe95584dc40f8adfd06ead1d1748c@sentry.io/1199998').install();
 
-    Raven.context(function() {
+    Raven.context(function () {
         var App = Stapes.subclass({
-            constructor: function() {
+            constructor: function () {
                 this.setupAjaxIntercept();
                 this.setupFormIntercept();
                 this.setupTypeaheadHandlers();
                 this.updateActiveMenuItem();
+                this.expandProcessStep();
+                this.handleCollapseEvents();
+
+
+                // handle button toggles
+                this.handleToggleButtons();
+                this.syncToggleButtonStates();
             },
 
-            setupAjaxIntercept: function() {
-                $(document).ajaxError(function(e, res, xhr) {
+            // setup collapse event handlers
+            handleCollapseEvents: function() {
+                $(window).on('shown.bs.collapse', function(e) {
+                    var target = $(e.target);
+                    var id = e.target.id;
+
+                    if (id) {
+                        if ($('[data-target="#' + id + '"]').hasClass('process-step')) {
+                            var q = qs();
+
+                            q.step = id;
+                            history.pushState(null, null, location.pathname + '?' + $.param(q));
+                        }
+                    }
+                }.bind(this));
+            },
+
+            expandProcessStep: function() {
+                var q = qs();
+
+                if (q.step) {
+                    $('#' + q.step).collapse('show');
+                }
+            },
+
+            // turns "btn-group-toggle" elements into a kind of radio button
+            handleToggleButtons: function () {
+                $('.btn-group-toggle input').on('click', function(e) {
+                    var input = $(e.target);
+
+                    if (input.length) {
+                        var toggle = input.closest('.btn-group-toggle');
+
+                        if (toggle.length) {
+                            if (input.attr('value') && input.attr('name')) {
+                                toggle.attr('data-field-value', input.attr('value'));
+                                this.syncToggleButtonStates();
+                            }
+                        }
+                    }
+                }.bind(this));
+            },
+
+            syncToggleButtonStates: function() {
+                $('.btn-group-toggle[data-field-value]').each(function(i, e) {
+                    var toggle = $(e);
+                    var value = toggle.attr('data-field-value');
+
+                    if (toggle.length && value.length) {
+                        var input = toggle.find('input[value="' + value + '"]');
+
+                        toggle.find('.btn').removeClass('active');
+                        input.closest('.btn').addClass('active');
+                    }
+                }.bind(this));
+            },
+
+            setupAjaxIntercept: function () {
+                $(document).ajaxError(function (e, res, xhr) {
                     Raven.captureMessage('HTTP ' + res.status, {
                         'level': 'warning',
                         'extra': {
-                            'status':   res.status,
-                            'payload':  (res.responseJSON || res.responseText),
-                            'request':  xhr,
+                            'status': res.status,
+                            'payload': (res.responseJSON || res.responseText),
+                            'request': xhr,
                         },
                     });
                 });
             },
 
-            setupFormIntercept: function() {
+            setupFormIntercept: function () {
                 // prevent normal form submissions, we'll handle them here
-                $('form').on('submit', function(e){
+                $('form').on('submit', function (e) {
                     try {
                         var st = $(e.currentTarget).attr('data-form-type');
 
-                        if(st === 'traditional' || st === 'custom') {
+                        if (st === 'traditional' || st === 'custom') {
                             return;
                         }
 
                         this.submitForm(e);
-                    } catch(e) {
+                    } catch (e) {
                         this.notify('Form Error: ' + e.message, 'error');
                     }
 
@@ -53,7 +131,7 @@ $(function(){
                 }.bind(this));
             },
 
-            submitForm: function(event){
+            submitForm: function (event) {
                 var form = $(event.target);
                 var formEl = form.get(0);
                 var url = '';
@@ -70,27 +148,27 @@ $(function(){
                 var createNew = true;
                 var record = {};
 
-                $.each(form.serializeArray(), function(i, field) {
-                    if(field.value == '' || field.value == '0'){
+                $.each(form.serializeArray(), function (i, field) {
+                    if (field.value == '' || field.value == '0') {
                         delete field['value'];
                     }
 
 
-                    if(field.name == "_id"){
-                        if(field.value){
+                    if (field.name == "_id") {
+                        if (field.value) {
                             createNew = false;
                         }
 
                         record['_id'] = field.value;
-                    }else if(!isEmpty(field.value)){
+                    } else if (!isEmpty(field.value)) {
                         record[field.name] = field.value;
                     }
                 });
 
                 $.ajax(url, {
                     method: (form.attr('method') || (createNew ? 'POST' : 'PUT')),
-                    data:   record,
-                    success: function(){
+                    data: record,
+                    success: function () {
                         var redirectTo = '/';
 
                         if (form.data('redirect-to')) {
@@ -101,7 +179,7 @@ $(function(){
 
                         location.href = redirectTo;
                     }.bind(this),
-                    error: function(data) {
+                    error: function (data) {
                         console.error('Form Error:', data);
                         this.showResponseError(data);
                     }.bind(this),
@@ -109,7 +187,7 @@ $(function(){
             },
 
             // show a notification alert bubble
-            notify: function(message, type, details, config){
+            notify: function (message, type, details, config) {
                 $.notify($.extend(details, {
                     'message': message,
                 }), $.extend(config, {
@@ -118,39 +196,39 @@ $(function(){
             },
 
             // show a notification bubble for response errors
-            showResponseError: function(response){
+            showResponseError: function (response) {
                 this.notify(response.responseText, 'danger', {
                     'icon': 'fa fa-warning',
                     'title': '<b>' +
-                        response.statusText + ' (HTTP '+response.status.toString()+')' +
+                        response.statusText + ' (HTTP ' + response.status.toString() + ')' +
                         '<br />' +
-                    '</b>',
+                        '</b>',
                 });
             },
 
-            setupTypeaheadHandlers: function() {
+            setupTypeaheadHandlers: function () {
                 // setup typeahead for fields that have it
-                $('.typeahead').each(function(i, el){
+                $('.typeahead').each(function (i, el) {
                     el = $(el);
 
                     el.typeahead({
                         highlight: true,
                         async: true,
-                    },{
+                    }, {
                         limit: parseInt(el.data('typeahead-limit') || 9),
-                        source: function(query, _, asyncResults){
+                        source: function (query, _, asyncResults) {
                             var url = el.data('typeahead-url');
                             var field = el.data('typeahead-field');
 
-                            if(url){
+                            if (url) {
                                 url = url.replace('{}', query.replace(/^\//, ''));
 
                                 $.ajax(url, {
-                                    success: function(data){
+                                    success: function (data) {
                                         if (field) {
                                             var results = [];
 
-                                            $.each(data, function(i, value) {
+                                            $.each(data, function (i, value) {
                                                 if ($.isPlainObject(value)) {
                                                     results.push(value[field]);
                                                 }
@@ -169,8 +247,8 @@ $(function(){
                 }.bind(this));
             },
 
-            genericMapClickHandler: function(map, layers) {
-                return function(e) {
+            genericMapClickHandler: function (map, layers) {
+                return function (e) {
                     try {
                         var features = map.queryRenderedFeatures(e.point, {
                             "layers": layers,
@@ -194,19 +272,20 @@ $(function(){
                             }
                         }
 
-                        var currentPopup = new mapboxgl.Popup({ offset: [0, -15] })
+                        var currentPopup = new mapboxgl.Popup({
+                                offset: [0, -15]
+                            })
                             .setLngLat(feature.geometry.coordinates)
                             .setHTML('<p>' + feature.properties.description + '</p>')
                             .setLngLat(feature.geometry.coordinates)
                             .addTo(map);
-                    } catch(e) {
-                        ;
+                    } catch (e) {;
                     }
                 }
             },
 
-            genericMapHoverHandler: function(map, layers) {
-                return function(e) {
+            genericMapHoverHandler: function (map, layers) {
+                return function (e) {
                     var features = map.queryRenderedFeatures(e.point, {
                         "layers": layers,
                     })
@@ -219,13 +298,11 @@ $(function(){
                 };
             },
 
-            updateActiveMenuItem: function() {
+            updateActiveMenuItem: function () {
                 var pathComponents = window.location.pathname.split('/');
 
                 $("[data-menu-triggers] .dropdown-menu").removeClass('show');
                 $("[data-menu-triggers]").removeClass('show');
-
-                console.debug(pathComponents);
 
                 if (pathComponents.length > 1) {
                     var expandSelector = "[data-menu-triggers~='" + pathComponents[1] + "']";
