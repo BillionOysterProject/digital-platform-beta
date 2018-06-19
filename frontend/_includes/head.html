@@ -60,6 +60,7 @@ ga('send', 'pageview');
 -->
 
 <!-- Application CSS Files -->
+{{ if nex (qs `style`) `none` }}
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/css/bootstrap3-panel.css">
 <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">
@@ -74,3 +75,4 @@ ga('send', 'pageview');
 <link rel="stylesheet" href="assets/css/typeahead.css">
 <link rel="stylesheet" href="assets/css/handsontable.full.min.css">
 <link rel="stylesheet" href="assets/css/application.css">
+{{ end }}

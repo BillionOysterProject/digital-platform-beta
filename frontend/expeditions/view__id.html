@@ -1,20 +1,20 @@
 ---
 bindings:
-- name:     'expedition'
-  resource: ':/api/expeditions/{{ param 1 }}'
+-   name:     'expedition'
+    resource: ':/api/expeditions/{{ param 1 }}'
 
-- name:     'team'
-  resource: ':/api/teams/{{ .bindings.expedition.team._id }}'
+-   name:     'team'
+    resource: ':/api/teams/{{ .bindings.expedition.team._id }}'
 
-- name:     'organization'
-  resource: ':/api/school-orgs/{{ .bindings.expedition.team.schoolOrg._id }}'
+-   name:     'organization'
+    resource: ':/api/school-orgs/{{ .bindings.expedition.team.schoolOrg._id }}'
 
-- name:     'photos'
-  resource: '/api/expeditions/photos'
-  optional: true
-  fallback: []
-  params:
-    q: '_id/{{ param 1}}'
+-   name:     'photos'
+    resource: '/api/expeditions/photos'
+    optional: true
+    fallback: []
+    params:
+        q: '_id/{{ param 1}}'
 ---
 {{ $expedition := $.bindings.expedition }}
 {{ $photos     := $.bindings.photos }}
