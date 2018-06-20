@@ -713,17 +713,12 @@ bindings:
             <!-- BEGIN Mobile Organisms -->
             <div class="card border-1 mb-2">
                 <div class="card-header" id="addMobileOrganisms">
-<<<<<<< HEAD
-                    <section class="shaded" data-toggle="collapse" data-target="#mobileOrganisms">
-                        <h3>Mobile Organisms</h3>
-=======
                     <section class="shaded collapsed" data-toggle="collapse" data-target="#mobileOrganisms">
                         <h3>Mobile Organisms</h3>
 
                         <div class="step-toggle">
                             <i class="fa"></i>
                         </div>
->>>>>>> 0de7915876fc158d87bda37c9ced5c8958b87130
                     </section>
                     <div class="step-toggle">
                         <i class="fa fa-plus"></i>
@@ -739,21 +734,11 @@ bindings:
                                     from the dropdown menu.</li>
                                 <li>Column 2: enter in how many of that species you found.</li>
                             </ul>
-<<<<<<< HEAD
-
-
-                        <div class="w-100" style="overflow: hidden;">
-=======
                             You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
                             (Rows will automatically be added to the end of the table as you type.)
                         </p>
-                        <!--
-                        <p>
-                            You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
-                        </p>
-                        -->
+
                         <div class="spreadsheet">
->>>>>>> 0de7915876fc158d87bda37c9ced5c8958b87130
                             <div id="mobileOrganismsTable"></div>
                         </div>
                         <div class="form-group mt-4">
@@ -773,18 +758,11 @@ bindings:
             <!-- BEGIN Sessile Organisms -->
             <div class="card border-1 mb-2">
                 <div class="card-header" id="addSessileOrganisms">
-<<<<<<< HEAD
-                    <section class="shaded" data-toggle="collapse" data-target="#sessileOrganisms">
-                        <h3>Sessile Organisms</h3>
-                        <div class="step-toggle">
-                            <i class="fa fa-plus"></i>
-=======
                     <section class="shaded collapsed" data-toggle="collapse" data-target="#sessileOrganisms">
                         <h3>Sessile Organisms</h3>
 
                         <div class="step-toggle">
                             <i class="fa"></i>
->>>>>>> 0de7915876fc158d87bda37c9ced5c8958b87130
                         </div>
                     </section>
                 </div>
@@ -794,32 +772,6 @@ bindings:
                         <p>
                             In the table below, enter each <strong>sessile organism species</strong> you identified at the center of each cross hatch.
                         </p>
-<<<<<<< HEAD
-
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="collapse" href="#settlementTile0">Settlement Tile 1</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="collapse" href="#settlementTile1">Settlement Tile 2</a>
-                            </li>
-                        </ul>
-
-                        <div class="w-100" style="overflow: hidden;" class="collapse" id="settlementTile0">
-                            <div id="sessileOrganismsTable_0"></div>
-                        </div>
-
-                        <div class="w-100" style="overflow: hidden;" class="collapse" id="settlementTile1">
-                            <div id="sessileOrganismsTable_1"></div>
-                        </div>
-
-                        <div class="w-100" style="overflow: hidden;" class="collapse" id="settlementTile2">
-                            <div id="sessileOrganismsTable_2"></div>
-                        </div>
-=======
-                        -->
->>>>>>> 0de7915876fc158d87bda37c9ced5c8958b87130
 
                         <div class="spreadsheet">
                             <div id="sessileOrganismsTable"></div>
@@ -842,18 +794,11 @@ bindings:
             <!-- BEGIN Water Quality -->
             <div class="card border-1 mb-2">
                 <div class="card-header" id="addWaterQuality">
-<<<<<<< HEAD
-                    <section class="shaded" data-toggle="collapse" data-target="#waterQuality">
-                        <h3>Water Quality</h3>
-                        <div class="step-toggle">
-                            <i class="fa fa-plus"></i>
-=======
                     <section class="shaded collapsed" data-toggle="collapse" data-target="#waterQuality">
                         <h3>Water Quality</h3>
 
                         <div class="step-toggle">
                             <i class="fa"></i>
->>>>>>> 0de7915876fc158d87bda37c9ced5c8958b87130
                         </div>
                     </section>
                 </div>
@@ -887,12 +832,6 @@ bindings:
             <!-- BEGIN Report a Wild Oyster -->
             <div class="card border-1">
                 <div class="card-header" id="addWildOysters">
-<<<<<<< HEAD
-                    <section class="shaded" data-toggle="collapse" data-target="#wildOysters">
-                        <h3>Report a wild oyster sighting</h3>
-                        <div class="step-toggle">
-                            <i class="fa fa-bullhorn"></i>
-=======
                     <section class="shaded collapsed" data-toggle="collapse" data-target="#wildOysters">
                         <h3>
                             Report a wild oyster sighting
@@ -900,7 +839,6 @@ bindings:
 
                         <div class="step-toggle">
                             <i class="fa"></i>
->>>>>>> 0de7915876fc158d87bda37c9ced5c8958b87130
                         </div>
                     </section>
                 </div>
@@ -997,85 +935,10 @@ bindings:
                 width = body.width();
             }
 
-<<<<<<< HEAD
-        var mobileOrganismsTable = new Handsontable(document.querySelector('#mobileOrganismsTable'), {
-            stretchH:          'all',
-            autoWrapRow:       true,
-            minSpareRows:       5,
-            startRows:          5,
-            maxRows:            100,
-            manualRowResize:    true,
-            manualColumnResize: true,
-            contextMenu:        true,
-            rowHeaders:         true,
-            preventOverflow:    'horizontal',
-            renderAllRows:      true,
-            columns: [{
-                type:      'autocomplete',
-                strict:    false,
-                source:    [
-                {{ range $i, $organism := $.bindings.mobileOrganisms }}
-                    '{{ $organism.commonName }}',
-                    '{{ $organism.latinName }}',
-                {{ end }}
-                ],
-                width:     20,
-            }, {
-                data:      'countOfSpecies',
-                type:      'numeric',
-                validator: 'valid-species-count',
-                width:      20,
-                numericFormat: {
-                    pattern: '0',
-                    culture: 'en-US',
-                },
-            }, {
-                data:       'notes',
-                width:       20,
-            }],
-            colHeaders: [
-                'Common OR Scientific Name',
-                '# of Organisms',
-                'Notes (Optional)',
-            ],
-        });
-
-        window.createSessileOrganismsTable = function(index) {
-            new Handsontable(document.querySelector('#sessileOrganismsTable_' + index), {
-                stretchH:           'all',
-                autoWrapRow:        true,
-                startRows:          25,
-                maxRows:            100,
-                manualRowResize:    true,
-                manualColumnResize: true,
-                contextMenu:        true,
-                rowHeaders:         true,
-                preventOverflow:    'horizontal',
-                renderAllRows:      true,
-                columns: [{
-                    type:      'autocomplete',
-                    strict:    false,
-                    source:    [
-                    {{ range $i, $organism := $.bindings.sessileOrganisms }}
-                        '{{ $organism.commonName }}',
-                        '{{ $organism.latinName }}',
-                    {{ end }}
-                    ],
-                    width:     20,
-                }, {
-                    data:       'notes',
-                    width:       20,
-                }],
-                colHeaders: [
-                    'Common or Scientific Name',
-                    'Notes (Optional)',
-                ],
-=======
             $.each(tables, function(i, table){
                 table.updateSettings({
                     width: width,
                 });
->>>>>>> 0de7915876fc158d87bda37c9ced5c8958b87130
             });
         });
 
