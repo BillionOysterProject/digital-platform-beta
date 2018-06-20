@@ -380,6 +380,8 @@ form label {
     border-radius:   8px;
     position:        relative;
     padding:         0;
+    user-select:     none;
+    cursor:          pointer;
 }
 
 .process-step > section {
@@ -387,7 +389,7 @@ form label {
 }
 
 .process-step h2 {
-    display: inline;
+    display:     inline;
     font-size:   1.4rem;
     font-weight: bold;
     color:      #37547B !important;
@@ -408,24 +410,32 @@ form label {
     color:      #37547B;
 }
 
-.process-step .step-toggle i.fa {
+.step-toggle > i.fa {
     font-family:     FontAwesome;
     font-size:       16pt;
 }
 
-.process-step .step-toggle i.fa::after {
+*[data-toggle="collapse"] > .step-toggle > i.fa::after {
     content:         '\f068';
-
 }
 
-.process-step.collapsed .step-toggle i.fa::after {
+*[data-toggle="collapse"].collapsed > .step-toggle > i.fa::after {
     content:         '\f067';
+}
+
+.form .card-header {
+    user-select: none;
+    cursor: pointer;
 }
 
 .form .card-header h3 {
     display: inline;
     font-size: 1.25rem;
     font-weight: bold;
+}
+
+.form .card-header {
+    position: relative;
 }
 
 .form .card-header h3,
@@ -1804,9 +1814,10 @@ li.loading-dialog {
 }
 
 /* fix Handsontable height issues (see: https://github.com/handsontable/handsontable/issues/3432#issuecomment-218442750) */
-.wtHolder {
+.ht_master .wtHolder {
   width: auto !important;
   height: auto !important;
+  overflow: hidden;
 }
 
 .wtHider {
@@ -1823,4 +1834,15 @@ li.loading-dialog {
 
 .ht_clone_top, .ht_clone_left, .ht_clone_top_left_corner {
   z-index: 1 !important;
+}
+
+
+.spreadsheet {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.card .spreadsheet {
+
 }
