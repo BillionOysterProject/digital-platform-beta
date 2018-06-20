@@ -23,12 +23,28 @@ window.qs = function() {
     return queries;
 };
 
+window.validatePositive = function(checkvalue) {
+    return function(value, callback){
+        try {
+            if ($.isNumeric(value) && checkvalue(value)) {
+                callback(true);
+                return;
+            }
+        } catch(e) {
+            ;
+        }
+
+        callback(false);
+    }
+};
+
 $(function () {
     Raven.config('https://5f7fe95584dc40f8adfd06ead1d1748c@sentry.io/1199998').install();
 
     Raven.context(function () {
         var App = Stapes.subclass({
             constructor: function () {
+                this.setupHandsontable();
                 this.setupAjaxIntercept();
                 this.setupFormIntercept();
                 this.setupTypeaheadHandlers();
@@ -40,6 +56,7 @@ $(function () {
                 // handle button toggles
                 this.handleToggleButtons();
                 this.syncToggleButtonStates();
+
             },
 
             // setup collapse event handlers
@@ -310,6 +327,40 @@ $(function () {
                     $(expandSelector + ' .dropdown-menu').addClass('show');
                     $(expandSelector).addClass('show');
                 }
+            },
+
+            setupHandsontable: function() {
+                Handsontable.validators.registerValidator('valid-settlement-tile', validatePositive(function(v){
+                    return (v > 0) && (v <= 10) && Math.floor(v) == v;
+                }));
+
+                Handsontable.validators.registerValidator('valid-oyster', validatePositive(function(v) {
+                    return (v > 0) && (v < 250);
+                }));
+
+                Handsontable.validators.registerValidator('valid-species-count', validatePositive(function(v) {
+                    return (v >= 0);
+                }));
+            },
+
+            createTable: function(selector, headers, columns, config) {
+                config = $.extend(true, {}, {
+                    stretchH:           'all',
+                    autoWrapRow:        true,
+                    minSpareRows:       5,
+                    startRows:          5,
+                    maxRows:            100,
+                    manualRowResize:    true,
+                    manualColumnResize: true,
+                    contextMenu:        false,
+                    rowHeaders:         true,
+                    preventOverflow:    'horizontal',
+                }, (config || {}));
+
+                return new Handsontable($(selector).get(0), $.extend(true, {}, config, {
+                    columns:    columns,
+                    colHeaders: headers,
+                }));
             },
         });
 
