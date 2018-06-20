@@ -244,14 +244,17 @@ bindings:
                         <p>
                             <strong>Measure Each Live Oyster</strong>
                         </p>
+                        <p>
+                            Enter the measurements of all of the live oysters on each tagged substrate shell in the table below.
+                        </p>
 
-                        Enter the measurements of each live oyster on each tagged substrate shell in the table below.
 
                         <ul>
-                            <li>In the first column, enter the tag number (#1-10).</li>
-                            <li>In the second column, enter the length (in millimeters) of
-                            each <strong>live</strong> oyster on that substrate shell.</li>
+                            <li>Column 1: enter the <strong>tag number</strong> (#1-10). </li>
+                            <li>Column 2: enter the <strong>length (in millimeters) of
+                            one of the live oysters</strong> on that substrate shell. Only enter one oyster measurement per cell.</li>
                         </ul>
+                        <p>Fill in a new row for each oyster measurement.</p>
                         <p class="mb-3">
                             You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
                             (Rows will automatically be added to the end of the table as you type.)
@@ -262,10 +265,10 @@ bindings:
                         </div>
 
                         <div class="alert alert-info form-text mt-4" role="alert">
-                            <small>
+                            <p>
                             Note: If you see a red background in a cell, check your numbers!  The substrate shell column accepts values from 1-10,
                             and the oyster length column accepts values from 1-250.
-                            </small>
+                            </p>
                         </div>
 
                         <div class="form-group mt-4">
@@ -727,16 +730,13 @@ bindings:
                 <div id="mobileOrganisms" class="collapse" aria-labelledby="addMobileOrganisms" data-parent="#accordion">
                     <div class="card-body">
                             <p><strong>Mobile Organism Identifications</strong></p>
-                            In the table below, enter each <strong>mobile organism species</strong> you identified and a <strong>count</strong> of how many you found.
+                            Enter each mobile organism species you identified and a count of how many you found in the table below .
                             </p>
                             <ul>
-                                <li>Column 1: start typing either the commmon or scientific name of the mobile organism, then select it
+                                <li>Column 1: start typing either the <strong>commmon or scientific name</strong> of the mobile organism, then select it
                                     from the dropdown menu.</li>
-                                <li>Column 2: enter in how many of that species you found.</li>
+                                <li>Column 2: enter in a <strong>count</strong> of how many of that species you found.</li>
                             </ul>
-                            You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
-                            (Rows will automatically be added to the end of the table as you type.)
-                        </p>
 
                         <div class="spreadsheet">
                             <div id="mobileOrganismsTable"></div>
@@ -770,7 +770,11 @@ bindings:
                     <div class="card-body">
                         <p><strong>Sessile Organism Identifications</strong></p>
                         <p>
-                            In the table below, enter each <strong>sessile organism species</strong> you identified at the center of each cross hatch.
+                            Enter each sessile organism species you identified on your settlement tiles in the table below.
+                        </p>
+                        <p>
+                            In column 1, start typing either the <strong>commmon or scientific name</strong> of the sessile organism, then select it
+                            from the dropdown menu.
                         </p>
 
                         <div class="spreadsheet">
@@ -958,7 +962,7 @@ bindings:
                     if (!tables.oysterMeasurements) {
                         // setup the oyster measurements table
                         tables.oysterMeasurements = bop.createTable('#oysterMeasurementsTable', [
-                            'Substrate Shell No.',
+                            'Tag Number',
                             'Oyster Length (mm)',
                         ], [{
                             data:      'substrateShellNumber',
@@ -983,9 +987,9 @@ bindings:
                 if (target.find('#mobileOrganismsTable').length) {
                     if (!tables.mobileOrganisms) {
                         tables.mobileOrganisms = bop.createTable('#mobileOrganismsTable', [
-                            'Common OR Latin Name',
+                            'Common OR Scientific Name',
                             '# of Organisms',
-                            'Notes',
+                            'Notes (Optional)',
                         ], [{
                             type:      'autocomplete',
                             strict:    false,
@@ -1018,8 +1022,8 @@ bindings:
                 if (target.find('#sessileOrganismsTable').length) {
                     if (!tables.sessileOrganisms) {
                         tables.sessileOrganisms = bop.createTable('#sessileOrganismsTable', [
-                            'Common Name',
-                            'Notes',
+                            'Common or Scientific Name',
+                            'Notes (Optional)',
                         ], [{
                             type:      'autocomplete',
                             strict:    false,
@@ -1051,13 +1055,23 @@ bindings:
                             'Result #1',
                             'Result #2',
                             'Result #3',
-                        ], [{
+                        ],
+                        [{
                             data:      'waterQualityParameter',
                             editor:    false,
+                            source:    [
+                           'Salinity',
+                            ],
                         }, {
                             data:      'method',
-                            editor:    false,
-                            type: 'dropdown',
+                            type:      'autocomplete',
+                            strict:    false,
+                            source:    [
+                            {{ range $i, $organism := $.bindings.sessileOrganisms }}
+                                '{{ $organism.commonName }}',
+                                '{{ $organism.latinName }}',
+                            {{ end }}
+                            ],
                         }, {
                             data:      'unit',
                         }, {

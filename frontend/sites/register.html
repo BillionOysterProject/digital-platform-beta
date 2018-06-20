@@ -3,8 +3,8 @@ page:
     body_class: 'container mt-1'
     view:       'Register a Structure'
 ---
-<p>
-    Before you complete a monitoring expedition, you'll need to register your Oyster Research Structure and enter
+<p class="mt-3">
+    Before you complete a monitoring expedition, you'll need to register your Oyster Research Station (or other oyster structure) and enter
     baseline Oyster Measurement and Site Conditions data.  Click on each of the steps below to
     fill in this information.
 </p>
@@ -23,7 +23,7 @@ page:
                     <strong class="fa-stack-1x">1</strong>
                 </span>
                 <span>
-                    <strong>Enter information about this structure.</strong>
+                    <h2>Enter information about your ORS or other oyster structure.</h2>
                 </span>
             </div>
         </section>
@@ -39,7 +39,7 @@ page:
                 class="required"
                 for="name"
             >
-                Structure Name
+                ORS or Other Oyster Structure Name
             </label>
             <input
                 type="text"
@@ -154,7 +154,7 @@ page:
                 </span>
 
                 <span>
-                    <strong>Enter baseline data.</strong>
+                    <h2>Enter baseline data.</h2>
                 </span>
             </div>
         </section>
@@ -172,13 +172,11 @@ page:
         <div id="accordion">
             <div class="card border-1 mb-2">
                 <div class="card-header" id="addOysterBaselines">
-                    <section class="shaded" data-toggle="collapse" data-target="#oysterBaselines">
-                        <section class="container-fluid">
-                            <div id="step1-header" class="blue">
-                                <i class="fa fa-anchor fa-2x"></i>
-                                <strong>Oyster Measurements Baselines</strong>
-                            </div>
-                        </section>
+                    <section class="shaded collapsed" data-toggle="collapse" data-target="#oysterBaselines">
+                        <h3>Oyster Measurements Baselines</h3>
+                        <div class="step-toggle">
+                            <i class="fa"></i>
+                        </div>
                     </section>
                 </div>
 
@@ -186,7 +184,7 @@ page:
                     <div class="card-body">
                         <p>
                             Click on the tabs below to enter the set date, source, # of live oysters, and
-                            total mass for each of the 10 substrate shells.
+                            total mass for each of the 10 tagged substrate shells.
                         </p>
 
                         <div class="card text-left">
@@ -218,7 +216,7 @@ page:
                                         class="form-check-label"
                                         for="inlineCheckbox1"
                                     >
-                                        Apply Set Date and Source to all 10 substrate shells
+                                        Apply Set Date and Source to all 10 tagged substrate shells
                                     </label>
                                 </div>
                                 <br/>
@@ -293,19 +291,17 @@ page:
 
             <div class="card border-1 mb-2">
                 <div class="card-header" id="addSiteBaselines">
-                    <section class="shaded" data-toggle="collapse" data-target="#siteBaselines">
-                        <section class="container-fluid">
-                            <div id="step1-header" class="blue">
-                                <i class="fa fa-anchor fa-2x"></i>
-                                <strong>Site Conditions Baselines</strong>
-                            </div>
-                        </section>
+                    <section class="shaded collapsed" data-toggle="collapse" data-target="#siteBaselines">
+                        <h3>Site Conditions Baselines</h3>
+                        <div class="step-toggle">
+                            <i class="fa"></i>
+                        </div>
                     </section>
                 </div>
 
                 <div id="siteBaselines" class="collapse" aria-labelledby="addSiteBaselines" data-parent="#accordion">
                     <div class="card-body">
-                        <div class="form-group mt-4">
+                        <div class="form-group mt-1">
                             <label
                                 for="CSO"
                             >
@@ -454,7 +450,7 @@ page:
                 </span>
 
                 <span>
-                    <strong>Upload and tag any photos you took.</strong>
+                    <h2>Upload and tag any photos you took.</h2>
                 </span>
             </div>
         </section>
