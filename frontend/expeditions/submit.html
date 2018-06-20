@@ -714,30 +714,24 @@ bindings:
             <div class="card border-1 mb-2">
                 <div class="card-header" id="addMobileOrganisms">
                     <section class="shaded" data-toggle="collapse" data-target="#mobileOrganisms">
-                        <section class="container-fluid">
-                            <i class="fa fa-plus fa-2x"></i>
-                            <strong>Mobile Organisms</strong>
-                        </section>
+                        <h3>Mobile Organisms</h3>
                     </section>
+                    <div class="step-toggle">
+                        <i class="fa fa-plus"></i>
+                    </div>
                 </div>
                 <div id="mobileOrganisms" class="collapse" aria-labelledby="addMobileOrganisms" data-parent="#accordion">
                     <div class="card-body">
                             <p><strong>Mobile Organism Identifications</strong></p>
-                            In the table below, enter each mobile organism species you identified and a count of how many you found.
+                            In the table below, enter each <strong>mobile organism species</strong> you identified and a <strong>count</strong> of how many you found.
+                            </p>
                             <ul>
-                                <li>In the first column, start typing either the commmon or scientific name of the mobile organism, then select it
+                                <li>Column 1: start typing either the commmon or scientific name of the mobile organism, then select it
                                     from the dropdown menu.</li>
-                                <li>In the second column, enter in how many of that species you found.</li>
-                                <li>(Optional) In the third column, enter any notes or questions you have about what you found.</li>
+                                <li>Column 2: enter in how many of that species you found.</li>
                             </ul>
-                            You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
-                            (Rows will automatically be added to the end of the table as you type.)
-                        </p>
-                        <!--
-                        <p>
-                            You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
-                        </p>
-                        -->
+
+
                         <div class="w-100" style="overflow: hidden;">
                             <div id="mobileOrganismsTable"></div>
                         </div>
@@ -759,21 +753,19 @@ bindings:
             <div class="card border-1 mb-2">
                 <div class="card-header" id="addSessileOrganisms">
                     <section class="shaded" data-toggle="collapse" data-target="#sessileOrganisms">
-                        <section class="container-fluid">
-                            <i class="fa fa-plus fa-2x"></i>
-                            <h3>Sessile Organisms</h3>
-                        </section>
+                        <h3>Sessile Organisms</h3>
+                        <div class="step-toggle">
+                            <i class="fa fa-plus"></i>
+                        </div>
                     </section>
                 </div>
                 <div id="sessileOrganisms" class="collapse" aria-labelledby="addSessileOrganisms" data-parent="#accordion">
                     <div class="card-body">
                         <p><strong>Sessile Organism Identifications</strong></p>
-                        <p>In the table below, enter the sessile organism you identified in the middle of each cross hatch.
+                        <p>
+                            In the table below, enter each <strong>sessile organism species</strong> you identified at the center of each cross hatch.
                         </p>
-                        <!--
-                        <p>(See this diagram for help!)
-                        </p>
-                        -->
+
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="collapse" href="#settlementTile0">Settlement Tile 1</a>
@@ -818,10 +810,10 @@ bindings:
             <div class="card border-1 mb-2">
                 <div class="card-header" id="addWaterQuality">
                     <section class="shaded" data-toggle="collapse" data-target="#waterQuality">
-                        <section class="container-fluid">
-                            <i class="fa fa-plus fa-2x"></i>
-                            <h3>Water Quality</h3>
-                        </section>
+                        <h3>Water Quality</h3>
+                        <div class="step-toggle">
+                            <i class="fa fa-plus"></i>
+                        </div>
                     </section>
                 </div>
                 <div id="waterQuality" class="collapse" aria-labelledby="addWaterQuality" data-parent="#accordion">
@@ -837,7 +829,6 @@ bindings:
                         -->
                         <div style="overflow: hidden;" class="w-100"></div>
                             <div id="waterQualityTable"></div>
-                        </div>
                         <div class="form-group mt-4">
                             <label for="notes">Water Quality Notes</label>
                             <textarea
@@ -856,10 +847,10 @@ bindings:
             <div class="card border-1">
                 <div class="card-header" id="addWildOysters">
                     <section class="shaded" data-toggle="collapse" data-target="#wildOysters">
-                        <section class="container-fluid">
-                            <i class="fa fa-bullhorn fa-2x"></i>
-                            <h3>Report a wild oyster sighting</h3>
-                        </section>
+                        <h3>Report a wild oyster sighting</h3>
+                        <div class="step-toggle">
+                            <i class="fa fa-bullhorn"></i>
+                        </div>
                     </section>
                 </div>
                 <div id="wildOysters" class="collapse" aria-labelledby="addWildOysters" data-parent="#accordion">
@@ -1040,9 +1031,9 @@ bindings:
                 width:       20,
             }],
             colHeaders: [
-                'Common OR Latin Name',
+                'Common OR Scientific Name',
                 '# of Organisms',
-                'Notes',
+                'Notes (Optional)',
             ],
         });
 
@@ -1050,7 +1041,6 @@ bindings:
             new Handsontable(document.querySelector('#sessileOrganismsTable_' + index), {
                 stretchH:           'all',
                 autoWrapRow:        true,
-                minSpareRows:       1,
                 startRows:          25,
                 maxRows:            100,
                 manualRowResize:    true,
@@ -1074,8 +1064,8 @@ bindings:
                     width:       20,
                 }],
                 colHeaders: [
-                    'Common Name',
-                    'Notes',
+                    'Common or Scientific Name',
+                    'Notes (Optional)',
                 ],
             });
         };
