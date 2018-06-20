@@ -245,15 +245,17 @@ bindings:
                             <strong>Measure Each Live Oyster</strong>
                         </p>
 
-                        Enter the measurements of each live oyster on each substrate shell in the table below.
+                        Enter the measurements of each live oyster on each tagged substrate shell in the table below.
 
                         <ul>
-                            <li>In the first column, enter the substrate shell number (#1-10).</li>
+                            <li>In the first column, enter the tag number (#1-10).</li>
                             <li>In the second column, enter the length (in millimeters) of
                             each <strong>live</strong> oyster on that substrate shell.</li>
                         </ul>
-                        You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
-                        (Rows will automatically be added to the end of the table as you type.)
+                        <p class="mb-3">
+                            You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
+                            (Rows will automatically be added to the end of the table as you type.)
+                        </p>
 
                         <div class="w-100" style="overflow: hidden;">
                             <div id="oysterMeasurementsTable"></div>
@@ -459,8 +461,7 @@ bindings:
                         </div>
 
                         <hr/>
-                        <h3>Recent Rainfall
-                        </h3>
+                        <h4>Recent Rainfall</h4>
                         <div class="form-group">
                             <label>Has it rained in the past <span class="blue">7</span> days?</label>
                             <br/>
@@ -541,7 +542,7 @@ bindings:
                         </div>
 
                         <hr/>
-                        <h3>Water Conditions</h3>
+                        <h4>Water Conditions</h4>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -692,12 +693,6 @@ bindings:
                                 </div>
                             </div>
                         </div>
-
-                        <!--
-                        <hr/>
-                        <h3>Land Conditions</h3>
-                        <p>placeholder for land garbage</p>
-                        -->
 
                         <div class="form-group mt-4">
                             <label for="notes">Site Conditions Notes</label>
@@ -1004,7 +999,7 @@ bindings:
                 },
             }],
             colHeaders: [
-                'Substrate Shell No.',
+                'Tag Number',
                 'Oyster Length (mm)',
             ],
         });
