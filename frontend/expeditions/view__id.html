@@ -8,6 +8,7 @@ bindings:
 
 -   name:     'organization'
     resource: ':/api/school-orgs/{{ .bindings.expedition.team.schoolOrg._id }}'
+    fallback: {}
 
 -   name:     'photos'
     resource: '/api/expeditions/photos'
@@ -28,14 +29,12 @@ bindings:
 
             <p>
                 <a href="/profiles/team-view/{{ .bindings.team._id }}">
-                  <b>{{ $expedition.name }}</b>
+                    <b>{{ $expedition.name }}</b>
                 </a>
                 <br/>
-                {{ if $.bindings.organization }}
                 <a href="/profiles/organization-view/{{ .bindings.organization._id }}">
-                  {{ $.bindings.organization.name }}
+                    {{ $.bindings.organization.name }}
                 </a>
-                {{ end }}
             </p>
         </div>
 
