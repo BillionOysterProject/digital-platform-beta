@@ -118,7 +118,6 @@ bindings:
             </div>
         </div>
 
-<!-- "Site Name" field displays if user answers "NO" to "Are you reporting data related to a structure, like an Oyster Research Station (ORS)?"
         <div class="form-group">
             <label for="site">Site Name</label>
             <div class="input-group">
@@ -126,15 +125,14 @@ bindings:
                     type="text"
                     class="form-control typeahead w-100"
                     name="site"
-                    data-typeahead-url="/api/sites?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
-                    data-typeahead-field="name"
+                    data-typeahead-url="/api/sites?fields=name,bodyOfWater&amp;q=str:name/contains:{}/str:bodyOfWater/contains:{}&amp;sort=name&amp;conjunction=or"
+                    data-typeahead-field="name,bodyOfWater"
                 >
                 <small class="form-text mb-3">
                     Start typing your site's name in the field above, then select it from the dropdown list.
                 </small>
             </div>
         </div>
--->
 
         <div class="form-group">
             <label for="team">Team</label>
