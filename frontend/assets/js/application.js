@@ -238,7 +238,7 @@ $(function () {
                             var field = el.data('typeahead-field');
 
                             if (url) {
-                                url = url.replace('{}', query.replace(/^\//, ''));
+                                url = url.replace(/\{\}/g, query.replace(/^\//, ''));
 
                                 $.ajax(url, {
                                     success: function (data) {
