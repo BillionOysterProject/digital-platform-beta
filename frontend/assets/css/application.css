@@ -1846,3 +1846,11 @@ li.loading-dialog {
 .card .spreadsheet {
 
 }
+
+.handsontable td.current-row {
+    background-color: rgba(66, 107, 169, 0.25) !important;
+}
+
+.handsontable td.current-col {
+    background-color: rgba(66, 107, 169, 0.25) !important;
+}

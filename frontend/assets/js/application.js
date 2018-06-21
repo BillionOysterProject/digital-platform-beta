@@ -49,9 +49,11 @@ $(function () {
                 this.setupFormIntercept();
                 this.setupTypeaheadHandlers();
                 this.updateActiveMenuItem();
-                this.expandProcessStep();
-                this.handleCollapseEvents();
 
+                if (location.host.indexOf('localhost') === 0) {
+                    this.expandProcessStep();
+                    this.handleCollapseEvents();
+                }
 
                 // handle button toggles
                 this.handleToggleButtons();
@@ -354,16 +356,18 @@ $(function () {
 
             createTable: function(selector, headers, columns, config) {
                 config = $.extend(true, {}, {
-                    stretchH:           'all',
-                    autoWrapRow:        true,
-                    minSpareRows:       5,
-                    startRows:          5,
-                    maxRows:            100,
-                    manualRowResize:    true,
-                    manualColumnResize: true,
-                    contextMenu:        false,
-                    rowHeaders:         true,
-                    preventOverflow:    'horizontal',
+                    stretchH:            'all',
+                    autoWrapRow:         true,
+                    minSpareRows:        5,
+                    startRows:           5,
+                    maxRows:             100,
+                    manualRowResize:     true,
+                    manualColumnResize:  true,
+                    contextMenu:         false,
+                    rowHeaders:          true,
+                    preventOverflow:     'horizontal',
+                    currentRowClassName: 'current-row',
+                    currentColClassName: 'current-col',
                 }, (config || {}));
 
                 return new Handsontable($(selector).get(0), $.extend(true, {}, config, {
