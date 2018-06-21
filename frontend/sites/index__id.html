@@ -135,6 +135,32 @@ bindings:
             zoom:   13,
         });
 
+        // load everyone but us; e.g.: our "neighbors"
+        // $.ajax({
+        //     url: '/api/sites/export.geojson?' + $.param({
+        //         fields: 'name,bodyOfWater,latitude,longitude,nycParkName',
+        //         q:      '_id/not:{{ $site._id }}',
+        //     }),
+        //     success: function(collection) {
+        //         var layer = {
+        //             "id": "neighbors",
+        //             "type": "circle",
+        //             "source": {
+        //                 "type": "geojson",
+        //                 "data": collection,
+        //             },
+        //             "paint": {
+        //                 "circle-radius": 4,
+        //                 "circle-color": "#EA5F56",
+        //                 "circle-stroke-width": 1,
+        //                 "circle-stroke-color": "#FFFFFF",
+        //             },
+        //         };
+
+        //         map.addLayer(layer);
+        //     },
+        // });
+
         map.on('load', function(){
             map.addLayer({
                 "id": "sites",
