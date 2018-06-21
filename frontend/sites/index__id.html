@@ -64,7 +64,7 @@ bindings:
 
 <div class="row no-gutters site-jumbotron">
     <div class="col">
-      <div id="siteMap"></div>
+        <div id="siteMap"></div>
     </div>
 
     {{ if $photos }}
@@ -169,52 +169,52 @@ bindings:
 </script>
 
 <div class="container-fluid pt-2">
-	{{ if $stations }}
-	<h2 class="mt-4 mb-4">Oyster Research Stations</h2>
+    {{ if $stations }}
+    <h2 class="mt-4 mb-4">Oyster Research Stations</h2>
 
-	<div class="row">
-		{{ range $i, $station := $stations }}
-  		<div class="media col-12 col-lg-6 col-xl-4 mb-4">
-  			<div class="col-2">
-	  			{{ if $station.photo }}
-	    		<img class="img-fluid" src="{{ $station.photo.path }}" alt="Photo of this ORS">
-	    		{{ else }}
-	    		<img class="img-fluid img-muted" src="assets/img/placeholders/ors.jpg" alt="Placeholder ORS image">
-	    		{{ end }}
-    		</div>
-    		<div class="media-body">
-      			<h3 class="mt-0 mb-1">{{ $station.name }}</h3>
-      			<i class="fa fa-fw fa-building"></i> {{ $station.schoolOrg.name }}
-      			<br/>
-                {{ if $station.teamLead }}
-      			<i class="fa fa-fw fa-user"></i>{{ $station.teamLead.displayName }}
-      			<br/>
+    <div class="row">
+        {{ range $i, $station := $stations }}
+        <div class="media col-12 col-lg-6 col-xl-4 mb-4">
+            <div class="col-2">
+                {{ if $station.photo }}
+                <img class="img-fluid" src="{{ $station.photo.path }}" alt="Photo of this ORS">
+                {{ else }}
+                <img class="img-fluid img-muted" src="assets/img/placeholders/ors.jpg" alt="Placeholder ORS image">
                 {{ end }}
-    		</div>
-  		</div>
-  		{{ end }}
-  	</div>
+            </div>
+            <div class="media-body">
+                <h3 class="mt-0 mb-1">{{ $station.name }}</h3>
+                <i class="fa fa-fw fa-building"></i> {{ $station.schoolOrg.name }}
+                <br/>
+                {{ if $station.teamLead }}
+                <i class="fa fa-fw fa-user"></i>{{ $station.teamLead.displayName }}
+                <br/>
+                {{ end }}
+            </div>
+        </div>
+        {{ end }}
+    </div>
     {{ end }}
 
-	{{ if $people }}
+    {{ if $people }}
     <div id="sitePeople"></div>
-	{{ end }}
+    {{ end }}
 
-	{{ if $schoolOrgs }}
-	<h2 class="mt-4 mb-4">Organizations</h2>
+    {{ if $schoolOrgs }}
+    <h2 class="mt-4 mb-4">Organizations</h2>
 
-	<div class="row">
-		{{ range $i, $schoolOrg := $schoolOrgs }}
-  		<div class="media col-12 col-lg-6 col-xl-4 mb-4">
-  			<div class="col-2">
-	    		<img class="img-fluid img-muted" src="assets/img/placeholders/ors.jpg" alt="Placeholder ORS image">
-    		</div>
-    		<div class="media-body">
-      			<h3 class="mt-0 mb-1">{{ $schoolOrg.name }}</h3>
-      			<br/>
-    		</div>
-  		</div>
-  		{{ end }}
+    <div class="row">
+        {{ range $i, $schoolOrg := $schoolOrgs }}
+        <div class="media col-12 col-lg-6 col-xl-4 mb-4">
+            <div class="col-2">
+                <img class="img-fluid img-muted" src="assets/img/placeholders/ors.jpg" alt="Placeholder ORS image">
+            </div>
+            <div class="media-body">
+                <h3 class="mt-0 mb-1">{{ $schoolOrg.name }}</h3>
+                <br/>
+            </div>
+        </div>
+        {{ end }}
     {{ end }}
 </div>
 
@@ -235,7 +235,9 @@ bindings:
             {{   $team := firstByKey $teams "_id" $expedition.team }}
             <tr>
                 <td>{{ time $expedition.monitoringStartDate `ymd` }}</td>
-                <td>{{ $expedition.name }}</td>
+                <td>
+                    <a href="/expeditions/view/{{ $expedition._id }}" target="_blank">{{ $expedition.name }}</a>
+                </td>
                 <td>{{ $team.name }}</td>
             </tr>
             {{ end }}
@@ -271,7 +273,7 @@ bindings:
 
     <div class="row">
         <div class="col">
-           <ul>
+            <ul>
                 <li>
                     <strong>For a huge range of information in one map:</strong> the <strong><a href="http://www.oasisnyc.net/map.aspx">OASIS map.</a></strong> Find nearby stewardship groups, CSOs, public waterfront access points, wetlands, and almost any other kind of publicly available data about your site you can imagine.
                 </li>
@@ -294,7 +296,7 @@ bindings:
                         <li>
                             <strong><a href="https://welikia.org/m-map.php">Welikia map.</a></strong> What did this site look like in 1609? This map will tell you about the landscape, plants, animals, and people who lived in NYC pre-colonization.
                         </li>
-                         <li>
+                        <li>
                             <strong><a href="https://www.oldnyc.org/">Old NYC map.</a></strong> Find old photographs of places near this site from the New York Public Library's <a href="https://digitalcollections.nypl.org/collections/photographic-views-of-new-york-city-1870s-1970s-from-the-collections-of-the-ne-2#/?tab=about">"Photographic Views of New York City, 1870s-1970s"</a> collection.
                         </li>
                         <li>
@@ -303,18 +305,17 @@ bindings:
                     </ul>
                     <br/>
                 <li><strong>Get land use information:</strong></li>
-                    <ul>
-                        <li>
-                        <strong><a href="https://livinglotsnyc.org/#11/40.7300/-73.9900">Living Lots.</a></strong> Find a vacant lot near this site and learn how to turn it into a gathering place for the local community- or see who already has!
+                <ul>
+                    <li>
+                    <strong><a href="https://livinglotsnyc.org/#11/40.7300/-73.9900">Living Lots.</a></strong> Find a vacant lot near this site and learn how to turn it into a gathering place for the local community- or see who already has!
+                    </li>
+                    <strong><a href="https://nycommons.org/#map=11/40.7300/-73.9900&layers=%5B%22post%20office%22%2C%22vacant%20lot%20%2F%20garden%22%2C%22park%22%2C%22park%20building%22%2C%22library%22%2C%22public%20housing%22%2C%22waterfront%22%5D&owners=%7B%22post%20office%22%3A%5B321%2C304%2C314%2C326%2C323%2C286%2C317%2C332%2C306%2C289%2C329%2C290%2C298%2C325%2C291%2C296%2C316%2C305%2C333%2C300%2C293%2C285%2C301%2C322%2C319%2C303%2C294%2C328%2C292%2C318%2C327%2C320%2C335%2C288%2C330%2C334%2C324%2C331%2C302%2C287%2C297%2C299%2C155%2C13%2C7%2C152%2C53%2C279%5D%2C%22vacant%20lot%20%2F%20garden%22%3A%5B169%2C70%2C170%2C55%2C235%2C13%2C7%2C29%2C137%2C31%2C160%2C35%2C11%2C9%2C18%2C57%2C164%2C163%2C152%2C161%2C91%2C167%2C171%2C53%2C172%2C27%2C75%5D%2C%22park%22%3A%5B252%2C255%2C264%2C240%2C254%2C170%2C241%2C55%2C13%2C43%2C7%2C29%2C31%2C160%2C35%2C11%2C9%2C164%2C161%2C124%2C22%2C15%2C167%2C53%2C246%2C75%5D%2C%22park%20building%22%3A%5B160%5D%2C%22library%22%3A%5B278%2C70%2C46%2C13%2C7%2C137%2C164%2C124%2C131%5D%2C%22public%20housing%22%3A%5B164%5D%2C%22waterfront%22%3A%5B170%2C46%2C55%2C13%2C122%2C43%2C7%2C29%2C31%2C160%2C35%2C11%2C9%2C18%2C57%2C164%2C161%2C91%2C117%2C39%2C22%2C101%2C15%2C167%2C53%2C27%2C75%5D%7D&boundaries=%7B%7D">NY Commons.</a></strong> Find city-owned land near your site, and learn how it can be used, what projects are underway, and how you can advocate for the changes you want to see.
+                    </li>
+                    <li>
+                        <strong><a href="http://www.urbanreviewer.org/#map=12/40.7401/-73.9462">Urban Reviewer map.</a></strong> Decades ago, city officials demolished large parts of the city in order to improve them, and they called this process "Urban Renewal."  But they didn't always consult the people who lived there, and they didn't always rebuild neighborhoods after they destroyed them.  Find urban renewal projects near this site and see what happened to them- or share your story about it.
                         </li>
-                        <strong><a href="https://nycommons.org/#map=11/40.7300/-73.9900&layers=%5B%22post%20office%22%2C%22vacant%20lot%20%2F%20garden%22%2C%22park%22%2C%22park%20building%22%2C%22library%22%2C%22public%20housing%22%2C%22waterfront%22%5D&owners=%7B%22post%20office%22%3A%5B321%2C304%2C314%2C326%2C323%2C286%2C317%2C332%2C306%2C289%2C329%2C290%2C298%2C325%2C291%2C296%2C316%2C305%2C333%2C300%2C293%2C285%2C301%2C322%2C319%2C303%2C294%2C328%2C292%2C318%2C327%2C320%2C335%2C288%2C330%2C334%2C324%2C331%2C302%2C287%2C297%2C299%2C155%2C13%2C7%2C152%2C53%2C279%5D%2C%22vacant%20lot%20%2F%20garden%22%3A%5B169%2C70%2C170%2C55%2C235%2C13%2C7%2C29%2C137%2C31%2C160%2C35%2C11%2C9%2C18%2C57%2C164%2C163%2C152%2C161%2C91%2C167%2C171%2C53%2C172%2C27%2C75%5D%2C%22park%22%3A%5B252%2C255%2C264%2C240%2C254%2C170%2C241%2C55%2C13%2C43%2C7%2C29%2C31%2C160%2C35%2C11%2C9%2C164%2C161%2C124%2C22%2C15%2C167%2C53%2C246%2C75%5D%2C%22park%20building%22%3A%5B160%5D%2C%22library%22%3A%5B278%2C70%2C46%2C13%2C7%2C137%2C164%2C124%2C131%5D%2C%22public%20housing%22%3A%5B164%5D%2C%22waterfront%22%3A%5B170%2C46%2C55%2C13%2C122%2C43%2C7%2C29%2C31%2C160%2C35%2C11%2C9%2C18%2C57%2C164%2C161%2C91%2C117%2C39%2C22%2C101%2C15%2C167%2C53%2C27%2C75%5D%7D&boundaries=%7B%7D">NY Commons.</a></strong> Find city-owned land near your site, and learn how it can be used, what projects are underway, and how you can advocate for the changes you want to see.
-                        </li>
-                        <li>
-                            <strong><a href="http://www.urbanreviewer.org/#map=12/40.7401/-73.9462">Urban Reviewer map.</a></strong> Decades ago, city officials demolished large parts of the city in order to improve them, and they called this process "Urban Renewal."  But they didn't always consult the people who lived there, and they didn't always rebuild neighborhoods after they destroyed them.  Find urban renewal projects near this site and see what happened to them- or share your story about it.
-                            </li>
-                    </ul>
-
-           </ul>
+                </ul>
+            </ul>
         </div>
     </div>
 </div>
