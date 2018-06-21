@@ -238,16 +238,25 @@ $(function () {
                             var field = el.data('typeahead-field');
 
                             if (url) {
-                                url = url.replace('{}', query.replace(/^\//, ''));
+                                url = url.replace(/\{\}/g, query.replace(/^\//, ''));
 
                                 $.ajax(url, {
                                     success: function (data) {
                                         if (field) {
                                             var results = [];
+                                            var fieldNames = field.split(',');
 
                                             $.each(data, function (i, value) {
                                                 if ($.isPlainObject(value)) {
-                                                    results.push(value[field]);
+                                                    var parts = [];
+
+                                                    $.each(fieldNames, function(j, fname) {
+                                                        if (value[fname]) {
+                                                            parts.push(value[fname]);
+                                                        }
+                                                    });
+
+                                                    results.push(parts.join(', '));
                                                 }
                                             });
 
