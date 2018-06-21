@@ -32,7 +32,7 @@ bindings:
                     <b>{{ $expedition.name }}</b>
                 </a>
                 <br/>
-                {{ if $.bindings.organization }}
+                {{ if (get $.bindings.organization `_id`) }}
                 <a href="/profiles/organization-view/{{ $.bindings.organization._id }}">
                     {{ $.bindings.organization.name }}
                 </a>
