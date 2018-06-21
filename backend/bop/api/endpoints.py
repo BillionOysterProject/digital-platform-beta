@@ -102,6 +102,9 @@ class CollectionView(Endpoint):
         else:
             params['sort'] = None
 
+        if 'conjunction' in request.args:
+            params['conjunction'] = request.args['conjunction']
+
         return params
 
     @property
