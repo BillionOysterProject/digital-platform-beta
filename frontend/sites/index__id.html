@@ -219,33 +219,28 @@ bindings:
 </div>
 
 {{ if $expeditions }}
-<div class="container-fluid pt-2">
-    <h2 class="mt-4 mb-4">Data from this site</h2>
+<h2 class="mt-4 mb-4">Data from this site</h2>
 
-    <div class="row">
-        <div class="col">
-            <table class="table table-sm table-hover">
-                <thead>
-                    <tr>
-                        <th>Expedition Date</th>
-                        <th>Expedition Name</th>
-                        <th>Team</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{ range $i, $expedition := $expeditions }}
-                    {{   $team := firstByKey $teams "_id" $expedition.team }}
-                    <tr>
-                        <td>{{ time $expedition.monitoringStartDate `ymd` }}</td>
-                        <td>{{ $expedition.name }}</td>
-                        <td>{{ $team.name }}</td>
-                    </tr>
-                    {{ end }}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th>Expedition Date</th>
+            <th>Expedition Name</th>
+            <th>Team</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range $i, $expedition := $expeditions }}
+        {{   $team := firstByKey $teams "_id" $expedition.team }}
+        <tr>
+            <td>{{ time $expedition.monitoringStartDate `ymd` }}</td>
+            <td>{{ $expedition.name }}</td>
+            <td>{{ $team.name }}</td>
+        </tr>
+        {{ end }}
+    </tbody>
+</table>
+
 {{ end }}
 
 {{ if $site.nycParkName }}

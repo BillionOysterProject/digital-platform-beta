@@ -790,6 +790,14 @@ bindings:
                         </div>
 
                         <div class="form-group mt-4">
+                            <a
+                                href="#"
+                                class="btn btn-primary"
+                                onclick="return false"
+                            >Add Settlement Tile</a>
+                        </div>
+
+                        <div class="form-group mt-4">
                             <label for="notes">Sessile Organisms Notes</label>
                             <textarea
                                 class="form-control"
@@ -799,13 +807,7 @@ bindings:
                             ></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <a
-                                href="#"
-                                class="btn btn-primary"
-                                onclick="return false"
-                            >Add Settlement Tile</a>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -835,6 +837,14 @@ bindings:
                         -->
                         <div class="spreadsheet"></div>
                             <div id="waterQualityTable"></div>
+
+                        <div class="form-group mt-4">
+                            <a
+                                href="#"
+                                class="btn btn-primary"
+                                onclick="return false"
+                            >Add Water Sample</a>
+                        </div>
                         <div class="form-group mt-4">
                             <label for="notes">Water Quality Notes</label>
                             <textarea
@@ -843,13 +853,6 @@ bindings:
                                 name="notes"
                                 maxlength="16536"
                             ></textarea>
-                        </div>
-                        <div class="form-group">
-                            <a
-                                href="#"
-                                class="btn btn-primary"
-                                onclick="return false"
-                            >Add Water Sample</a>
                         </div>
                     </div>
                 </div>
@@ -912,21 +915,16 @@ bindings:
 
     <section class="content collapse" id="enterdata3">
         <div class="form-group">
-            <label for="date">Expedition Photos</label>
-            <small class="form-text mb-3">
-                Upload a photo of your ORS, inner and outer oyster substrate shell photos, and/or any other photos
-                from your expedition that you'd like to share.
-            </small>
+            <p>On a mobile device?  Try out the new
+                <a href="https://cloudberrycreative.invisionapp.com/share/YRDEHC775#/screens/256519836" target="_blank">mobile photo upload tool</a>!</p>
+            <p class="form-text mb-3">
+                On a laptop or desktop?  You can upload all of your photos at once below.  You'll be able to tag them
+                after you upload them.
+            </p>
+
             <div class="drop-area">
                 Drag files here or click to upload photos from this expedition.
             </div>
-            <!--
-            Photo types:
-                - Expedition Photo
-                - Oyster cage
-                - Substrate shell (front)
-                - Substrate shell (back)
-            -->
         </div>
     </section>
 
@@ -1064,7 +1062,7 @@ bindings:
                 if (target.find('#waterQualityTable').length) {
                     if (!tables.waterQualityTable) {
                         tables.waterQualityTable = bop.createTable('#waterQualityTable', [
-                            'Water Quality Parameter',
+                            'Parameter',
                             'Method',
                             'Unit',
                             'Result #1',
@@ -1109,6 +1107,7 @@ bindings:
                             startRows:    5,
                             maxRows:      100,
                             width:        width,
+                            stretchH:     'none',
                         });
                     }
                 }
