@@ -193,43 +193,43 @@ header:
           label: pH (Log Scale)
 
       - id: photometer
-        name: Photometer
+        label: Photometer
 
       - id: colormetric-ampules
-        name: Colormetric Ampules
+        label: Colormetric Ampules
         units:
         - id: saturation
           label: Saturation (%)
 
       - id: sensor
-        name: Sensor
+        label: Sensor
 
       - id: sensor-ro
-        name: Sensor (Read Only)
+        label: Sensor (Read Only)
 
       - id: winkler
-        name: Winkler
+        label: Winkler
 
       - id: refractometer
-        name: Refractometer
+        label: Refractometer
         units:
         - id: ppt
           label: PPT
 
       - id: hydrometer
-        name: Hydrometer
+        label: Hydrometer
         units:
         - id: ppt
           label: PPT
 
       - id: turbidity-tube
-        name: Turbidity Tube
+        label: Turbidity Tube
         units:
         - id: cm
           label: Visibility (cm)
 
       - id: digital-thermometer
-        name: Digital Thermometer
+        label: Digital Thermometer
         units:
         - id: celsius
           label: Degrees (C)
@@ -238,7 +238,7 @@ header:
           label: Degrees (F)
 
       - id: analog-thermometer
-        name: Analog Thermometer
+        label: Analog Thermometer
         units:
         - id: celsius
           label: Degrees (C)

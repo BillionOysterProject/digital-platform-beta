@@ -1073,31 +1073,37 @@ bindings:
                         ],
                         [{
                             data:      'waterQualityParameter',
-                            editor:    false,
-                            source:    [
-                           'Salinity',
+                            editor:    'select',
+                            selectOptions: [
+                            {{- range $i, $parameter := $.page.waterQualityParameters }}
+                                '{{ $parameter.label }}',
+                            {{- end }}
                             ],
                         }, {
                             data:      'method',
-                            type:      'autocomplete',
-                            strict:    false,
-                            source:    [
-                            {{ range $i, $organism := $.bindings.sessileOrganisms }}
-                                '{{ $organism.commonName }}',
-                                '{{ $organism.latinName }}',
-                            {{ end }}
+                            editor:    'select',
+                            selectOptions: [
+                            {{- range $i, $method := (uniq (sort (flatten (pluck $.page.waterQualityParameters `methods`)))) }}
+                                '{{ get (firstByKey $.page.testingMethods `id` $method) `label` }}',
+                            {{- end }}
                             ],
                         }, {
                             data:      'unit',
+                            editor:    'select',
+                            selectOptions: [
+                            {{- range $i, $unit := (uniqByKey (sort (flatten (pluck $.page.testingMethods `units`))) `id`) }}
+                                '{{ $unit.label }}',
+                            {{- end }}
+                            ],
                         }, {
                             data:       'result1',
-                            type:      'numeric',
+                            type:       'numeric',
                         }, {
                             data:       'result2',
-                            type:      'numeric',
+                            type:       'numeric',
                         }, {
                             data:       'result3',
-                            type:      'numeric',
+                            type:       'numeric',
                         }], {
                             minSpareRows: 1,
                             startRows:    5,
