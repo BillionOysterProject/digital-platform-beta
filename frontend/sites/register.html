@@ -63,6 +63,7 @@ page:
                         type="radio"
                         id="structure{{ $i }}"
                         class="custom-control-input"
+                        name="structure"
                     >
                     <label class="custom-control-label w-100" for="structure{{ $i }}">
                         {{ $structureType.label }}
@@ -73,20 +74,23 @@ page:
         </div>
 
         <!--TODO: if user selects "oyster tank," create a new site using the org address-->
-        <div class="form-group col-sm-8">
-            <label for="site">Site Name</label>
-            <div class="input-group">
-                <input
-                    type="text"
-                    class="form-control typeahead w-100"
-                    name="site"
-                    data-typeahead-url="/api/sites?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
-                    data-typeahead-field="name"
-                >
+        <div class="col-sm-12 col-md-8">
+            <div class="form-group">
+                <label for="site">Site Name</label>
+                <div class="input-group">
+                    <input
+                        type="text"
+                        class="form-control typeahead w-100"
+                        name="site"
+                        data-typeahead-url="/api/sites?fields=name,bodyOfWater&amp;q=str:name/contains:{}/str:bodyOfWater/contains:{}&amp;sort=name&amp;conjunction=or"
+                        data-typeahead-field="name,bodyOfWater"
+                        autofocus
+                    >
+                    <small class="form-text text-muted">
+                        Start typing your site's name in the field above to pull up your site.
+                    </small>
+                </div>
             </div>
-            <small class="form-text mb-3">
-                Start typing your site's name in the field above to pull up your site.
-            </small>
         </div>
 
         <div class="col-sm-12">
@@ -99,6 +103,7 @@ page:
                     <input
                         type="radio"
                         id="structureStatus{{ $i }}"
+                        name="status"
                         class="custom-control-input"
                     >
                     <label class="custom-control-label w-100" for="structureStatus{{ $i }}">
