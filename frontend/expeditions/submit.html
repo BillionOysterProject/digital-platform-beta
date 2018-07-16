@@ -262,7 +262,7 @@ bindings:
 
                 <div id="oysterMeasurement" class="collapse" aria-labelledby="addOysterMeasurements" data-parent="#accordion">
                     <div class="card-body">
-                        <!--
+
                         <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 form-group">
@@ -291,7 +291,7 @@ bindings:
                                 </div>
                             </div>
                         </div>
-                        -->
+
                         <p>
                             <strong>Measure Each Live Oyster</strong>
                         </p>
@@ -378,12 +378,13 @@ bindings:
 
 
                         <div class="form-group mt-4">
-                            <label for="notes">Oyster Measurement Notes</label>
+                            <label for="oysterMeasurementNotes">Oyster Measurement Notes</label>
                             <textarea
                                 class="form-control"
                                 type="text"
-                                name="notes"
+                                name="oysterMeasurement.notes"
                                 maxlength="16536"
+                                id="oysterMeasurementNotes"
                             ></textarea>
                         </div>
 
@@ -413,22 +414,24 @@ bindings:
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="weatherConditions">Weather</label>
-                                    <br/>
-                                    <div class="btn-group btn-group-toggle">
-                                        {{ range $i, $weatherCondition := $.page.weatherConditions }}
-                                        <label
-                                            class="btn btn-primary"
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="weatherConditions"
-                                                value="{{ $weatherCondition.id }}"
+                                    <fieldset>
+                                        <legend>Weather</legend>
+                                        <br/>
+                                        <div class="btn-group btn-group-toggle">
+                                            {{ range $i, $weatherCondition := $.page.weatherConditions }}
+                                            <label
+                                                class="btn btn-primary"
                                             >
-                                            {{ $weatherCondition.label }}
-                                        </label>
-                                        {{ end }}
-                                    </div>
+                                                <input
+                                                    type="radio"
+                                                    name="protocols.siteCondition.meteorologicalConditions.weatherConditions"
+                                                    value="{{ $weatherCondition.id }}"
+                                                >
+                                                {{ $weatherCondition.label }}
+                                            </label>
+                                            {{ end }}
+                                        </div>
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
@@ -436,14 +439,15 @@ bindings:
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="temperature">Air temperature (C)</label>
+                                    <label for="airTemperature">Air temperature (C)</label>
                                     <input
                                         class="form-control"
-                                        name="temperature"
+                                        name="protocols.siteCondition.meteorologicalConditions.airTemperatureC"
                                         type="number"
                                         step="0.1"
                                         min="-40"
                                         max="50"
+                                        id="airTemperature"
 
                                     />
                                     <span class="help-block">
@@ -475,7 +479,8 @@ bindings:
                                         class="form-control"
                                         type="number"
                                         min="0"
-                                        name="windSpeed"
+                                        name="protocols.siteCondition.meteorologicalConditions.windSpeedMPH"
+                                        id="windSpeed"
                                     />
                                     <span class="help-block">Method: Anemometer</span>
                                 </div>
@@ -485,22 +490,24 @@ bindings:
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="windDirection">Wind Direction</label>
-                                    <br/>
-                                    <div class="btn-group btn-group-toggle">
-                                        {{ range $i, $windDirection := $.page.windDirections }}
-                                        <label
-                                            class="btn btn-primary"
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="windDirection"
-                                                value="{{ $windDirection.id }}"
+                                    <fieldset>
+                                        <legend>Wind Direction</legend>
+                                        <br/>
+                                        <div class="btn-group btn-group-toggle">
+                                            {{ range $i, $windDirection := $.page.windDirections }}
+                                            <label
+                                                class="btn btn-primary"
                                             >
-                                            {{ $windDirection.label }}
-                                        </label>
-                                        {{ end }}
-                                    </div>
+                                                <input
+                                                    type="radio"
+                                                    name="protocols.siteCondition.meteorologicalConditions.windDirection"
+                                                    value="{{ $windDirection.id }}"
+                                                >
+                                                {{ $windDirection.label }}
+                                            </label>
+                                            {{ end }}
+                                        </div>
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
@@ -513,7 +520,8 @@ bindings:
                                         class="form-control"
                                         type="number"
                                         min="0"
-                                        name="humidity"
+                                        name="protocols.siteCondition.meteorologicalConditions.humidityPer"
+                                        id="humidity"
                                     />
                                     <span class="help-block">Method: Sling Psychrometer</span>
                                 </div>
@@ -523,82 +531,88 @@ bindings:
                         <hr/>
                         <h4>Recent Rainfall</h4>
                         <div class="form-group">
-                            <label>Has it rained in the past <span class="blue">7</span> days?</label>
-                            <br/>
-                            <div class ="btn-group btn-group-toggle">
-                                <label
-                                    class="btn btn-primary"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="recentRainfall.rainedIn7Days"
-                                        value="true"
+                            <fieldset>
+                                <legend>Has it rained in the past <span class="blue">7</span> days?</legend>
+                                <br/>
+                                <div class ="btn-group btn-group-toggle">
+                                    <label
+                                        class="btn btn-primary"
                                     >
-                                    Yes
-                                </label>
-                                <label
-                                    class="btn btn-primary"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="recentRainfall.rainedIn7Days"
-                                        value="false"
+                                        <input
+                                            type="radio"
+                                            name="protocols.siteCondition.recentRainfall.rainedIn7Days"
+                                            value="true"
+                                        >
+                                        Yes
+                                    </label>
+                                    <label
+                                        class="btn btn-primary"
                                     >
-                                    No
-                                </label>
-                            </div>
+                                        <input
+                                            type="radio"
+                                            name="recentRainfall.rainedIn7Days"
+                                            value="false"
+                                        >
+                                        No
+                                    </label>
+                                </div>
+                            </fieldset>
                         </div>
                         <div class="form-group">
-                            <label>Has it rained in the past <span class="blue">72</span> hours?</label>
-                            <br/>
-                            <div class ="btn-group btn-group-toggle">
-                                <label
-                                    class="btn btn-primary"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="recentRainfall.rainedIn72Hours"
-                                        value="true"
+                            <fieldset>
+                                <legend>Has it rained in the past <span class="blue">72</span> hours?</legend>
+                                <br/>
+                                <div class ="btn-group btn-group-toggle">
+                                    <label
+                                        class="btn btn-primary"
                                     >
-                                    Yes
-                                </label>
-                                <label
-                                    class="btn btn-primary"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="recentRainfall.rainedIn72Hours"
-                                        value="false"
+                                        <input
+                                            type="radio"
+                                            name="protocols.siteCondition.recentRainfall.rainedIn72Hours"
+                                            value="true"
+                                        >
+                                        Yes
+                                    </label>
+                                    <label
+                                        class="btn btn-primary"
                                     >
-                                    No
-                                </label>
-                            </div>
+                                        <input
+                                            type="radio"
+                                            name="protocols.siteCondition.recentRainfall.rainedIn72Hours"
+                                            value="false"
+                                        >
+                                        No
+                                    </label>
+                                </div>
+                            </fieldset>
                         </div>
                         <div class="form-group">
-                            <label>Has it rained in the past <span class="blue">24</span> hours?</label>
-                            <br/>
-                            <div class ="btn-group btn-group-toggle">
-                                <label
-                                    class="btn btn-primary"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="recentRainfall.rainedIn24Hours"
-                                        value="true"
+                            <fieldset>
+                                <legend>Has it rained in the past <span class="blue">24</span> hours?</legend>
+                                <br/>
+                                <div class ="btn-group btn-group-toggle">
+                                    <label
+                                        class="btn btn-primary"
                                     >
-                                    Yes
-                                </label>
-                                <label
-                                    class="btn btn-primary"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="recentRainfall.rainedIn24Hours"
-                                        value="false"
+                                        <input
+                                            type="radio"
+                                            name="protocols.siteCondition.recentRainfall.rainedIn24Hours"
+                                            value="true"
+                                        >
+                                        Yes
+                                    </label>
+                                    <label
+                                        class="btn btn-primary"
                                     >
-                                    No
-                                </label>
-                            </div>
+                                        <input
+                                            type="radio"
+                                            name="protocols.siteCondition.recentRainfall.rainedIn24Hours"
+                                            value="false"
+                                        >
+                                        No
+                                    </label>
+                                </div>
+                            </fieldset>
                         </div>
 
                         <hr/>
@@ -606,14 +620,15 @@ bindings:
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="surfaceCurrentSpeedMPS">
+                                    <label for="surfaceCurrentSpeed">
                                         Surface current speed (meters/second)
                                     </label>
                                     <input
                                         class="form-control"
                                         type="number"
                                         min="0"
-                                        name="surfaceCurrentSpeedMPS"
+                                        name="protocols.siteCondition.waterConditions.surfaceCurrentSpeedMPS"
+                                        id="surfaceCurrentSpeed"
                                     />
                                 </div>
                             </div>
@@ -622,22 +637,24 @@ bindings:
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="waterColor">Describe the water color</label>
-                                    <br/>
-                                    <div class="btn-group btn-group-toggle">
-                                        {{ range $i, $waterColor := $.page.waterColors }}
-                                        <label
-                                            class="btn btn-primary"
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="waterColor"
-                                                value="{{ $waterColor.id }}"
+                                    <fieldset>
+                                        <legend>Describe the water color</legend>
+                                        <br/>
+                                        <div class="btn-group btn-group-toggle">
+                                            {{ range $i, $waterColor := $.page.waterColors }}
+                                            <label
+                                                class="btn btn-primary"
                                             >
-                                            {{ $waterColor.label }}
-                                        </label>
-                                        {{ end }}
-                                    </div>
+                                                <input
+                                                    type="radio"
+                                                    name="protocols.siteCondition.waterConditions.waterColor"
+                                                    value="{{ $waterColor.id }}"
+                                                >
+                                                {{ $waterColor.label }}
+                                            </label>
+                                            {{ end }}
+                                        </div>
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
@@ -645,30 +662,32 @@ bindings:
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Is there an oil sheen present?</label>
-                                    <br/>
-                                    <div class="btn-group btn-group-toggle">
-                                        <label
-                                            class="btn btn-primary"
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="waterConditions.oilSheen"
-                                                value="true"
+                                    <fieldset>
+                                        <legend>Is there an oil sheen present?</legend>
+                                        <br/>
+                                        <div class="btn-group btn-group-toggle">
+                                            <label
+                                                class="btn btn-primary"
                                             >
-                                            Yes
-                                        </label>
-                                        <label
-                                            class="btn btn-primary"
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="waterConditions.oilSheen"
-                                                value="false"
+                                                <input
+                                                    type="radio"
+                                                    name="protocols.siteCondition.waterConditions.oilSheen"
+                                                    value="true"
+                                                >
+                                                Yes
+                                            </label>
+                                            <label
+                                                class="btn btn-primary"
                                             >
-                                            No
-                                        </label>
-                                    </div>
+                                                <input
+                                                    type="radio"
+                                                    name="protocols.siteCondition.waterConditions.oilSheen"
+                                                    value="false"
+                                                >
+                                                No
+                                            </label>
+                                        </div>
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
@@ -676,30 +695,32 @@ bindings:
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Is there any garbage in the water?</label>
-                                    <br/>
-                                    <div class="btn-group btn-group-toggle">
-                                        <label
-                                            class="btn btn-primary"
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="garbage.garbagePresent"
-                                                value="true"
+                                    <fieldset>
+                                        <legend>Is there any garbage in the water?</legend>
+                                        <br/>
+                                        <div class="btn-group btn-group-toggle">
+                                            <label
+                                                class="btn btn-primary"
                                             >
-                                            Yes
-                                        </label>
-                                        <label
-                                            class="btn btn-primary"
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="garbage.garbagePresent"
-                                                value="false"
+                                                <input
+                                                    type="radio"
+                                                    name="protocols.siteCondition.waterConditions.garbage.garbagePresent"
+                                                    value="true"
+                                                >
+                                                Yes
+                                            </label>
+                                            <label
+                                                class="btn btn-primary"
                                             >
-                                            No
-                                        </label>
-                                    </div>
+                                                <input
+                                                    type="radio"
+                                                    name="protocols.siteCondition.waterConditions.garbage.garbagePresent"
+                                                    value="false"
+                                                >
+                                                No
+                                            </label>
+                                        </div>
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
@@ -707,24 +728,26 @@ bindings:
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="CSOPipeFlow">
-                                        Is there any flow through the Combined Sewer Overflow (CSO) pipes?
-                                    </label>
-                                    <br/>
-                                    <div class="btn-group btn-group-toggle">
-                                        {{ range $i, $pipeFlow := $.page.pipeFlows }}
-                                        <label
-                                            class="btn btn-primary"
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="CSOPipeFlow"
-                                                value="{{ $pipeFlow.id }}"
+                                    <fieldset>
+                                        <legend>
+                                            Is there any flow through the Combined Sewer Overflow (CSO) pipes?
+                                        </legend>
+                                        <br/>
+                                        <div class="btn-group btn-group-toggle">
+                                            {{ range $i, $pipeFlow := $.page.pipeFlows }}
+                                            <label
+                                                class="btn btn-primary"
                                             >
-                                            {{ $pipeFlow.label }}
-                                        </label>
-                                        {{ end }}
-                                    </div>
+                                                <input
+                                                    type="radio"
+                                                    name="protocols.siteCondition.waterConditions.markedCombinedSewerOverflowPipes.howMuchFlowThrough"
+                                                    value="{{ $pipeFlow.id }}"
+                                                >
+                                                {{ $pipeFlow.label }}
+                                            </label>
+                                            {{ end }}
+                                        </div>
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
@@ -732,39 +755,40 @@ bindings:
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="otherPipeFlow">
-                                        Is there any flow through the unmarked or other outfall pipes?
-                                    </label>
-                                    <br/>
-                                    <div class="btn-group btn-group-toggle">
-                                        {{ range $i, $pipeFlow := $.page.pipeFlows }}
-                                        <label
-                                            class="btn btn-primary"
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="otherPipeFlow"
-                                                value="{{ $pipeFlow.id }}"
+                                    <fieldset>
+                                        <legend>
+                                            Is there any flow through the unmarked or other outfall pipes?
+                                        </legend>
+                                        <br/>
+                                        <div class="btn-group btn-group-toggle">
+                                            {{ range $i, $pipeFlow := $.page.pipeFlows }}
+                                            <label
+                                                class="btn btn-primary"
                                             >
-                                            {{ $pipeFlow.label }}
-                                        </label>
-                                        {{ end }}
-                                    </div>
+                                                <input
+                                                    type="radio"
+                                                    name="protocols.siteCondition.waterConditions.unmarkedOutfallPipes.howMuchFlowThrough"
+                                                    value="{{ $pipeFlow.id }}"
+                                                >
+                                                {{ $pipeFlow.label }}
+                                            </label>
+                                            {{ end }}
+                                        </div>
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group mt-4">
-                            <label for="notes">Site Conditions Notes</label>
+                            <label for="siteConditionsNotes">Site Conditions Notes</label>
                             <textarea
                                 class="form-control"
                                 type="text"
-                                name="notes"
+                                name="protocols.siteCondition.notes"
                                 maxlength="16536"
+                                id="siteConditionsNotes"
                             ></textarea>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -799,12 +823,13 @@ bindings:
                             <div id="mobileOrganismsTable"></div>
                         </div>
                         <div class="form-group mt-4">
-                            <label for="notes">Mobile Organisms Notes</label>
+                            <label for="mobileOrganismsNotes">Mobile Organisms Notes</label>
                             <textarea
                                 class="form-control"
                                 type="text"
-                                name="notes"
+                                name="protocols.mobileTrap.notes"
                                 maxlength="16536"
+                                id="mobileOrganismsNotes"
                             ></textarea>
                         </div>
                     </div>
@@ -847,12 +872,13 @@ bindings:
                         </div>
 
                         <div class="form-group mt-4">
-                            <label for="notes">Sessile Organisms Notes</label>
+                            <label for="sessileOrganismsNotes">Sessile Organisms Notes</label>
                             <textarea
                                 class="form-control"
                                 type="text"
-                                name="notes"
+                                name="protocols.settlementTiles.notes"
                                 maxlength="16536"
+                                id="sessileOrganismsNotes"
                             ></textarea>
                         </div>
 
@@ -895,12 +921,13 @@ bindings:
                             >Add Water Sample</a>
                         </div>
                         <div class="form-group mt-4">
-                            <label for="notes">Water Quality Notes</label>
+                            <label for="waterQualityNotes">Water Quality Notes</label>
                             <textarea
                                 class="form-control"
                                 type="text"
-                                name="notes"
+                                name="protocols.waterQuality.notes"
                                 maxlength="16536"
+                                id="waterQualityNotes"
                             ></textarea>
                         </div>
                     </div>
@@ -926,12 +953,13 @@ bindings:
                         <p>Did you find any wild oysters?
                         </p>
                         <div class="form-group mt-4">
-                            <label for="notes">Wild Oyster Notes</label>
+                            <label for="wildOysternotes">Wild Oyster Notes</label>
                             <textarea
                                 class="form-control"
                                 type="text"
                                 name="notes"
                                 maxlength="16536"
+                                id="wildOysternotes"
                             ></textarea>
                         </div>
                     </div>
