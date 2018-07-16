@@ -4,6 +4,10 @@ page:
     view:       'Enter Data'
 
 bindings:
+-   name:     'expedition'
+    resource: '/api/expeditions/{{ qs `id` }}'
+    optional: true
+
 -   name:     'mobileOrganisms'
     resource: '/api/mobile-organisms/'
     params:
@@ -48,21 +52,35 @@ bindings:
     </section>
 
     <section class="content collapse" id="enterdata1">
+
         <div class="form-group">
             <label for="name">Expedition Name</label>
-            <input class="form-control" type="text" name="name">
+            <input
+                class="form-control"
+                type="text"
+                id="name"
+                name="name"
+                {{ if $.bindings.expedition }}
+                value="{{ $.bindings.expedition.name }}"
+                {{ end }}
+                >
             <small class="form-text mb-3">
                 Give your expedition a unique name.
             </small>
         </div>
+
         <div class="form-group">
             <label for="monitoringStartDate">Expedition Date and Time</label>
             <input
                 class="form-control col-4"
+                id="monitoringStartDate"
                 type="datetime-local"
                 name="monitoringStartDate"
+                {{ if $.bindings.expedition }}
+                value="{{ $.bindings.expedition.monitoringStartDate }}"
+                {{ else }}
                 value="{{ now `ymd` }}"
-                autofocus
+                {{ end }}
             >
         </div>
 
@@ -79,57 +97,69 @@ bindings:
         -->
 
         <div class="form-group mt-4">
-            <label>
-                Select your structure type
-            </label>
-            <p>
-                (Note: if you're entering data that isn't associated with an oyster research structure, like
-                    the results of a <a href="https://www.nationalgeographic.org/projects/bioblitz/" target="_blank">BioBlitz</a> or fish count, select "No structure.")
-            </p>
-            {{ range $i, $structureType := $.page.structureTypes }}
-            <div class="custom-control custom-radio">
-                <input
-                    type="radio"
-                    id="structure{{ $i }}"
-                    class="custom-control-input"
-                    name="structure"
-                >
-                <label class="custom-control-label w-100" for="structure{{ $i }}">
-                    {{ $structureType.label }}
-                </label>
-            </div>
-            {{ end }}
+            <fieldset>
+                <legend>
+                    Select your structure type
+                </legend>
+                <p>
+                    (Note: if you're entering data that isn't associated with an oyster research structure, like
+                        the results of a <a href="https://www.nationalgeographic.org/projects/bioblitz/" target="_blank">BioBlitz</a> or fish count, select "No structure.")
+                </p>
+                {{ range $i, $structureType := $.page.structureTypes }}
+                <div class="custom-control custom-radio">
+                    <input
+                        type="radio"
+                        id="structure{{ $i }}"
+                        class="custom-control-input"
+                        name="station.structureType"
+                        value="{{ $structureType.id }}"
+                        {{ if $.bindings.expedition }}
+                        {{ if eq $.bindings.expedition.station.structureType $structureType.id }}
+                        checked
+                        {{ end }}
+                        {{ end }}
+                    >
+                    <label class="custom-control-label w-100" for="structure{{ $i }}">
+                        {{ $structureType.label }}
+                    </label>
+                </div>
+                {{ end }}
+            </fieldset>
         </div>
 
 <!-- "Structure Name" field displays if user answers "YES" to "Are you reporting data related to a structure, like an Oyster Research Station (ORS)?"-->
         <div class="form-group">
-            <label for="station">Structure Name</label>
+            <label for="structureName">Structure Name</label>
             <div class="input-group">
                 <input
                     type="text"
                     class="form-control typeahead w-100"
-                    name="station"
+                    name="station.name"
                     data-typeahead-url="/api/restoration-stations?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
                     data-typeahead-field="name"
+                    id="structureName"
+                    aria-describedby="structureNameHelp"
                 >
 
-                <small class="form-text mb-3">
+                <small class="form-text mb-3" id="structureNameHelp">
                     Start typing your structure's name in the field above, then select it from the dropdown list.  Don't see your structure? You can add one on our <a class="font-weight-bold" href="#">Register a Structure</a> page.
                 </small>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="site">Site Name</label>
+            <label for="siteName">Site Name</label>
             <div class="input-group">
                 <input
                     type="text"
                     class="form-control typeahead w-100"
-                    name="site"
+                    name="siteName"
                     data-typeahead-url="/api/sites?fields=name,bodyOfWater&amp;q=str:name/contains:{}/str:bodyOfWater/contains:{}&amp;sort=name&amp;conjunction=or"
                     data-typeahead-field="name,bodyOfWater"
+                    id="siteName"
+                    aria-describedby="siteNameHelp"
                 >
-                <small class="form-text mb-3">
+                <small class="form-text mb-3" id="siteNameHelp">
                     Start typing your site's name in the field above, then select it from the dropdown list.
                 </small>
             </div>
@@ -141,11 +171,13 @@ bindings:
                 <input
                     type="text"
                     class="form-control typeahead w-100"
-                    name="team"
+                    name="team.name"
                     data-typeahead-url="/api/teams?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
                     data-typeahead-field="name"
+                    id="team"
+                    aria-describedby="teamHelp"
                 >
-                <small class="form-text mb-3">
+                <small class="form-text mb-3" id="teamHelp">
                     Start typing your team's name in the field above, then select it from the dropdown list.
                 </small>
             </div>
@@ -155,12 +187,26 @@ bindings:
             adults," "Number of students," and other fields from the field report -->
 
         <div class="form-group">
-            <label for="name">Number of adults</label>
-            <input class="form-control col-2" type="number" min="0" name="numberAdults">
+            <label for="numberAdults">Number of adults</label>
+            <input
+                class="form-control col-2"
+                type="number"
+                min="0" n
+                ame="numberAdults"
+                id="numberAdults"
+                value=""
+            >
         </div>
         <div class="form-group">
-            <label for="name">Number of students</label>
-            <input class="form-control col-2" type="number" min="0" name="numberStudents">
+            <label for="numberStudents">Number of students</label>
+            <input
+                class="form-control col-2"
+                type="number"
+                min="0"
+                name="numberStudents"
+                id="numberStudents"
+                value=""
+            >
         </div>
     </section>
 
@@ -192,14 +238,14 @@ bindings:
             out the <a href="https://drive.google.com/drive/folders/0Bzf_STNcTtRmM2VubzJaM1dWZEU" target="_blank">field manual</a>.
         </p>
 
-<!--
+
         <div class="form-check mb-4">
             <input class="form-check-input" type="checkbox" value="" id="test1">
             <label class="form-check-label" for="test1">
                 Allow all team members to edit all protocols.
             </label>
         </div>
--->
+
         <div id="accordion">
 
             <!-- BEGIN Oyster Measurements -->
@@ -277,56 +323,59 @@ bindings:
                         </div>
 
                         <div class="form-group mt-4">
-                            <label for="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage">
-                                Bioaccumulation on Cage
-                            </label>
+                            <fieldset>
+                                <legend>
+                                    Bioaccumulation on Cage
+                                </legend>
 
-                            <div class="custom-control custom-radio">
-                                <input
-                                    type="radio"
-                                    name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
-                                    id="ba1"
-                                    class="custom-control-input"
-                                >
-                                <label class="custom-control-label w-100" for="ba1">
-                                    <span>None/clean</span> No macroalgae or animals present
-                                </label>
-                            </div>
+                                <div class="custom-control custom-radio">
+                                    <input
+                                        type="radio"
+                                        name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                                        id="ba1"
+                                        class="custom-control-input"
+                                    >
+                                    <label class="custom-control-label w-100" for="ba1">
+                                        <strong>None/clean:</strong> No macroalgae or animals present.
+                                    </label>
+                                </div>
 
-                            <div class="custom-control custom-radio">
-                                <input
-                                    type="radio"
-                                    name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
-                                    class="custom-control-input"
-                                    id="ba2"
-                                >
-                                <label class="custom-control-label w-100" for="ba2">
-                                    <span>Light</span> Macroalgae or minimal animals present that do not encroach on mesh openings
-                                </label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input
-                                    type="radio"
-                                    name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
-                                    class="custom-control-input"
-                                    id="ba3"
-                                >
-                                <label class="custom-control-label w-100" for="ba3">
-                                    <span>Medium</span> Some encrusting macroalgae/animals reducing size of mesh opening up to 25%
-                                </label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input
-                                    type="radio"
-                                    name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
-                                    class="custom-control-input"
-                                    id="ba4"
-                                >
-                                <label class="custom-control-label w-100" for="ba4">
-                                    <span>Heavy</span> Encrusting macroalgae/animals reducing mesh opening by over 50%
-                                </label>
-                            </div>
+                                <div class="custom-control custom-radio">
+                                    <input
+                                        type="radio"
+                                        name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                                        class="custom-control-input"
+                                        id="ba2"
+                                    >
+                                    <label class="custom-control-label w-100" for="ba2">
+                                        <strong>Light:</strong> Macroalgae or minimal animals present that do not encroach on mesh openings.
+                                    </label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input
+                                        type="radio"
+                                        name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                                        class="custom-control-input"
+                                        id="ba3"
+                                    >
+                                    <label class="custom-control-label w-100" for="ba3">
+                                        <strong>Medium:</strong> Some encrusting macroalgae/animals reducing size of mesh opening up to 25%.
+                                    </label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input
+                                        type="radio"
+                                        name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                                        class="custom-control-input"
+                                        id="ba4"
+                                    >
+                                    <label class="custom-control-label w-100" for="ba4">
+                                        <strong>Heavy:</strong> Encrusting macroalgae/animals reducing mesh opening by over 50%.
+                                    </label>
+                                </div>
+                            </fieldset>
                         </div>
+
 
                         <div class="form-group mt-4">
                             <label for="notes">Oyster Measurement Notes</label>

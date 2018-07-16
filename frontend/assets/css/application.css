@@ -121,8 +121,13 @@ h6, .h6 {
   font-size: 12px;
 }
 
-form label {
+form label,
+form legend {
     user-select:     none;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: .5rem;
+    font-size: inherit;
 }
 
 .custom-radio .custom-control-label {
