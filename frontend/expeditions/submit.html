@@ -5,9 +5,9 @@ page:
 
 bindings:
 -   name:     'expedition'
+    only_if:  '{{ qs `id` }}'
     resource: '/api/expeditions/{{ qs `id` }}'
     optional: true
-    fallback: false
 
 -   name:     'mobileOrganisms'
     resource: '/api/mobile-organisms/'
