@@ -290,6 +290,30 @@ bindings:
                                         </li>
                                     </ul>
                                 </div>
+                                <div class="col-sm-12 col-md-6 form-group">
+                                    <label>Send one-time link to edit this protocol (learn more):</label>
+                                    <input type="text" class="form-control">
+                                    <br />
+                                    <button tyle="button" class="btn btn-primary">
+                                        <i class="fa fa-envelope"></i>
+                                        Send Invite
+                                    </button>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 form-group">
+                                    <label>People who can edit this protocol:</label>
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            testuser@example.com
+                                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <i>testuser2@example.com (has not accepted)</i>
+                                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
 
@@ -407,6 +431,34 @@ bindings:
                 </div>
                 <div id="siteConditions" class="collapse" aria-labelledby="addSiteConditions" data-parent="#accordion">
                     <div class="card-body">
+                        <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 form-group">
+                                    <label>Invite team members to enter data for this protocol:</label>
+                                    <input type="text" class="form-control">
+                                    <br />
+                                    <button tyle="button" class="btn btn-primary">
+                                        <i class="fa fa-envelope"></i>
+                                        Send Invite
+                                    </button>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 form-group">
+                                    <label>Team members who can edit this protocol:</label>
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            Johnny Userface
+                                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <i>Sally Shrimphead (has not accepted)</i>
+                                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <p>
                             Select or enter in as much Site Conditions data as you can.
                         </p>
@@ -417,7 +469,6 @@ bindings:
                                 <div class="form-group">
                                     <fieldset>
                                         <legend>Weather</legend>
-                                        <br/>
                                         <div class="btn-group btn-group-toggle">
                                             {{ range $i, $weatherCondition := $.page.weatherConditions }}
                                             <label
@@ -493,7 +544,6 @@ bindings:
                                 <div class="form-group">
                                     <fieldset>
                                         <legend>Wind Direction</legend>
-                                        <br/>
                                         <div class="btn-group btn-group-toggle">
                                             {{ range $i, $windDirection := $.page.windDirections }}
                                             <label
@@ -534,7 +584,6 @@ bindings:
                         <div class="form-group">
                             <fieldset>
                                 <legend>Has it rained in the past <span class="blue">7</span> days?</legend>
-                                <br/>
                                 <div class ="btn-group btn-group-toggle">
                                     <label
                                         class="btn btn-primary"
@@ -562,7 +611,6 @@ bindings:
                         <div class="form-group">
                             <fieldset>
                                 <legend>Has it rained in the past <span class="blue">72</span> hours?</legend>
-                                <br/>
                                 <div class ="btn-group btn-group-toggle">
                                     <label
                                         class="btn btn-primary"
@@ -590,7 +638,6 @@ bindings:
                         <div class="form-group">
                             <fieldset>
                                 <legend>Has it rained in the past <span class="blue">24</span> hours?</legend>
-                                <br/>
                                 <div class ="btn-group btn-group-toggle">
                                     <label
                                         class="btn btn-primary"
@@ -640,7 +687,6 @@ bindings:
                                 <div class="form-group">
                                     <fieldset>
                                         <legend>Describe the water color</legend>
-                                        <br/>
                                         <div class="btn-group btn-group-toggle">
                                             {{ range $i, $waterColor := $.page.waterColors }}
                                             <label
@@ -665,7 +711,6 @@ bindings:
                                 <div class="form-group">
                                     <fieldset>
                                         <legend>Is there an oil sheen present?</legend>
-                                        <br/>
                                         <div class="btn-group btn-group-toggle">
                                             <label
                                                 class="btn btn-primary"
@@ -698,7 +743,6 @@ bindings:
                                 <div class="form-group">
                                     <fieldset>
                                         <legend>Is there any garbage in the water?</legend>
-                                        <br/>
                                         <div class="btn-group btn-group-toggle">
                                             <label
                                                 class="btn btn-primary"
@@ -733,7 +777,6 @@ bindings:
                                         <legend>
                                             Is there any flow through the Combined Sewer Overflow (CSO) pipes?
                                         </legend>
-                                        <br/>
                                         <div class="btn-group btn-group-toggle">
                                             {{ range $i, $pipeFlow := $.page.pipeFlows }}
                                             <label
@@ -760,7 +803,6 @@ bindings:
                                         <legend>
                                             Is there any flow through the unmarked or other outfall pipes?
                                         </legend>
-                                        <br/>
                                         <div class="btn-group btn-group-toggle">
                                             {{ range $i, $pipeFlow := $.page.pipeFlows }}
                                             <label
@@ -805,20 +847,45 @@ bindings:
                             <i class="fa"></i>
                         </div>
                     </section>
-                    <div class="step-toggle">
-                        <i class="fa fa-plus"></i>
-                    </div>
                 </div>
                 <div id="mobileOrganisms" class="collapse" aria-labelledby="addMobileOrganisms" data-parent="#accordion">
                     <div class="card-body">
-                            <p><strong>Mobile Organism Identifications</strong></p>
-                            Enter each mobile organism species you identified and a count of how many you found in the table below.
-                            </p>
-                            <ul>
-                                <li>Column 1: start typing either the <strong>commmon or scientific name</strong> of the mobile organism, then select it
-                                    from the dropdown menu.</li>
-                                <li>Column 2: enter in a <strong>count</strong> of how many of that species you found.</li>
-                            </ul>
+                        <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 form-group">
+                                    <label>Invite team members to enter data for this protocol:</label>
+                                    <input type="text" class="form-control">
+                                    <br />
+                                    <button tyle="button" class="btn btn-primary">
+                                        <i class="fa fa-envelope"></i>
+                                        Send Invite
+                                    </button>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 form-group">
+                                    <label>Team members who can edit this protocol:</label>
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            Johnny Userface
+                                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <i>Sally Shrimphead (has not accepted)</i>
+                                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <p><strong>Mobile Organism Identifications</strong></p>
+                        Enter each mobile organism species you identified and a count of how many you found in the table below.
+                        </p>
+                        <ul>
+                            <li>Column 1: start typing either the <strong>commmon or scientific name</strong> of the mobile organism, then select it
+                                from the dropdown menu.</li>
+                            <li>Column 2: enter in a <strong>count</strong> of how many of that species you found.</li>
+                        </ul>
 
                         <div class="spreadsheet">
                             <div id="mobileOrganismsTable"></div>
@@ -851,6 +918,34 @@ bindings:
                 </div>
                 <div id="sessileOrganisms" class="collapse" aria-labelledby="addSessileOrganisms" data-parent="#accordion">
                     <div class="card-body">
+                        <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 form-group">
+                                    <label>Invite team members to enter data for this protocol:</label>
+                                    <input type="text" class="form-control">
+                                    <br />
+                                    <button tyle="button" class="btn btn-primary">
+                                        <i class="fa fa-envelope"></i>
+                                        Send Invite
+                                    </button>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 form-group">
+                                    <label>Team members who can edit this protocol:</label>
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            Johnny Userface
+                                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <i>Sally Shrimphead (has not accepted)</i>
+                                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <p><strong>Sessile Organism Identifications</strong></p>
                         <p>
                             Enter each sessile organism species you identified on your settlement tile in the table below.
@@ -902,6 +997,34 @@ bindings:
                 </div>
                 <div id="waterQuality" class="collapse" aria-labelledby="addWaterQuality" data-parent="#accordion">
                     <div class="card-body">
+                        <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 form-group">
+                                    <label>Invite team members to enter data for this protocol:</label>
+                                    <input type="text" class="form-control">
+                                    <br />
+                                    <button tyle="button" class="btn btn-primary">
+                                        <i class="fa fa-envelope"></i>
+                                        Send Invite
+                                    </button>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 form-group">
+                                    <label>Team members who can edit this protocol:</label>
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            Johnny Userface
+                                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <i>Sally Shrimphead (has not accepted)</i>
+                                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <p><strong>Water Quality Parameter Measurements</strong></p>
                         <p>For every water quality parameter you'd like to submit, select the method and then enter
                             the three measurements in the table below.
@@ -1184,8 +1307,7 @@ bindings:
                             minSpareRows: 1,
                             startRows:    5,
                             maxRows:      100,
-                            width:        width,
-                            stretchH:     'none',
+                            width:        'width',
                         });
                     }
                 }
