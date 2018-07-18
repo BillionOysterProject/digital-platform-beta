@@ -209,6 +209,72 @@ bindings:
                 value=""
             >
         </div>
+
+
+        <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
+            <h3>Invite people to edit this expedition</h3>
+            <p>Use the options below to invite team members (students) or people without a Digital Platform account
+                to edit this expedition.  (You can also invite people to edit specific protocols in the data entry
+                sections.)</p>
+            <br/>
+            <div class="form-check mb-4">
+                <input class="form-check-input" type="checkbox" value="" id="test1">
+                <label class="form-check-label" for="test1">
+                    Allow all team members to edit all protocols.
+                </label>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6 form-group">
+                    <label>Invite specific team members to enter data for this expedition:</label>
+                    <input type="text" class="form-control">
+                    <br />
+                    <button tyle="button" class="btn btn-primary">
+                        <i class="fa fa-envelope"></i>
+                        Send Invite
+                    </button>
+                </div>
+
+                <div class="col-sm-12 col-md-6 form-group">
+                    <label>Team members who can edit this protocol:</label>
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            Johnny Userface
+                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                        </li>
+                        <li class="list-group-item">
+                            <i>Sally Shrimphead (has not accepted)</i>
+                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-12 col-md-6 form-group">
+                    <label>Send one-time link to edit this expedition (learn more):</label>
+                    <input type="text" class="form-control">
+                    <br />
+                    <button tyle="button" class="btn btn-primary">
+                        <i class="fa fa-envelope"></i>
+                        Send Invite
+                    </button>
+                </div>
+
+                <div class="col-sm-12 col-md-6 form-group">
+                    <label>People who can edit this protocol:</label>
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            testuser@example.com
+                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                        </li>
+                        <li class="list-group-item">
+                            <i>testuser2@example.com (has not accepted)</i>
+                            <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- ########################################################################################### -->
@@ -238,14 +304,6 @@ bindings:
             as much data as you can!  For help with BOP's protocols, check
             out the <a href="https://drive.google.com/drive/folders/0Bzf_STNcTtRmM2VubzJaM1dWZEU" target="_blank">field manual</a>.
         </p>
-
-
-        <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" value="" id="test1">
-            <label class="form-check-label" for="test1">
-                Allow all team members to edit all protocols.
-            </label>
-        </div>
 
         <div id="accordion">
 

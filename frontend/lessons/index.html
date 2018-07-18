@@ -19,9 +19,24 @@ bindings:
     expand: false
     q:      'status/published'
 ---
+
 <section class="content container-fluid lessons-list">
+    <h2>
+        <i class="fa fa-star"></i>
+        Featured Lessons
+    </h2>
+    <hr/>
+    <br/>
+
+    <h2>
+    <i class="fa fa-anchor"></i>
+    Billion Oyster Project Lessons
+    </h2>
+    <hr/>
+    <br/>
+
     {{ range $i, $unit := .bindings.units }}
-    <h2
+    <h3
         data-toggle="collapse"
         href="#unit{{ $unit._id }}"
         role="button"
@@ -29,7 +44,7 @@ bindings:
     >
         <i class="fa-fw {{ or $unit.icon `fa-book` }}"></i>
         {{ $unit.title }}
-    </h2>
+    </h3>
 
     <hr />
 
