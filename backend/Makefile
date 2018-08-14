@@ -3,7 +3,7 @@
 all: env deps test
 
 env:
-	which virtualenv || pip install virtualenv
+	which virtualenv || pip install --user virtualenv
 	virtualenv env
 	./env/bin/pip install pytest ipython
 
