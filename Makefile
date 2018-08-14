@@ -7,17 +7,15 @@ all:
 	cd backend && make
 
 run:
-	supervisord -c scripts/stack.ini
+	./backend/env/bin/supervisord -c scripts/stack.ini
 
 run-development:
 	BOP_S3_PUBLIC_BUCKET=digital-platform-dev-files \
-	PIVOT_ENV=development \
-		supervisord -c scripts/stack.ini
+	PIVOT_ENV=development ./backend/env/bin/supervisord -c scripts/stack.ini
 
 run-production:
 	BOP_S3_PUBLIC_BUCKET=digital-platform-prod-files \
-	PIVOT_ENV=production \
-		supervisord -c scripts/stack.ini
+	PIVOT_ENV=production ./backend/env/bin/supervisord -c scripts/stack.ini
 
 run-db:
 	cd database && pivot -s schema -L debug -Q web
