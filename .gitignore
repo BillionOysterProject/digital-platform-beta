@@ -10,3 +10,4 @@
 *.cache
 /scripts/gis/cache
 /scripts/gis/db
+.pytest_cache
