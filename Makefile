@@ -4,30 +4,32 @@
 PATH := "$(PATH):$(HOME)/go/bin:$(HOME)/bin:$(HOME)/.local/bin:$(HOME)/Library/Python/2.7/bin:"
 
 all:
-	test -d logs || mkdir logs
 	cd backend && make
 
-run:
+run-pre:
+	test -d logs || mkdir logs
+
+run: run-pre
 	./backend/env/bin/supervisord -c scripts/stack.ini
 
-run-development:
+run-development: run-pre
 	BOP_S3_PUBLIC_BUCKET=digital-platform-dev-files \
 	PIVOT_ENV=development ./backend/env/bin/supervisord -c scripts/stack.ini
 
-run-production:
+run-production: run-pre
 	BOP_S3_PUBLIC_BUCKET=digital-platform-prod-files \
 	PIVOT_ENV=production ./backend/env/bin/supervisord -c scripts/stack.ini
 
-run-db:
+run-db: run-pre
 	cd database && pivot -s schema -L debug -Q web
 
-run-backend:
+run-backend: run-pre
 	cd backend && ./env/bin/python server.py
 
-run-frontend:
+run-frontend: run-pre
 	cd frontend && diecast
 
-run-worker:
+run-worker: run-pre
 	cd backend && make run-worker
 
 tail:
