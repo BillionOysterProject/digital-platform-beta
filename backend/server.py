@@ -51,5 +51,4 @@ if __name__ == '__main__':
             http_server = WSGIServer((addr, port), app.wsgi_app)
             http_server.serve_forever()
     except:
-        sentry.captureException()
         raise
