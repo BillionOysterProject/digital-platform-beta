@@ -8,6 +8,9 @@ from flask_login import login_user, logout_user
 from ..utils import as_bool
 from ..user import User
 import six
+import os
+import logging
+import pivot.exceptions
 
 
 class Authentication(Endpoint):
@@ -128,6 +131,27 @@ class Users(CollectionView):
         super(Users, cls).register(app)
         app.login_manager.user_loader(_load_user)
         User.collection = cls.get_collection()
+
+    @property
+    def current_user(self):
+        impersonate = os.getenv('IMPERSONATE')
+
+        if impersonate == 'off':
+            impersonate = None
+
+        if impersonate:
+            # try loading the IMPERSONATE user
+            try:
+                users = self.collection.query('username/is:{}'.format(impersonate))
+
+                if len(users) == 1:
+                    logging.warning('Impersonating user {}'.format(impersonate))
+                    return User(users.records[0])
+            except pivot.exceptions.RecordNotFound:
+                pass
+
+        else:
+            return super(Users, self).current_user
 
     def me(self):
         user = self.current_user

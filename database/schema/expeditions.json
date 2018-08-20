@@ -1,0 +1,101 @@
+[{
+    "name": "expeditions",
+    "allow_missing_embedded_records": true,
+    "embed": [{
+        "key":        "team",
+        "collection": "teams"
+    }, {
+        "key":        "teamLead",
+        "collection": "users"
+    }, {
+        "key":        "protocols.mobileTrap",
+        "collection": "protocolmobiletraps",
+        "fields": [
+            "collectionTime",
+            "mobileOrganisms",
+            "notes",
+            "status",
+            "submitted",
+            "teamMembers"
+        ]
+    }, {
+        "key":        "teamLists.mobileTrap.*",
+        "collection": "users"
+    }, {
+        "key":        "teamLists.oysterMeasurement.*",
+        "collection": "users"
+    }, {
+        "key":        "teamLists.settlementTiles.*",
+        "collection": "users"
+    }, {
+        "key":        "teamLists.siteCondition.*",
+        "collection": "users"
+    }, {
+        "key":        "teamLists.waterQuality.*",
+        "collection": "users"
+    }],
+    "fields": [{
+        "name":       "name",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":       "created",
+        "type":       "date",
+        "required":   true,
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }, {
+        "name":       "monitoringStartDate",
+        "type":       "date"
+    }, {
+        "name":       "monitoringEndDate",
+        "type":       "date"
+    }, {
+        "name":       "published",
+        "type":       "date"
+    }, {
+        "name":       "updated",
+        "type":       "date",
+        "required":   true,
+        "formatters": {
+            "current-time": true
+        }
+    }, {
+        "name":       "station",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":       "status",
+        "type":       "str",
+        "required":   true,
+        "default":    "incomplete",
+        "validators": {
+            "one-of": [
+                "incomplete",
+                "pending",
+                "returned",
+                "published",
+                "unpublished"
+            ]
+        }
+    }, {
+        "name":       "team",
+        "type":       "str"
+    }, {
+        "name":       "teamLead",
+        "type":       "str"
+    }, {
+        "name":       "teamLists",
+        "type":       "object"
+    }, {
+        "name":       "notes",
+        "type":       "str"
+    }, {
+        "name":       "returnedNotes",
+        "type":       "str"
+    }, {
+        "name":       "protocols",
+        "type":       "object"
+    }]
+}]

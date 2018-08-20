@@ -36,10 +36,10 @@ body {
 }
 
 body > header {
-{{ if (contains $.request.host `bop.nyc`) }}
-    background:      #2C3C56;
-{{ else }}
+{{ if $.env.DEBUG }}
     background:      #70140e;
+{{ else }}
+    background:      #2C3C56;
 {{ end }}
 }
 

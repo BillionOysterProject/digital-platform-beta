@@ -1,6 +1,6 @@
 [{
     "name": "prospectiveorgs",
-
+    "allow_missing_embedded_records": true,
     "fields": [{
         "name": "type",
         "type": "str",

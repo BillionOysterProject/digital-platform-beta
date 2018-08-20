@@ -1,7 +1,9 @@
 .PHONY: database backend frontend
 .EXPORT_ALL_VARIABLES:
 
-PATH := "$(PATH):$(HOME)/go/bin:$(HOME)/bin:$(HOME)/.local/bin:$(HOME)/Library/Python/2.7/bin:"
+IMPERSONATE ?= bop-admin
+DEBUG       ?= true
+PATH        := "$(PATH):$(HOME)/go/bin:$(HOME)/bin:$(HOME)/.local/bin:$(HOME)/Library/Python/2.7/bin:"
 
 all:
 	cd backend && make
