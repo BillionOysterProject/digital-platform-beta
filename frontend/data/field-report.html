@@ -1,0 +1,193 @@
+---
+page:
+    body_class: 'site-details'
+
+bindings:
+- name:		'site'
+  resource: '/api/sites/{{ param 1 }}'
+
+- name:     'stations'
+  resource: '/api/restoration-stations'
+  fallback: []
+  params:
+    q: 'siteId/{{ param 1 }}'
+
+- name:     'relatedTeams'
+  resource: '/api/teams'
+  fallback: []
+  not_if:   '{{ isEmpty $.bindings.stations }}'
+  params:
+    q: 'teamLeads/{{ join (uniq (pluck $.bindings.stations "teamLead._id")) "|" }}'
+    fields: 'teamLead,teamLeads,name'
+    expand: false
+
+- name:     'relatedExpeditions'
+  resource: '/api/expeditions'
+  not_if:   '{{ isEmpty $.bindings.stations }}'
+  params:
+    q:      'station/{{ join (pluck $.bindings.stations "_id") "|" }}/status/published'
+    sort:   '-monitoringStartDate'
+    expand: false
+    limit:  100
+
+- name: 'photos'
+  resource: '/api/expeditions/photos'
+  not_if:   '{{ isEmpty $.bindings.relatedExpeditions }}'
+  params:
+    q: '_id/{{ join (pluck $.bindings.relatedExpeditions "_id") "|" }}'
+---
+
+{{ $site     := $.bindings.site }}
+{{ $stations := $.bindings.stations }}
+{{ $teams    := $.bindings.relatedTeams }}
+
+{{ range $i, $relatedTeam := $teams }}
+{{   push "people" $relatedTeam.teamLead }}
+{{   if (isArray $relatedTeam.teamLeads) }}
+{{      range $j, $tl := $relatedTeam.teamLeads }}
+{{        push "people" $tl }}
+{{      end }}
+{{   end }}
+{{ end }}
+
+{{ $people      := uniq $.vars.people }}
+{{ $schoolOrgs  := (uniqByKey (filterByKey (pluck $.bindings.stations "schoolOrg") "name" "{{ not (hasPrefix (lower .) `unaffiliated`) }}") "name") }}
+{{ $expeditions := $.bindings.relatedExpeditions }}
+{{ $photos      := head (shuffle $.bindings.photos) 25 }}
+
+<h1 class="text-left pb-0">Field Report for Expedition ["Name"] on [Date]</h1>
+<section class="content shaded pt-1">
+    <i class="fa fa-fw fa-map-marker"></i>
+</section>
+
+
+<div class="row no-gutters site-jumbotron">
+    <div class="col">
+        <div id="siteMap">        <iframe
+            src="https://platform-beta.bop.nyc/sites/map"
+            frameborder="0"
+            style="width: 100%; height: 250px;"
+        ></iframe></div>
+
+    </div>
+</div>
+
+<section class="content">
+<h2>Expedition Metadata</h2>
+    <p><em>Metadata means data about data...</em></p>
+    
+            <ul class="list-unstyled">
+                <div class="row">
+                    <div class="col-6">
+                        <li class="media">
+                            <img class="mr-3" src=".../64x64" alt="Generic placeholder image">
+                            <div class="media-body">
+                                <p class="mt-0 mb-1"><strong>Type of structure:</strong> Oyster Research Station</p>
+                                <strong>Structure name:</strong> "Wutang Clams"
+                            </div>
+                        </li>
+                    </div>
+                
+                    <div class="col-6">
+                        <li class="media">
+                            <img class="mr-3" src=".../64x64" alt="Generic placeholder image">
+                            <div class="media-body">
+                                <p class="mt-0 mb-1"><strong>Team Lead:</strong> Ms. Pacman</p>
+                                <strong>Team Name:</strong> "Fake Team"
+                            </div>
+                        </li>
+                    </div>
+                
+                    <div class="col-6 mt-3">
+                        <li class="media">
+                            <img class="mr-3" src=".../64x64" alt="Generic placeholder image">
+                            <div class="media-body">
+                                <p class="mt-0 mb-1"><strong>Organization Name:</strong> P.S. 1</p>
+                                <strong>Organization Location:</strong> Red Hook, Brooklyn
+                            </div>
+                        </li>
+                    </div>
+
+                    <div class="col-6 mt-3">
+                            <li class="media">
+                                <img class="mr-3" src=".../64x64" alt="Generic placeholder image">
+                                <div class="media-body">
+                                    <p class="mt-0 mb-1"><strong>Number of Adults:</strong> 3</p>
+                                    <strong>Number of Students:</strong> 30
+                                </div>
+                            </li>
+                    </div>
+
+                </div>
+            </ul>
+</section>
+
+<section class="content">
+        <h2>Oyster Measurements Data</h2>
+        <div class="row">
+                <div class="col-12">
+                    <p>
+                        <em>This protocol captures data on meteorological conditions, recent rainfall,
+                        and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
+                        can affect oysters by impacting water quality, particularly through Combined Sewer Overflows. Learn more.</em>        
+                    </p>
+                </div>
+                <div class="col-12"><strong>Notes:</strong></div>
+        </div>
+</section>
+
+<section class="content">
+        <h2>Site Conditions Data</h2>
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    <em>This protocol captures data on meteorological conditions, recent rainfall,
+                    and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
+                    can affect oysters by impacting water quality, particularly through Combined Sewer Overflows. Learn more.</em>        
+                </p>
+            </div>
+            <div class="col-12"><strong>Notes:</strong></div>
+        </div>
+</section>
+
+<section class="content">
+        <h2>Mobile Organisms Data</h2>
+        <div class="row">
+                <div class="col-12">
+                    <p>
+                        <em>This protocol captures data on meteorological conditions, recent rainfall,
+                        and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
+                        can affect oysters by impacting water quality, particularly through Combined Sewer Overflows. Learn more.</em>        
+                    </p>
+                </div>
+                <div class="col-12"><strong>Notes:</strong></div>
+        </div>
+</section>
+
+<section class="content">
+        <h2>Sessile Organisms Data</h2>
+        <div class="row">
+                <div class="col-12">
+                    <p>
+                        <em>This protocol captures data on meteorological conditions, recent rainfall,
+                        and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
+                        can affect oysters by impacting water quality, particularly through Combined Sewer Overflows. Learn more.</em>        
+                    </p>
+                </div>
+                <div class="col-12"><strong>Notes:</strong></div>
+        </div>
+</section>
+
+<section class="content">
+        <h2>Water Quality Data</h2>
+        <div class="row">
+                <div class="col-12">
+                    <p>
+                        <em>This protocol captures data on meteorological conditions, recent rainfall,
+                        and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
+                        can affect oysters by impacting water quality, particularly through Combined Sewer Overflows. Learn more.</em>        
+                    </p>
+                </div>
+                <div class="col-12"><strong>Notes:</strong></div>
+        </div>
+</section>
