@@ -53,7 +53,7 @@ bindings:
 {{ $people      := uniq $.vars.people }}
 {{ $schoolOrgs  := (uniqByKey (filterByKey (pluck $.bindings.stations "schoolOrg") "name" "{{ not (hasPrefix (lower .) `unaffiliated`) }}") "name") }}
 {{ $expeditions := $.bindings.relatedExpeditions }}
-{{ $photos      := head (shuffle $.bindings.photos) 25 }}
+{{ $photos      := head (compact (flatten (shuffle $.bindings.photos))) 25 }}
 
 <h1 class="text-left pb-0">{{ $site.name }}, {{ $site.bodyOfWater }}</h1>
 <section class="content shaded pt-1">
