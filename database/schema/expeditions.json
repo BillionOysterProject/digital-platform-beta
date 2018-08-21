@@ -19,6 +19,50 @@
             "teamMembers"
         ]
     }, {
+        "key":        "protocols.settlementTiles",
+        "collection": "protocolsettlementtiles",
+        "fields": [
+            "collectionTime",
+            "settlementTiles",
+            "notes",
+            "status",
+            "submitted",
+            "teamMembers"
+        ]
+    }, {
+        "key":        "protocols.siteCondition",
+        "collection": "protocolsiteconditions",
+        "fields": [
+            "collectionTime",
+            "",
+            "notes",
+            "status",
+            "submitted",
+            "teamMembers"
+        ]
+    }, {
+        "key":        "protocols.oysterMeasurement",
+        "collection": "protocoloystermeasurements",
+        "fields": [
+            "collectionTime",
+            "",
+            "notes",
+            "status",
+            "submitted",
+            "teamMembers"
+        ]
+    }, {
+        "key":        "protocols.waterQuality",
+        "collection": "protocolwaterqualities",
+        "fields": [
+            "collectionTime",
+            "",
+            "notes",
+            "status",
+            "submitted",
+            "teamMembers"
+        ]
+    }, {
         "key":        "teamLists.mobileTrap.*",
         "collection": "users"
     }, {

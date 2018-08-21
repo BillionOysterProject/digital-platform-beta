@@ -2,6 +2,9 @@
     "name": "protocolmobiletraps",
     "allow_missing_embedded_records": true,
     "embed": [{
+        "key":        "scribeMember",
+        "collection": "users"
+    },{
         "key":        "teamMembers",
         "collection": "users"
     }, {
@@ -44,7 +47,7 @@
         "validators": {
             "one-of": [
                 "incomplete",
-                "pending",
+                "submitted",
                 "returned",
                 "published",
                 "unpublished"

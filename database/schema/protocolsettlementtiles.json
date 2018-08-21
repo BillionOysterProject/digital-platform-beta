@@ -1,0 +1,77 @@
+[{
+    "name": "protocolsettlementtiles",
+    "allow_missing_embedded_records": true,
+    "embed": [{
+        "key":        "scribeMember",
+        "collection": "users"
+    }, {
+        "key":        "teamMembers",
+        "collection": "users"
+    }, {
+        "key":        [
+            "settlementTiles.*.grid1.organism",
+            "settlementTiles.*.grid2.organism",
+            "settlementTiles.*.grid3.organism",
+            "settlementTiles.*.grid4.organism",
+            "settlementTiles.*.grid5.organism",
+            "settlementTiles.*.grid6.organism",
+            "settlementTiles.*.grid7.organism",
+            "settlementTiles.*.grid8.organism",
+            "settlementTiles.*.grid9.organism",
+            "settlementTiles.*.grid10.organism",
+            "settlementTiles.*.grid11.organism",
+            "settlementTiles.*.grid12.organism",
+            "settlementTiles.*.grid13.organism",
+            "settlementTiles.*.grid14.organism",
+            "settlementTiles.*.grid15.organism",
+            "settlementTiles.*.grid16.organism",
+            "settlementTiles.*.grid17.organism",
+            "settlementTiles.*.grid18.organism",
+            "settlementTiles.*.grid19.organism",
+            "settlementTiles.*.grid21.organism",
+            "settlementTiles.*.grid22.organism",
+            "settlementTiles.*.grid23.organism",
+            "settlementTiles.*.grid24.organism",
+            "settlementTiles.*.grid25.organism"
+        ],
+        "collection": "sessileorganisms",
+        "fields": [
+            "commonName",
+            "latinName",
+            "image"
+        ]
+    }],
+    "fields": [{
+        "name":       "collectionTime",
+        "type":       "date"
+    }, {
+        "name":     "scribeMember",
+        "type":     "str"
+    }, {
+        "name":     "teamMembers",
+        "type":     "raw"
+    }, {
+        "name":     "notes",
+        "type":     "str"
+    }, {
+        "name":       "status",
+        "type":       "str",
+        "required":   true,
+        "default":    "incomplete",
+        "validators": {
+            "one-of": [
+                "incomplete",
+                "submitted",
+                "returned",
+                "published",
+                "unpublished"
+            ]
+        }
+    }, {
+        "name":     "submitted",
+        "type":     "date"
+    }, {
+        "name":     "settlementTiles",
+        "type":     "raw"
+    }]
+}]
