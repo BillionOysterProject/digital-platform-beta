@@ -4,6 +4,7 @@ import sys
 import os
 import inspect
 import pivot
+from .utils import parse_docstring
 from .api import *
 from flask import Flask, jsonify, url_for
 from werkzeug.exceptions import default_exceptions
@@ -81,23 +82,55 @@ class API(Flask):
         output = []
 
         for rule in self.url_map.iter_rules():
-            options = OrderedDict({
-                'arguments': [],
-            })
-
-            urlargs = {}
-
-            for arg in rule.arguments:
-                options['arguments'].append(arg)
-                urlargs[arg] = ':{}'.format(arg)
-
-            options['methods'] = sorted(
+            methods = sorted(
                 [r for r in rule.methods if r not in ['HEAD', 'OPTIONS']]
             )
 
-            options['url'] = url_for(rule.endpoint, **urlargs)
+            for method in methods:
+                options = OrderedDict({
+                    'arguments': [],
+                })
 
-            output.append(options)
+                urlargs = {}
+
+                for arg in rule.arguments:
+                    options['arguments'].append(arg)
+                    urlargs[arg] = ':{}'.format(arg)
+
+                options['method'] = method
+                options['url'] = url_for(rule.endpoint, **urlargs)
+
+                obj = self.view_functions[rule.endpoint]
+                doc = obj.__doc__
+
+                if doc:
+                    parsed = parse_docstring(doc)
+                    options['description'] = parsed['short_description']
+
+                    for i, opt in enumerate(options['arguments']):
+                        options['arguments'][i] = {
+                            'name': opt,
+                        }
+
+                    options['querystrings'] = []
+
+                    try:
+                        for param in parsed['params']:
+                            for i, opt in enumerate(options['arguments']):
+                                if opt['name'] == param['name']:
+                                    options['arguments'][i]['description'] = param['doc']
+                                    raise StopIteration
+
+                            # if we got here, we're not describing a URL param, but a querystring
+                            options['querystrings'].append({
+                                'name':        param['name'],
+                                'description': param['doc'].strip(),
+                            })
+
+                    except StopIteration:
+                        pass
+
+                output.append(options)
 
         return sorted(output, key=lambda v: v.get('url'))
 

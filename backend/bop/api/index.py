@@ -13,4 +13,7 @@ class Index(Endpoint):
         })
 
     def routes(self):
+        """
+        A list of all supported API endpoints.
+        """
         return jsonify(self.app.list_routes())

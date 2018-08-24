@@ -11,6 +11,7 @@ ANONYMOUS_ROUTES = (
     ('POST', re.compile('^/api/auth/signin/?')),
     ('GET', re.compile('^/api/auth/signout/?')),
     ('GET', re.compile('^/api/users/me/?')),
+    ('GET', re.compile('^/api/routes/?')),
 
     # permit public access to participating and prospective organizations
     # --------------------------------------------------------------------------

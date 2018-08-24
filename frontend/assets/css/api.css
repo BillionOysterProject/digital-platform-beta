@@ -1,0 +1,213 @@
+#api {
+    padding: 15px;
+}
+
+#api code {
+    color: #A21011;
+    background-color: transparent;
+    padding: 0;
+}
+
+#api .pre {
+    font-family: monospace;
+}
+
+#api .endpoints > h2 {
+    margin-top: 1em;
+}
+
+#api .endpoints h3 {
+    font-size: 16pt;
+    width: 100%;
+    border-bottom: 2px solid #CCCCCC;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.25em;
+}
+
+#api .endpoints > p {
+
+    margin-bottom: 3em;
+}
+
+#api .endpoint .endpoint-header {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: #DDDDDD;
+    border: 1px solid #CCCCCC;
+    padding: 0.25em;
+    padding-bottom: 0.75em;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+#api .endpoint .endpoint-header.collapsed {
+    background-color: #EFEFEF;
+}
+
+#api .endpoint .endpoint-body {
+    margin-bottom: 2em;
+    background-color: #EFEFEF;
+    padding: 1.25em;
+    border: 1px solid #CCCCCC;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top: 0px;
+    padding-top: 1em;
+}
+
+#api .endpoint .route {
+    padding-left: 0.25em;
+}
+
+.endpoint-header .route-description {
+    font-size:   12pt;
+    display: block;
+}
+
+#api .endpoint .method,
+#api .endpoint .route-path {
+    font-size: 12pt;
+}
+
+#api .endpoint .route-path {
+    font-family: monospace;
+    font-weight: bold;
+    color: inherit;
+}
+
+#api .endpoint .method {
+    background-color: #666666;
+    border-radius: 4px;
+    border-right-width: 4px;
+    color: white;
+    padding: 0.25em;
+    margin-right: 0.25em;
+    display: inline-block;
+    width: 4em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+}
+
+#api .endpoint .method-get {
+    background-color: #00AEEF;
+}
+
+#api .endpoint .method-post {
+    background-color: #93CB4D;
+}
+
+#api .endpoint .method-put {
+    background-color: #D08926;
+}
+
+#api .endpoint .method-delete {
+    background-color: #A21011;
+}
+
+#api .endpoint li {
+    list-style-type: none;
+}
+
+#api .endpoint h2 {
+    margin: 0.25em 0;
+}
+
+#api .endpoint h4 {
+    font-size: 13pt;
+}
+
+#api .endpoint .response-header {
+    font-size: 14pt;
+}
+
+#api .endpoint .response-detail {
+    display: flex;
+    justify-content: stretch;
+}
+
+#api .endpoint .response-detail > * {
+    flex: 1;
+}
+
+#api .endpoint .response-property .property-badge {
+    border: 1px solid #666666;
+    display: flex;
+    justify-content: stretch;
+    border-radius: 4px;
+    font-size: 10pt;
+    width: 100%;
+}
+
+#api .endpoint .response-property .property-badge .property-name {
+    flex: 3;
+    padding: 0.25em 1em;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+#api .endpoint .response-property .property-badge .property-description {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: normal;
+    margin: 0;
+}
+
+#api .endpoint .response-property .property-badge .property-type {
+    text-align: center;
+    color: white;
+    flex: 1;
+    font-size: 12pt;
+    padding: 0.25em 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#api .endpoint .property-badge.property-badge-string {
+    border-color: rgb(23, 129, 216);
+}
+
+#api .endpoint .property-badge.property-badge-string .property-type {
+    background-color: rgb(23, 129, 216);
+}
+
+#api .endpoint .property-badge.property-badge-integer {
+    border-color: rgb(103, 158, 37);
+}
+
+#api .endpoint .property-badge.property-badge-integer .property-type {
+    background-color: rgb(103, 158, 37);
+}
+
+#api .endpoint .property-badge.property-badge-float {
+    border-color: #D08926;
+}
+
+#api .endpoint .property-badge.property-badge-float .property-type {
+    background-color: #D08926;
+}
+
+#api .endpoint .property-badge.property-badge-boolean {
+    border-color: #A21011;
+}
+
+#api .endpoint .property-badge.property-badge-boolean .property-type {
+    background-color: #A21011;
+}
+
+#api .endpoint .property-badge.property-badge-time {
+    border-color: rgb(130, 49, 184);
+}
+
+#api .endpoint .property-badge.property-badge-time .property-type {
+    background-color: rgb(130, 49, 184);
+}
+
+#api .endpoint .response-property .property-name {
+    font-family: monospace;
+}

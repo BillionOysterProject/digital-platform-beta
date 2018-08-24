@@ -369,9 +369,22 @@ class CollectionView(Endpoint):
         )
 
     def index(self):
+        """
+        Retrieve a collection of objects.
+
+        :param q: Filter collection results.
+        :param limit: Limit the number of results to a given count, or 'false' for no limit.
+        :param offset: Offset the results by a given count. Used to paginate through results.
+        :param sort: A comma-separated list of fields to sort results by. Prefix field names with '-' to sort in descending order.
+        """
         return self._get_query_results(request.args.get('q', 'all'))
 
     def get(self, record_id):
+        """
+        Retrieve a specific object.
+
+        :param record_id: The ID of the object to retrieve.
+        """
         result = self.collection.get(record_id)
         result = self._expand_results([result])[0]
         result = self._prepare_single_result(result, **self.single_result_params)

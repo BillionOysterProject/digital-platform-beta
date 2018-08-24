@@ -1,0 +1,95 @@
+---
+bindings:
+-   name:     routes
+    resource: /api/routes
+---
+{{ $routes := $.bindings.routes }}
+<div id="api">
+    <div class="conventions">
+        <section>
+            <h2>Responses</h2>
+
+            <pre id="api_responses" class="json-body"></pre>
+            <script type="text/javascript">
+
+            </script>
+
+            <p>
+                Lorem ipsum...
+            </p>
+        </section>
+
+        <section>
+            <h2>Errors</h2>
+
+            <p>
+                Dolor sit amet.
+            </p>
+
+            <pre id="api_responses_error" class="json-body"></pre>
+            <script type="text/javascript">
+
+            </script>
+        </section>
+    </div>
+
+    {{ if $routes }}
+    <div class="endpoints">
+        <h2>Endpoints</h2>
+        <p>
+            Below is the documentation for all supported API endpoints in the Digital Platform.
+        </p>
+
+        {{ range $i, $endpoint := $routes }}
+        {{   $slug := printf "%s-%s" (lower $endpoint.method) (rtrim (rxreplace (ltrim $endpoint.url `/`) `\W+` `-`) `-`) }}
+        <div class="endpoint">
+            <a name="{{ $slug }}"></a>
+            <h2 class="endpoint-header">
+                <span class="method method-{{ lower $endpoint.method }}">{{ $endpoint.method }}</span>
+
+                <span class="route">
+                    <a href="#{{ $slug }}" class="route-path">{{ $endpoint.url }}</a>
+
+                    {{ if $endpoint.description }}
+                    <span class="route-description">{{ $endpoint.description }}</span>
+                    {{ end }}
+                </span>
+            </h2>
+
+            <div class="endpoint-body">
+                {{ if $endpoint.querystrings }}
+                <h3>Query String Parameters</h3>
+
+                <table class="query-string-params table table-sm mb-4">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {{ range $i, $qs := $endpoint.querystrings }}
+                    <tr>
+                        <td><code>{{ $qs.name }}</code></td>
+                        <td>{{ or $qs.description `(undocumented)` }}</td>
+                        <td>
+                            {{ if $qs.example }}
+                            <code>
+                                {{ if $i }}&amp;{{ else }}?{{ end }}{{ $qs.name }}={{ $qs.example }}
+                            </code>
+                            {{ else }}
+                            &ndash;
+                            {{ end }}
+                        </td>
+                    </tr>
+                    {{ end }}
+                    </tbody>
+                </table>
+                {{ end }}
+            </div>
+        </div>
+        {{ end }}
+    </div>
+    {{ end }}
+</div>

@@ -1,6 +1,7 @@
 --index-url https://pypi.python.org/simple/
 Flask
 Flask-Session
+blinker
 boto3
 cryptography
 dpath
@@ -10,18 +11,18 @@ flask-login
 geojson>=2.3.0
 gevent<1.3.0
 git+https://github.com/ghetzel/pivot.git#subdirectory=lib/python
+import_string==0.1.0
 ipython
 pbkdf2
 pycolorize
 pytest
 python-dateutil
 pytz
+raven
+raven[flask]
 requests
 rq
 six
 sortedcontainers
-unicodecsv
-raven
-raven[flask]
-blinker
 supervisor
+unicodecsv
