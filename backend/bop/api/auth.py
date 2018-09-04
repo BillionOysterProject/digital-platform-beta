@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+import os
 from .endpoints import Endpoint, CollectionView, GeoCollectionView
 from flask import jsonify, request, g
 from werkzeug.exceptions import BadRequest, Unauthorized
@@ -90,6 +91,10 @@ class Teams(CollectionView):
         if as_bool(request.args.get('byMember')):
             query.append('teamMembers/{}'.format(user_id))
 
+        # TODO: implement field OR field
+        # if as_bool(request.args.get('teamsImOn')):
+        #     query.append('teamMembers|teamLeads/{}'.format(user_id))
+
         if request.args.get('orgId'):
             query.append('schoolOrg/{}'.format(
                 request.args['orgId']
@@ -131,6 +136,7 @@ class Users(CollectionView):
 
     def me(self):
         user = self.current_user
+
         if user:
             return jsonify(user)
         else:

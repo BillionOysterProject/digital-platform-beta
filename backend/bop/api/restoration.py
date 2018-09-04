@@ -7,8 +7,10 @@ import requests
 import dpath.util
 import io
 import logging
+import json
 from .. import env
 from ..time import Time
+from ..utils import dict_merge
 import unicodecsv
 from sortedcontainers import SortedList
 
@@ -211,31 +213,224 @@ class Expeditions(CollectionView):
 
         return jsonify(images)
 
+    def post(self):
+        flatBody = request.form or request.json
+        body = {}
+
+
+        for k, v in flatBody.items():
+            dpath.util.new(body, k, v, separator='.')
+
+        subclass = {
+            'siteCondition':     ProtocolSiteConditions,
+            'oysterMeasurement': ProtocolOysterMeasurements,
+            'settlementTiles':   ProtocolSettlementTiles,
+            'mobileTrap':        ProtocolMobileTraps,
+            'waterQuality':      ProtocolWaterQualities,
+        }
+
+        expedition = {
+            'protocols': {},
+        }
+
+        if 'protocols' in body:
+            # for each protocol, delegate processing that protocol's data to its
+            # own class-specific implementation.
+            #
+            # The record_from_submit() function will return the record
+            # that should be saved on the expedition, or raise a validation error.
+            #
+            for name, protocol in body['protocols'].items():
+                creates = {}
+
+                try:
+                    if name in subclass:
+                        if isinstance(protocol, dict):
+                            subrecord, created = subclass[name].record_from_submit(
+                                body['protocols'][name]
+                            )
+
+                            # expedition['protocols'][name] = subrecord.get('_id')
+
+                            # TODO: temp, remove this in favor of the line above
+                            expedition['protocols'][name] = subrecord
+
+                            if created:
+                                creates[name] = expedition['protocols'][name]
+                except:
+                    # if anything went wrong, cleanup the partially-created records
+                    for name, record in creates.items():
+                        try:
+                            if name in subclass:
+                                logging.warning('Cleaning up protocol {} record {}'.format(
+                                    name,
+                                    record
+                                ))
+
+                                subclass[name].collection.delete(record)
+                        except:
+                            continue
+
+                    raise
+
+            # cleanup the data we've processed from the input
+            del body['protocols']
+
+        # TODO: team lists
+        # TODO: station
+        # TODO: team
+        # TODO: teamLead (current user)
+
+        # cls.get_collection().update(expedition)
+
+        return jsonify(expedition)
+
 
 class ProtocolSiteConditions(CollectionView):
     route_base      = 'protocol-site-conditions'
     collection_name = 'protocolsiteconditions'
+
+    @classmethod
+    def record_from_submit(cls, body):
+        create = (False if '_id' in body else True)
+        _id = body.get('_id')
+
+        if _id:
+            record = cls.get_collection().get(_id)
+        else:
+            record = {}
+
+        record.update(body)
+        record = cls.get_collection().update(record)
+
+        return record, create
 
 
 class ProtocolOysterMeasurements(CollectionView):
     route_base      = 'protocol-oyster-measurements'
     collection_name = 'protocoloystermeasurements'
 
+    @classmethod
+    def record_from_submit(cls, body):
+        create = (False if '_id' in body else True)
+        _id = body.get('_id')
+
+        if _id:
+            record = cls.get_collection().get(_id)
+        else:
+            record = {}
+
+        observations = body.pop('observations', [])
+
+        for pair in observations:
+            if len(pair) == 2:
+                shellNumber = pair[0]
+                mm = pair[1]
+
+                if shellNumber and mm:
+                    dict_merge(record, cls.append_oyster_measurement(record, shellNumber, mm))
+
+        record.update(body)
+        # record = cls.get_collection().update(record)
+
+        return record, create
+
+    @classmethod
+    def append_oyster_measurement(cls, record, shellNumber, mm):
+        if 'measuringOysterGrowth' not in record:
+            record['measuringOysterGrowth'] = {}
+
+        if 'substrateShells' not in record['measuringOysterGrowth']:
+            record['measuringOysterGrowth']['substrateShells'] = []
+
+        targetShell = None
+        targetShellIndex = None
+
+        for i, shell in enumerate(record['measuringOysterGrowth']['substrateShells']):
+            if int(shellNumber) == int(shell['substrateShellNumber']):
+                targetShellIndex = i
+                targetShell = shell
+                break
+
+        if not targetShell:
+            targetShell = {
+                'minimumSizeOfLiveOysters': 0,
+                'averageSizeOfLiveOysters': 0,
+                'maximumSizeOfLiveOysters': 0,
+                'measurements': [],
+                'innerSidePhoto': {},
+                'outerSidePhoto': {},
+                'setDate': Time().isoformat(),
+                'source': None,
+                'substrateShellNumber': shellNumber,
+                'totalNumberOfLiveOystersOnShell': 0,
+            }
+
+        targetShell['measurements'].append({
+            'sizeOfLiveOysterMM': mm,
+        })
+
+        dict_merge(targetShell, cls.recalculate_shell_stats(targetShell))
+
+        if targetShellIndex is None:
+            record['measuringOysterGrowth']['substrateShells'].append(targetShell)
+        else:
+            record['measuringOysterGrowth']['substrateShells'][targetShellIndex] = targetShell
+
+        return record
+
+    @classmethod
+    def recalculate_shell_stats(cls, shell):
+        szMin = shell.get('minimumSizeOfLiveOysters')
+        szAvg = shell.get('averageSizeOfLiveOysters')
+        szMax = shell.get('maximumSizeOfLiveOysters')
+        szAll = []
+
+        for measurement in shell.get('measurements', []):
+            value = measurement.get('sizeOfLiveOysterMM')
+
+            if value:
+                szAll.append(value)
+
+                if not szMin or value < szMin:
+                    szMin = value
+
+                if not szMax or value > szMax:
+                    szMax = value
+
+        szAvg = float(sum(szAll)) / len(szAll)
+
+        shell['minimumSizeOfLiveOysters']        = szMin
+        shell['averageSizeOfLiveOysters']        = szAvg
+        shell['maximumSizeOfLiveOysters']        = szMax
+        shell['totalNumberOfLiveOystersOnShell'] = len(szAll)
+
+        return shell
+
 
 class ProtocolMobileTraps(CollectionView):
     route_base      = 'protocol-mobile-traps'
     collection_name = 'protocolmobiletraps'
 
+    @classmethod
+    def record_from_submit(cls, body):
+        pass
 
 class ProtocolSettlementTiles(CollectionView):
     route_base      = 'protocol-settlement-tiles'
     collection_name = 'protocolsettlementtiles'
 
+    @classmethod
+    def record_from_submit(cls, body):
+        pass
 
 class ProtocolWaterQualities(CollectionView):
     route_base      = 'protocol-water-qualities'
     collection_name = 'protocolwaterqualities'
 
+    @classmethod
+    def record_from_submit(cls, body):
+        pass
 
 class RestorationStations(GeoCollectionView):
     route_base      = 'restoration-stations'

@@ -6,6 +6,7 @@ import six
 import unicodecsv
 import io
 import logging
+import json
 import pivot.exceptions
 from flask import jsonify, request, g, Response
 from flask_classy import FlaskView, route
@@ -44,6 +45,9 @@ class Endpoint(FlaskView):
     @property
     def current_user(self):
         try:
+            if os.environ.get('IMPERSONATE'):
+                return User.get(os.environ.get('IMPERSONATE'))
+
             return User.get(current_user['id'])
         except:
             return None
@@ -392,7 +396,9 @@ class CollectionView(Endpoint):
         return jsonify(result)
 
     def post(self):
-        pass
+        body = request.form or request.json
+
+        return jsonify(body)
 
     def put(self):
         pass

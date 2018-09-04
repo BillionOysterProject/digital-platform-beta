@@ -1,0 +1,70 @@
+<!-- BEGIN Mobile Organisms -->
+<div class="card border-1 mb-2">
+    <div class="card-header" id="addMobileOrganisms">
+        <section class="shaded collapsed" data-toggle="collapse" data-target="#mobileOrganisms">
+            <h3>Mobile Organisms</h3>
+
+            <div class="step-toggle">
+                <i class="fa"></i>
+            </div>
+        </section>
+    </div>
+    <div id="mobileOrganisms" class="collapse" aria-labelledby="addMobileOrganisms" data-parent="#accordion">
+        <div class="card-body">
+            <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 form-group">
+                        <label>Invite team members to enter data for this protocol:</label>
+                        <input type="text" class="form-control">
+                        <br />
+                        <button tyle="button" class="btn btn-primary">
+                            <i class="fa fa-envelope"></i>
+                            Send Invite
+                        </button>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 form-group">
+                        <label>Team members who can edit this protocol:</label>
+
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                Johnny Userface
+                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                            </li>
+                            <li class="list-group-item">
+                                <i>Sally Shrimphead (has not accepted)</i>
+                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <p><strong>Mobile Organism Identifications</strong></p>
+            Enter each mobile organism species you identified and a count of how many you found in the table below.
+            </p>
+            <ul>
+                <li>Column 1: start typing either the <strong>commmon or scientific name</strong> of the mobile organism, then select it
+                    from the dropdown menu.</li>
+                <li>Column 2: enter in a <strong>count</strong> of how many of that species you found.</li>
+            </ul>
+
+            <div class="spreadsheet">
+                <div
+                    id="mobileOrganismsTable"
+                    data-field-name="protocols.mobileTrap.mobileOrganisms"
+                ></div>
+            </div>
+            <div class="form-group mt-4">
+                <label for="mobileOrganismsNotes">Mobile Organisms Notes</label>
+                <textarea
+                    class="form-control"
+                    type="text"
+                    name="protocols.mobileTrap.notes"
+                    maxlength="16536"
+                    id="mobileOrganismsNotes"
+                ></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Mobile Organisms -->

@@ -1,0 +1,418 @@
+<!-- BEGIN Site Conditions -->
+<div class="card border-1 mb-2">
+    <div class="card-header" id="addSiteConditions">
+        <section class="shaded collapsed" data-toggle="collapse" data-target="#siteConditions">
+            <h3>Site Conditions</h3>
+
+            <div class="step-toggle">
+                <i class="fa"></i>
+            </div>
+        </section>
+    </div>
+    <div id="siteConditions" class="collapse" aria-labelledby="addSiteConditions" data-parent="#accordion">
+        <div class="card-body">
+            <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 form-group">
+                        <label>Invite team members to enter data for this protocol:</label>
+                        <input type="text" class="form-control">
+                        <br />
+                        <button tyle="button" class="btn btn-primary">
+                            <i class="fa fa-envelope"></i>
+                            Send Invite
+                        </button>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 form-group">
+                        <label>Team members who can edit this protocol:</label>
+
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                Johnny Userface
+                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                            </li>
+                            <li class="list-group-item">
+                                <i>Sally Shrimphead (has not accepted)</i>
+                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <p>
+                Select or enter in as much Site Conditions data as you can.
+            </p>
+            <h4>Meteorological Conditions</h4>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>Weather</legend>
+                            <div class="btn-group btn-group-toggle">
+                                {{ range $i, $weatherCondition := $.page.weatherConditions }}
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="protocols.siteCondition.meteorologicalConditions.weatherConditions"
+                                        value="{{ $weatherCondition.id }}"
+                                    >
+                                    {{ $weatherCondition.label }}
+                                </label>
+                                {{ end }}
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="airTemperature">Air temperature (C)</label>
+                        <input
+                            class="form-control"
+                            name="protocols.siteCondition.meteorologicalConditions.airTemperatureC"
+                            type="number"
+                            step="0.1"
+                            min="-40"
+                            max="50"
+                            id="airTemperature"
+
+                        />
+                        <span class="help-block">
+                            <p>Fahrenheit: <span id="temperatureF"></span>&deg;F</p>
+                        </span>
+                    </div>
+                </div>
+
+                <script>
+                $(function(){
+                    $('input[name="temperature"]').on('change', function(e){
+                        var el = $(e.target);
+
+                        if (el.val()) {
+                            var degF = parseFloat(el.val()) * (9/5) + 32;
+
+                            $('#temperatureF').text(degF);
+                        }
+                    });
+                });
+                </script>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="windSpeed">Wind speed (mph)</label>
+                        <input
+                            class="form-control"
+                            type="number"
+                            min="0"
+                            name="protocols.siteCondition.meteorologicalConditions.windSpeedMPH"
+                            id="windSpeed"
+                        />
+                        <span class="help-block">Method: Anemometer</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>Wind Direction</legend>
+                            <div class="btn-group btn-group-toggle">
+                                {{ range $i, $windDirection := $.page.windDirections }}
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="protocols.siteCondition.meteorologicalConditions.windDirection"
+                                        value="{{ $windDirection.id }}"
+                                    >
+                                    {{ $windDirection.label }}
+                                </label>
+                                {{ end }}
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="humidity">Humidity (%)</label>
+                        <input
+                            class="form-control"
+                            type="number"
+                            min="0"
+                            name="protocols.siteCondition.meteorologicalConditions.humidityPer"
+                            id="humidity"
+                        />
+                        <span class="help-block">Method: Sling Psychrometer</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr/>
+            <h4>Recent Rainfall</h4>
+            <div class="form-group">
+                <fieldset>
+                    <legend>Has it rained in the past <span class="blue">7</span> days?</legend>
+                    <div class ="btn-group btn-group-toggle">
+                        <label
+                            class="btn btn-primary"
+                        >
+                            <input
+                                type="radio"
+                                name="protocols.siteCondition.recentRainfall.rainedIn7Days"
+                                value="true"
+                            >
+                            Yes
+                        </label>
+                        <label
+                            class="btn btn-primary"
+                        >
+                            <input
+                                type="radio"
+                                name="recentRainfall.rainedIn7Days"
+                                value="false"
+                            >
+                            No
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="form-group">
+                <fieldset>
+                    <legend>Has it rained in the past <span class="blue">72</span> hours?</legend>
+                    <div class ="btn-group btn-group-toggle">
+                        <label
+                            class="btn btn-primary"
+                        >
+                            <input
+                                type="radio"
+                                name="protocols.siteCondition.recentRainfall.rainedIn72Hours"
+                                value="true"
+                            >
+                            Yes
+                        </label>
+                        <label
+                            class="btn btn-primary"
+                        >
+                            <input
+                                type="radio"
+                                name="protocols.siteCondition.recentRainfall.rainedIn72Hours"
+                                value="false"
+                            >
+                            No
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="form-group">
+                <fieldset>
+                    <legend>Has it rained in the past <span class="blue">24</span> hours?</legend>
+                    <div class ="btn-group btn-group-toggle">
+                        <label
+                            class="btn btn-primary"
+                        >
+                            <input
+                                type="radio"
+                                name="protocols.siteCondition.recentRainfall.rainedIn24Hours"
+                                value="true"
+                            >
+                            Yes
+                        </label>
+                        <label
+                            class="btn btn-primary"
+                        >
+                            <input
+                                type="radio"
+                                name="protocols.siteCondition.recentRainfall.rainedIn24Hours"
+                                value="false"
+                            >
+                            No
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+
+            <hr/>
+            <h4>Water Conditions</h4>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="surfaceCurrentSpeed">
+                            Surface current speed (meters/second)
+                        </label>
+                        <input
+                            class="form-control"
+                            type="number"
+                            min="0"
+                            name="protocols.siteCondition.waterConditions.surfaceCurrentSpeedMPS"
+                            id="surfaceCurrentSpeed"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>Describe the water color</legend>
+                            <div class="btn-group btn-group-toggle">
+                                {{ range $i, $waterColor := $.page.waterColors }}
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="protocols.siteCondition.waterConditions.waterColor"
+                                        value="{{ $waterColor.id }}"
+                                    >
+                                    {{ $waterColor.label }}
+                                </label>
+                                {{ end }}
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>Is there an oil sheen present?</legend>
+                            <div class="btn-group btn-group-toggle">
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="protocols.siteCondition.waterConditions.oilSheen"
+                                        value="true"
+                                    >
+                                    Yes
+                                </label>
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="protocols.siteCondition.waterConditions.oilSheen"
+                                        value="false"
+                                    >
+                                    No
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>Is there any garbage in the water?</legend>
+                            <div class="btn-group btn-group-toggle">
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="protocols.siteCondition.waterConditions.garbage.garbagePresent"
+                                        value="true"
+                                    >
+                                    Yes
+                                </label>
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="protocols.siteCondition.waterConditions.garbage.garbagePresent"
+                                        value="false"
+                                    >
+                                    No
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>
+                                Is there any flow through the Combined Sewer Overflow (CSO) pipes?
+                            </legend>
+                            <div class="btn-group btn-group-toggle">
+                                {{ range $i, $pipeFlow := $.page.pipeFlows }}
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="protocols.siteCondition.waterConditions.markedCombinedSewerOverflowPipes.howMuchFlowThrough"
+                                        value="{{ $pipeFlow.id }}"
+                                    >
+                                    {{ $pipeFlow.label }}
+                                </label>
+                                {{ end }}
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>
+                                Is there any flow through the unmarked or other outfall pipes?
+                            </legend>
+                            <div class="btn-group btn-group-toggle">
+                                {{ range $i, $pipeFlow := $.page.pipeFlows }}
+                                <label
+                                    class="btn btn-primary"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="protocols.siteCondition.waterConditions.unmarkedOutfallPipes.howMuchFlowThrough"
+                                        value="{{ $pipeFlow.id }}"
+                                    >
+                                    {{ $pipeFlow.label }}
+                                </label>
+                                {{ end }}
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mt-4">
+                <label for="siteConditionsNotes">Site Conditions Notes</label>
+                <textarea
+                    class="form-control"
+                    type="text"
+                    name="protocols.siteCondition.notes"
+                    maxlength="16536"
+                    id="siteConditionsNotes"
+                ></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Site Conditions -->

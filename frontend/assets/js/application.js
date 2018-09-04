@@ -172,7 +172,6 @@ $(function () {
                         delete field['value'];
                     }
 
-
                     if (field.name == "_id") {
                         if (field.value) {
                             createNew = false;
@@ -184,14 +183,31 @@ $(function () {
                     }
                 });
 
+                form.find('[data-has-table]').each(function(i, el) {
+                    el = $(el);
+                    var hot = el.data('table');
+
+                    if (hot) {
+                        record[el.attr('data-field-name')] = hot.getData();
+                    }
+                });
+
+                console.debug('Submitting', record)
+
                 $.ajax(url, {
                     method: (form.attr('method') || (createNew ? 'POST' : 'PUT')),
-                    data: record,
-                    success: function () {
+                    data:  JSON.stringify(record),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
                         var redirectTo = '/';
 
-                        if (form.data('redirect-to')) {
-                            redirectTo = form.data('redirect-to');
+                        if (form.attr('data-debug-log') === 'true') {
+                            console.debug(data)
+                            return;
+
+                        } else if (form.attr('data-redirect-to')) {
+                            redirectTo = form.attr('data-redirect-to');
                         } else if (form.attr('name')) {
                             redirectTo = '/' + form.attr('name');
                         }
@@ -199,8 +215,7 @@ $(function () {
                         location.href = redirectTo;
                     }.bind(this),
                     error: function (data) {
-                        console.error('Form Error:', data);
-                        this.showResponseError(data);
+                        console.error('Form Error:', data.responseJSON.error);
                     }.bind(this),
                 })
             },
@@ -234,10 +249,10 @@ $(function () {
                         highlight: true,
                         async: true,
                     }, {
-                        limit: parseInt(el.data('typeahead-limit') || 9),
+                        limit: parseInt(el.attr('data-typeahead-limit') || 9),
                         source: function (query, _, asyncResults) {
-                            var url = el.data('typeahead-url');
-                            var field = el.data('typeahead-field');
+                            var url = el.attr('data-typeahead-url');
+                            var field = el.attr('data-typeahead-field');
 
                             if (url) {
                                 url = url.replace(/\{\}/g, query.replace(/^\//, ''));
@@ -355,6 +370,8 @@ $(function () {
             },
 
             createTable: function(selector, headers, columns, config) {
+                var el = $(selector);
+
                 config = $.extend(true, {}, {
                     stretchH:            'all',
                     autoWrapRow:         true,
@@ -370,10 +387,14 @@ $(function () {
                     currentColClassName: 'current-col',
                 }, (config || {}));
 
-                return new Handsontable($(selector).get(0), $.extend(true, {}, config, {
+                el.data('table', new Handsontable(el.get(0), $.extend(true, {}, config, {
                     columns:    columns,
                     colHeaders: headers,
-                }));
+                })));
+
+                el.attr('data-has-table', 'true');
+
+                return el.data('table');
             },
         });
 
