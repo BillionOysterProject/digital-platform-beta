@@ -35,13 +35,8 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Host: {{ $.request.host }} */
 body > header {
-{{ if (contains $.request.host `bop.nyc`) }}
     background:      #2C3C56;
-{{ else }}
-    background:      #70140e;
-{{ end }}
 }
 
 .pre {
