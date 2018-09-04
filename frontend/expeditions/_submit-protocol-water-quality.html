@@ -1,5 +1,9 @@
 <!-- BEGIN Water Quality -->
 <div class="card border-1 mb-2">
+    {{ if get $.bindings.expedition `protocols.waterQuality._id` }}
+    <input type="hidden" name="protocols.waterQuality._id" value="{{ get $.bindings.expedition `protocols.waterQuality._id` }}">
+    {{ end }}
+
     <div class="card-header" id="addWaterQuality">
         <section class="shaded collapsed" data-toggle="collapse" data-target="#waterQuality">
             <h3>Water Quality</h3>

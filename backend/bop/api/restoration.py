@@ -233,6 +233,8 @@ class Expeditions(CollectionView):
             'protocols': {},
         }
 
+        return jsonify(body)
+
         if 'protocols' in body:
             # for each protocol, delegate processing that protocol's data to its
             # own class-specific implementation.
@@ -414,7 +416,7 @@ class ProtocolMobileTraps(CollectionView):
 
     @classmethod
     def record_from_submit(cls, body):
-        pass
+        return body
 
 class ProtocolSettlementTiles(CollectionView):
     route_base      = 'protocol-settlement-tiles'
@@ -422,7 +424,7 @@ class ProtocolSettlementTiles(CollectionView):
 
     @classmethod
     def record_from_submit(cls, body):
-        pass
+        return body
 
 class ProtocolWaterQualities(CollectionView):
     route_base      = 'protocol-water-qualities'
@@ -430,7 +432,7 @@ class ProtocolWaterQualities(CollectionView):
 
     @classmethod
     def record_from_submit(cls, body):
-        pass
+        return body
 
 class RestorationStations(GeoCollectionView):
     route_base      = 'restoration-stations'

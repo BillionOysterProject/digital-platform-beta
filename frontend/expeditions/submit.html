@@ -91,6 +91,9 @@ includes:
             >
         </div>
 
+        {{ if $.bindings.expedition }}
+        <input type="hidden" name="station._id" value="{{ $.bindings.expedition.station._id }}">
+        {{ end }}
 
         <!--
             This next section is about selecting structures (like an ORS, Community Reef, or Oyster Tank).
@@ -189,6 +192,10 @@ includes:
                 </small>
             </div>
         </div>
+
+        {{ if $.bindings.expedition }}
+        <input type="hidden" name="team._id" value="{{ $.bindings.expedition.team._id }}">
+        {{ end }}
 
         <!--If user selected "Community Reef" or "Other Reef" above, display fields "Number of
             adults," "Number of students," and other fields from the field report -->

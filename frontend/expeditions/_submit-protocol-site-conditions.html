@@ -1,5 +1,9 @@
 <!-- BEGIN Site Conditions -->
 <div class="card border-1 mb-2">
+    {{ if get $.bindings.expedition `protocols.siteCondition._id` }}
+    <input type="hidden" name="protocols.siteCondition._id" value="{{ get $.bindings.expedition `protocols.siteCondition._id` }}">
+    {{ end }}
+
     <div class="card-header" id="addSiteConditions">
         <section class="shaded collapsed" data-toggle="collapse" data-target="#siteConditions">
             <h3>Site Conditions</h3>

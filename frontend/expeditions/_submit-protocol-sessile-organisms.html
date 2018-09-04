@@ -1,5 +1,9 @@
 <!-- BEGIN Sessile Organisms -->
 <div class="card border-1 mb-2">
+    {{ if get $.bindings.expedition `protocols.settlementTiles._id` }}
+    <input type="hidden" name="protocols.settlementTiles._id" value="{{ get $.bindings.expedition `protocols.settlementTiles._id` }}">
+    {{ end }}
+
     <div class="card-header" id="addSessileOrganisms">
         <section class="shaded collapsed" data-toggle="collapse" data-target="#sessileOrganisms">
             <h3>Sessile Organisms</h3>

@@ -1,5 +1,9 @@
 <!-- BEGIN Oyster Measurements -->
 <div class="card border-1 mb-2">
+    {{ if get $.bindings.expedition `protocols.oysterMeasurement._id` }}
+    <input type="hidden" name="protocols.oysterMeasurement._id" value="{{ get $.bindings.expedition `protocols.oysterMeasurement._id` }}">
+    {{ end }}
+
     <div class="card-header" id="addOysterMeasurements">
         <section class="shaded collapsed" data-toggle="collapse" data-target="#oysterMeasurement">
             <h3>Oyster Measurements</h3>

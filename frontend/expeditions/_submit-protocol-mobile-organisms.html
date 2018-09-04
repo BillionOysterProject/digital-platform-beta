@@ -1,5 +1,9 @@
 <!-- BEGIN Mobile Organisms -->
 <div class="card border-1 mb-2">
+    {{ if get $.bindings.expedition `protocols.mobileTrap._id` }}
+    <input type="hidden" name="protocols.mobileTrap._id" value="{{ get $.bindings.expedition `protocols.mobileTrap._id` }}">
+    {{ end }}
+
     <div class="card-header" id="addMobileOrganisms">
         <section class="shaded collapsed" data-toggle="collapse" data-target="#mobileOrganisms">
             <h3>Mobile Organisms</h3>
