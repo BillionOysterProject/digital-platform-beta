@@ -2,11 +2,27 @@
     "name": "expeditions",
     "allow_missing_embedded_records": true,
     "embed": [{
+        "key":        "station",
+        "collection": "restorationstations",
+        "fields": [
+            "name",
+            "siteId"
+        ]
+    }, {
         "key":        "team",
-        "collection": "teams"
+        "collection": "teams",
+        "fields": [
+            "name",
+            "schoolOrg"
+        ]
     }, {
         "key":        "teamLead",
-        "collection": "users"
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username",
+            "profileImageURL"
+        ]
     }, {
         "key":        "protocols.mobileTrap",
         "collection": "protocolmobiletraps",
@@ -64,19 +80,44 @@
         ]
     }, {
         "key":        "teamLists.mobileTrap.*",
-        "collection": "users"
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username",
+            "profileImageURL"
+        ]
     }, {
         "key":        "teamLists.oysterMeasurement.*",
-        "collection": "users"
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username",
+            "profileImageURL"
+        ]
     }, {
         "key":        "teamLists.settlementTiles.*",
-        "collection": "users"
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username",
+            "profileImageURL"
+        ]
     }, {
         "key":        "teamLists.siteCondition.*",
-        "collection": "users"
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username",
+            "profileImageURL"
+        ]
     }, {
         "key":        "teamLists.waterQuality.*",
-        "collection": "users"
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username",
+            "profileImageURL"
+        ]
     }],
     "fields": [{
         "name":       "name",

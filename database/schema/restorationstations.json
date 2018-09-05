@@ -1,6 +1,37 @@
 [{
     "name": "restorationstations",
     "allow_missing_embedded_records": true,
+    "embed": [{
+        "key": "siteId",
+        "collection": "sites",
+        "fields": [
+            "name",
+            "latitude",
+            "longitude",
+            "bodyOfWater"
+        ]
+    }, {
+        "key": "schoolOrg",
+        "collection": "schoolorgs",
+        "fields": [
+            "name"
+        ]
+    }, {
+        "key": "team",
+        "collection": "teams",
+        "fields": [
+            "name",
+            "created",
+            "teamLeads"
+        ]
+    }, {
+        "key": "teamLead",
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username"
+        ]
+    }],
     "fields": [{
         "name":       "name",
         "type":       "str",

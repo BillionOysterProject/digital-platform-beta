@@ -23,51 +23,6 @@ class Expeditions(CollectionView):
     route_base      = 'expeditions'
     collection_name = 'expeditions'
 
-    expand_fields   = {
-        'teamLead': (
-            'users', ['_id', 'displayName', 'username', 'profileImageURL'],
-        ),
-        'team': (
-            'teams', ['_id', 'name', 'schoolOrg'],
-        ),
-        'team.schoolOrg': (
-            'schoolorgs', ['_id', 'name'],
-        ),
-        'station': (
-            'restorationstations', ['_id', 'name'],
-        ),
-        'teamLists.mobileTrap': (
-            'users', ['_id', 'displyaName', 'username', 'profileImageURL'],
-        ),
-        'teamLists.oysterMeasurement': (
-            'users', ['_id', 'displayName', 'username', 'profileImageURL'],
-        ),
-        'teamLists.settlementTiles': (
-            'users', ['_id', 'displayName', 'username', 'profileImageURL'],
-        ),
-        'teamLists.siteCondition': (
-            'users', ['_id', 'displayName', 'username', 'profileImageURL'],
-        ),
-        'teamLists.waterQuality': (
-            'users', ['_id', 'displayName', 'username', 'profileImageURL'],
-        ),
-        'protocols.mobileTrap': (
-            'protocolmobiletraps', [],
-        ),
-        'protocols.oysterMeasurement': (
-            'protocoloystermeasurements', [],
-        ),
-        'protocols.settlementTiles': (
-            'protocolsettlementtiles', [],
-        ),
-        'protocols.siteCondition': (
-            'protocolsiteconditions', [],
-        ),
-        'protocols.waterQuality': (
-            'protocolwaterqualities', [],
-        ),
-    }
-
     @route('/report')
     def report(self):
         from ..tasks.data import EXPEDITION_EXPORT_KEY
@@ -241,22 +196,6 @@ class RestorationStations(GeoCollectionView):
     route_base      = 'restoration-stations'
     collection_name = 'restorationstations'
     results_only    = True
-
-    expand_fields   = {
-        'siteId': (
-            'sites', [],
-        ),
-        'schoolOrg': (
-            'schoolorgs', ['_id', 'name'],
-        ),
-        'team': (
-            'teams', ['_id', 'name', 'created', 'teamLeads'],
-        ),
-        'teamLead': (
-            'users', ['_id', 'displayName', 'username'],
-        ),
-    }
-
 
 class Sites(GeoCollectionView):
     route_base      = 'sites'
