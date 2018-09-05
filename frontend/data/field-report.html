@@ -140,9 +140,7 @@ bindings:
         <div id="oysterMeasurement" class="collapse" aria-labelledby="addOysterMeasurements" data-parent="#accordion">
             <div class="card-body">
                 <p>
-                    <em>This protocol captures data on meteorological conditions, recent rainfall,
-                    and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
-                    can affect oysters by impacting water quality, particularly through Combined Sewer Overflows. Learn more.</em>        
+                    <em>This protocol captures data on oyster growth and mortality. Learn more.</em>        
                 </p>
                 
                 <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
@@ -190,12 +188,12 @@ bindings:
                         <caption>Summary Data</caption> 
                         <tbody>
                             <tr>
-                                <th scope="row">Growth Rate (as a percentage, from baseline)</th>
-                                <td>20%</td>
+                                    <th scope="row">Mortality (as a percentage, from baseline)</th>
+                                    <td>50%</td>
                             </tr>
                             <tr>
-                                <th scope="row">Mortality (as a percentage, from baseline)</th>
-                                <td>50%</td>
+                                <th scope="row">Growth Rate (as a percentage, from baseline)</th>
+                                <td>20%</td>
                             </tr>
                             <tr>
                                 <th scope="row">Average Oyster Length (in mm, this expedition)</th>
@@ -210,100 +208,88 @@ bindings:
                                 <td>55 mm</td>
                             </tr>
                         </tbody>
-                    </table>        
+                    </table> 
+                </div>
+
+                <h4>Graph: Bar Chart of Number of Live Oysters (by substrate shell)</h4>
+                <div>
+                    <figure class="figure">
+                            <img src="https://raw.githubusercontent.com/BillionOysterProject/digital-platform-beta/master/newplot%20(3).png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                            <figcaption class="figure-caption">Each substrate shell....</figcaption>
+                    </figure> 
+                </div>      
                 
                 <div class="mt-3">
-                    <h4>Table: Mass and Mortality By Substrate Shell</h4>
+                    <h4>Table: Mortality By Substrate Shell</h4>
                     <table class="table table-bordered">
-                        <caption>Mass and Mortality By Substrate Shell</caption>
+                        <caption>Mortality By Substrate Shell</caption>
                         <thead>
                             <tr>
                                 <th scope="col">Tag #</th>
                                 <th scope="col">Source</th>
-                                <th scope="col">Mass at baseline (g)</th>
-                                <th scope="col">Mass this expedition (g)</th>
                                 <th scope="col"># of live oysters at baseline</th>
                                 <th scope="col"># of live oysters this expedition</th>
+                                <th scope="col">Percent Mortality </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th scope="row">1</th>
                                 <td>Muscongus Bay, ME</td>
-                                <td>30</td>
-                                <td>50</td>
                                 <td>20</td>
                                 <td>10</td>
                             </tr>
                             <tr>
                                 <th scope="row">2</th>
                                 <td>Muscongus Bay, ME</td>
-                                <td>30</td>
-                                <td>50</td>
                                 <td>20</td>
                                 <td>10</td>
                             </tr>
                             <tr>
                                 <th scope="row">3</th>
                                 <td>Muscongus Bay, ME</td>
-                                <td>30</td>
-                                <td>50</td>
                                 <td>20</td>
                                 <td>10</td>
                             </tr>
                             <tr>
                                 <th scope="row">4</th>
                                 <td>Muscongus Bay, ME</td>
-                                <td>30</td>
-                                <td>50</td>
                                 <td>20</td>
                                 <td>10</td>
                             </tr>
                             <tr>
                                 <th scope="row">5</th>
                                 <td>Muscongus Bay, ME</td>
-                                <td>30</td>
-                                <td>50</td>
                                 <td>20</td>
                                 <td>10</td>
                             </tr>
                             <tr>
                                 <th scope="row">6</th>
                                 <td>Muscongus Bay, ME</td>
-                                <td>30</td>
-                                <td>50</td>
                                 <td>20</td>
                                 <td>10</td>
                             </tr>
                             <tr>
                                 <th scope="row">7</th>
                                 <td>Muscongus Bay, ME</td>
-                                <td>30</td>
-                                <td>50</td>
                                 <td>20</td>
                                 <td>10</td>   
                             </tr>
                             <tr>
                                 <th scope="row">8</th>
                                 <td>Muscongus Bay, ME</td>
-                                <td>30</td>
-                                <td>50</td>
                                 <td>20</td>
                                 <td>10</td>   
                             </tr>
                             <tr>
                                 <th scope="row">9</th>
                                 <td>Muscongus Bay, ME</td>
-                                <td>30</td>
-                                <td>50</td>
                                 <td>20</td>
                                 <td>10</td>    
                             </tr>
                             <tr>
                                 <th scope="row">10</th>
                                 <td>Muscongus Bay, ME</td>
-                                <td>30</td>
-                                <td>50</td>
                                 <td>20</td>
                                 <td>10</td>    
                             </tr>
@@ -311,6 +297,29 @@ bindings:
                     </table>
                 </div>   
 
+                <h4>Graph: Bar Chart of Oyster Measurements</h4>
+                <div>
+                    <figure class="figure">
+                        <img src="https://raw.githubusercontent.com/BillionOysterProject/digital-platform-beta/master/each%20live%20oyster%20measurement%20sample.png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                        <figcaption class="figure-caption">Oyster measurements....</figcaption>
+                    </figure> 
+                </div>
+
+                <h4>Graph: Histogram of Oyster Measurements</h4>
+                <div>
+                    <figure class="figure">
+                        <img src="https://raw.githubusercontent.com/BillionOysterProject/digital-platform-beta/master/newplot%20(2).png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                        <figcaption class="figure-caption">Oyster measurements....</figcaption>
+                    </figure> 
+                </div> 
+
+                <h4>Graph: Box Plot of Oyster Measurements</h4>
+                <div>
+                    <figure class="figure">
+                        <img src="https://raw.githubusercontent.com/BillionOysterProject/digital-platform-beta/master/unnamed.png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                        <figcaption class="figure-caption">Oyster measurements....</figcaption>
+                    </figure> 
+                </div>
 
                 <div class="mt-3">
                     <h4>Table: Oyster Lengths</h4>
@@ -330,18 +339,16 @@ bindings:
                         </tbody>
                     </table>
                 </div>
-                
- 
-                
+
                 <div class="mt-3">
-                    <h4>Photos</h4>
-                    <div class="card" style="width: 18rem;">
-                            <img class="card-img-top" src="https://billionoysterproject.org/wp-content/uploads/2016/11/DSCN2167-BBP-growth-calipers.jpg" alt="Card image cap">
-                            <div class="card-body">
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
+                        <h4>Photos</h4>
+                        <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="https://billionoysterproject.org/wp-content/uploads/2016/11/DSCN2167-BBP-growth-calipers.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                        </div>
                     </div>
-                </div>
 
             </div>
         </div>
