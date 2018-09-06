@@ -74,7 +74,7 @@ bindings:
 
 <section class="content">
 <h2>Expedition Metadata</h2>
-    <p><em>Metadata means data about data...</em></p>
+    <p>Metadata is information about the monitoring expedition.  This includes the site, the people who conducted the expedition, and the type of structure.</p>
     
     <ul class="list-unstyled">
         <div class="row">
@@ -124,7 +124,18 @@ bindings:
 
 <section class="content">
     <h2>Expedition Data</h2>
-    <p><em>Participants collect data following certain protocols...</em></p>
+    <p>Billion Oyster Project is working to understand the best methods and locations to restore oysters in New York Harbor.
+        We also want to understand what benefits, or "ecosystem services," oysters might provide.
+        You help us conduct this research by collecting data on:
+        <ul>
+            <li>Measures of oyster performance (like growth and mortality)</li>
+            <li>Factors that affect oyster performance (like water quality)</li>
+            <li>Diversity and abundance of non-oyster species</li>
+        </ul>
+        The data in this expedition represents one piece of a larger dataset that is growing with your help!
+        To view data from multiple expeditions, use the <a href="https://platform-beta.bop.nyc/data">View Data</a> page.
+
+    </p>
     
     <!--Oyster Measurements-->
     <div class="card border-1 mb-2">
@@ -140,7 +151,7 @@ bindings:
         <div id="oysterMeasurement" class="collapse" aria-labelledby="addOysterMeasurements" data-parent="#accordion">
             <div class="card-body">
                 <p>
-                    <em>This protocol captures data on oyster growth and mortality. Learn more.</em>        
+                    The Oyster Measurements protocol captures data on oyster growth and mortality.       
                 </p>
                 
                 <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
@@ -183,16 +194,16 @@ bindings:
                 </ul>
 
                 <div class="mt-3">
-                    <h4>Table: Summary Data</h4>
+                    <h4>Summary Data</h4>
                     <table class="table table-bordered">
-                        <caption>Summary Data</caption> 
+                        <caption>Summary data on oyster mortality and growth, including the average oyster length and smallest and largest oysters.</caption> 
                         <tbody>
                             <tr>
-                                    <th scope="row">Mortality (as a percentage, from baseline)</th>
-                                    <td>50%</td>
+                                <th scope="row">Mortality (% from baseline)</th>
+                                <td>50%</td>
                             </tr>
                             <tr>
-                                <th scope="row">Growth Rate (as a percentage, from baseline)</th>
+                                <th scope="row">Growth Rate (% from baseline)</th>
                                 <td>20%</td>
                             </tr>
                             <tr>
@@ -209,30 +220,31 @@ bindings:
                             </tr>
                         </tbody>
                     </table> 
+                    
                 </div>
 
-                <h4>Bar Chart: Number of Live Oysters, This Expedition</h4>
-                <p><em>The number of live oysters per substrate shell for this expedition.</em></p>
-                <div>
+                <h4>Oyster Mortality Data and Visualizations</h4>
+                <p><strong>Bar Chart: Number of Live Oysters, This Expedition</strong></p>
                     <figure class="figure">
-                            <img src="https://raw.githubusercontent.com/BillionOysterProject/digital-platform-beta/master/newplot%20(3).png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-                            <figcaption class="figure-caption">Each substrate shell....</figcaption>
+                        <div></div>
+                        <img src="https://raw.githubusercontent.com/BillionOysterProject/digital-platform-beta/master/newplot%20(3).png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                        <figcaption class="figure-caption">The number of live oysters per substrate shell for this expedition.</figcaption>
                     </figure> 
-                </div>      
+                      
 
                 <h4>Bar Chart: Number of Live Oysters, Baseline vs. This Expedition</h4>
-                <p><em>The number of live oysters per substrate shell during the baseline expedition (in orange) and during this expedition (in blue).</em></p>
                 <div>
                     <figure class="figure">
+                        <div></div>
                             <img src="https://raw.githubusercontent.com/BillionOysterProject/digital-platform-beta/master/newplot%20(3).png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-                            <figcaption class="figure-caption">Each substrate shell....</figcaption>
+                            <figcaption class="figure-caption">The number of live oysters per substrate shell during the baseline expedition (in orange) and during this expedition (in blue).</figcaption>
                     </figure> 
                 </div> 
                 
                 <div class="mt-3">
                     <h4>Table: Mortality By Substrate Shell</h4>
                     <table class="table table-bordered">
-                        <caption>Mortality By Substrate Shell</caption>
+                        <caption>The number of live oysters on each substrate shell at baseline and during this expedition, plus the mortality rate.</caption>
                         <thead>
                             <tr>
                                 <th scope="col">Tag #</th>
@@ -248,91 +260,107 @@ bindings:
                                 <td>Muscongus Bay, ME</td>
                                 <td>20</td>
                                 <td>10</td>
+                                <td>50%</td>
                             </tr>
                             <tr>
                                 <th scope="row">2</th>
                                 <td>Muscongus Bay, ME</td>
                                 <td>20</td>
                                 <td>10</td>
+                                <td>50%</td>
                             </tr>
                             <tr>
                                 <th scope="row">3</th>
                                 <td>Muscongus Bay, ME</td>
                                 <td>20</td>
                                 <td>10</td>
+                                <td>50%</td>
                             </tr>
                             <tr>
                                 <th scope="row">4</th>
                                 <td>Muscongus Bay, ME</td>
                                 <td>20</td>
                                 <td>10</td>
+                                <td>50%</td>
                             </tr>
                             <tr>
                                 <th scope="row">5</th>
                                 <td>Muscongus Bay, ME</td>
                                 <td>20</td>
                                 <td>10</td>
+                                <td>50%</td>
                             </tr>
                             <tr>
                                 <th scope="row">6</th>
                                 <td>Muscongus Bay, ME</td>
                                 <td>20</td>
                                 <td>10</td>
+                                <td>50%</td>
                             </tr>
                             <tr>
                                 <th scope="row">7</th>
                                 <td>Muscongus Bay, ME</td>
                                 <td>20</td>
-                                <td>10</td>   
+                                <td>10</td>
+                                <td>50%</td>   
                             </tr>
                             <tr>
                                 <th scope="row">8</th>
                                 <td>Muscongus Bay, ME</td>
                                 <td>20</td>
-                                <td>10</td>   
+                                <td>10</td>
+                                <td>50%</td>   
                             </tr>
                             <tr>
                                 <th scope="row">9</th>
                                 <td>Muscongus Bay, ME</td>
                                 <td>20</td>
-                                <td>10</td>    
+                                <td>10</td>
+                                <td>50%</td>    
                             </tr>
                             <tr>
                                 <th scope="row">10</th>
                                 <td>Muscongus Bay, ME</td>
                                 <td>20</td>
-                                <td>10</td>    
+                                <td>10</td>
+                                <td>50%</td>    
                             </tr>
+                            <tr>
+                                <th scope="row">TOTAL</th>
+                                <td></td>
+                                <td>200</td>
+                                <td>100</td> 
+                                <td>50%</td>   
+                            </tr>                            
                         </tbody>
                     </table>
                 </div>   
 
+                <h4>Oyster Growth Data and Visualizations</h4>
                 <h4>Bar Chart: Oyster Measurements</h4>
-                <p><em>The length, in millimeters, of each live oyster measured during this expedition.</em></p>
-                <div>
                     <figure class="figure">
                         <img src="https://raw.githubusercontent.com/BillionOysterProject/digital-platform-beta/master/each%20live%20oyster%20measurement%20sample.png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-                        <figcaption class="figure-caption">Oyster measurements....</figcaption>
+                        <figcaption class="figure-caption">The length, in millimeters, of each live oyster measured during this expedition.</figcaption>
                     </figure> 
-                </div>
+                
 
                 <h4>Histogram: Oyster Measurements</h4>
-                <p><em>This graph is a different way to view the lengths of all of the live oysters.  It splits all of the oyster measurements
-                    into even-sized groups by size (in 5mm increments) and tells you how many oysters were in each group.
-                </em></p>
-                <div>
                     <figure class="figure">
                         <img src="https://raw.githubusercontent.com/BillionOysterProject/digital-platform-beta/master/newplot%20(2).png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-                        <figcaption class="figure-caption">Oyster measurements....</figcaption>
+                        <figcaption class="figure-caption">A histogram is a different way to view the lengths of all of the live oysters.  It splits all of the oyster measurements
+                                into even-sized groups by size (in 5mm increments) and tells you how many oysters were in each group.</figcaption>
                     </figure> 
-                </div> 
+                
 
-                <h4>Graph: Box Plot of Oyster Measurements</h4>
-                <p><em>This graph puts the average oyster measurement in the middle of the plot...</em></p>
+                <h4>Box Plot: Oyster Measurements</h4>
                 <div>
                     <figure class="figure">
                         <img src="https://raw.githubusercontent.com/BillionOysterProject/digital-platform-beta/master/unnamed.png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-                        <figcaption class="figure-caption">Oyster measurements....</figcaption>
+                        <figcaption class="figure-caption">A box plot shows you what the smallest, largest, average, and "normal" range of oyster measurements
+                            were for this expedition.  The line in the middle of the box represents the average oyster measurement.  The top and bottom lines of the box...
+                            The bottom and top lines
+                            represent the smallest and largest oyster measurements.  
+                        </figcaption>
                     </figure> 
                 </div>
 
