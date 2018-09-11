@@ -393,7 +393,7 @@ $(function () {
                     0.0,
                     200.0,
                     5.0,
-                    'Live oyster size (mm)',
+                    'Histogram: Oyster Measurements',
                     'Live oyster size (mm)',
                     'Number of oysters',
                     'div_oyster_size'
@@ -408,7 +408,7 @@ $(function () {
 
                     Math.round(live_oyster_size.length/10),
                     10,
-                    'Live oyster size (mm)',
+                    'Bar Chart: Oyster Measurements',
                     'Oyster',
                     'Live oyster size (mm)',
                     'div_barplot_oyster_size'
@@ -419,7 +419,7 @@ $(function () {
                     live_oyster_size,
                     Math.round(live_oyster_size.length/10),
                     10,
-                    'Live oyster size (mm)',
+                    'Box Plot: Oyster Measurements',
                     'Oyster',
                     'Live oyster size (mm)',
                     'div_boxplot_oyster_size'
@@ -444,7 +444,7 @@ $(function () {
                     number_live_oysters,
                     1,
                     1,
-                    'Number of live oysters',
+                    'Bar Chart: Number of Live Oysters, This Expedition',
                     'Substrate shell',
                     'Number of live oysters',
                     'div_barplot_number_oysters'
@@ -464,15 +464,6 @@ $(function () {
 
             flatMap: function(f,xs) {
                 return xs.map(f).reduce(this.concat,[]);
-            },
-
-            get_date: function(actual_JSON) {
-                var x = actual_JSON.map(function(y) {
-                    return y.collectionTime.substring(0,10).split('-').map(function(z) {
-                        return parseFloat(z);
-                    });
-                });
-                return x;
             },
 
             diffDates: function(first, second) {
@@ -714,8 +705,10 @@ $(function () {
                     if (diffs[i] < 0) {
                         var d1 = data1[i];
                         var d2 = data2[i];
+
                         data1[i] = d2;
                         data2[i] = d1;
+
                         diffs[i] = Math.abs(diffs[i]);
                     }
                 }
