@@ -129,36 +129,23 @@ bindings:
                     and growth (how long each live oyster is, measured in millimeters) since the baseline expedition (the first expedition). Learn more.       
                 </p>
                 
-                <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
-                    <strong>Contributors to this protocol:</strong>                              
-                    <ul class="list-group"> 
-                        <div class="row"> 
-                            <div class="col-6">                             
-                                <li class="list-group-item">
-                                    {{ $expedition.protocols.oysterMeasurement.scribeMember.displayName }}
-                                </li> 
-                            </div>                      
-                        </div>
-                    </ul>
-                </div>
+                <p>
+                    <strong>Contributor for this protocol:</strong>
+                        {{ $expedition.protocols.oysterMeasurement.scribeMember.displayName }}
+                </p>
 
-                <div class="card mt-3 mb-3">
-                    <div class="card-header">
-                        <strong>Oyster Measurements Notes:</strong>
-                    </div>
-                    <div class="card-body">
-                            {{ $expedition.protocols.oysterMeasurement.notes }}
-                    </div>
-                </div>
-
-
-                <div class="media-body">
+                <p><strong>Oyster Measurements Notes:</strong> 
+                    <br/>
+                    {{ $expedition.protocols.oysterMeasurement.notes }}
+                </p>
+                    
+                <p>
                     <strong>Bioaccumulation on Cage:</strong>
                     {{ $expedition.protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage }}
-                </div>
+                </p>
 
                 <div class="mt-3">
-                    <h4>Summary Data for This Expedition</h4>
+                    <h4>Table: Summary Data for This Expedition</h4>
                     <table class="table table-bordered">
                         <caption>Summary data on oyster mortality and growth, including the average oyster length and smallest and largest oysters.</caption> 
                         <tbody>
@@ -385,7 +372,7 @@ bindings:
                         <div class="card" style="width: 18rem;">
                                 <img class="card-img-top" src="https://billionoysterproject.org/wp-content/uploads/2016/11/DSCN2167-BBP-growth-calipers.jpg" alt="Card image cap">
                                 <div class="card-body">
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <p class="card-text">Substrate Shell Tag #1, Outer Side</p>
                                 </div>
                         </div>
                     </div>
