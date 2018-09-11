@@ -11,21 +11,21 @@ includes:
     user-navbar: /_includes/user-navbar.html
 
 bindings:
-- name:     'user'
-  resource: ':/api/users/me'
-  not_if:   '{{ eqx .request.url.path `/authentication/signin` }}'
-  fallback: {}
-  if_status:
-    401:    '/authentication/signin'
+-   name:     'user'
+    resource: '/api/users/me'
+    not_if:   '{{ eqx $.request.url.path "/authentication/signin" }}'
+    fallback: {}
+    if_status:
+        401:    '/authentication/signin'
 
 flags:
-    admin:             '{{ has `admin` .bindings.user.roles }}'
-    teamLead:          '{{ has `team lead` .bindings.user.roles }}'
-    teamLeadPending:   '{{ has `team lead pending` .bindings.user.roles }}'
-    teamMember:        '{{ has `team member` .bindings.user.roles }}'
-    teamMemberPending: '{{ has `team member pending` .bindings.user.roles }}'
-    partner:           '{{ has `partner` .bindings.user.roles }}'
-    loggedIn:          '{{ if .bindings.user }}true{{ end }}'
+    admin:             '{{ has "admin" $.bindings.user.roles }}'
+    teamLead:          '{{ has "team lead" $.bindings.user.roles }}'
+    teamLeadPending:   '{{ has "team lead pending" $.bindings.user.roles }}'
+    teamMember:        '{{ has "team member" $.bindings.user.roles }}'
+    teamMemberPending: '{{ has "team member pending" $.bindings.user.roles }}'
+    partner:           '{{ has "partner" $.bindings.user.roles }}'
+    loggedIn:          '{{ if $.bindings.user }}true{{ end }}'
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -40,12 +40,12 @@ flags:
 
     <section id="main">
         {{ template "user-navbar" . }}
-        {{ if and .page.view (not .page.notitle) }}
+        {{ if and $.page.view (not $.page.notitle) }}
         <section class="content shaded text-center">
-            <h1>{{ .page.view }}</h1>
+            <h1>{{ $.page.view }}</h1>
         </section>
         {{ end }}
-        <section class="content-body {{ .page.body_class }}">
+        <section class="content-body {{ $.page.body_class }}">
         {{ template "content" . }}
         </section>
     </section>

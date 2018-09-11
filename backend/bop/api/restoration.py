@@ -66,6 +66,21 @@ class Expeditions(CollectionView):
         'protocols.waterQuality': (
             'protocolwaterqualities', [],
         ),
+        'protocols.mobileTrap.scribeMember': (
+            'users', ['_id', 'displayName', 'username'],
+        ),
+        'protocols.oysterMeasurement.scribeMember': (
+            'users', ['_id', 'displayName', 'username'],
+        ),
+        'protocols.settlementTiles.scribeMember': (
+            'users', ['_id', 'displayName', 'username'],
+        ),
+        'protocols.siteCondition.scribeMember': (
+            'users', ['_id', 'displayName', 'username'],
+        ),
+        'protocols.waterQuality.scribeMember': (
+            'users', ['_id', 'displayName', 'username'],
+        ),
     }
 
     @route('/report')
@@ -216,25 +231,54 @@ class ProtocolSiteConditions(CollectionView):
     route_base      = 'protocol-site-conditions'
     collection_name = 'protocolsiteconditions'
 
+    expand_fields   = {
+        'scribeMember': (
+            'users', ['_id', 'displayName', 'username'],
+        )
+    }
 
 class ProtocolOysterMeasurements(CollectionView):
     route_base      = 'protocol-oyster-measurements'
     collection_name = 'protocoloystermeasurements'
+
+    expand_fields   = {
+        'scribeMember': (
+            'users', ['_id', 'displayName', 'username'],
+        )
+    }
 
 
 class ProtocolMobileTraps(CollectionView):
     route_base      = 'protocol-mobile-traps'
     collection_name = 'protocolmobiletraps'
 
+    expand_fields   = {
+        'scribeMember': (
+            'users', ['_id', 'displayName', 'username'],
+        )
+    }
+
 
 class ProtocolSettlementTiles(CollectionView):
     route_base      = 'protocol-settlement-tiles'
     collection_name = 'protocolsettlementtiles'
 
+    expand_fields   = {
+        'scribeMember': (
+            'users', ['_id', 'displayName', 'username'],
+        )
+    }
+
 
 class ProtocolWaterQualities(CollectionView):
     route_base      = 'protocol-water-qualities'
     collection_name = 'protocolwaterqualities'
+
+    expand_fields   = {
+        'scribeMember': (
+            'users', ['_id', 'displayName', 'username'],
+        )
+    }
 
 
 class RestorationStations(GeoCollectionView):

@@ -1,0 +1,489 @@
+---
+page:
+    body_class: 'site-details'
+    view: 'Field Report'
+    notitle: true
+
+bindings:
+-   name:	  'expedition'
+    resource: '/api/expeditions/{{ param 1 }}'
+
+-   name:     'site'
+    resource: '/api/sites/{{ $.bindings.expedition.station.siteId }}'
+
+-   name:     'schoolOrg'
+    resource: '/api/expeditions/{{ $.bindings.expedition.teamLead.schoolOrg }}'
+    only_if:  '{{ isEmpty $.bindings.expedition.team }}'
+---
+
+{{ $expedition := $.bindings.expedition }}
+{{ $site       := $.bindings.site }}
+{{ $schoolOrg  := or $.bindings.expedition.team.schoolOrg $.bindings.schoolOrg }}
+
+<h1 class="text-left pb-2">Expedition Field Report: {{ $expedition.name}}</h1>
+<section class="content shaded pt-1">
+    <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>{{ $site.name }}, {{ $site.bodyOfWater }}</p>
+    <p class="mb-1"><i class="fa fa-fw fa-globe"></i>{{ $site.boroughCounty }}, {{ $site.state }}</p>
+    <p class="mb-1"><i class="fa fa-fw fa-calendar"></i>{{ time $expedition.monitoringEndDate "January 1, 2006, 3:04pm"  }}</p>
+</section>
+
+<div class="row no-gutters site-jumbotron">
+    <div class="col">
+        <div id="siteMap">
+            <iframe
+                src="https://platform-beta.bop.nyc/sites/map"
+                frameborder="0"
+                style="width: 100%; height: 250px;"
+            ></iframe>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+<h2>Expedition Metadata</h2>
+    <p>
+        Metadata is information about the monitoring expedition.  This includes the people
+        who conducted the expedition, the type of structure, and the date/location information above.
+    </p>
+    
+    <ul class="list-unstyled">
+        <div class="row">
+            <div class="col-6">
+                <li class="media">
+                    <img class="img-thumbnail mr-3" src="https://avatars0.githubusercontent.com/u/16782836?s=200&v=4" alt="Generic placeholder image">
+                    <div class="media-body">
+                        <p class="mt-0 mb-1">
+                            <strong>Type of structure:</strong>
+                            {{ get (firstByKey $.page.structureTypes "id" $expedition.station.structureType) "label" }}
+                        </p>
+                        <strong>Structure name:</strong> {{ $expedition.station.name }}
+                    </div>
+                </li>
+            </div>
+        
+            <div class="col-6">
+                <li class="media">
+                    <img class="img-thumbnail mr-3" src="https://avatars0.githubusercontent.com/u/16782836?s=200&v=4" alt="Generic placeholder image">
+                    <div class="media-body">
+                        <p class="mt-0 mb-1"><strong>Team Lead:</strong> {{ $expedition.teamLead.displayName }} </p>
+                        <strong>Team Name:</strong> {{ $expedition.team.name}}
+                    </div>
+                </li>
+            </div>
+        
+            <div class="col-6 mt-3">
+                <li class="media">
+                    <img class="img-thumbnail mr-3" src="https://avatars0.githubusercontent.com/u/16782836?s=200&v=4" alt="Generic placeholder image">
+                    <div class="media-body">
+                        <p class="mt-0 mb-1"><strong>Organization Name:</strong> {{ $schoolOrg.name }}</p>
+                        <strong>Organization Location:</strong> {{ $schoolOrg.streetAddress }}, {{ $schoolOrg.city }},
+                        {{ $schoolOrg.state }}
+                    </div>
+                </li>
+            </div>
+
+            <div class="col-6 mt-3">
+                <li class="media">
+                    <img class="img-thumbnail mr-3" src="https://avatars0.githubusercontent.com/u/16782836?s=200&v=4" alt="Generic placeholder image">
+                    <div class="media-body">
+                        <p class="mt-0 mb-1"><strong>Number of Adults:</strong> 3</p>
+                        <strong>Number of Students:</strong> 30
+                    </div>
+                </li>
+            </div>
+
+        </div>
+    </ul>
+</section>
+
+<section class="content">
+    <h2>Expedition Data</h2>
+    <p>Billion Oyster Project is working to understand the best methods and locations to restore oysters in New York Harbor.
+        We also want to understand what benefits to the harbor, or "ecosystem services," oysters might provide.
+        You help us conduct this research by collecting data on:
+        <ul>
+            <li>Measures of oyster performance (like mortality and growth)</li>
+            <li>Factors that affect oyster performance (like site conditions and water quality)</li>
+            <li>Diversity and abundance of mobile and sessile non-oyster species</li>
+        </ul>
+        The data in this expedition represents one piece of a larger dataset that is growing with your help!
+        To view data from multiple expeditions, use the <a href="https://platform-beta.bop.nyc/data">View Data</a> page.
+
+    </p>
+    
+    <!--Oyster Measurements-->
+    <div class="card border-1 mb-2">
+        <div class="card-header" id="oysterMeasurementsData">
+            <section class="shaded collapsed" data-toggle="collapse" data-target="#oysterMeasurement">
+                <h3>Oyster Measurements</h3>
+                <div class="step-toggle">
+                    <i class="fa"></i>
+                </div>
+            </section>
+        </div>
+
+        <div id="oysterMeasurement" class="collapse" aria-labelledby="addOysterMeasurements" data-parent="#accordion">
+            <div class="card-body">
+                <p>
+                    This protocol captures data on oyster mortality (how many oysters survived) 
+                    and growth (how long each live oyster is, measured in millimeters) since the baseline expedition (the first expedition). Learn more.       
+                </p>
+                
+                <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
+                    <strong>Contributors to this protocol:</strong>                              
+                    <ul class="list-group"> 
+                        <div class="row"> 
+                            <div class="col-6">                             
+                                <li class="list-group-item">
+                                    {{ $expedition.protocols.oysterMeasurement.scribeMember.displayName }}
+                                </li> 
+                            </div>                      
+                        </div>
+                    </ul>
+                </div>
+
+                <div class="card mt-3 mb-3">
+                    <div class="card-header">
+                        <strong>Oyster Measurements Notes:</strong>
+                    </div>
+                    <div class="card-body">
+                            {{ $expedition.protocols.oysterMeasurement.notes }}
+                    </div>
+                </div>
+
+
+                <div class="media-body">
+                    <strong>Bioaccumulation on Cage:</strong>
+                    {{ $expedition.protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage }}
+                </div>
+
+                <div class="mt-3">
+                    <h4>Summary Data for This Expedition</h4>
+                    <table class="table table-bordered">
+                        <caption>Summary data on oyster mortality and growth, including the average oyster length and smallest and largest oysters.</caption> 
+                        <tbody>
+                            <tr>
+                                <th scope="row">Mortality (from baseline)</th>
+                                <td> %</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Growth Rate (from baseline)</th>
+                                <td> %</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Average Oyster Length (the "mean")</th>
+                                <td>{{ $expedition.protocols.oysterMeasurement.averageSizeOfAllLiveOysters }} mm</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Smallest Oyster (the "minimum" or "min")</th>
+                                <td>{{ $expedition.protocols.oysterMeasurement.minimumSizeOfAllLiveOysters }} mm</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Largest Oyster (the "maximum" or "max")</th>
+                                <td>{{ $expedition.protocols.oysterMeasurement.maximumSizeOfAllLiveOysters }} mm</td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                    
+                </div>
+
+                <h4>Oyster Mortality Data and Visualizations</h4>
+                <p>
+                    We can represent data on oyster mortality (how many oysters survived) in multiple ways.  
+                    One format is a bar chart- this one shows the number of live oysters on each substrate shell during this expedition.
+                </p>
+                <p><strong>Bar Chart: Number of Live Oysters, This Expedition</strong></p>
+                    <figure class="figure">
+                        <div id="div_number_oysters"></div>
+                        <figcaption class="figure-caption">The number of live oysters per substrate shell for this expedition.</figcaption>
+                    </figure>              
+                <p>
+                    We can also combine two bar charts to make comparisons between two datasets.  
+                    This one uses different color bars to compare the number of live oysters at baseline vs. this expedition:
+                </p>
+                <p><strong>Bar Chart: Number of Live Oysters, Baseline vs. This Expedition</strong></p>
+                <div>
+                    <figure class="figure">
+                        <div id="div_oyster_size"></div>
+                        <figcaption class="figure-caption">The number of live oysters per substrate shell during the baseline expedition (in orange) and during this expedition (in blue).</figcaption>
+                    </figure> 
+                </div> 
+                
+                <div class="mt-3">
+                    <p>A table is another way to visualize data using rows and columns.
+                            This table uses a different row for each tagged substrate shell.  
+                            It uses different columns to show the tag number, the source (where the oyster parents were from), the number of live oysters at baseline, and the number of live oysters during this expedition. 
+                    </p>
+                    <strong>Table: Mortality By Substrate Shell</strong>
+                    <table class="table table-bordered table-sm">
+                        <caption>The source and number of live oysters on each substrate shell at baseline and during this expedition, plus the mortality rate.
+                                To calculate mortality, you take the number of live oysters during this expedition and divide it by the number of live oysters at baseline, and then express it as a percentage.
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Tag #</th>
+                                <th scope="col">Source</th>
+                                <th scope="col"># of live oysters this expedition</th>
+                                <th scope="col"># of live oysters at baseline</th>
+                                <th scope="col">Percent Mortality </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Muscongus Bay, ME</td>
+                                <td>20</td>
+                                <td>10</td>
+                                <td>50%</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Muscongus Bay, ME</td>
+                                <td>20</td>
+                                <td>10</td>
+                                <td>50%</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Muscongus Bay, ME</td>
+                                <td>20</td>
+                                <td>10</td>
+                                <td>50%</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>Muscongus Bay, ME</td>
+                                <td>20</td>
+                                <td>10</td>
+                                <td>50%</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">5</th>
+                                <td>Muscongus Bay, ME</td>
+                                <td>20</td>
+                                <td>10</td>
+                                <td>50%</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">6</th>
+                                <td>Muscongus Bay, ME</td>
+                                <td>20</td>
+                                <td>10</td>
+                                <td>50%</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">7</th>
+                                <td>Muscongus Bay, ME</td>
+                                <td>20</td>
+                                <td>10</td>
+                                <td>50%</td>   
+                            </tr>
+                            <tr>
+                                <th scope="row">8</th>
+                                <td>Muscongus Bay, ME</td>
+                                <td>20</td>
+                                <td>10</td>
+                                <td>50%</td>   
+                            </tr>
+                            <tr>
+                                <th scope="row">9</th>
+                                <td>Muscongus Bay, ME</td>
+                                <td>20</td>
+                                <td>10</td>
+                                <td>50%</td>    
+                            </tr>
+                            <tr>
+                                <th scope="row">10</th>
+                                <td>Muscongus Bay, ME</td>
+                                <td>20</td>
+                                <td>10</td>
+                                <td>50%</td>    
+                            </tr>
+                            <tr>
+                                <th scope="row">TOTAL</th>
+                                <td></td>
+                                <td>200</td>
+                                <td>100</td> 
+                                <td>50%</td>   
+                            </tr>                            
+                        </tbody>
+                    </table>
+                </div>   
+
+                <h4>Oyster Growth Data and Visualizations</h4>
+                <p>
+                    Different types of graphs can help you assess how well the oysters are growing at your site.
+                    A bar chart is one way to visualize the lengths of each oyster during this expedition:
+                </p>
+                <p><strong>Bar Chart: Oyster Measurements</strong></p>
+                
+                    <figure class="figure">
+                        <div id="div_barplot_number_oysters"></div>
+                        <figcaption class="figure-caption">The length, in millimeters, of each live oyster measured during this expedition, sorted from smallest to largest.</figcaption>
+                    </figure> 
+                
+                <p>
+                    A histogram is a different way to view the lengths of all of the live oysters.  
+                    This one splits all of the oyster measurements into even-sized groups by length (in 5mm increments) 
+                    and tells you how many oysters are in each group.
+                    A histogram is a good way to condense a large set of data into a smaller, more readable graph.
+                </p>
+                <p><strong>Histogram: Oyster Measurements</strong></p>
+                    <figure class="figure">
+                        <div id="div_barplot_oyster_size"></div>
+                        <figcaption class="figure-caption"></figcaption>
+                    </figure> 
+
+                <p>
+                    A box plot shows you what the smallest (min), largest (max), average (mean), and "normal" range of oyster measurements were for this expedition.  
+                </p>
+                    <ul>
+                    <li>The bottom and top lines represent the min and max oyster measurements. 
+                        These lines show us the "range" of oyster measurements for this expedition.
+                    </li>
+                    <li>The line in the middle of the box represents the mean oyster measurement. </li> 
+                    <li>The top and bottom lines of the box represent the "standard deviation" above and below the mean oyster measurement.
+                        (It's okay if you don't know what a standard deviation is- it's a way of showing what's considered "normal" in a dataset.
+                        You can learn about standard deviation here.)</li> 
+                    </ul>
+
+                
+                <p><strong>Box Plot: Oyster Measurements</strong></p>
+                <div>
+                    <figure class="figure">
+                        <div id="div_boxplot_oyster_size"></div>
+                        <figcaption class="figure-caption"></figcaption>
+                    </figure> 
+                </div>
+
+                <p>
+                    The table below shows the length of each live oyster.  
+                    This is the "raw data" that was used to make the bar chart, histogram, and box plot above.
+                </p>
+                <div class="mt-3">
+                    <h4>Table: Oyster Lengths</h4>
+                    <table class="table table-bordered table-sm">
+                        <caption>Oyster Lengths</caption> 
+                        <thead>
+                            <tr>
+                                <th scope="col">Tag #</th>
+                                <th scope="col">Oyster Length (mm)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>20</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-3">
+                        <h4>Photos</h4>
+                        <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="https://billionoysterproject.org/wp-content/uploads/2016/11/DSCN2167-BBP-growth-calipers.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--Site Conditions-->
+    <div class="card border-1 mb-2">
+        <div class="card-header" id="siteConditionsData">
+            <section class="shaded collapsed" data-toggle="collapse" data-target="#siteConditions">
+                <h3>Site Conditions</h3>
+                <div class="step-toggle">
+                    <i class="fa"></i>
+                </div>
+            </section>
+        </div>
+
+        <div id="siteConditions" class="collapse" aria-labelledby="siteConditionsData" data-parent="#accordion">
+            <div class="card-body">
+                    <p>
+                        This protocol captures data on meteorological conditions, recent rainfall,
+                        and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
+                        can affect oysters by impacting water quality, particularly through Combined Sewer Overflows. Learn more.        
+                    </p>
+            </div>
+        </div>
+    </div>
+
+    <!--Mobile Organisms-->
+    <div class="card border-1 mb-2">
+        <div class="card-header" id="mobileOrganismsData">
+            <section class="shaded collapsed" data-toggle="collapse" data-target="#mobileOrganisms">
+                <h3>Mobile Organisms</h3>
+                <div class="step-toggle">
+                    <i class="fa"></i>
+                </div>
+            </section>
+        </div>
+
+        <div id="mobileOrganisms" class="collapse" aria-labelledby="mobileOrganismsData" data-parent="#accordion">
+            <div class="card-body">
+                    <p>
+                        This protocol captures data on the abundance (how many) and composition (which species) of the mobile organisms (like crustaceans and fish) 
+                        that were in the Oyster Research Station during this expedition.
+                        This tells us about how oysters might impact biodiversity in New York Harbor.  Learn more.        
+                    </p>
+            </div>
+        </div>
+    </div>
+    
+    <!--Sessile Organisms-->
+    <div class="card border-1 mb-2">
+        <div class="card-header" id="sessileOrganismsData">
+            <section class="shaded collapsed" data-toggle="collapse" data-target="#sessileOrganisms">
+                <h3>Sessile Organisms</h3>
+                <div class="step-toggle">
+                    <i class="fa"></i>
+                </div>
+            </section>
+        </div>
+
+        <div id="sessileOrganisms" class="collapse" aria-labelledby="sessileOrganismsData" data-parent="#accordion">
+            <div class="card-body">
+                    <p>
+                        This protocol captures data on the sessile organisms (ones that after anchoring to one spot don't move again, like sponges, tunicates, and barnacles) 
+                        that colonized the tiles of the Oyster Research Station during this expedition.
+                        This tells us about the potential for oyster reefs to provide a substrate for a variety of sessile species,
+                        as well as how those species might change over time ("ecological succession").  Learn more.        
+                    </p>
+            </div>
+        </div>
+    </div> 
+    
+    <!--Water Quality-->
+    <div class="card border-1 mb-2">
+        <div class="card-header" id="waterQualityData">
+            <section class="shaded collapsed" data-toggle="collapse" data-target="#waterQuality">
+                <h3>Water Quality</h3>
+                <div class="step-toggle">
+                    <i class="fa"></i>
+                </div>
+            </section>
+        </div>
+
+        <div id="waterQuality" class="collapse" aria-labelledby="waterQualityData" data-parent="#accordion">
+            <div class="card-body">
+                    <p>
+                        This protocol captures data on several different water quality parameters (temperature, salinity, dissolved oxygen, etc.)
+                        that might affect oyster mortality and growth. Learn more.        
+                    </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+$(function(){
+    expeditionPlots.renderExpeditionGraphs(JSON.parse('{{ jsonify $.bindings.expedition }}'));
+})
+</script>
