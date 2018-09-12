@@ -109,17 +109,17 @@ header:
         label: 'West'
 
       waterColors:
-      - id:    'light-blue'
+      - id:    'lightBlue'
         label: 'Light Blue'
-      - id:    'dark-blue'
+      - id:    'darkBlue'
         label: 'Dark Blue'
-      - id:    'light-green'
+      - id:    'lightGreen'
         label: 'Light Green'
-      - id:    'dark-green'
+      - id:    'darkGreen'
         label: 'Dark Green'
-      - id:    'light-brown'
+      - id:    'lightBrown'
         label: 'Light Brown'
-      - id:    'dark-brown'
+      - id:    'darkBrown'
         label: 'Dark Brown'
 
       pipeFlows:

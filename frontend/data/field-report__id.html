@@ -16,9 +16,17 @@ bindings:
     only_if:  '{{ isEmpty $.bindings.expedition.team }}'
 ---
 
-{{ $expedition := $.bindings.expedition }}
-{{ $site       := $.bindings.site }}
-{{ $schoolOrg  := or $.bindings.expedition.team.schoolOrg $.bindings.schoolOrg }}
+{{ $expedition        := $.bindings.expedition }}
+{{ $site              := $.bindings.site }}
+{{ $schoolOrg         := or $.bindings.expedition.team.schoolOrg $.bindings.schoolOrg }}
+{{ $oysterMeasurement := $.bindings.expedition.protocols.oysterMeasurement }}
+{{ $siteCondition     := $.bindings.expedition.protocols.siteCondition }}
+{{ $mobileOrganism    := $.bindings.expedition.protocols.mobileTrap }}
+{{ $sessileOrganism   := $.bindings.expedition.protocols.settlementTiles }}
+{{ $waterQuality      := $.bindings.expedition.protocols.waterQuality }}
+
+{{ $substrateShell    := $.bindings.expedition.protocols.oysterMeasurement.measuringOysterGrowth.substrateShells }}
+{{ $baseline          := $.bindings.expedition.station.baselines }}
 
 <h1 class="text-left pb-2">Expedition Field Report: {{ $expedition.name}}</h1>
 <section class="content shaded pt-1">
@@ -86,14 +94,19 @@ bindings:
                 <li class="media">
                     <img class="img-thumbnail mr-3" src="https://avatars0.githubusercontent.com/u/16782836?s=200&v=4" alt="Generic placeholder image">
                     <div class="media-body">
-                        <p class="mt-0 mb-1"><strong>Number of Adults:</strong> 3</p>
-                        <strong>Number of Students:</strong> 30
+                        <p class="mt-0 mb-1"><strong>Number of Adults:</strong></p>
+                        <strong>Number of Students:</strong>
                     </div>
                 </li>
             </div>
 
         </div>
     </ul>
+    {{ if $expedition.notes }}
+    <p>
+        <strong>Expedition Notes:</strong> {{ $expedition.notes }}
+    </p>
+    {{ end }}
 </section>
 
 <section class="content">
@@ -112,6 +125,7 @@ bindings:
     </p>
     
     <!--Oyster Measurements-->
+    {{ if $oysterMeasurement }}
     <div class="card border-1 mb-2">
         <div class="card-header" id="oysterMeasurementsData">
             <section class="shaded collapsed" data-toggle="collapse" data-target="#oysterMeasurement">
@@ -125,30 +139,36 @@ bindings:
         <div id="oysterMeasurement" class="collapse" aria-labelledby="addOysterMeasurements" data-parent="#accordion">
             <div class="card-body">
                 <p>
-                    This protocol captures data on oyster mortality (how many oysters survived) 
-                    and growth (how long each live oyster is, measured in millimeters) since the baseline expedition (the first expedition). Learn more.       
+                    <em>This protocol captures data on oyster mortality (how many oysters survived) 
+                        and growth (how long each live oyster is, measured in millimeters) since the baseline expedition (the first expedition). Learn more.</em>       
                 </p>
                 
                 <p>
                     <strong>Contributor for this protocol:</strong>
-                        {{ $expedition.protocols.oysterMeasurement.scribeMember.displayName }}
+                        {{ $oysterMeasurement.scribeMember.displayName }}
                 </p>
 
+                {{ if $oysterMeasurement.notes }}
                 <p><strong>Oyster Measurements Notes:</strong> 
                     <br/>
-                    {{ $expedition.protocols.oysterMeasurement.notes }}
+                    {{ $oysterMeasurement.notes }}
                 </p>
-                    
+                {{ end }}
+                
+                {{ if $oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage }}
                 <p>
                     <strong>Bioaccumulation on Cage:</strong>
-                    {{ $expedition.protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage }}
+                    {{ $oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage }}
                 </p>
+                {{ end }}
 
                 <div class="mt-3">
+                    <!--Need a function here to hide this entire section if there is no oyster mortality or growth data (unlikely but possible)-->
                     <h4>Summary Data for This Expedition</h4>
                     <table class="table table-bordered">
                         <caption>Summary data on oyster mortality and growth, including the average oyster length and smallest and largest oysters.</caption> 
                         <tbody>
+                            <!--Need a function to hide Mortality and Growth Rate if this is the first expedition to this station-->
                             <tr>
                                 <th scope="row">Mortality (from baseline)</th>
                                 <td> %</td>
@@ -157,23 +177,34 @@ bindings:
                                 <th scope="row">Growth Rate (from baseline)</th>
                                 <td> %</td>
                             </tr>
+
+                            {{ if $oysterMeasurement.averageSizeOfAllLiveOysters }}
                             <tr>
                                 <th scope="row">Average Oyster Length (the "mean")</th>
-                                <td>{{ $expedition.protocols.oysterMeasurement.averageSizeOfAllLiveOysters }} mm</td>
+                                <td>{{ $oysterMeasurement.averageSizeOfAllLiveOysters }} mm</td>
                             </tr>
+                            {{ end }}
+
+                            {{ if $oysterMeasurement.minimumSizeOfAllLiveOysters }}
                             <tr>
                                 <th scope="row">Smallest Oyster (the "minimum" or "min")</th>
-                                <td>{{ $expedition.protocols.oysterMeasurement.minimumSizeOfAllLiveOysters }} mm</td>
+                                <td>{{ $oysterMeasurement.minimumSizeOfAllLiveOysters }} mm</td>
                             </tr>
+                            {{ end }}
+
+                            {{ if $oysterMeasurement.maximumSizeOfAllLiveOysters }}
                             <tr>
                                 <th scope="row">Largest Oyster (the "maximum" or "max")</th>
-                                <td>{{ $expedition.protocols.oysterMeasurement.maximumSizeOfAllLiveOysters }} mm</td>
+                                <td>{{ $oysterMeasurement.maximumSizeOfAllLiveOysters }} mm</td>
                             </tr>
+                            {{ end }}
+
                         </tbody>
                     </table> 
                     
                 </div>
 
+                <!--Need a function here to hide this entire section if there is no oyster mortality or growth data (unlikely but possible)-->
                 <h4>Oyster Mortality Data and Visualizations</h4>
                 <p>
                     We can represent data on oyster mortality (how many oysters survived) in multiple ways.  
@@ -184,6 +215,8 @@ bindings:
                         <div id="div_barplot_number_oysters"></div>
                         <figcaption class="figure-caption">The number of live oysters per substrate shell for this expedition.</figcaption>
                     </figure>              
+                
+                <!--Need a function here to hide this paragraph and chart if there is only one expedition-->
                 <p>
                     We can also combine two bar charts to make comparisons between two datasets.  
                     This one uses different color bars to compare the number of live oysters at baseline vs. this expedition:
@@ -191,7 +224,7 @@ bindings:
                 <p><strong>Bar Chart: Number of Live Oysters, Baseline vs. This Expedition</strong></p>
                 <div>
                     <figure class="figure">
-                        MISSING
+                        <div id="div_double_barplot_number_oysters"></div>
                         <figcaption class="figure-caption">The number of live oysters per substrate shell during the baseline expedition (in orange) and during this expedition (in blue).</figcaption>
                     </figure> 
                 </div> 
@@ -219,7 +252,7 @@ bindings:
                             <tr>
                                 <th scope="row">1</th>
                                 <td>Muscongus Bay, ME</td>
-                                <td>20</td>
+                                <td></td>
                                 <td>10</td>
                                 <td>50%</td>
                             </tr>
@@ -289,7 +322,7 @@ bindings:
                             <tr>
                                 <th scope="row">TOTAL</th>
                                 <td></td>
-                                <td>200</td>
+                                <td>{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</td>
                                 <td>100</td> 
                                 <td>50%</td>   
                             </tr>                            
@@ -297,6 +330,7 @@ bindings:
                     </table>
                 </div>   
 
+                <!--Need a function here to hide this entire section if there is no oyster growth data (possible if all the live oysters die)-->
                 <h4>Oyster Growth Data and Visualizations</h4>
                 <p>
                     Different types of graphs can help you assess how well the oysters are growing at your site.
@@ -380,8 +414,10 @@ bindings:
             </div>
         </div>
     </div>
+    {{ end }}
 
     <!--Site Conditions-->
+    {{ if $siteCondition }}
     <div class="card border-1 mb-2">
         <div class="card-header" id="siteConditionsData">
             <section class="shaded collapsed" data-toggle="collapse" data-target="#siteConditions">
@@ -399,11 +435,96 @@ bindings:
                         and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
                         can affect oysters by impacting water quality, particularly through Combined Sewer Overflows. Learn more.        
                     </p>
+
+                    <p>
+                        <strong>Contributor for this protocol:</strong>
+                            {{ $siteCondition.scribeMember.displayName }}
+                    </p>
+    
+                    {{ if $siteCondition.notes }}
+                    <p><strong>Site Conditions Notes:</strong> 
+                        <br/>
+                        {{ $siteCondition.notes }}
+                    </p>
+                    {{ end }}
+                    
+                    {{ if $siteCondition.meteorologicalConditions }}
+                    <h4>Meteorological Conditions</h4>
+                    {{ end }}
+                    {{ if $siteCondition.meteorologicalConditions.weatherConditions }}
+                    <p><strong>Weather:</strong> {{ get (firstByKey $.page.weatherConditions "id" $siteCondition.meteorologicalConditions.weatherConditions) "label" }}</p> 
+                    {{ end }}
+
+                    {{ if $siteCondition.meteorologicalConditions.airTemperatureC }}
+                    <p><strong>Air temperature:</strong> {{ $siteCondition.meteorologicalConditions.airTemperatureC }} &#8451</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.meteorologicalConditions.windSpeedMPH }}
+                    <p><strong>Wind speed:</strong> {{ $siteCondition.meteorologicalConditions.windSpeedMPH }} MPH</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.meteorologicalConditions.windDirection }}
+                    <p><strong>Wind direction:</strong> {{ $siteCondition.meteorologicalConditions.windDirection }}</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.meteorologicalConditions.humidityPer }}
+                    <p><strong>Humidity:</strong> {{ $siteCondition.meteorologicalConditions.humidityPer }}%</p>
+                    {{ end }}
+
+                    <!--Recent rainfall isn't showing up if the answer in the database is "false"-->
+                    {{ if $siteCondition.recentRainfall }}
+                    <h4>Recent Rainfall</h4>
+                    {{ end }}
+
+                    {{ if $siteCondition.recentRainfall.rainedIn7Days }}
+                    <p><strong>Has it rained in the past 7 days?</strong> {{ $siteCondition.recentRainfall.rainedIn7Days }}</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.recentRainfall.rainedIn72Hours }}
+                    <p><strong>Has it rained in the past 72 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn72Hours }}</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.recentRainfall.rainedIn24Hours }}
+                    <p><strong>Has it rained in the past 24 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn24Hours }}</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.waterConditions }}
+                    <h4>Water Conditions</h4>
+                    {{ end }}
+
+                    {{ if $siteCondition.waterConditions.surfaceCurrentSpeedMPS }}
+                    <p><strong>Surface current speed:</strong> {{ $siteCondition.waterConditions.surfaceCurrentSpeedMPS }} MPS</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.waterConditions.waterColor }}
+                    <p><strong>Describe the water color:</strong> {{ get (firstByKey $.page.waterColors "id" $siteCondition.waterConditions.waterColor) "label" }}</p>
+                    {{ end }}
+
+                    <!--If there answer is "false" it doesn't show up-->
+                    {{ if $siteCondition.waterConditions.oilSheen }}
+                    <p><strong>Is there an oil sheen present?</strong> {{ $siteCondition.waterConditions.oilSheen }}</p>
+                    {{ end }}
+
+                    <!--This isn't showing up if the answer is true OR false-->
+                    {{ if $siteCondition.garbage.garbagePresent }}
+                    <p><strong>Is there any garbage in the water?</strong> {{ $siteCondition.garbage.garbagePresent }}</p>
+                    {{ end }}
+
+                    {{ if $siteCondition }}
+                    <p><strong>Is there any flow through the Combined Sewer Overflow (CSO) pipes?</strong></p>
+                    {{ end }}
+
+                    {{ if $siteCondition }}
+                    <p><strong>Is there any flow through the unmarked/other pipes?</strong></p>
+                    {{ end }}
+
             </div>
         </div>
     </div>
+    {{ end }}
 
     <!--Mobile Organisms-->
+    {{ if $mobileOrganism }}
     <div class="card border-1 mb-2">
         <div class="card-header" id="mobileOrganismsData">
             <section class="shaded collapsed" data-toggle="collapse" data-target="#mobileOrganisms">
@@ -424,8 +545,10 @@ bindings:
             </div>
         </div>
     </div>
+    {{ end }}
     
     <!--Sessile Organisms-->
+    {{ if $sessileOrganism }}
     <div class="card border-1 mb-2">
         <div class="card-header" id="sessileOrganismsData">
             <section class="shaded collapsed" data-toggle="collapse" data-target="#sessileOrganisms">
@@ -447,8 +570,10 @@ bindings:
             </div>
         </div>
     </div> 
+    {{ end }}
     
     <!--Water Quality-->
+    {{ if $waterQuality }}
     <div class="card border-1 mb-2">
         <div class="card-header" id="waterQualityData">
             <section class="shaded collapsed" data-toggle="collapse" data-target="#waterQuality">
@@ -468,6 +593,8 @@ bindings:
             </div>
         </div>
     </div>
+    {{ end }}
+
 </section>
 
 <script>

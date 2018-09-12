@@ -378,7 +378,7 @@ $(function () {
         });
 
         var ExpeditionPlots = Stapes.subclass({
-            // Rebecca Elyanow 2018
+            // adapted from code contributed by Rebecca Elyanow 2018
 
             renderExpeditionGraphs: function(actual_JSON) {
                 var live_oyster_size = this.get_oyster_size_single(actual_JSON,0.0,200.0).filter(Number);
