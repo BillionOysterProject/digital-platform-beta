@@ -58,7 +58,20 @@ bindings:
         <div class="row">
             <div class="col-6">
                 <li class="media">
-                    <img class="img-thumbnail mr-3" src="https://avatars0.githubusercontent.com/u/16782836?s=200&v=4" alt="Generic placeholder image">
+                    {{ if $expedition.station.photo }}
+                    <img 
+                        class="img-thumbnail mr-3" 
+                        style="max-width: 100px; height: auto;" 
+                        src="{{ $expedition.station.photo.path }}"
+                        alt="{{ $expedition.teamLead.displayName }}'s ORS"
+                    >
+                    {{ else }}
+                    <img 
+                        class="img-thumbnail mr-3" 
+                        style="max-width: 100px; height: auto;"
+                        src="assets/img/placeholders/ors.jpg" 
+                        alt="Placeholder image">
+                    {{ end }}                  
                     <div class="media-body">
                         <p class="mt-0 mb-1">
                             <strong>Type of structure:</strong>
@@ -71,9 +84,23 @@ bindings:
         
             <div class="col-6">
                 <li class="media">
-                    <img class="img-thumbnail mr-3" src="https://avatars0.githubusercontent.com/u/16782836?s=200&v=4" alt="Generic placeholder image">
+                    {{ if $expedition.teamLead.profileImageURL}}
+                    <img 
+                        class="img-thumbnail mr-3" 
+                        style="max-width: 100px; height: auto;" 
+                        src="{{ $expedition.teamLead.profileImageURL }}" 
+                        alt="Generic placeholder image"
+                    >
+                    {{ else }}
+                    <img 
+                        class="img-thumbnail mr-3" 
+                        style="max-width: 100px; height: auto;"
+                        src="assets/img/placeholders/ors.jpg" 
+                        alt="Placeholder image">
+                    {{ end }}
                     <div class="media-body">
                         <p class="mt-0 mb-1"><strong>Team Lead:</strong> {{ $expedition.teamLead.displayName }} </p>
+                        <p class="mt-0 mb-1"><strong>Team Lead Type:</strong> {{ $expedition.teamLead.teamLeadType }} </p>
                         <strong>Team Name:</strong> {{ $expedition.team.name}}
                     </div>
                 </li>
@@ -81,24 +108,45 @@ bindings:
         
             <div class="col-6 mt-3">
                 <li class="media">
-                    <img class="img-thumbnail mr-3" src="https://avatars0.githubusercontent.com/u/16782836?s=200&v=4" alt="Generic placeholder image">
+                    <!--A lot of photos have http instead of https and aren't showing up!-->
+                    {{ if $schoolOrg.photo.path }}
+                    <img 
+                        class="img-thumbnail mr-3" 
+                        style="max-width: 100px; height: auto;" 
+                        src="{{ $expedition.team.schoolOrg.profileImageURL }}" 
+                        alt="{{ $expedition.schoolOrg.name }}'s profile picture"
+                    >
+                    {{ else }}
+                    <img 
+                        class="img-thumbnail mr-3" 
+                        style="max-width: 100px; height: auto;"
+                        src="assets/img/placeholders/ors.jpg" 
+                        alt="Placeholder image"
+                    >
+                    {{ end }}
                     <div class="media-body">
                         <p class="mt-0 mb-1"><strong>Organization Name:</strong> {{ $schoolOrg.name }}</p>
-                        <strong>Organization Location:</strong> {{ $schoolOrg.streetAddress }}, {{ $schoolOrg.city }},
-                        {{ $schoolOrg.state }}
+                        <strong>Organization Location:</strong> {{ $schoolOrg.streetAddress }}, {{ $schoolOrg.city }}, {{ $schoolOrg.state }}
+                        <br/>
+                        <strong>Organization Type:</strong> {{ $schoolOrg.organizationType }}
                     </div>
                 </li>
             </div>
-
+            {{ if $expedition.numberOfAdults }}
             <div class="col-6 mt-3">
                 <li class="media">
-                    <img class="img-thumbnail mr-3" src="https://avatars0.githubusercontent.com/u/16782836?s=200&v=4" alt="Generic placeholder image">
+                    <img 
+                    class="img-thumbnail mr-3" 
+                    src="https://avatars0.githubusercontent.com/u/16782836?s=200&v=4" 
+                    alt="Generic placeholder image"
+                    >
                     <div class="media-body">
                         <p class="mt-0 mb-1"><strong>Number of Adults:</strong></p>
                         <strong>Number of Students:</strong>
                     </div>
                 </li>
             </div>
+            {{ end }}
 
         </div>
     </ul>
