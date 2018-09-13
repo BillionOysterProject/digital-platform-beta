@@ -25,8 +25,8 @@ bindings:
 {{ $sessileOrganism   := $.bindings.expedition.protocols.settlementTiles }}
 {{ $waterQuality      := $.bindings.expedition.protocols.waterQuality }}
 
-{{ $substrateShell    := $.bindings.expedition.protocols.oysterMeasurement.measuringOysterGrowth.substrateShells }}
-{{ $baseline          := $.bindings.expedition.station.baselines }}
+{{ $substrateShells    := $.bindings.expedition.protocols.oysterMeasurement.measuringOysterGrowth.substrateShells }}
+{{ $baselines          := $.bindings.expedition.station.baselines }}
 
 <h1 class="text-left pb-2">Expedition Field Report: {{ $expedition.name}}</h1>
 <section class="content shaded pt-1">
@@ -115,9 +115,9 @@ bindings:
         We also want to understand what benefits to the harbor, or "ecosystem services," oysters might provide.
         You help us conduct this research by collecting data on:
         <ul>
-            <li>Measures of oyster performance (like mortality and growth)</li>
-            <li>Factors that affect oyster performance (like site conditions and water quality)</li>
-            <li>Diversity and abundance of mobile and sessile non-oyster species</li>
+            <li>Measures of oyster performance (mortality, growth, and recruitment)</li>
+            <li>Factors that affect oyster performance (including site conditions and water quality)</li>
+            <li>Diversity and abundance of non-oyster species (mobile and sessile organisms)</li>
         </ul>
         The data in this expedition represents one piece of a larger dataset that is growing with your help!
         To view data from multiple expeditions, use the <a href="https://platform-beta.bop.nyc/data">View Data</a> page.
@@ -216,18 +216,21 @@ bindings:
                         <figcaption class="figure-caption">The number of live oysters per substrate shell for this expedition.</figcaption>
                     </figure>              
                 
-                <!--Need a function here to hide this paragraph and chart if there is only one expedition-->
-                <p>
-                    We can also combine two bar charts to make comparisons between two datasets.  
-                    This one uses different color bars to compare the number of live oysters at baseline vs. this expedition:
-                </p>
-                <p><strong>Bar Chart: Number of Live Oysters, Baseline vs. This Expedition</strong></p>
+
+                <!--Well this doesn't work
+                    Need a function here to hide this paragraph and chart if there is only one expedition
+                                <p>
+                                    We can also combine two bar charts to make comparisons between two datasets.  
+                                    This one uses different color bars to compare the number of live oysters at baseline vs. this expedition:
+                                </p>
+                    <p><strong>Bar Chart: Number of Live Oysters, Baseline vs. This Expedition</strong></p>
                 <div>
                     <figure class="figure">
                         <div id="div_double_barplot_number_oysters"></div>
                         <figcaption class="figure-caption">The number of live oysters per substrate shell during the baseline expedition (in orange) and during this expedition (in blue).</figcaption>
                     </figure> 
                 </div> 
+                -->
                 
                 <div class="mt-3">
                     <p>A table is another way to visualize data using rows and columns.
@@ -236,95 +239,32 @@ bindings:
                     </p>
                     <strong>Table: Mortality By Substrate Shell</strong>
                     <table class="table table-bordered table-sm">
-                        <caption>The source and number of live oysters on each substrate shell at baseline and during this expedition, plus the mortality rate.
-                                To calculate mortality, you take the number of live oysters during this expedition and divide it by the number of live oysters at baseline, and then express it as a percentage.
+                        <caption>The source and number of live oysters on each substrate shell for this expedition.
                         </caption>
                         <thead>
                             <tr>
                                 <th scope="col">Tag #</th>
                                 <th scope="col">Source</th>
                                 <th scope="col"># of live oysters this expedition</th>
-                                <th scope="col"># of live oysters at baseline</th>
-                                <th scope="col">Percent Mortality </th>
+                                <!--Commenting things out now that we know all of the baselines are a mess
+                                <th scope="col"># of live oysters last expedition</th>
+                                <th scope="col">Percent Mortality </th>-->
                             </tr>
                         </thead>
+                        
                         <tbody>
+                            {{ range $index, $substrateShell := $substrateShells }}
                             <tr>
-                                <th scope="row">1</th>
+                                <th scope="row">{{ $substrateShell.substrateShellNumber }}</th>
                                 <td>Muscongus Bay, ME</td>
-                                <td></td>
-                                <td>10</td>
-                                <td>50%</td>
+                                <td>{{ $substrateShell.totalNumberOfLiveOystersOnShell }}</td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Muscongus Bay, ME</td>
-                                <td>20</td>
-                                <td>10</td>
-                                <td>50%</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Muscongus Bay, ME</td>
-                                <td>20</td>
-                                <td>10</td>
-                                <td>50%</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>Muscongus Bay, ME</td>
-                                <td>20</td>
-                                <td>10</td>
-                                <td>50%</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>Muscongus Bay, ME</td>
-                                <td>20</td>
-                                <td>10</td>
-                                <td>50%</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">6</th>
-                                <td>Muscongus Bay, ME</td>
-                                <td>20</td>
-                                <td>10</td>
-                                <td>50%</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">7</th>
-                                <td>Muscongus Bay, ME</td>
-                                <td>20</td>
-                                <td>10</td>
-                                <td>50%</td>   
-                            </tr>
-                            <tr>
-                                <th scope="row">8</th>
-                                <td>Muscongus Bay, ME</td>
-                                <td>20</td>
-                                <td>10</td>
-                                <td>50%</td>   
-                            </tr>
-                            <tr>
-                                <th scope="row">9</th>
-                                <td>Muscongus Bay, ME</td>
-                                <td>20</td>
-                                <td>10</td>
-                                <td>50%</td>    
-                            </tr>
-                            <tr>
-                                <th scope="row">10</th>
-                                <td>Muscongus Bay, ME</td>
-                                <td>20</td>
-                                <td>10</td>
-                                <td>50%</td>    
-                            </tr>
+                            {{ end }}
+                            
                             <tr>
                                 <th scope="row">TOTAL</th>
                                 <td></td>
-                                <td>{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</td>
-                                <td>100</td> 
-                                <td>50%</td>   
+                                <td>{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</td>  
                             </tr>                            
                         </tbody>
                     </table>
@@ -505,7 +445,7 @@ bindings:
                     <p><strong>Is there an oil sheen present?</strong> {{ $siteCondition.waterConditions.oilSheen }}</p>
                     {{ end }}
 
-                    <!--This isn't showing up if the answer is true OR false-->
+                    <!--okay it looks like booleans just aren't showing up-->
                     {{ if $siteCondition.garbage.garbagePresent }}
                     <p><strong>Is there any garbage in the water?</strong> {{ $siteCondition.garbage.garbagePresent }}</p>
                     {{ end }}
@@ -542,6 +482,38 @@ bindings:
                         that were in the Oyster Research Station during this expedition.
                         This tells us about how oysters might impact biodiversity in New York Harbor.  Learn more.        
                     </p>
+                    <p>
+                        <strong>Contributor for this protocol:</strong>
+                            {{ $mobileOrganism.scribeMember.displayName }}
+                    </p>
+    
+                    {{ if $mobileOrganism.notes }}
+                    <p><strong>Mobile Organisms Notes:</strong> 
+                        <br/>
+                        {{ $mobileOrganism.notes }}
+                    </p>
+                    {{ end }}
+
+                    <table class="table table-bordered table-sm">   
+                        <thead>
+                            <tr>
+                                <th scope="col">Common Name</th>
+                                <th scope="col">Scientific Name</th>
+                                <th scope="col">Count</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td>Grass shrimp</td>
+                                    <td>Palaemonetes spp.</td>
+                                    <td>10</td>
+                                    <td>Really cool</td>
+                                </tr>
+                        </tbody>
+                    </table> 
+
+
             </div>
         </div>
     </div>
@@ -567,6 +539,38 @@ bindings:
                         This tells us about the potential for oyster reefs to provide a substrate for a variety of sessile species,
                         as well as how those species might change over time ("ecological succession").  Learn more.        
                     </p>
+
+                    <p>
+                        <strong>Contributor for this protocol:</strong>
+                            {{ $sessileOrganism.scribeMember.displayName }}
+                    </p>
+    
+                    {{ if $sessileOrganism.notes }}
+                    <p><strong>Sessile Organisms Notes:</strong> 
+                        <br/>
+                        {{ $sessileOrganism.notes }}
+                    </p>
+                    {{ end }}                    
+
+
+                    <table class="table table-bordered table-sm">   
+                            <thead>
+                                <tr>
+                                    <th scope="col">Common Name</th>
+                                    <th scope="col">Scientific Name</th>
+                                    <th scope="col">Percent of grid points occupied (across all tiles)</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td>Oyster</td>
+                                        <td>Crassostrea virginica</td>
+                                        <td>10%</td>
+                                        <td>Also really cool</td>
+                                    </tr>
+                            </tbody>
+                        </table>
             </div>
         </div>
     </div> 
@@ -590,6 +594,37 @@ bindings:
                         This protocol captures data on several different water quality parameters (temperature, salinity, dissolved oxygen, etc.)
                         that might affect oyster mortality and growth. Learn more.        
                     </p>
+
+                    <p>
+                        <strong>Contributor for this protocol:</strong>
+                            {{ $waterQuality.scribeMember.displayName }}
+                    </p>
+    
+                    {{ if $waterQuality.notes }}
+                    <p><strong>Water Quality Notes:</strong> 
+                        <br/>
+                        {{ $waterQuality.notes }}
+                    </p>
+                    {{ end }}
+
+                    <table class="table table-bordered table-sm">   
+                        <thead>
+                            <tr>
+                                <th scope="col">Water Quality Parameter</th>
+                                <th scope="col">Method</th>
+                                <th scope="col">Unit</th>
+                                <th scope="col">Average of Results</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td>Salinity</td>
+                                    <td>Hydrometer</td>
+                                    <td>PPT</td>
+                                    <td>5</td>
+                                </tr>
+                        </tbody>
+                    </table>
             </div>
         </div>
     </div>
