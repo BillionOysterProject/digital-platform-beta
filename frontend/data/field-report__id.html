@@ -135,6 +135,11 @@ bindings:
                         <strong>Organization Location:</strong> {{ $schoolOrg.streetAddress }}, {{ $schoolOrg.city }}, {{ $schoolOrg.state }}
                         <br/>
                         <strong>Organization Type:</strong> {{ $schoolOrg.organizationType }}
+                        <br/>
+                        {{ if $schoolOrg.schoolType }}
+                        <strong>School Type:</strong> {{ $schoolOrg.schoolType }}
+                        {{ end }}
+
                     </div>
                 </li>
             </div>
@@ -328,7 +333,7 @@ bindings:
                 <p>
                     Different types of graphs can help you assess how well the oysters are growing at your site.
                     A bar chart is one way to visualize the lengths of each oyster.  
-                    So, during this expedition there were <span style="color:blue">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> live oysters total.
+                    During this expedition there were <span style="color:blue">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> live oysters total.
                     This chart uses one bar to represent each live oyster's length, so there are <span style="color:blue">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> bars.
                     The bars are sorted in order from smallest to largest.
                     You can hover over a bar to display the exact measurement.   
@@ -597,11 +602,27 @@ bindings:
                                     <td></td>
                                     <td>{{ $mobileOrganism.count }}</td>
                                     <td>{{ $mobileOrganism.notesQuestions }}</td>
-
                                 </tr>
                             {{ end }}
                         </tbody>
                     </table> 
+
+                    <h4>Mobile Organisms Photos</h4>
+                    {{ range $i, $mobileOrganism := $mobileOrganisms }}
+                    <div class="row">
+                            <div class="col">
+                                <div class="card" style="width: 18rem;">
+                                        <img 
+                                            class="card-img-top" 
+                                            src="{{ rxreplace $mobileOrganism.sketchPhoto.path `^http:` `https:` }}" 
+                                            alt="mobile organism photo">
+                                        <div class="card-body">
+                                            <p class="card-text">Organism Name</p>
+                                        </div>
+                                </div>
+                            </div>
+                    </div>
+                    {{ end }}
 
 
             </div>
@@ -732,10 +753,63 @@ bindings:
                         </thead>
                         <tbody>
                             {{ range $i, $sample := $samples }}
+                            {{  if $sample.waterTemperature.results }}    
+                                <tr>
+                                    <td>Water Temperature</td>
+                                    <td>{{ $sample.waterTemperature.method }}</td>
+                                    <td>{{ $sample.waterTemperature.units }}</td>
+                                    <td>{{ $sample.waterTemperature.average }}</td>
+                                </tr>
+                            {{  end }}
+                            {{ if $sample.dissolvedOxygen.results }}
+                                <tr>
+                                    <td>Dissolved Oxygen</td>
+                                    <td>{{ $sample.dissolvedOxygen.method }}</td>
+                                    <td>{{ $sample.dissolvedOxygen.units }}</td>
+                                    <td>{{ $sample.dissolvedOxygen.average }}</td>
+                                </tr>
+                            {{  end }}
+                            {{ if $sample.salinity.results }}
                                 <tr>
                                     <td>Salinity</td>
-
+                                    <td>{{ $sample.salinity.method }}</td>
+                                    <td>{{ $sample.salinity.units }}</td>
+                                    <td>{{ $sample.salinity.average }}</td>
                                 </tr>
+                            {{  end }}
+                            {{ if $sample.pH.results }}
+                                <tr>
+                                    <td>pH</td>
+                                    <td>{{ $sample.pH.method }}</td>
+                                    <td>{{ $sample.pH.units }}</td>
+                                    <td>{{ $sample.pH.average }}</td>
+                                </tr>
+                            {{  end }}
+                            {{ if $sample.turbidity.results }}
+                                <tr>
+                                    <td>Turbidity</td>
+                                    <td>{{ $sample.turbidity.method }}</td>
+                                    <td>{{ $sample.turbidity.units }}</td>
+                                    <td>{{ $sample.turbidity.average }}</td>
+                                </tr>
+                            {{  end }}
+                            {{ if $sample.ammonia.results }}
+                                <tr>
+                                    <td>Ammonia</td>
+                                    <td>{{ $sample.ammonia.method }}</td>
+                                    <td>{{ $sample.ammonia.units }}</td>
+                                    <td>{{ $sample.ammonia.average }}</td>
+                                </tr>
+                            {{  end }}
+                            {{ if $sample.nitrates.results }}
+                                <tr>
+                                    <td>Nitrates</td>
+                                    <td>{{ $sample.nitrates.method }}</td>
+                                    <td>{{ $sample.nitrates.units }}</td>
+                                    <td>{{ $sample.nitrates.average }}</td>
+                                </tr>
+                            {{  end }}
+                            <!--Figure out how to add in "other" parameters-->
                             {{ end }}
                         </tbody>
                     </table>
