@@ -1,0 +1,186 @@
+[{
+    "name": "expeditions",
+    "allow_missing_embedded_records": true,
+    "embed": [{
+        "key":        "station",
+        "collection": "restorationstations",
+        "fields": [
+            "name",
+            "siteId"
+        ]
+    }, {
+        "key":        "team",
+        "collection": "teams",
+        "fields": [
+            "name",
+            "schoolOrg"
+        ]
+    }, {
+        "key":        "teamLead",
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username",
+            "profileImageURL"
+        ]
+    }, {
+        "key":        "protocols.mobileTrap",
+        "collection": "protocolmobiletraps",
+        "fields": [
+            "collectionTime",
+            "mobileOrganisms",
+            "notes",
+            "status",
+            "submitted",
+            "teamMembers"
+        ]
+    }, {
+        "key":        "protocols.settlementTiles",
+        "collection": "protocolsettlementtiles",
+        "fields": [
+            "collectionTime",
+            "settlementTiles",
+            "notes",
+            "status",
+            "submitted",
+            "teamMembers"
+        ]
+    }, {
+        "key":        "protocols.siteCondition",
+        "collection": "protocolsiteconditions",
+        "fields": [
+            "collectionTime",
+            "",
+            "notes",
+            "status",
+            "submitted",
+            "teamMembers"
+        ]
+    }, {
+        "key":        "protocols.oysterMeasurement",
+        "collection": "protocoloystermeasurements",
+        "fields": [
+            "collectionTime",
+            "",
+            "notes",
+            "status",
+            "submitted",
+            "teamMembers"
+        ]
+    }, {
+        "key":        "protocols.waterQuality",
+        "collection": "protocolwaterqualities",
+        "fields": [
+            "collectionTime",
+            "",
+            "notes",
+            "status",
+            "submitted",
+            "teamMembers"
+        ]
+    }, {
+        "key":        "teamLists.mobileTrap.*",
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username",
+            "profileImageURL"
+        ]
+    }, {
+        "key":        "teamLists.oysterMeasurement.*",
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username",
+            "profileImageURL"
+        ]
+    }, {
+        "key":        "teamLists.settlementTiles.*",
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username",
+            "profileImageURL"
+        ]
+    }, {
+        "key":        "teamLists.siteCondition.*",
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username",
+            "profileImageURL"
+        ]
+    }, {
+        "key":        "teamLists.waterQuality.*",
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username",
+            "profileImageURL"
+        ]
+    }],
+    "fields": [{
+        "name":       "name",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":       "created",
+        "type":       "date",
+        "required":   true,
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }, {
+        "name":       "monitoringStartDate",
+        "type":       "date"
+    }, {
+        "name":       "monitoringEndDate",
+        "type":       "date"
+    }, {
+        "name":       "published",
+        "type":       "date"
+    }, {
+        "name":       "updated",
+        "type":       "date",
+        "required":   true,
+        "formatters": {
+            "current-time": true
+        }
+    }, {
+        "name":       "station",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":       "status",
+        "type":       "str",
+        "required":   true,
+        "default":    "incomplete",
+        "validators": {
+            "one-of": [
+                "incomplete",
+                "pending",
+                "returned",
+                "published",
+                "unpublished"
+            ]
+        }
+    }, {
+        "name":       "team",
+        "type":       "str"
+    }, {
+        "name":       "teamLead",
+        "type":       "str"
+    }, {
+        "name":       "teamLists",
+        "type":       "object"
+    }, {
+        "name":       "notes",
+        "type":       "str"
+    }, {
+        "name":       "returnedNotes",
+        "type":       "str"
+    }, {
+        "name":       "protocols",
+        "type":       "object"
+    }]
+}]

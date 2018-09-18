@@ -1,0 +1,107 @@
+[{
+    "name": "lessons",
+    "allow_missing_embedded_records": true,
+    "embed": [{
+        "key": "user",
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username"
+        ]
+    }, {
+        "key": "unit",
+        "collection": "units",
+        "fields": [
+            "title",
+            "color",
+            "icon"
+        ]
+    }, {
+        "key": "units.*",
+        "collection": "units",
+        "fields": [
+            "title",
+            "color",
+            "icon"
+        ]
+    }],
+    "fields": [{
+        "name":       "created",
+        "type":       "date",
+        "required":   true,
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }, {
+        "name":       "title",
+        "type":       "str",
+        "required":   true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":       "unit",
+        "type":       "str"
+    }, {
+        "name":       "units",
+        "type":       "raw"
+    }, {
+        "name":       "featuredImage",
+        "type":       "object"
+    }, {
+        "name":       "lessonOverview",
+        "type":       "object"
+    }, {
+        "name":       "lessonObjectives",
+        "type":       "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":       "materialsResources",
+        "type":       "object"
+    }, {
+        "name":       "background",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":       "preparation",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":       "instructionPlan",
+        "type":       "object"
+    }, {
+        "name":       "standards",
+        "type":       "object"
+    }, {
+        "name":       "user",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":       "permissions",
+        "type":       "raw",
+        "default": [
+            "team lead"
+        ]
+    },{
+        "name":       "status",
+        "type":       "str",
+        "required":   true,
+        "default":    "published",
+        "validators": {
+            "one-of": [
+                "draft",
+                "pending",
+                "published",
+                "returned"
+            ]
+        }
+    }, {
+        "name":      "returnedNotes",
+        "type":      "str"
+    }, {
+        "name":      "downloadPdf",
+        "type":      "object"
+    }]
+}]

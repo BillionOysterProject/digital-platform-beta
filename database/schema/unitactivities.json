@@ -1,0 +1,40 @@
+[{
+    "name": "unitactivities",
+    "allow_missing_embedded_records": true,
+    "embed": [{
+        "key": "user",
+        "collection": "users"
+    }, {
+        "key": "unit",
+        "collection": "units",
+        "fields": [
+
+        ]
+    }],
+    "fields": [{
+        "name":       "user",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":       "unit",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":       "activity",
+        "type":       "str",
+        "required":   true,
+        "validators": {
+            "one-of": [
+                "viewed",
+                "downloaded"
+            ]
+        }
+    }, {
+        "name":       "created",
+        "type":       "date",
+        "required":   true,
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }]
+}]

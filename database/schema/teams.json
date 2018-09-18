@@ -1,0 +1,60 @@
+[{
+    "name": "teams",
+    "allow_missing_embedded_records": true,
+    "embed": [{
+        "key":        "schoolOrg",
+        "collection": "schoolorgs",
+        "fields": [
+            "name",
+            "organizationType",
+            "schoolType",
+            "streetAddress",
+            "neighborhood",
+            "city",
+            "state",
+            "zip",
+            "syncId"
+        ]
+    }, {
+        "key":        "teamLeads.*",
+        "collection": "users"
+    }, {
+        "key":        "teamMembers.*",
+        "collection": "users"
+    }],
+    "fields": [{
+        "name":      "name",
+        "type":      "str",
+        "required":  true
+    }, {
+        "name":      "description",
+        "type":      "str"
+    }, {
+        "name":      "photo",
+        "type":      "object"
+    }, {
+        "name":      "schoolOrg",
+        "type":      "str",
+        "required":  true
+    }, {
+        "name":      "teamLeads",
+        "type":      "raw"
+    }, {
+        "name":      "teamMembers",
+        "type":      "raw"
+    }, {
+        "name":      "updated",
+        "type":      "date",
+        "required":  true,
+        "formatters": {
+            "current-time": true
+        }
+    }, {
+        "name":       "created",
+        "type":       "date",
+        "required":   true,
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }]
+}]

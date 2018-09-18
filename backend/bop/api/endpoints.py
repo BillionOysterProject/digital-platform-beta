@@ -83,22 +83,30 @@ class CollectionView(Endpoint):
     def filter_params(self):
         params = {}
 
+        # limit the number of results from the database
+        # ----------------------------------------------------------------------
         if 'limit' in request.args:
             if request.args['limit'].lower() == 'false':
                 params['limit'] = False
             else:
                 params['limit'] = int(request.args['limit'])
 
+        # offset the results from the database (for pagination)
+        # ----------------------------------------------------------------------
         if 'offset' in request.args:
             params['offset'] = int(request.args['offset'])
         else:
             params['offset'] = 0
 
+        # specify specific fields to include in the response
+        # ----------------------------------------------------------------------
         if 'fields' in request.args:
             params['fields'] = request.args['fields'].split(',')
         else:
             params['fields'] = []
 
+        # specify the field(s) to sort results by
+        # ----------------------------------------------------------------------
         if 'sort' in request.args:
             params['sort'] = request.args['sort'].split(',')
         elif isinstance(self.default_sort, list):
@@ -106,8 +114,18 @@ class CollectionView(Endpoint):
         else:
             params['sort'] = None
 
+        # specify the logical operator used to join multiple filter criteria ("and", "or")
+        # ----------------------------------------------------------------------
         if 'conjunction' in request.args:
             params['conjunction'] = request.args['conjunction']
+
+        # specify whether embedded results should be expanded
+        # ----------------------------------------------------------------------
+        if 'expand' in request.args:
+            if as_bool(request.args['expand']):
+                params['noexpand'] = False
+            else:
+                params['noexpand'] = True
 
         return params
 
@@ -125,16 +143,9 @@ class CollectionView(Endpoint):
         return {}
 
     def _prepare_query_results(self, results, expand=True, raw=False):
-        if expand:
-            data = [
-                self._prepare_single_result(r) for r in self._expand_results(
-                    list(results)
-                )
-            ]
-        else:
-            data = [
-                self._prepare_single_result(r) for r in results
-            ]
+        data = [
+            self._prepare_single_result(r) for r in results
+        ]
 
         if raw is True:
             return data
@@ -153,97 +164,6 @@ class CollectionView(Endpoint):
             pass
 
         return result
-
-    def _expand_results(self, results):
-        """
-        Performs object reference expansion, configurable on a per-collection basis.
-        """
-
-        # hang onto expanded results for the duration of this call so we don't needlessly
-        # hammer the database with repeat calls during this process
-        _result_cache = {}
-
-        if len(self.expand_fields):
-            # for each result...
-            for i, result in enumerate(results):
-                if isinstance(result, dict):
-                    expand_keys = sorted(self.expand_fields.keys())
-
-                    # deep get the value from the result
-                    for field in expand_keys:
-                        related = self.expand_fields[field]
-
-                        if isinstance(related, tuple):
-                            try:
-                                value = dpath.util.get(dict(result), field, separator='.')
-                            except KeyError:
-                                continue
-
-                            related_collection = related[0]
-
-                            try:
-                                related_fields = list(related[1])
-                            except IndexError:
-                                related_fields = None
-
-                            output = None
-
-                            # retrieved value is a list, expand each item
-                            if isinstance(value, list):
-                                output = []
-
-                                for expand_id in value:
-                                    try:
-                                        cache_key = '{}:{}'.format(related_collection, expand_id)
-
-                                        if cache_key not in _result_cache:
-                                            _result_cache[cache_key] = dict(
-                                                self.collection_for(related_collection).get(
-                                                    expand_id,
-                                                    fields=related_fields
-                                                )
-                                            )
-
-                                        output.append(self._prepare_single_result(
-                                            _result_cache[cache_key]
-                                        ))
-                                    except:
-                                        logging.warning('{}/{}: Field {} contains reference to missing record: {}/{}'.format(
-                                            self.collection.name,
-                                            result.id,
-                                            field,
-                                            related_collection,
-                                            expand_id
-                                        ))
-                                        continue
-
-                            elif isinstance(value, six.string_types + (int,)):
-                                # unpack IDs into expanded objects
-                                try:
-                                    cache_key = '{}:{}'.format(related_collection, value)
-
-                                    if cache_key not in _result_cache:
-                                        _result_cache[cache_key] = dict(
-                                            self.collection_for(related_collection).get(
-                                                value,
-                                                fields=related_fields
-                                            )
-                                        )
-
-                                    output = self._prepare_single_result(_result_cache[cache_key])
-                                except pivot.exceptions.RecordNotFound:
-                                    output = None
-
-                            dpath.util.set(result, field, output, separator='.')
-
-                        else:
-                            raise TypeError(
-                                "Expansion rule must be tuple(collection, [fields ..])"
-                            )
-
-                results[i] = result
-
-        return results
 
     @route('/metrics')
     def metrics(self):
@@ -291,10 +211,14 @@ class CollectionView(Endpoint):
 
         query_results_params = self.query_results_params
         query_results_params['raw'] = True
-        query_results_params['expand'] = request.args.get('expand', has_nested_fields)
 
         if 'limit' not in params:
             params['limit'] = False
+
+        if not request.args.get('expand', has_nested_fields):
+            params['noexpand'] = True
+        else:
+            params['noexpand'] = False
 
         results = self.collection.query(query, **params)
         results = self._prepare_query_results(results, **query_results_params)
@@ -390,7 +314,6 @@ class CollectionView(Endpoint):
         :param record_id: The ID of the object to retrieve.
         """
         result = self.collection.get(record_id)
-        result = self._expand_results([result])[0]
         result = self._prepare_single_result(result, **self.single_result_params)
 
         return jsonify(result)
@@ -413,13 +336,17 @@ class CollectionView(Endpoint):
         if isinstance(raw, bool):
             qrp['raw'] = raw
 
-        if isinstance(expand, bool):
-            qrp['expand'] = expand
 
         filters = self.filter_params
 
         if isinstance(params, dict):
             filters.update(params)
+
+        if isinstance(expand, bool):
+            if expand:
+                filters['noexpand'] = False
+            else:
+                filters['noexpand'] = True
 
         results = self.collection.query(query, **filters)
         return self._prepare_query_results(results, **qrp)
