@@ -21,12 +21,18 @@ bindings:
 {{ $schoolOrg         := or $.bindings.expedition.team.schoolOrg $.bindings.schoolOrg }}
 {{ $oysterMeasurement := $.bindings.expedition.protocols.oysterMeasurement }}
 {{ $siteCondition     := $.bindings.expedition.protocols.siteCondition }}
-{{ $mobileOrganism    := $.bindings.expedition.protocols.mobileTrap }}
+{{ $mobileTrap    := $.bindings.expedition.protocols.mobileTrap }}
 {{ $sessileOrganism   := $.bindings.expedition.protocols.settlementTiles }}
 {{ $waterQuality      := $.bindings.expedition.protocols.waterQuality }}
 
 {{ $substrateShells    := $.bindings.expedition.protocols.oysterMeasurement.measuringOysterGrowth.substrateShells }}
 {{ $baselines          := $.bindings.expedition.station.baselines }}
+
+{{ $mobileOrganisms    := $.bindings.expedition.protocols.mobileTrap.mobileOrganisms }}
+
+{{ $settlementTiles    := $.bindings.expedition.protocols.settlementTiles.settlementTiles}}
+
+{{ $samples            := $.bindings.expedition.protocols.waterQuality.samples }}
 
 <h1 class="text-left pb-2">Expedition Field Report: {{ $expedition.name}}</h1>
 <section class="content shaded pt-1">
@@ -545,7 +551,7 @@ bindings:
     {{ end }}
 
     <!--Mobile Organisms-->
-    {{ if $mobileOrganism }}
+    {{ if $mobileTrap }}
     <div class="card border-1 mb-2">
         <div class="card-header" id="mobileOrganismsData">
             <section class="shaded collapsed" data-toggle="collapse" data-target="#mobileOrganisms">
@@ -565,13 +571,13 @@ bindings:
                     </p>
                     <p>
                         <strong>Contributor for this protocol:</strong>
-                            {{ $mobileOrganism.scribeMember.displayName }}
+                            {{ $mobileTrap.scribeMember.displayName }}
                     </p>
     
-                    {{ if $mobileOrganism.notes }}
+                    {{ if $mobileTrap.notes }}
                     <p><strong>Mobile Organisms Notes:</strong> 
                         <br/>
-                        {{ $mobileOrganism.notes }}
+                        {{ $mobileTrap.notes }}
                     </p>
                     {{ end }}
 
@@ -581,16 +587,19 @@ bindings:
                                 <th scope="col">Common Name</th>
                                 <th scope="col">Scientific Name</th>
                                 <th scope="col">Count</th>
-                                <th scope="col">Description</th>
+                                <th scope="col">Notes</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {{ range $i, $mobileOrganism := $mobileOrganisms }}
                                 <tr>
-                                    <td>Grass shrimp</td>
-                                    <td>Palaemonetes spp.</td>
-                                    <td>10</td>
-                                    <td>Really cool</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{ $mobileOrganism.count }}</td>
+                                    <td>{{ $mobileOrganism.notesQuestions }}</td>
+
                                 </tr>
+                            {{ end }}
                         </tbody>
                     </table> 
 
@@ -615,7 +624,7 @@ bindings:
         <div id="sessileOrganisms" class="collapse" aria-labelledby="sessileOrganismsData" data-parent="#accordion">
             <div class="card-body">
                     <p>
-                        This protocol captures data on the sessile organisms (ones that after anchoring to one spot don't move again, like sponges, tunicates, and barnacles) 
+                        This protocol captures data on the sessile organisms (creatures that after anchoring to one spot don't move again, like sponges, tunicates, and barnacles) 
                         that colonized the tiles of the Oyster Research Station during this expedition.
                         This tells us about the potential for oyster reefs to provide a substrate for a variety of sessile species,
                         as well as how those species might change over time ("ecological succession").  Learn more.        
@@ -652,6 +661,27 @@ bindings:
                                     </tr>
                             </tbody>
                         </table>
+
+                        <div class="mt-3">
+                                <h4>Sessile Organisms Photos</h4>
+                                {{ range $i, $settlementTile := $settlementTiles }}
+                                {{  if $settlementTile.tilePhoto.path }}
+                                <div class="row">
+                                        <div class="col">
+                                            <div class="card" style="width: 18rem;">
+                                                    <img 
+                                                        class="card-img-top" 
+                                                        src="{{ rxreplace $settlementTile.tilePhoto.path `^http:` `https:` }}" 
+                                                        alt="settlement tile photo">
+                                                    <div class="card-body">
+                                                        <p class="card-text">Settlement Tile # </p>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                {{  end }}
+                                {{ end }}
+                            </div>
             </div>
         </div>
     </div> 
@@ -688,6 +718,9 @@ bindings:
                     </p>
                     {{ end }}
 
+                    <!--Put something in to repeat for each sample-->
+                    <h4>Water Sample # </h4>
+
                     <table class="table table-bordered table-sm">   
                         <thead>
                             <tr>
@@ -698,12 +731,12 @@ bindings:
                             </tr>
                         </thead>
                         <tbody>
+                            {{ range $i, $sample := $samples }}
                                 <tr>
                                     <td>Salinity</td>
-                                    <td>Hydrometer</td>
-                                    <td>PPT</td>
-                                    <td>5</td>
+
                                 </tr>
+                            {{ end }}
                         </tbody>
                     </table>
             </div>
