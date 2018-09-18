@@ -369,7 +369,7 @@ $(function () {
                 }));
             },
 
-            createTable: function(selector, headers, columns, config) {
+            createTable: function(selector, headers, columns, config, loadFn) {
                 var el = $(selector);
 
                 config = $.extend(true, {}, {
@@ -393,6 +393,10 @@ $(function () {
                 })));
 
                 el.attr('data-has-table', 'true');
+
+                if ($.isFunction(loadFn)) {
+                    loadFn(el.data('table'));
+                }
 
                 return el.data('table');
             },

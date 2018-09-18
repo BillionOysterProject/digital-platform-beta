@@ -498,6 +498,22 @@ includes:
                         }], {
                             maxRows: 100,
                             width:   width,
+                        }, function(table) {
+                        {{ if $.bindings.expedition }}
+                            var input = JSON.parse('{{ jsonify (get $.bindings.expedition "protocols.mobileTrap.mobileOrganisms") }}');
+                            var data = [];
+
+                            if (input && input.length) {
+                                for(var i = 0; i < input.length; i++) {
+                                    data.push([
+                                        input[i].organism,
+                                        input[i].count,
+                                    ]);
+                                }
+                            }
+
+                            table.loadData(data);
+                        {{ end }}
                         });
                     }
                 }

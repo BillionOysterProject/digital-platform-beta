@@ -21,6 +21,35 @@ class ExpeditionActivities(CollectionView):
     results_only    = True
 
 
+class Organisms(CollectionView):
+    @classmethod
+    def first_by_name(cls, commonOrLatin):
+        try:
+            results = cls.query(
+                'commonName/is:{}/latinName/is:{}'.format(commonOrLatin, commonOrLatin),
+                conjunction='or'
+            )
+
+            if len(results) == 1:
+                return results[0]
+        except:
+            pass
+
+        return None
+
+
+class MobileOrganisms(Organisms):
+    route_base      = 'mobile-organisms'
+    collection_name = 'mobileorganisms'
+    results_only    = True
+
+
+class SessileOrganisms(Organisms):
+    route_base      = 'sessile-organisms'
+    collection_name = 'sessileorganisms'
+    results_only    = True
+
+
 class Expeditions(CollectionView):
     route_base      = 'expeditions'
     collection_name = 'expeditions'
@@ -416,7 +445,35 @@ class ProtocolMobileTraps(CollectionView):
 
     @classmethod
     def record_from_submit(cls, body):
-        return body
+        create = (False if '_id' in body else True)
+        _id = body.get('_id')
+
+        if _id:
+            record = cls.get_collection().get(_id)
+        else:
+            record = {}
+
+        organisms = body.pop('mobileOrganisms', [])
+        record['mobileOrganisms'] = []
+
+        for pair in organisms:
+            if len(pair) >= 2:
+                commonOrLatin = pair[0]
+                count = int(pair[1])
+
+                mo = MobileOrganisms.first_by_name(commonOrLatin)
+
+                if mo:
+                    record['mobileOrganisms'].append({
+                    'count': count,
+                    'organism': mo._id,
+                    'notesQuestions': None,
+                    'sketchPhoto': {
+                        'path': '',
+                    },
+                })
+
+        return record, create
 
 class ProtocolSettlementTiles(CollectionView):
     route_base      = 'protocol-settlement-tiles'
@@ -424,7 +481,40 @@ class ProtocolSettlementTiles(CollectionView):
 
     @classmethod
     def record_from_submit(cls, body):
-        return body
+        create = (False if '_id' in body else True)
+        _id = body.get('_id')
+
+        if _id:
+            record = cls.get_collection().get(_id)
+        else:
+            record = {}
+
+        tiles = body.pop('settlementTiles', [])
+        record['settlementTiles'] = []
+
+        for tile in tiles:
+            tileToSave = {
+                'description': tile.get('description')
+            }
+
+            for j, grid in enumerate(tile['grids']):
+                if len(grid):
+                    commonOrLatin = grid[0]
+                    mo = SessileOrganisms.first_by_name(commonOrLatin)
+                    notes = ''
+
+                    if len(grid) > 1:
+                        notes = grid[1]
+
+                    if mo:
+                        tileToSave['grid{}'.format(j)] = {
+                            'organism': mo._id,
+                            'notes': notes
+                        }
+
+            record['settlementTiles'].append(tileToSave)
+
+        return record, create
 
 class ProtocolWaterQualities(CollectionView):
     route_base      = 'protocol-water-qualities'
@@ -458,16 +548,4 @@ class RestorationStations(GeoCollectionView):
 class Sites(GeoCollectionView):
     route_base      = 'sites'
     collection_name = 'sites'
-    results_only    = True
-
-
-class MobileOrganisms(CollectionView):
-    route_base      = 'mobile-organisms'
-    collection_name = 'mobileorganisms'
-    results_only    = True
-
-
-class SessileOrganisms(CollectionView):
-    route_base      = 'sessile-organisms'
-    collection_name = 'sessileorganisms'
     results_only    = True
