@@ -25,59 +25,19 @@
         ]
     }, {
         "key":        "protocols.mobileTrap",
-        "collection": "protocolmobiletraps",
-        "fields": [
-            "collectionTime",
-            "mobileOrganisms",
-            "notes",
-            "status",
-            "submitted",
-            "teamMembers"
-        ]
+        "collection": "protocolmobiletraps"
     }, {
         "key":        "protocols.settlementTiles",
-        "collection": "protocolsettlementtiles",
-        "fields": [
-            "collectionTime",
-            "settlementTiles",
-            "notes",
-            "status",
-            "submitted",
-            "teamMembers"
-        ]
+        "collection": "protocolsettlementtiles"
     }, {
         "key":        "protocols.siteCondition",
-        "collection": "protocolsiteconditions",
-        "fields": [
-            "collectionTime",
-            "",
-            "notes",
-            "status",
-            "submitted",
-            "teamMembers"
-        ]
+        "collection": "protocolsiteconditions"
     }, {
         "key":        "protocols.oysterMeasurement",
-        "collection": "protocoloystermeasurements",
-        "fields": [
-            "collectionTime",
-            "",
-            "notes",
-            "status",
-            "submitted",
-            "teamMembers"
-        ]
+        "collection": "protocoloystermeasurements"
     }, {
         "key":        "protocols.waterQuality",
-        "collection": "protocolwaterqualities",
-        "fields": [
-            "collectionTime",
-            "",
-            "notes",
-            "status",
-            "submitted",
-            "teamMembers"
-        ]
+        "collection": "protocolwaterqualities"
     }, {
         "key":        "teamLists.mobileTrap.*",
         "collection": "users",

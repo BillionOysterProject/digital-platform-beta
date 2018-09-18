@@ -8,7 +8,7 @@ import io
 import logging
 import json
 import pivot.exceptions
-from flask import jsonify, request, g, Response
+from flask import jsonify, request, g, Response, abort
 from flask_classy import FlaskView, route
 from flask_login import current_user
 from collections import OrderedDict
@@ -324,10 +324,10 @@ class CollectionView(Endpoint):
         return jsonify(body)
 
     def put(self):
-        pass
+        abort(501, 'This endpoint has not been implemented')
 
     def delete(self):
-        pass
+        abort(501, 'This endpoint has not been implemented')
 
     def _get_query_results(self, query=None, params=None, raw=None, expand=None):
         query = g.get('query', (query or 'all'))

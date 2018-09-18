@@ -203,7 +203,7 @@ $(function () {
                         var redirectTo = '/';
 
                         if (form.attr('data-debug-log') === 'true') {
-                            console.debug(data)
+                            console.debug('DEBUG', data)
                             return;
 
                         } else if (form.attr('data-redirect-to')) {
@@ -215,7 +215,11 @@ $(function () {
                         location.href = redirectTo;
                     }.bind(this),
                     error: function (data) {
-                        console.error('Form Error:', data.responseJSON.error);
+                        try {
+                            console.error('Form Error:', data.responseJSON.error);
+                        } catch (e) {
+                            console.error('Form Error:', data.statusText);
+                        }
                     }.bind(this),
                 })
             },

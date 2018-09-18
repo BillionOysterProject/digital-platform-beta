@@ -36,7 +36,7 @@ includes:
     To make your expedition public, click "Save and Publish" at the bottom of this page.
 </p>
 
-<form class="form mt-4" action="/api/expeditions/" data-debug-log="true">
+<form class="form mt-4" action="/api/expeditions/" data-debug-log="true" method="post">
     <!-- ########################################################################################### -->
     <!-- Step 1: Enter Expedition Metadata-->
     <!--         Enter information (like date and location) about the expedition. -->
@@ -57,6 +57,10 @@ includes:
             <i class="fa"></i>
         </div>
     </section>
+
+    {{ if $.bindings.expedition }}
+    <input type="hidden" name="_id" value="{{ $.bindings.expedition._id }}">
+    {{ end }}
 
     <section class="content collapse" id="enterdata1">
 
@@ -124,7 +128,7 @@ includes:
                         name="station.structureType"
                         value="{{ $structureType.id }}"
                         {{ if $.bindings.expedition }}
-                        {{ if eq $.bindings.expedition.station.structureType $structureType.id }}
+                        {{ if eqx $.bindings.expedition.station.structureType $structureType.id }}
                         checked
                         {{ end }}
                         {{ end }}
@@ -467,6 +471,24 @@ includes:
                             },
                         }], {
                             width: width,
+                        }, function(table) {
+                        {{ if $.bindings.expedition }}
+                            var input = JSON.parse('{{ jsonify (get $.bindings.expedition "protocols.oysterMeasurement.measuringOysterGrowth.substrateShells") }}');
+                            var data = [];
+
+                            if (input && input.length) {
+                                for(var i = 0; i < input.length; i++) {
+                                    for(var j = 0; j < input[i].measurements.length; j++) {
+                                        data.push({
+                                            substrateShellNumber: input[i].substrateShellNumber,
+                                            oysterLength: input[i].measurements[j].sizeOfLiveOysterMM,
+                                        });
+                                    }
+                                }
+                            }
+
+                            table.loadData(data);
+                        {{ end }}
                         });
                     }
                 }
@@ -478,6 +500,7 @@ includes:
                             '# of Organisms',
                         ], [{
                             type:      'autocomplete',
+                            data:      'organism',
                             strict:    false,
                             source:    [
                             {{ range $i, $organism := $.bindings.mobileOrganisms }}
@@ -505,10 +528,10 @@ includes:
 
                             if (input && input.length) {
                                 for(var i = 0; i < input.length; i++) {
-                                    data.push([
-                                        input[i].organism,
-                                        input[i].count,
-                                    ]);
+                                    data.push({
+                                        organism      : input[i].organism.latinName,
+                                        countOfSpecies: input[i].count,
+                                    });
                                 }
                             }
 
@@ -589,6 +612,22 @@ includes:
                             startRows:    5,
                             maxRows:      100,
                             width:        'width',
+                        }, function(table) {
+                        {{ if $.bindings.expedition }}
+                            var input = JSON.parse('{{ jsonify (get $.bindings.expedition "protocols.mobileTrap.waterQuality.samples") }}');
+                            var data = [];
+
+                            // if (input && input.length) {
+                            //     for(var i = 0; i < input.length; i++) {
+                            //         data.push({
+                            //             organism      : input[i].organism.latinName,
+                            //             countOfSpecies: input[i].count,
+                            //         });
+                            //     }
+                            // }
+
+                            table.loadData(data);
+                        {{ end }}
                         });
                     }
                 }

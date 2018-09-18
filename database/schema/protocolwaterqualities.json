@@ -1,0 +1,47 @@
+[{
+    "name": "protocolwaterqualities",
+    "allow_missing_embedded_records": true,
+    "embed": [{
+        "key":        "scribeMember",
+        "collection": "users"
+    },{
+        "key":        "teamMembers",
+        "collection": "users"
+    }],
+    "fields": [{
+        "name":       "collectionTime",
+        "type":       "date"
+    }, {
+        "name":       "scribeMember",
+        "type":       "str"
+    }, {
+        "name":       "teamMembers",
+        "type":       "raw"
+    }, {
+        "name":       "notes",
+        "type":       "str"
+    }, {
+        "name":       "submitted",
+        "type":       "date"
+    }, {
+        "name":       "status",
+        "type":       "str",
+        "required":   true,
+        "default":    "incomplete",
+        "validators": {
+            "one-of": [
+                "incomplete",
+                "submitted",
+                "returned",
+                "published",
+                "unpublished"
+            ]
+        }
+    }, {
+        "name":       "samples",
+        "type":       "raw"
+    }, {
+        "name":       "bacteriaCountMPN",
+        "type":       "float"
+    }]
+}]

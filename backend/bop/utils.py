@@ -118,3 +118,23 @@ def dict_merge(dct, merge_dct):
             dict_merge(dct[k], merge_dct[k])
         else:
             dct[k] = merge_dct[k]
+
+
+def compact(source, keep_if=lambda k, v: v is not None):
+    """
+    Takes a dictionary and returns a copy with elements matching a given lambda removed. The
+    default behavior will remove any values that are `None`.
+
+    Args:
+        source (dict): The dictionary to operate on.
+
+        keep_if (lambda(k,v), optional): A function or lambda that will be called for each
+            (key, value) pair.  If the function returns truthy, the element will be left alone,
+            otherwise it will be removed.
+    """
+    if isinstance(source, dict):
+        return {
+            k: v for k, v in source.items() if v is not None and keep_if(k, v)
+        }
+
+    raise ValueError("Expected: dict, got: {0}".format(type(source)))
