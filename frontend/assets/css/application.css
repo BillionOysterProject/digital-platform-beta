@@ -1865,25 +1865,25 @@ li.loading-dialog {
 .axis text {
     font: 15px sans-serif;
   }
-  
+
   .axis path,
   .axis line {
     fill: none;
     stroke: #000;
     shape-rendering: crispEdges;
   }
-  
+
   .bar {
     fill: steelblue;
     fill-opacity: .9;
   }
-  
+
   .bar:hover {
     fill: orange;
   }
-  
-  label {
+
+  /* label {
     position: absolute;
     top: 15px;
     right: 15px;
-  }
+  } */
