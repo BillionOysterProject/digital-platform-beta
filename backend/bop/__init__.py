@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 import sys
+import logging
 import os
 import inspect
 import pivot
@@ -27,6 +28,7 @@ def handle_error(e):
 
     if code not in [401, 403, 404]:
         logging.warning(e)
+
     return jsonify(error=str(e)), code
 
 
@@ -39,7 +41,7 @@ class API(Flask):
 
     def setup_sentry_reporting(self):
         # setup Sentry error reporting (only works if SENTRY_DSN envvar is set)
-        self.sentry = Sentry(self, logging=True, level=logging.WARNING)
+        self.sentry = Sentry(self, logging=True, level=logging.INFO)
 
     def setup_persistent_sessions(self):
         self.session_manager = Session()

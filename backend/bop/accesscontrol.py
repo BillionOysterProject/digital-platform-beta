@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from werkzeug.exceptions import Forbidden
 import re
+import os
 
 # a set of (METHOD, REGEX) tuples denoting paths that are anonymously
 # accessible.

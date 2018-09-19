@@ -1,0 +1,61 @@
+[{
+    "name": "protocolmobiletraps",
+    "allow_missing_embedded_records": true,
+    "embed": [{
+        "key":        "scribeMember",
+        "collection": "users"
+    },{
+        "key":        "teamMembers",
+        "collection": "users"
+    }, {
+        "key":        "mobileOrganisms.*.organism",
+        "collection": "mobileorganisms",
+        "fields": [
+            "id",
+            "category",
+            "commonName",
+            "latinName",
+            "image"
+        ]
+    }],
+    "fields": [{
+        "name":       "collectionTime",
+        "type":       "date"
+    }, {
+        "name":       "latitude",
+        "type":       "float"
+    }, {
+        "name":       "longitude",
+        "type":       "float"
+    }, {
+        "name":       "scribeMember",
+        "type":       "str"
+    }, {
+        "name":       "teamMembers",
+        "type":       "raw"
+    }, {
+        "name":       "notes",
+        "type":       "str"
+    }, {
+        "name":       "submitted",
+        "type":       "date"
+    }, {
+        "name":       "status",
+        "type":       "str",
+        "required":   true,
+        "default":    "incomplete",
+        "validators": {
+            "one-of": [
+                "incomplete",
+                "submitted",
+                "returned",
+                "published",
+                "unpublished"
+            ]
+        }
+    }, {
+        "name":       "mobileOrganisms",
+        "type":       "raw",
+        "default":    []
+    }]
+}]

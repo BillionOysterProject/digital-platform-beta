@@ -1,6 +1,6 @@
 [{
     "name": "schoolorgs",
-
+    "allow_missing_embedded_records": true,
     "fields": [{
         "name":       "created",
         "type":       "date",

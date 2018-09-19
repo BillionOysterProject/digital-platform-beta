@@ -1,0 +1,97 @@
+[{
+    "name": "units",
+    "allow_missing_embedded_records": true,
+    "embed": [{
+        "key": "user",
+        "collection": "users",
+        "fields": [
+            "displayName",
+            "username"
+        ]
+    }, {
+        "key": "lessons.*",
+        "collection": "lessons",
+        "fields": [
+            "status",
+            "title"
+        ]
+    }, {
+        "key": "parentUnits.*",
+        "collection": "units",
+        "fields": [
+            "status",
+            "icon",
+            "color",
+            "title"
+        ]
+    }],
+    "fields": [{
+        "name":       "created",
+        "type":       "date",
+        "required":   true,
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }, {
+        "name":       "title",
+        "type":       "str",
+        "required":   true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":       "color",
+        "type":       "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":       "icon",
+        "type":       "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":       "highlights",
+        "type":       "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":       "rationale",
+        "type":       "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":       "standards",
+        "type":       "object"
+    }, {
+        "name":       "lessons",
+        "type":       "raw"
+    }, {
+        "name":       "subUnits",
+        "type":       "raw"
+    }, {
+        "name":       "parentUnits",
+        "type":       "raw"
+    }, {
+        "name":       "user",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":       "updated",
+        "type":       "raw"
+    }, {
+        "name":       "status",
+        "type":       "str",
+        "required":   true,
+        "default":    "published",
+        "validators": {
+            "one-of": [
+                "draft",
+                "published"
+            ]
+        }
+    }]
+}]

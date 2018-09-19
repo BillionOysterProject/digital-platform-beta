@@ -1,0 +1,175 @@
+<!-- BEGIN Oyster Measurements -->
+<div class="card border-1 mb-2">
+    {{ if get $.bindings.expedition `protocols.oysterMeasurement._id` }}
+    <input type="hidden" name="protocols.oysterMeasurement._id" value="{{ get $.bindings.expedition `protocols.oysterMeasurement._id` }}">
+    {{ end }}
+
+    <div class="card-header" id="addOysterMeasurements">
+        <section class="shaded collapsed" data-toggle="collapse" data-target="#oysterMeasurement">
+            <h3>Oyster Measurements</h3>
+
+            <div class="step-toggle">
+                <i class="fa"></i>
+            </div>
+        </section>
+    </div>
+
+    <div id="oysterMeasurement" class="collapse" aria-labelledby="addOysterMeasurements" data-parent="#accordion">
+        <div class="card-body">
+
+            <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 form-group">
+                        <label>Invite team members to enter data for this protocol:</label>
+                        <input type="text" class="form-control">
+                        <br />
+                        <button tyle="button" class="btn btn-primary">
+                            <i class="fa fa-envelope"></i>
+                            Send Invite
+                        </button>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 form-group">
+                        <label>Team members who can edit this protocol:</label>
+
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                Johnny Userface
+                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                            </li>
+                            <li class="list-group-item">
+                                <i>Sally Shrimphead (has not accepted)</i>
+                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-12 col-md-6 form-group">
+                        <label>Send one-time link to edit this protocol (learn more):</label>
+                        <input type="text" class="form-control">
+                        <br />
+                        <button tyle="button" class="btn btn-primary">
+                            <i class="fa fa-envelope"></i>
+                            Send Invite
+                        </button>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 form-group">
+                        <label>People who can edit this protocol:</label>
+
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                testuser@example.com
+                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                            </li>
+                            <li class="list-group-item">
+                                <i>testuser2@example.com (has not accepted)</i>
+                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                <strong>Measure Each Live Oyster</strong>
+            </p>
+            <p>
+                Enter the measurements of all of the live oysters on each tagged substrate shell in the table below.
+            </p>
+
+
+            <ul>
+                <li>Column 1: enter the <strong>tag number</strong> (#1-10). </li>
+                <li>Column 2: enter the <strong>length (in millimeters) of
+                <em>one</em> of the live oysters</strong> on that substrate shell. Only enter one oyster measurement per cell!</li>
+            </ul>
+            <p>Repeat, using a new row for each oyster measurement.</p>
+            <p class="mb-3">
+                You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
+                (Rows will automatically be added to the end of the table as you type.)
+            </p>
+
+            <div class="spreadsheet mt-4">
+                <div
+                    id="oysterMeasurementsTable"
+                    data-field-name="protocols.oysterMeasurement.observations"
+                ></div>
+            </div>
+
+            <div class="alert alert-info form-text mt-4" role="alert">
+                <p>
+                Note: If you see a red background in a cell, check your numbers!  The "Tag Number" column accepts values from 1-10,
+                and the "Oyster Length" column accepts values from 1-250.
+                </p>
+            </div>
+
+            <div class="form-group mt-4">
+                <fieldset>
+                    <legend>
+                        Bioaccumulation on Cage
+                    </legend>
+
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                            id="ba1"
+                            class="custom-control-input"
+                        >
+                        <label class="custom-control-label w-100" for="ba1">
+                            <strong>None/clean:</strong> No macroalgae or animals present.
+                        </label>
+                    </div>
+
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                            class="custom-control-input"
+                            id="ba2"
+                        >
+                        <label class="custom-control-label w-100" for="ba2">
+                            <strong>Light:</strong> Macroalgae or minimal animals present that do not encroach on mesh openings.
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                            class="custom-control-input"
+                            id="ba3"
+                        >
+                        <label class="custom-control-label w-100" for="ba3">
+                            <strong>Medium:</strong> Some encrusting macroalgae/animals reducing size of mesh opening up to 25%.
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
+                            class="custom-control-input"
+                            id="ba4"
+                        >
+                        <label class="custom-control-label w-100" for="ba4">
+                            <strong>Heavy:</strong> Encrusting macroalgae/animals reducing mesh opening by over 50%.
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+
+
+            <div class="form-group mt-4">
+                <label for="oysterMeasurementNotes">Oyster Measurement Notes</label>
+                <textarea
+                    class="form-control"
+                    type="text"
+                    name="oysterMeasurement.notes"
+                    maxlength="16536"
+                    id="oysterMeasurementNotes"
+                ></textarea>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- END Oyster Measurements -->

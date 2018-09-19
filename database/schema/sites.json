@@ -1,5 +1,6 @@
 [{
     "name": "sites",
+    "allow_missing_embedded_records": true,
     "fields": [{
         "name":       "name",
         "type":       "str",
