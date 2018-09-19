@@ -14,6 +14,11 @@ bindings:
 -   name:     'schoolOrg'
     resource: '/api/expeditions/{{ $.bindings.expedition.teamLead.schoolOrg }}'
     only_if:  '{{ isEmpty $.bindings.expedition.team }}'
+
+-   name:     'allSessileOrganisms'
+    resource: '/api/sessile-organisms'
+    params:
+        limit: 1000
 ---
 
 {{ $expedition        := $.bindings.expedition }}
@@ -27,8 +32,35 @@ bindings:
 {{ $substrateShells   := $.bindings.expedition.protocols.oysterMeasurement.measuringOysterGrowth.substrateShells }}
 {{ $baselines         := $.bindings.expedition.station.baselines }}
 {{ $mobileOrganisms   := $.bindings.expedition.protocols.mobileTrap.mobileOrganisms }}
-{{ $settlementTiles   := $.bindings.expedition.protocols.settlementTiles.settlementTiles}}
+{{ $settlementTiles   := $.bindings.expedition.protocols.settlementTiles.settlementTiles }}
 {{ $samples           := $.bindings.expedition.protocols.waterQuality.samples }}
+
+{{ range $i, $tile := $settlementTiles }}
+{{   $tileKey  := (printf "tileTotals.%d" $i) }}
+{{   $totalKey := (printf "%s.total" $tileKey) }}
+{{   range $gridName, $grid := $tile }}
+{{     if hasPrefix $gridName "grid" }}
+{{       $oid := get $grid "organism._id" }}
+{{       if $oid }}
+{{         increment $totalKey }}
+{{         incrementByValue $tileKey $oid }}
+{{       end }}
+{{     end }}
+{{   end }}
+{{   if (get $.vars $totalKey) }}
+{{     increment "populatedTileCount" 25 }}
+{{   else }}
+{{     var $tileKey `` }}
+{{   end }}
+{{ end }}
+
+{{ range $tile, $totals := $.vars.tileTotals }}
+{{   range $name, $count := mapify $totals }}
+{{     if nex $name "total" }}
+{{       incrementByValue "finalTileCounts" $name $count }}
+{{     end }}
+{{   end }}
+{{ end }}
 
 <h1 class="text-left pb-2">Expedition Field Report: {{ $expedition.name}}</h1>
 <section class="content shaded pt-1">
@@ -131,6 +163,11 @@ bindings:
                         <strong>Organization Location:</strong> {{ $schoolOrg.streetAddress }}, {{ $schoolOrg.city }}, {{ $schoolOrg.state }}
                         <br/>
                         <strong>Organization Type:</strong> {{ $schoolOrg.organizationType }}
+                        <br/>
+                        {{ if $schoolOrg.schoolType }}
+                        <strong>School Type:</strong> {{ $schoolOrg.schoolType }}
+                        {{ end }}
+
                     </div>
                 </li>
             </div>
@@ -323,9 +360,11 @@ bindings:
                 <h4>Oyster Growth Data and Visualizations</h4>
                 <p>
                     Different types of graphs can help you assess how well the oysters are growing at your site.
+
                     A bar chart is one way to visualize the lengths of each oyster.
-                    So, during this expedition there were <span style="color:blue">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> live oysters total.
-                    This chart uses one bar to represent each live oyster's length, so there are <span style="color:blue">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> bars.
+                    During this expedition there were <span class="text-callout">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> live oysters total.
+
+                    This chart uses one bar to represent each live oyster's length, so there are <span class="text-callout">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> bars.
                     The bars are sorted in order from smallest to largest.
                     You can hover over a bar to display the exact measurement.
                 </p>
@@ -579,26 +618,33 @@ bindings:
                     <tbody>
                         {{ range $i, $mobileOrganism := $mobileOrganisms }}
                             <tr>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $mobileOrganism.organism.commonName }}</td>
+                                <td><i>{{ $mobileOrganism.organism.latinName }}</i></td>
                                 <td>{{ $mobileOrganism.count }}</td>
                                 <td>{{ $mobileOrganism.notesQuestions }}</td>
-
                             </tr>
                         {{ end }}
                     </tbody>
                 </table>
 
                 <h4>Mobile Organisms Photos</h4>
+
                 <div class="row">
                 {{ range $i, $mobileOrganism := $mobileOrganisms }}
-                {{  if $settlementTile.tilePhoto.path }}
+                {{  if or (get $mobileOrganism "sketchPhoto.path") (get $mobileOrganism "organism.image.path") }}
                     <figure class="col-xl-3 col-lg-4 col-md-6 col-sm-12 text-center figure">
                         <img
-                            src="{{ rxreplace $settlementTile.tilePhoto.path `^http:` `https:` }}"
-                            alt="settlement tile photo"
+                            {{ if get $mobileOrganism "sketchPhoto.path" }}
+                            src="{{ rxreplace $mobileOrganism.sketchPhoto.path `^http:` `https:` }}"
+                            {{ else if get $mobileOrganism "organism.image.path" }}
+                            src="{{ rxreplace $mobileOrganism.organism.path `^http:` `https:` }}"
+                            {{ end }}
+                            alt="mobile organism photo"
                         >
-                        <figcaption class="figure-caption">Settlement Tile #{{ add $i 1 }}</figcaption>
+                        <figcaption class="figure-caption">
+                            {{ $mobileOrganism.organism.commonName }}
+                            (<i>{{ $mobileOrganism.organism.latinName }}</i>)
+                        </figcaption>
                     </figure>
                 {{  end }}
                 {{ end }}
@@ -647,18 +693,21 @@ bindings:
                         <tr>
                             <th scope="col">Common Name</th>
                             <th scope="col">Scientific Name</th>
+                            <th scope="col">Grid Points occupied (across all tiles)</th>
                             <th scope="col">Percent of grid points occupied (across all tiles)</th>
-                            <th scope="col">Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                            <tr>
-                                <td>Oyster</td>
-                                <td>Crassostrea virginica</td>
-                                <td>10%</td>
-                                <td>Also really cool</td>
-                            </tr>
-                    </tbody>
+                        {{ range $organismId, $count := $.vars.finalTileCounts }}
+                        {{   $commonName := (get (firstByKey $.bindings.allSessileOrganisms "_id" $organismId ) "commonName") }}
+                        {{   $latinName  := (get (firstByKey $.bindings.allSessileOrganisms "_id" $organismId ) "latinName") }}
+                        <tr>
+                            <td>{{ $commonName }}</td>
+                            <td>{{ $latinName }}</td>
+                            <td>{{ $count }} / {{ $.vars.populatedTileCount }}</td>
+                            <td>{{ percent $count $.vars.populatedTileCount }}%</td>
+                        </tr>
+                        {{ end }}
                 </table>
 
                 <div class="mt-3">
@@ -727,10 +776,63 @@ bindings:
                         </thead>
                         <tbody>
                             {{ range $i, $sample := $samples }}
+                            {{  if $sample.waterTemperature.results }}
+                                <tr>
+                                    <td>Water Temperature</td>
+                                    <td>{{ $sample.waterTemperature.method }}</td>
+                                    <td>{{ $sample.waterTemperature.units }}</td>
+                                    <td>{{ $sample.waterTemperature.average }}</td>
+                                </tr>
+                            {{  end }}
+                            {{ if $sample.dissolvedOxygen.results }}
+                                <tr>
+                                    <td>Dissolved Oxygen</td>
+                                    <td>{{ $sample.dissolvedOxygen.method }}</td>
+                                    <td>{{ $sample.dissolvedOxygen.units }}</td>
+                                    <td>{{ $sample.dissolvedOxygen.average }}</td>
+                                </tr>
+                            {{  end }}
+                            {{ if $sample.salinity.results }}
                                 <tr>
                                     <td>Salinity</td>
-
+                                    <td>{{ $sample.salinity.method }}</td>
+                                    <td>{{ $sample.salinity.units }}</td>
+                                    <td>{{ $sample.salinity.average }}</td>
                                 </tr>
+                            {{  end }}
+                            {{ if $sample.pH.results }}
+                                <tr>
+                                    <td>pH</td>
+                                    <td>{{ $sample.pH.method }}</td>
+                                    <td>{{ $sample.pH.units }}</td>
+                                    <td>{{ $sample.pH.average }}</td>
+                                </tr>
+                            {{  end }}
+                            {{ if $sample.turbidity.results }}
+                                <tr>
+                                    <td>Turbidity</td>
+                                    <td>{{ $sample.turbidity.method }}</td>
+                                    <td>{{ $sample.turbidity.units }}</td>
+                                    <td>{{ $sample.turbidity.average }}</td>
+                                </tr>
+                            {{  end }}
+                            {{ if $sample.ammonia.results }}
+                                <tr>
+                                    <td>Ammonia</td>
+                                    <td>{{ $sample.ammonia.method }}</td>
+                                    <td>{{ $sample.ammonia.units }}</td>
+                                    <td>{{ $sample.ammonia.average }}</td>
+                                </tr>
+                            {{  end }}
+                            {{ if $sample.nitrates.results }}
+                                <tr>
+                                    <td>Nitrates</td>
+                                    <td>{{ $sample.nitrates.method }}</td>
+                                    <td>{{ $sample.nitrates.units }}</td>
+                                    <td>{{ $sample.nitrates.average }}</td>
+                                </tr>
+                            {{  end }}
+                            <!--Figure out how to add in "other" parameters-->
                             {{ end }}
                         </tbody>
                     </table>

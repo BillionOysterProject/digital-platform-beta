@@ -424,19 +424,16 @@ form label {
     content:         '\f067';
 }
 
-.form .card-header {
+.card-header {
     user-select: none;
     cursor: pointer;
+    position: relative;
 }
 
 .form .card-header h3 {
     display: inline;
     font-size: 1.25rem;
     font-weight: bold;
-}
-
-.form .card-header {
-    position: relative;
 }
 
 .form .card-header h3,
@@ -1894,4 +1891,8 @@ li.loading-dialog {
 
 .expeditions-status-published {
     color: limegreen;
+}
+
+.text-callout {
+    color: blue;
 }
