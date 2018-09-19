@@ -226,8 +226,8 @@ bindings:
         <div id="oysterMeasurement" class="collapse" aria-labelledby="addOysterMeasurements" data-parent="#accordion">
             <div class="card-body">
                 <p>
-                    <em>This protocol captures data on oyster mortality (how many oysters survived)
-                        and growth (how long each live oyster is, measured in millimeters) since the baseline expedition (the first expedition). Learn more.</em>
+                    This protocol captures data on oyster mortality (how many oysters survived)
+                    and growth (how long each live oyster is, measured in millimeters) since the baseline expedition (the first expedition). Learn more.
                 </p>
 
                 <p>
@@ -637,7 +637,7 @@ bindings:
                             {{ if get $mobileOrganism "sketchPhoto.path" }}
                             src="{{ rxreplace $mobileOrganism.sketchPhoto.path `^http:` `https:` }}"
                             {{ else if get $mobileOrganism "organism.image.path" }}
-                            src="{{ rxreplace $mobileOrganism.organism.path `^http:` `https:` }}"
+                            src="{{ rxreplace $mobileOrganism.organism.image.path `^http:` `https:` }}"
                             {{ end }}
                             alt="mobile organism photo"
                         >
