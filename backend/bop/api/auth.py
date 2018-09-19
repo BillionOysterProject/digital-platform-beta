@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
+import os
 from .endpoints import Endpoint, CollectionView, GeoCollectionView
 from flask import jsonify, request, g
 from werkzeug.exceptions import BadRequest, Unauthorized
@@ -8,6 +9,9 @@ from flask_login import login_user, logout_user
 from ..utils import as_bool
 from ..user import User
 import six
+import os
+import logging
+import pivot.exceptions
 
 
 class Authentication(Endpoint):
@@ -90,6 +94,10 @@ class Teams(CollectionView):
         if as_bool(request.args.get('byMember')):
             query.append('teamMembers/{}'.format(user_id))
 
+        # TODO: implement field OR field
+        # if as_bool(request.args.get('teamsImOn')):
+        #     query.append('teamMembers|teamLeads/{}'.format(user_id))
+
         if request.args.get('orgId'):
             query.append('schoolOrg/{}'.format(
                 request.args['orgId']
@@ -129,8 +137,30 @@ class Users(CollectionView):
         app.login_manager.user_loader(_load_user)
         User.collection = cls.get_collection()
 
+    @property
+    def current_user(self):
+        impersonate = os.getenv('IMPERSONATE')
+
+        if impersonate == 'off':
+            impersonate = None
+
+        if impersonate:
+            # try loading the IMPERSONATE user
+            try:
+                users = self.collection.query('username/is:{}'.format(impersonate))
+
+                if len(users) == 1:
+                    logging.warning('Impersonating user {}'.format(impersonate))
+                    return User(users.records[0])
+            except pivot.exceptions.RecordNotFound:
+                pass
+
+        else:
+            return super(Users, self).current_user
+
     def me(self):
         user = self.current_user
+
         if user:
             return jsonify(user)
         else:

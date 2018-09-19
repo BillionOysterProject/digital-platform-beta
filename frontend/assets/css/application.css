@@ -5,9 +5,9 @@ layout: none
     font-family: 'Roboto';
     src:         url('/assets/fonts/Roboto-Regular-webfont.eot');
     src:         url('/assets/fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-                 url('/assets/fonts/Roboto-Regular-webfont.woff')       format('woff'),
-                 url('/assets/fonts/Roboto-Regular-webfont.ttf')        format('truetype'),
-                 url('/assets/fonts/Roboto-Regular-webfont.svg')        format('svg');
+    url('/assets/fonts/Roboto-Regular-webfont.woff')       format('woff'),
+    url('/assets/fonts/Roboto-Regular-webfont.ttf')        format('truetype'),
+    url('/assets/fonts/Roboto-Regular-webfont.svg')        format('svg');
     font-weight: 400;
     font-style:  normal;
 }
@@ -16,9 +16,9 @@ layout: none
     font-family: 'Roboto';
     src:         url('/assets/fonts/Roboto-Bold-webfont.eot');
     src:         url('/assets/fonts/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
-                 url('/assets/fonts/Roboto-Bold-webfont.woff')       format('woff'),
-                 url('/assets/fonts/Roboto-Bold-webfont.ttf')        format('truetype'),
-                 url('/assets/fonts/Roboto-Bold-webfont.svg')        format('svg');
+    url('/assets/fonts/Roboto-Bold-webfont.woff')       format('woff'),
+    url('/assets/fonts/Roboto-Bold-webfont.ttf')        format('truetype'),
+    url('/assets/fonts/Roboto-Bold-webfont.svg')        format('svg');
     font-weight: 700;
     font-style:  normal;
 }
@@ -94,27 +94,27 @@ body > header {
 }
 
 h1, .h1 {
-  font-size: 36px;
+    font-size: 36px;
 }
 
 h2, .h2 {
-  font-size: 28px;
+    font-size: 28px;
 }
 
 h3, .h3 {
-  font-size: 24px;
+    font-size: 24px;
 }
 
 h4, .h4 {
-  font-size: 18px;
+    font-size: 18px;
 }
 
 h5, .h5 {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 h6, .h6 {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 form label,
@@ -424,19 +424,16 @@ form label {
     content:         '\f067';
 }
 
-.form .card-header {
+.card-header {
     user-select: none;
     cursor: pointer;
+    position: relative;
 }
 
 .form .card-header h3 {
     display: inline;
     font-size: 1.25rem;
     font-weight: bold;
-}
-
-.form .card-header {
-    position: relative;
 }
 
 .form .card-header h3,
@@ -1797,44 +1794,44 @@ li.loading-dialog {
 }
 
 .btn-group-toggle .btn {
-  background: white;
-  border: 1px solid #888;
-  color: black !important;
-  z-index: inherit !important;
+    background: white;
+    border: 1px solid #888;
+    color: black !important;
+    z-index: inherit !important;
 }
 
 .btn-group-toggle .btn.active {
-   background-color: #426ca9 !important;
-   border-color: black !important;
-   color: white !important;
+    background-color: #426ca9 !important;
+    border-color: black !important;
+    color: white !important;
 }
 
 .btn-group-toggle .btn:active {
-   background-color: #2c3c56 !important;
-   color: white !important;
+    background-color: #2c3c56 !important;
+    color: white !important;
 }
 
 /* fix Handsontable height issues (see: https://github.com/handsontable/handsontable/issues/3432#issuecomment-218442750) */
 .ht_master .wtHolder {
-  width: auto !important;
-  height: auto !important;
-  overflow: hidden;
+    width: auto !important;
+    height: auto !important;
+    overflow: hidden;
 }
 
 .wtHider {
-  padding: 0 5px 5px 0;
+    padding: 0 5px 5px 0;
 }
 
 .ht_clone_top {
-  width: auto !important;
+    width: auto !important;
 }
 
 .ht_clone_left {
-  height: auto !important;
+    height: auto !important;
 }
 
 .ht_clone_top, .ht_clone_left, .ht_clone_top_left_corner {
-  z-index: 1 !important;
+    z-index: 1 !important;
 }
 
 
@@ -1887,3 +1884,15 @@ li.loading-dialog {
     top: 15px;
     right: 15px;
   } */
+
+.expeditions-status-incomplete {
+    color: salmon;
+}
+
+.expeditions-status-published {
+    color: limegreen;
+}
+
+.text-callout {
+    color: blue;
+}

@@ -1,0 +1,25 @@
+---
+bindings:
+-   name: expeditions
+    resource: '/api/expeditions'
+    params:
+        expand: false
+        limit: 100
+        q:    'status/is:published'
+        sort: '-monitoringStartDate'
+---
+
+<section class="content">
+    <div class="col-6 offset-3">
+        <ul class="list-group w-100">
+            {{ range $i, $expedition := $.bindings.expeditions }}
+            <li class="list-group-item">
+                <i class="fa fa-fw fa-circle expeditions-status-{{ $expedition.status }}"></i>
+                <a href="/data/field-report/{{ $expedition._id }}">
+                    {{ $expedition.name }}
+                </a>
+            </li>
+            {{ end }}
+        </ul>
+    </div>
+</section>

@@ -1,0 +1,138 @@
+[{
+    "name": "users",
+    "allow_missing_embedded_records": true,
+    "export": [
+        "firstName",
+        "lastName",
+        "displayName",
+        "email",
+        "username",
+        "profileImageURL",
+        "teamLeadType",
+        "schoolOrg"
+    ],
+    "fields": [{
+        "name":     "firstName",
+        "type":     "str",
+        "required": true,
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":     "lastName",
+        "type":     "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":     "displayName",
+        "type":     "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":     "email",
+        "type":     "str",
+        "formatters": {
+            "trim-space": true
+        }
+    }, {
+        "name":     "username",
+        "type":     "str",
+        "formatters": {
+            "trim-space":  true,
+            "change-case": [
+                "lower",
+                "hyphenate"
+            ]
+        }
+    }, {
+        "name":     "password",
+        "type":     "str",
+        "required": true
+    }, {
+        "name":     "salt",
+        "type":     "str",
+        "required": true
+    }, {
+        "name":     "profileImageURL",
+        "type":     "str",
+        "formatters": {
+            "replace": [
+                ["^http:", "https:"]
+            ]
+        }
+    }, {
+        "name":     "provider",
+        "type":     "str",
+        "required": true
+    }, {
+        "name":     "providerData",
+        "type":     "raw"
+    }, {
+        "name":     "additionalProvidersData",
+        "type":     "raw"
+    }, {
+        "name":     "socialProfiles",
+        "type":     "object"
+    }, {
+        "name":     "roles",
+        "type":     "raw",
+        "validators": {
+            "one-of": [
+                "user",
+                "admin",
+                "team lead",
+                "org lead",
+                "team member",
+                "partner",
+                "team lead pending",
+                "org lead pending",
+                "team member pending"
+            ]
+        }
+    }, {
+        "name":     "teamLeadType",
+        "type":     "raw",
+        "validators": {
+            "one-of": [
+                "teacher",
+                "citizen scientist",
+                "professional scientist",
+                "site coordinator",
+                "other"
+            ]
+        }
+    }, {
+        "name":      "updated",
+        "type":      "date",
+        "required":  true,
+        "formatters": {
+            "current-time": true
+        }
+    }, {
+        "name":       "created",
+        "type":       "date",
+        "required":   true,
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }, {
+        "name":     "resetPasswordToken",
+        "type":     "str"
+    }, {
+        "name":     "resetPasswordExpires",
+        "type":     "date"
+    }, {
+        "name":     "schoolOrg",
+        "type":     "str"
+    }, {
+        "name":     "researchInterests",
+        "type":     "str"
+    }, {
+        "name":     "pending",
+        "type":     "bool",
+        "required": true,
+        "default":  false
+    }]
+}]
