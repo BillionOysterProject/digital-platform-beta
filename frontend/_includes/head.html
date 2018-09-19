@@ -2,8 +2,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <base href="{{ .diecast.route_prefix }}/">
-<title>{{ if .page.view }}{{ .page.view }} :: {{ end }}{{ .page.title }}</title>
-<meta name="description" content="{{ .page.description }}">
+<title>{{ if $.page.view }}{{ $.page.view }} :: {{ end }}{{ $.page.title }}</title>
+<meta name="description" content="{{ $.page.description }}">
 <meta name="fragment" content="!">
 
 <!-- Apple META -->
@@ -12,17 +12,17 @@
 
 <!-- Facebook META -->
 <meta property="fb:app_id" content="1479260685437922">
-<meta property="og:site_name" content="{{ .page.name }}">
-<meta property="og:title" content="{{ .page.title }}">
-<meta property="og:description" content="{{ .page.description }}">
-<meta property="og:url" content="{{ .page.url }}">
+<meta property="og:site_name" content="{{ $.page.name }}">
+<meta property="og:title" content="{{ $.page.title }}">
+<meta property="og:description" content="{{ $.page.description }}">
+<meta property="og:url" content="{{ $.page.url }}">
 <meta property="og:image" content="assets/img/brand/logo.png">
 <meta property="og:type" content="website">
 
 <!-- Twitter META -->
-<meta name="twitter:title" content="{{ .page.title }}">
-<meta name="twitter:description" content="{{ .page.description }}">
-<meta name="twitter:url" content="{{ .page.url }}">
+<meta name="twitter:title" content="{{ $.page.title }}">
+<meta name="twitter:description" content="{{ $.page.description }}">
+<meta name="twitter:url" content="{{ $.page.url }}">
 <meta name="twitter:image" content="assets/img/brand/logo.png">
 
 <!-- Fav Icon -->
@@ -43,6 +43,7 @@
 <script type="text/javascript" src="assets/js/papaparse.min.js"></script>
 <script type="text/javascript" src="assets/js/handsontable.full.min.js"></script>
 <script type="text/javascript" src="assets/js/mapbox-gl.js"></script>
+<script type="text/javascript" src="assets/js/plotly-latest.min.js"></script>
 <script type="text/javascript" src="assets/js/moment.min.js"></script>
 <script type="text/javascript" src="assets/js/application.js"></script>
 
@@ -60,7 +61,7 @@ ga('send', 'pageview');
 -->
 
 <!-- Application CSS Files -->
-{{ if nex (qs `style`) `none` }}
+{{ if nex (qs "style") "none" }}
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/css/bootstrap3-panel.css">
 <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">

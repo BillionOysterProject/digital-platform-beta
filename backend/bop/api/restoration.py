@@ -542,6 +542,7 @@ class ProtocolWaterQualities(CollectionView):
     def record_from_submit(cls, body):
         return body, False
 
+
 class RestorationStations(GeoCollectionView):
     route_base      = 'restoration-stations'
     collection_name = 'restorationstations'

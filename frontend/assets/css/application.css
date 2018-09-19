@@ -1855,3 +1855,35 @@ li.loading-dialog {
 .handsontable td.current-col {
     background-color: rgba(66, 107, 169, 0.25) !important;
 }
+
+/* Plotly graph styling */
+.js-plotly-plot .plotly div {
+    font-family: "Roboto", "Helvetica Neue", "Arial" ,sans-serif;
+  }
+
+/* Rebecca's CSS */
+.axis text {
+    font: 15px sans-serif;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .bar {
+    fill: steelblue;
+    fill-opacity: .9;
+  }
+
+  .bar:hover {
+    fill: orange;
+  }
+
+  /* label {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  } */

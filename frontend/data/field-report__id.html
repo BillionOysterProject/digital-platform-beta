@@ -1,0 +1,753 @@
+---
+page:
+    body_class: 'site-details'
+    view: 'Field Report'
+    notitle: true
+
+bindings:
+-   name:	  'expedition'
+    resource: '/api/expeditions/{{ param 1 }}'
+
+-   name:     'site'
+    resource: '/api/sites/{{ $.bindings.expedition.station.siteId }}'
+
+-   name:     'schoolOrg'
+    resource: '/api/expeditions/{{ $.bindings.expedition.teamLead.schoolOrg }}'
+    only_if:  '{{ isEmpty $.bindings.expedition.team }}'
+---
+
+{{ $expedition        := $.bindings.expedition }}
+{{ $site              := $.bindings.site }}
+{{ $schoolOrg         := or $.bindings.expedition.team.schoolOrg $.bindings.schoolOrg }}
+{{ $oysterMeasurement := $.bindings.expedition.protocols.oysterMeasurement }}
+{{ $siteCondition     := $.bindings.expedition.protocols.siteCondition }}
+{{ $mobileTrap    := $.bindings.expedition.protocols.mobileTrap }}
+{{ $sessileOrganism   := $.bindings.expedition.protocols.settlementTiles }}
+{{ $waterQuality      := $.bindings.expedition.protocols.waterQuality }}
+
+{{ $substrateShells    := $.bindings.expedition.protocols.oysterMeasurement.measuringOysterGrowth.substrateShells }}
+{{ $baselines          := $.bindings.expedition.station.baselines }}
+
+{{ $mobileOrganisms    := $.bindings.expedition.protocols.mobileTrap.mobileOrganisms }}
+
+{{ $settlementTiles    := $.bindings.expedition.protocols.settlementTiles.settlementTiles}}
+
+{{ $samples            := $.bindings.expedition.protocols.waterQuality.samples }}
+
+<h1 class="text-left pb-2">Expedition Field Report: {{ $expedition.name}}</h1>
+<section class="content shaded pt-1">
+    <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>{{ $site.name }}, {{ $site.bodyOfWater }}</p>
+    <p class="mb-1"><i class="fa fa-fw fa-globe"></i>{{ $site.boroughCounty }}, {{ $site.state }}</p>
+    <p class="mb-1"><i class="fa fa-fw fa-calendar"></i>{{ time $expedition.monitoringEndDate "January 1, 2006, 3:04pm"  }}</p>
+</section>
+
+<div class="row no-gutters site-jumbotron">
+    <div class="col">
+        <div id="siteMap">
+            <iframe
+                src="https://platform-beta.bop.nyc/sites/map"
+                frameborder="0"
+                style="width: 100%; height: 250px;"
+            ></iframe>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+<h2>Expedition Metadata</h2>
+    <p>
+        Metadata is information about the monitoring expedition.  This includes the people
+        who conducted the expedition, the type of structure, and the date/location information above.
+    </p>
+    
+    <ul class="list-unstyled">
+        <div class="row">
+            <div class="col-6">
+                <li class="media">
+                    {{ if $expedition.station.photo }}
+                    <img 
+                        class="img-thumbnail mr-3" 
+                        style="max-width: 100px; height: auto;" 
+                        src="{{ $expedition.station.photo.path }}"
+                        alt="{{ $expedition.teamLead.displayName }}'s ORS"
+                    >
+                    {{ else }}
+                    <img 
+                        class="img-thumbnail mr-3" 
+                        style="max-width: 100px; height: auto;"
+                        src="assets/img/placeholders/ors.jpg" 
+                        alt="Placeholder image">
+                    {{ end }}                  
+                    <div class="media-body">
+                        <p class="mt-0 mb-1">
+                            <strong>Type of structure:</strong>
+                            {{ get (firstByKey $.page.structureTypes "id" $expedition.station.structureType) "label" }}
+                        </p>
+                        <strong>Structure name:</strong> {{ $expedition.station.name }}
+                    </div>
+                </li>
+            </div>
+        
+            <div class="col-6">
+                <li class="media">
+                    {{ if $expedition.teamLead.profileImageURL}}
+                    <img 
+                        class="img-thumbnail mr-3" 
+                        style="max-width: 100px; height: auto;" 
+                        src="{{ $expedition.teamLead.profileImageURL }}" 
+                        alt="Generic placeholder image"
+                    >
+                    {{ else }}
+                    <img 
+                        class="img-thumbnail mr-3" 
+                        style="max-width: 100px; height: auto;"
+                        src="assets/img/placeholders/ors.jpg" 
+                        alt="Placeholder image">
+                    {{ end }}
+                    <div class="media-body">
+                        <p class="mt-0 mb-1"><strong>Team Lead:</strong> {{ $expedition.teamLead.displayName }} </p>
+                        <p class="mt-0 mb-1"><strong>Team Lead Type:</strong> {{ $expedition.teamLead.teamLeadType }} </p>
+                        <strong>Team Name:</strong> {{ $expedition.team.name}}
+                    </div>
+                </li>
+            </div>
+        
+            <div class="col-6 mt-3">
+                <li class="media">
+                    <!--A lot of photos have http instead of https and aren't showing up!-->
+                    {{ if $schoolOrg.photo.path }}
+                    <img 
+                        class="img-thumbnail mr-3" 
+                        style="max-width: 100px; height: auto;" 
+                        src="{{ $expedition.team.schoolOrg.profileImageURL }}" 
+                        alt="{{ $expedition.schoolOrg.name }}'s profile picture"
+                    >
+                    {{ else }}
+                    <img 
+                        class="img-thumbnail mr-3" 
+                        style="max-width: 100px; height: auto;"
+                        src="assets/img/placeholders/ors.jpg" 
+                        alt="Placeholder image"
+                    >
+                    {{ end }}
+                    <div class="media-body">
+                        <p class="mt-0 mb-1"><strong>Organization Name:</strong> {{ $schoolOrg.name }}</p>
+                        <strong>Organization Location:</strong> {{ $schoolOrg.streetAddress }}, {{ $schoolOrg.city }}, {{ $schoolOrg.state }}
+                        <br/>
+                        <strong>Organization Type:</strong> {{ $schoolOrg.organizationType }}
+                    </div>
+                </li>
+            </div>
+            {{ if $expedition.numberOfAdults }}
+            <div class="col-6 mt-3">
+                <li class="media">
+                    <img 
+                    class="img-thumbnail mr-3" 
+                    src="https://avatars0.githubusercontent.com/u/16782836?s=200&v=4" 
+                    alt="Generic placeholder image"
+                    >
+                    <div class="media-body">
+                        <p class="mt-0 mb-1"><strong>Number of Adults:</strong></p>
+                        <strong>Number of Students:</strong>
+                    </div>
+                </li>
+            </div>
+            {{ end }}
+
+        </div>
+    </ul>
+    {{ if $expedition.notes }}
+    <p>
+        <strong>Expedition Notes:</strong> {{ $expedition.notes }}
+    </p>
+    {{ end }}
+</section>
+
+<section class="content">
+    <h2>Expedition Data</h2>
+    <p>Billion Oyster Project is working to understand the best methods and locations to restore oysters in New York Harbor.
+        We also want to understand what benefits to the harbor, or "ecosystem services," oysters might provide.
+        You help us conduct this research by collecting data on:
+        <ul>
+            <li>Measures of oyster performance (mortality, growth, and recruitment)</li>
+            <li>Factors that affect oyster performance (including site conditions and water quality)</li>
+            <li>Diversity and abundance of non-oyster species (mobile and sessile organisms)</li>
+        </ul>
+        The data in this expedition represents one piece of a larger dataset that is growing with your help!
+        To view data from multiple expeditions, use the <a href="https://platform-beta.bop.nyc/data">View Data</a> page.
+
+    </p>
+    
+    <!--Oyster Measurements-->
+    {{ if $oysterMeasurement }}
+    <div class="card border-1 mb-2">
+        <div class="card-header" id="oysterMeasurementsData">
+            <section class="shaded collapsed" data-toggle="collapse" data-target="#oysterMeasurement">
+                <h3>Oyster Measurements</h3>
+                <div class="step-toggle">
+                    <i class="fa"></i>
+                </div>
+            </section>
+        </div>
+
+        <div id="oysterMeasurement" class="collapse" aria-labelledby="addOysterMeasurements" data-parent="#accordion">
+            <div class="card-body">
+                <p>
+                    <em>This protocol captures data on oyster mortality (how many oysters survived) 
+                        and growth (how long each live oyster is, measured in millimeters) since the baseline expedition (the first expedition). Learn more.</em>       
+                </p>
+                
+                <p>
+                    <strong>Contributor for this protocol:</strong>
+                        {{ $oysterMeasurement.scribeMember.displayName }}
+                </p>
+
+                {{ if $oysterMeasurement.notes }}
+                <p><strong>Oyster Measurements Notes:</strong> 
+                    <br/>
+                    {{ $oysterMeasurement.notes }}
+                </p>
+                {{ end }}
+                
+                {{ if $oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage }}
+                <p>
+                    <strong>Bioaccumulation on Cage:</strong>
+                    {{ $oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage }}
+                </p>
+                {{ end }}
+
+                <div class="mt-3">
+                    <!--Need a function here to hide this entire section if there is no oyster mortality or growth data (unlikely but possible)-->
+                    <h4>Summary Data for This Expedition</h4>
+                    <table class="table table-bordered">
+                        <caption>Summary data on oyster mortality and growth, including the average oyster length and smallest and largest oysters.</caption> 
+                        <tbody>
+                            <!--Need a function to hide Mortality and Growth Rate if this is the first expedition to this station-->
+                            <tr>
+                                <th scope="row">Mortality (from baseline)</th>
+                                <td> %</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Growth Rate (from baseline)</th>
+                                <td> %</td>
+                            </tr>
+
+                            {{ if $oysterMeasurement.averageSizeOfAllLiveOysters }}
+                            <tr>
+                                <th scope="row">Average Oyster Length (the "mean")</th>
+                                <td>{{ $oysterMeasurement.averageSizeOfAllLiveOysters }} mm</td>
+                            </tr>
+                            {{ end }}
+
+                            {{ if $oysterMeasurement.minimumSizeOfAllLiveOysters }}
+                            <tr>
+                                <th scope="row">Smallest Oyster (the "minimum" or "min")</th>
+                                <td>{{ $oysterMeasurement.minimumSizeOfAllLiveOysters }} mm</td>
+                            </tr>
+                            {{ end }}
+
+                            {{ if $oysterMeasurement.maximumSizeOfAllLiveOysters }}
+                            <tr>
+                                <th scope="row">Largest Oyster (the "maximum" or "max")</th>
+                                <td>{{ $oysterMeasurement.maximumSizeOfAllLiveOysters }} mm</td>
+                            </tr>
+                            {{ end }}
+
+                        </tbody>
+                    </table> 
+                    
+                </div>
+
+                <!--Need a function here to hide this entire section if there is no oyster mortality or growth data (unlikely but possible)-->
+                <h4>Oyster Mortality Data and Visualizations</h4>
+                <p>
+                    We can represent data on oyster mortality (how many oysters survived) in multiple ways.  
+                    One format is a bar chart- this one shows the number of live oysters on each substrate shell during this expedition.
+                </p>           
+                <figure class="figure">
+                    <div id="div_barplot_number_oysters"></div>
+                    <figcaption class="figure-caption">The number of live oysters per substrate shell for this expedition.</figcaption>
+                </figure>              
+                
+
+                <!--Well this doesn't work
+                    Need a function here to hide this paragraph and chart if there is only one expedition
+                                <p>
+                                    We can also combine two bar charts to make comparisons between two datasets.  
+                                    This one uses different color bars to compare the number of live oysters at baseline vs. this expedition:
+                                </p>
+                    <p><strong>Bar Chart: Number of Live Oysters, Baseline vs. This Expedition</strong></p>
+                <div>
+                    <figure class="figure">
+                        <div id="div_double_barplot_number_oysters"></div>
+                        <figcaption class="figure-caption">The number of live oysters per substrate shell during the baseline expedition (in orange) and during this expedition (in blue).</figcaption>
+                    </figure> 
+                </div> 
+                -->
+                
+                <div class="mt-3">
+                    <p>A table is another way to visualize data using rows and columns.
+                            This table uses a different row for each tagged substrate shell.  
+                            It uses different columns to show the tag number, the source (where the oyster parents were from), and the number of live oysters during this expedition. 
+                    </p>
+                    <strong>Table: Live Oysters Per Substrate Shell</strong>
+                    <table class="table table-bordered table-sm">
+                        <caption>The source and number of live oysters on each substrate shell for this expedition.
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Tag #</th>
+                                <th scope="col">Source</th>
+                                <th scope="col"># of live oysters this expedition</th>
+                                <!--Commenting things out now that we know all of the baselines are a mess
+                                <th scope="col"># of live oysters last expedition</th>
+                                <th scope="col">Percent Mortality </th>-->
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            {{ range $i, $substrateShell := $substrateShells }}
+                            <tr>
+                                <th scope="row">{{ $substrateShell.substrateShellNumber }}</th>
+                                <td>Muscongus Bay, ME</td>
+                                <td>{{ $substrateShell.totalNumberOfLiveOystersOnShell }}</td>
+                            </tr>
+                            {{ end }}
+                            
+                            <tr>
+                                <th scope="row">TOTAL</th>
+                                <td></td>
+                                <td>{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</td>  
+                            </tr>                            
+                        </tbody>
+                    </table>
+                </div>   
+
+                <!--Need a function here to hide this entire section if there is no oyster growth data (possible if all the live oysters die)-->
+                <h4>Oyster Growth Data and Visualizations</h4>
+                <p>
+                    Different types of graphs can help you assess how well the oysters are growing at your site.
+                    A bar chart is one way to visualize the lengths of each oyster.  
+                    So, during this expedition there were <span style="color:blue">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> live oysters total.
+                    This chart uses one bar to represent each live oyster's length, so there are <span style="color:blue">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> bars.
+                    The bars are sorted in order from smallest to largest.
+                    You can hover over a bar to display the exact measurement.   
+                </p>
+                
+                <figure class="figure">
+                    <div id="div_barplot_oyster_size"></div>
+                    <figcaption class="figure-caption">The length, in millimeters, of each live oyster measured during this expedition, sorted from smallest to largest.</figcaption>
+                </figure> 
+                
+                <p>
+                    A "frequency distribution histogram" is a different way to visualize the lengths of the live oysters.
+                    The "frequency" is how many times an observation appeared in the dataset, and the "distribution" is the grouping of the observations.  
+                    This one splits all of the oyster measurements into even-sized groups, or "bins," by length (in 5mm increments) 
+                    and tells you how many oysters are in each group.
+                    A histogram is a good way to view patterns and to condense a large dataset into a smaller, more readable graph.
+                </p>
+                <figure class="figure">
+                    <div id="div_oyster_size"></div>
+                    <div id="div_number_oysters"></div>
+                    <figcaption class="figure-caption"></figcaption>
+                </figure> 
+
+                <p>
+                    A box plot is another way to visualize the oyster measurement dataset.
+                    This box plot shows you what the smallest (min), largest (max), average (mean), and "normal" range of oyster measurements were for this expedition.  
+                </p>
+                    <ul>
+                    <li>The bottom and top lines represent the min and max oyster measurements. 
+                        These lines show us the "range" of oyster measurements for this expedition.
+                    </li>
+                    <li>The line in the middle of the box represents the mean oyster measurement. </li> 
+                    <li>The top and bottom lines of the box represent the "standard deviation" above and below the mean oyster measurement.
+                        (It's okay if you don't know what a standard deviation is- it's a way of showing what's considered "normal" in a dataset.
+                        You can learn about standard deviation here.)</li> 
+                    </ul>
+
+                <div>
+                    <figure class="figure">
+                        <div id="div_boxplot_oyster_size"></div>
+                        <figcaption class="figure-caption"></figcaption>
+                    </figure> 
+                </div>
+
+                <p>
+                    The table below shows the length of each live oyster.  
+                    This is the "raw data" that was used to make the bar chart, histogram, and box plot above.
+                </p>
+                <div class="mt-3">
+                    <h4>Table: Oyster Lengths</h4>
+                    <table class="table table-bordered table-sm">
+                        <caption>Oyster Lengths</caption> 
+                        <thead>
+                            <tr>
+                                <th scope="col">Tag #</th>
+                                <th scope="col">Oyster Length (mm)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{ range $i, $substrateShell := $substrateShells }}
+                            {{   range $j, $measurement := $substrateShell.measurements  }}
+                            {{      if $measurement.sizeOfLiveOysterMM }}
+                            <tr>
+                                <td>{{ $substrateShell.substrateShellNumber }}</td>
+                                <td>{{ $measurement.sizeOfLiveOysterMM }}</td>
+                            </tr>
+                            {{      end }}
+                            {{   end }}
+                            {{ end }}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-3">
+                    <h4>Oyster Measurements Photos</h4>
+                    {{ range $i, $substrateShell := $substrateShells }}
+                    {{  if $substrateShell.outerSidePhoto.path }}
+                    <div class="row">
+                            <div class="col">
+                                <div class="card" style="width: 18rem;">
+                                        <img 
+                                            class="card-img-top" 
+                                            src="{{ rxreplace $substrateShell.outerSidePhoto.path `^http:` `https:` }}" 
+                                            alt="outer side substrate shell photo">
+                                        <div class="card-body">
+                                            <p class="card-text">Substrate Shell #{{ $substrateShell.substrateShellNumber }}, outer side</p>
+                                        </div>
+                                </div>
+                            </div>
+                    </div>
+                    {{  end }}
+                    {{   if $substrateShell.innerSidePhoto.path }}
+                    <div class="row">
+                            <div class="col">
+                                <div class="card" style="width: 18rem;">
+                                        <img 
+                                            class="card-img-top" 
+                                            src="{{ rxreplace $substrateShell.innerSidePhoto.path `^http:` `https:` }}" 
+                                            alt="inner side substrate shell photo">
+                                        <div class="card-body">
+                                            <p class="card-text">Substrate Shell #{{ $substrateShell.substrateShellNumber }}, inner side</p>
+                                        </div>
+                                </div>
+                            </div>
+                    </div>
+                    {{  end }}
+                    {{ end }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{ end }}
+
+    <!--Site Conditions-->
+    {{ if $siteCondition }}
+    <div class="card border-1 mb-2">
+        <div class="card-header" id="siteConditionsData">
+            <section class="shaded collapsed" data-toggle="collapse" data-target="#siteConditions">
+                <h3>Site Conditions</h3>
+                <div class="step-toggle">
+                    <i class="fa"></i>
+                </div>
+            </section>
+        </div>
+
+        <div id="siteConditions" class="collapse" aria-labelledby="siteConditionsData" data-parent="#accordion">
+            <div class="card-body">
+                    <p>
+                        This protocol captures data on meteorological conditions, recent rainfall,
+                        and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
+                        can affect oysters by impacting water quality, particularly through Combined Sewer Overflows. Learn more.        
+                    </p>
+
+                    <p>
+                        <strong>Contributor for this protocol:</strong>
+                            {{ $siteCondition.scribeMember.displayName }}
+                    </p>
+    
+                    {{ if $siteCondition.notes }}
+                    <p><strong>Site Conditions Notes:</strong> 
+                        <br/>
+                        {{ $siteCondition.notes }}
+                    </p>
+                    {{ end }}
+                    
+                    {{ if $siteCondition.meteorologicalConditions }}
+                    <h4>Meteorological Conditions</h4>
+                    {{ end }}
+                    {{ if $siteCondition.meteorologicalConditions.weatherConditions }}
+                    <p><strong>Weather:</strong> {{ get (firstByKey $.page.weatherConditions "id" $siteCondition.meteorologicalConditions.weatherConditions) "label" }}</p> 
+                    {{ end }}
+
+                    {{ if $siteCondition.meteorologicalConditions.airTemperatureC }}
+                    <p><strong>Air temperature:</strong> {{ $siteCondition.meteorologicalConditions.airTemperatureC }} &#8451</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.meteorologicalConditions.windSpeedMPH }}
+                    <p><strong>Wind speed:</strong> {{ $siteCondition.meteorologicalConditions.windSpeedMPH }} MPH</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.meteorologicalConditions.windDirection }}
+                    <p><strong>Wind direction:</strong> {{ $siteCondition.meteorologicalConditions.windDirection }}</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.meteorologicalConditions.humidityPer }}
+                    <p><strong>Humidity:</strong> {{ $siteCondition.meteorologicalConditions.humidityPer }}%</p>
+                    {{ end }}
+
+                    <!--Recent rainfall isn't showing up if the answer in the database is "false"-->
+                    {{ if $siteCondition.recentRainfall }}
+                    <h4>Recent Rainfall</h4>
+                    {{ end }}
+
+                    {{ if $siteCondition.recentRainfall.rainedIn7Days }}
+                    <p><strong>Has it rained in the past 7 days?</strong> {{ $siteCondition.recentRainfall.rainedIn7Days }}</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.recentRainfall.rainedIn72Hours }}
+                    <p><strong>Has it rained in the past 72 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn72Hours }}</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.recentRainfall.rainedIn24Hours }}
+                    <p><strong>Has it rained in the past 24 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn24Hours }}</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.waterConditions }}
+                    <h4>Water Conditions</h4>
+                    {{ end }}
+
+                    {{ if $siteCondition.waterConditions.surfaceCurrentSpeedMPS }}
+                    <p><strong>Surface current speed:</strong> {{ $siteCondition.waterConditions.surfaceCurrentSpeedMPS }} MPS</p>
+                    {{ end }}
+
+                    {{ if $siteCondition.waterConditions.waterColor }}
+                    <p><strong>Describe the water color:</strong> {{ get (firstByKey $.page.waterColors "id" $siteCondition.waterConditions.waterColor) "label" }}</p>
+                    {{ end }}
+
+                    <!--If there answer is "false" it doesn't show up-->
+                    {{ if $siteCondition.waterConditions.oilSheen }}
+                    <p><strong>Is there an oil sheen present?</strong> {{ $siteCondition.waterConditions.oilSheen }}</p>
+                    {{ end }}
+
+                    <!--okay it looks like booleans just aren't showing up-->
+                    {{ if $siteCondition.garbage.garbagePresent }}
+                    <p><strong>Is there any garbage in the water?</strong> {{ $siteCondition.garbage.garbagePresent }}</p>
+                    {{ end }}
+
+                    {{ if $siteCondition }}
+                    <p><strong>Is there any flow through the Combined Sewer Overflow (CSO) pipes?</strong></p>
+                    {{ end }}
+
+                    {{ if $siteCondition }}
+                    <p><strong>Is there any flow through the unmarked/other pipes?</strong></p>
+                    {{ end }}
+
+            </div>
+        </div>
+    </div>
+    {{ end }}
+
+    <!--Mobile Organisms-->
+    {{ if $mobileTrap }}
+    <div class="card border-1 mb-2">
+        <div class="card-header" id="mobileOrganismsData">
+            <section class="shaded collapsed" data-toggle="collapse" data-target="#mobileOrganisms">
+                <h3>Mobile Organisms</h3>
+                <div class="step-toggle">
+                    <i class="fa"></i>
+                </div>
+            </section>
+        </div>
+
+        <div id="mobileOrganisms" class="collapse" aria-labelledby="mobileOrganismsData" data-parent="#accordion">
+            <div class="card-body">
+                    <p>
+                        This protocol captures data on the abundance (how many) and composition (which species) of the mobile organisms (like crustaceans and fish) 
+                        that were in the Oyster Research Station during this expedition.
+                        This tells us about how oysters might impact biodiversity in New York Harbor.  Learn more.        
+                    </p>
+                    <p>
+                        <strong>Contributor for this protocol:</strong>
+                            {{ $mobileTrap.scribeMember.displayName }}
+                    </p>
+    
+                    {{ if $mobileTrap.notes }}
+                    <p><strong>Mobile Organisms Notes:</strong> 
+                        <br/>
+                        {{ $mobileTrap.notes }}
+                    </p>
+                    {{ end }}
+
+                    <table class="table table-bordered table-sm">   
+                        <thead>
+                            <tr>
+                                <th scope="col">Common Name</th>
+                                <th scope="col">Scientific Name</th>
+                                <th scope="col">Count</th>
+                                <th scope="col">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{ range $i, $mobileOrganism := $mobileOrganisms }}
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{ $mobileOrganism.count }}</td>
+                                    <td>{{ $mobileOrganism.notesQuestions }}</td>
+
+                                </tr>
+                            {{ end }}
+                        </tbody>
+                    </table> 
+
+
+            </div>
+        </div>
+    </div>
+    {{ end }}
+    
+    <!--Sessile Organisms-->
+    {{ if $sessileOrganism }}
+    <div class="card border-1 mb-2">
+        <div class="card-header" id="sessileOrganismsData">
+            <section class="shaded collapsed" data-toggle="collapse" data-target="#sessileOrganisms">
+                <h3>Sessile Organisms</h3>
+                <div class="step-toggle">
+                    <i class="fa"></i>
+                </div>
+            </section>
+        </div>
+
+        <div id="sessileOrganisms" class="collapse" aria-labelledby="sessileOrganismsData" data-parent="#accordion">
+            <div class="card-body">
+                    <p>
+                        This protocol captures data on the sessile organisms (creatures that after anchoring to one spot don't move again, like sponges, tunicates, and barnacles) 
+                        that colonized the tiles of the Oyster Research Station during this expedition.
+                        This tells us about the potential for oyster reefs to provide a substrate for a variety of sessile species,
+                        as well as how those species might change over time ("ecological succession").  Learn more.        
+                    </p>
+
+                    <p>
+                        <strong>Contributor for this protocol:</strong>
+                            {{ $sessileOrganism.scribeMember.displayName }}
+                    </p>
+    
+                    {{ if $sessileOrganism.notes }}
+                    <p><strong>Sessile Organisms Notes:</strong> 
+                        <br/>
+                        {{ $sessileOrganism.notes }}
+                    </p>
+                    {{ end }}                    
+
+
+                    <table class="table table-bordered table-sm">   
+                            <thead>
+                                <tr>
+                                    <th scope="col">Common Name</th>
+                                    <th scope="col">Scientific Name</th>
+                                    <th scope="col">Percent of grid points occupied (across all tiles)</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td>Oyster</td>
+                                        <td>Crassostrea virginica</td>
+                                        <td>10%</td>
+                                        <td>Also really cool</td>
+                                    </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-3">
+                                <h4>Sessile Organisms Photos</h4>
+                                {{ range $i, $settlementTile := $settlementTiles }}
+                                {{  if $settlementTile.tilePhoto.path }}
+                                <div class="row">
+                                        <div class="col">
+                                            <div class="card" style="width: 18rem;">
+                                                    <img 
+                                                        class="card-img-top" 
+                                                        src="{{ rxreplace $settlementTile.tilePhoto.path `^http:` `https:` }}" 
+                                                        alt="settlement tile photo">
+                                                    <div class="card-body">
+                                                        <p class="card-text">Settlement Tile # </p>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                {{  end }}
+                                {{ end }}
+                            </div>
+            </div>
+        </div>
+    </div> 
+    {{ end }}
+    
+    <!--Water Quality-->
+    {{ if $waterQuality }}
+    <div class="card border-1 mb-2">
+        <div class="card-header" id="waterQualityData">
+            <section class="shaded collapsed" data-toggle="collapse" data-target="#waterQuality">
+                <h3>Water Quality</h3>
+                <div class="step-toggle">
+                    <i class="fa"></i>
+                </div>
+            </section>
+        </div>
+
+        <div id="waterQuality" class="collapse" aria-labelledby="waterQualityData" data-parent="#accordion">
+            <div class="card-body">
+                    <p>
+                        This protocol captures data on several different water quality parameters (temperature, salinity, dissolved oxygen, etc.)
+                        that might affect oyster mortality and growth. Learn more.        
+                    </p>
+
+                    <p>
+                        <strong>Contributor for this protocol:</strong>
+                            {{ $waterQuality.scribeMember.displayName }}
+                    </p>
+    
+                    {{ if $waterQuality.notes }}
+                    <p><strong>Water Quality Notes:</strong> 
+                        <br/>
+                        {{ $waterQuality.notes }}
+                    </p>
+                    {{ end }}
+
+                    <!--Put something in to repeat for each sample-->
+                    <h4>Water Sample # </h4>
+
+                    <table class="table table-bordered table-sm">   
+                        <thead>
+                            <tr>
+                                <th scope="col">Water Quality Parameter</th>
+                                <th scope="col">Method</th>
+                                <th scope="col">Unit</th>
+                                <th scope="col">Average of Results</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{ range $i, $sample := $samples }}
+                                <tr>
+                                    <td>Salinity</td>
+
+                                </tr>
+                            {{ end }}
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+    {{ end }}
+
+</section>
+
+<script>
+$(function(){
+    expeditionPlots.renderExpeditionGraphs(JSON.parse('{{ jsonify $.bindings.expedition }}'));
+})
+</script>
