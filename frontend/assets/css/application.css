@@ -1887,3 +1887,11 @@ li.loading-dialog {
     top: 15px;
     right: 15px;
   } */
+
+.expeditions-status-incomplete {
+    color: salmon;
+}
+
+.expeditions-status-published {
+    color: limegreen;
+}
