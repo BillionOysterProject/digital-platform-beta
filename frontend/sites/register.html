@@ -1,12 +1,12 @@
 ---
 page:
     body_class: 'container mt-1'
-    view:       'Register a Structure'
+    view:       'Register Your Oysters'
 ---
 <p class="mt-3">
-    Before you complete a monitoring expedition, you'll need to register your Oyster Research Station (or other oyster structure) and enter
-    baseline Oyster Measurement and Site Conditions data.  Click on each of the steps below to
-    fill in this information.
+    Complete this form when you get a new Oyster Research Station (or other oyster research structure) 
+    OR a new batch of tagged oysters for an existing ORS or structure.  
+    Click on each of the steps below to fill in this information.
 </p>
 <!--(Need help? Check out the wiki!)-->
 <form class="form mt-4">
@@ -34,6 +34,42 @@ page:
     </section>
 
     <section class="content collapse" id="enterBaselineData1">
+        
+        
+        <div class="form-group col-sm-12">
+            <fieldset>
+                <legend>
+                        Are you registering a new ORS (or other oyster structure) with new oysters
+                        or adding a new batch of oysters to an existing ORS or structure?
+                </legend>
+                <div class="custom-control custom-radio">
+                    <input
+                        type="radio"
+                        id="newORS"
+                        class="custom-control-input"
+                        name="newORSOrOysters"
+                        for="newORS"
+                    >
+                    <label class="custom-control-label w-100" for="newORS">
+                        New ORS or structure + new oysters
+                    </label>
+                </div>
+                <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            id="newOysters"
+                            class="custom-control-input"
+                            name="newORSOrOysters"
+                            for="newOysters"
+                        >
+                        <label class="custom-control-label w-100" for="newOysters">
+                            Existing ORS or structure + new oysters
+                        </label>
+                </div>
+            </fieldset>
+        </div>
+        
+        
         <div class="form-group col-sm-6">
             <label
                 class="required"
@@ -172,7 +208,8 @@ page:
     <section class="content collapse" id="enterBaselineData2">
         <p>
             Click on each section below to enter Oyster Measurements and Site Conditions baseline data.
-            You won't need to fill these sections out again unless you get new oysters or move to a new site.
+            You'll only need to fill these out again if you get a new batch of oysters from BOP 
+            or if you move to a new site.
         </p>
         <div id="accordion">
             <div class="card border-1 mb-2">
@@ -306,6 +343,10 @@ page:
 
                 <div id="siteBaselines" class="collapse" aria-labelledby="addSiteBaselines" data-parent="#accordion">
                     <div class="card-body">
+                        <p>
+                            Complete the Site Conditions baselines if you plan to enter data for the Site Conditions protocol.
+                            Otherwise, you can leave this blank!
+                        </p>
                         <div class="form-group mt-1">
                             <label
                                 for="CSO"
