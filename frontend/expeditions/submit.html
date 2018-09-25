@@ -544,8 +544,41 @@ includes:
                 if (target.find('#sessileOrganismsTable').length) {
                     if (!tables.sessileOrganisms) {
                         tables.sessileOrganisms = bop.createTable('#sessileOrganismsTable', [
-                            'Common or Scientific Name',
+                            'Organism (Tile #1)',
+                            'Organism (Tile #2)',
+                            'Organism (Tile #3)',
+                            'Organism (Tile #4)',
                         ], [{
+                            type:      'autocomplete',
+                            strict:    false,
+                            source:    [
+                            {{ range $i, $organism := $.bindings.sessileOrganisms }}
+                                '{{ $organism.commonName }}',
+                                '{{ $organism.latinName }}',
+                            {{ end }}
+                            ],
+                            width:     20,
+                        }, {
+                            type:      'autocomplete',
+                            strict:    false,
+                            source:    [
+                            {{ range $i, $organism := $.bindings.sessileOrganisms }}
+                                '{{ $organism.commonName }}',
+                                '{{ $organism.latinName }}',
+                            {{ end }}
+                            ],
+                            width:     20,
+                        }, {
+                            type:      'autocomplete',
+                            strict:    false,
+                            source:    [
+                            {{ range $i, $organism := $.bindings.sessileOrganisms }}
+                                '{{ $organism.commonName }}',
+                                '{{ $organism.latinName }}',
+                            {{ end }}
+                            ],
+                            width:     20,
+                        }, {
                             type:      'autocomplete',
                             strict:    false,
                             source:    [
@@ -560,6 +593,37 @@ includes:
                             startRows:    25,
                             maxRows:      100,
                             width:        width,
+                        }, function(table) {
+                        {{ if $.bindings.expedition }}
+                            var input = JSON.parse('{{ jsonify (get $.bindings.expedition "protocols.settlementTiles.settlementTiles") }}');
+                            var data = [];
+
+                            if (input && input.length) {
+                                for(var i = 0; i < 25; i++) {
+                                    var row = [];
+
+                                    for(var j = 0; j < input.length; j++) {
+                                        try {
+                                            var cell = input[j]['grid' + (i+1).toString()];
+
+                                            if (cell) {
+                                                row.push(cell.organism.latinName);
+                                            }
+                                        } catch(e) {
+                                            ;
+                                        }
+
+                                        if (j == 3) {
+                                            break;
+                                        }
+                                    }
+
+                                    data.push(row);
+                                }
+                            }
+
+                            table.loadData(data);
+                        {{ end }}
                         });
                     }
                 }

@@ -1,4 +1,4 @@
-backend: 'sqlite://./bop.db'
+backend: 'mongodb+scram://localhost:27017/bop?autoregister=true&authdb=admin'
 
 environments:
     development:

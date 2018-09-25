@@ -30,7 +30,7 @@ class Organisms(CollectionView):
     def first_by_name(cls, commonOrLatin):
         try:
             results = cls.get_collection().query(
-                'latinName/is:{}/commonName/is:{}'.format(commonOrLatin, commonOrLatin),
+                'latinName/like:{}/commonName/like:{}'.format(commonOrLatin, commonOrLatin),
                 conjunction='or'
             )
 
@@ -287,10 +287,10 @@ class Expeditions(CollectionView):
                             except Skip:
                                 continue
 
-                            # expedition['protocols'][name] = subrecord.get('_id')
+                            expedition['protocols'][name] = subrecord.get('id')
 
                             # TODO: temp, remove this in favor of the line above
-                            expedition['protocols'][name] = subrecord
+                            #expedition['protocols'][name] = subrecord
 
                             if created:
                                 creates[name] = expedition['protocols'][name]
@@ -318,8 +318,8 @@ class Expeditions(CollectionView):
         # TODO: team
         # TODO: teamLead (current user)
 
-
-        # cls.get_collection().update(expedition)
+        # WRITE
+        expedition = self.get_collection().update_or_create(expedition).records[0]
 
         return jsonify(expedition)
 
@@ -339,7 +339,9 @@ class ProtocolSiteConditions(CollectionView):
             record = {}
 
         record.update(body)
-        # record = cls.get_collection().update(record)
+
+        # WRITE
+        record = cls.get_collection().update_or_create(record).records[0]
 
         return record, create
 
@@ -370,7 +372,9 @@ class ProtocolOysterMeasurements(CollectionView):
                         dict_merge(record, cls.append_oyster_measurement(record, shellNumber, mm))
 
             record.update(body)
-            # record = cls.get_collection().update(record)
+
+            # WRITE
+            record = cls.get_collection().update_or_create(record).records[0]
 
         return record, create
 
@@ -471,12 +475,12 @@ class ProtocolMobileTraps(CollectionView):
                     commonOrLatin = pair[0]
                     count = int(pair[1])
 
-                    mo = MobileOrganisms.first_by_name(commonOrLatin)
+                    mobileOrganism = MobileOrganisms.first_by_name(commonOrLatin)
 
-                    if mo:
+                    if mobileOrganism:
                         neworgs.append({
                             'count': count,
-                            'organism': mo.id,
+                            'organism': mobileOrganism.id,
                             'notesQuestions': None,
                             'sketchPhoto': {
                                 'path': '',
@@ -485,7 +489,8 @@ class ProtocolMobileTraps(CollectionView):
 
             record['mobileOrganisms'] = neworgs
 
-            # record = cls.get_collection().update(record)
+            # WRITE
+            record = cls.get_collection().update_or_create(record).records[0]
 
         return record, create
 
@@ -503,36 +508,84 @@ class ProtocolSettlementTiles(CollectionView):
         else:
             record = {}
 
-        tiles = body.pop('settlementTiles', [])
+        grids = body.pop('settlementTiles', [])
 
-        if len(tiles):
-            record['settlementTiles'] = []
+        # junky "cache"
+        organisms = {}
 
-            for tile in tiles:
-                tileToSave = {
-                    'description': tile.get('description')
-                }
+        if len(grids):
+            # get the total number of populated tiles in the submitted data
+            tileCount = max([
+                len([
+                    i for i in t if i is not None and i.lower() != 'n/a'
+                ]) for t in grids
+            ])
 
-                for j, grid in enumerate(tile['grids']):
-                    if len(grid):
-                        commonOrLatin = grid[0]
-                        mo = SessileOrganisms.first_by_name(commonOrLatin)
-                        notes = ''
+            # build that many empty settlement tiles
+            record['settlementTiles'] = [cls.make_empty_tile(i) for i in range(tileCount)]
 
-                        if len(grid) > 1:
-                            notes = grid[1]
+            # for each grid square...
+            for i, grid in enumerate(grids):
+                tileToSave = {}
 
-                        if mo:
-                            tileToSave['grid{}'.format(j)] = {
-                                'organism': mo._id,
-                                'notes': notes
-                            }
+                # for each tile...
+                for j, commonOrLatin in enumerate(grid):
+                    if not commonOrLatin:
+                        continue
 
-                record['settlementTiles'].append(tileToSave)
+                    sessileOrganism = None
 
-            # record = cls.get_collection().update(record)
+                    if commonOrLatin.lower() == 'n/a':
+                        continue
+                    elif commonOrLatin in organisms:
+                        sessileOrganism = organisms[commonOrLatin]
+                    else:
+                        sessileOrganism = SessileOrganisms.first_by_name(commonOrLatin)
+
+                    if sessileOrganism:
+                        organisms[commonOrLatin] = sessileOrganism
+                        record['settlementTiles'][j]['grid{}'.format(i+1)] = {
+                            'organism': sessileOrganism.id,
+                            'notes':    '',
+                        }
+
+            record['settlementTiles'].append(tileToSave)
+
+            # WRITE
+            record = cls.get_collection().update_or_create(record).records[0]
 
         return record, create
+
+    @classmethod
+    def make_empty_tile(cls, n):
+        return {
+            'grid1': {},
+            'grid2': {},
+            'grid3': {},
+            'grid4': {},
+            'grid5': {},
+            'grid6': {},
+            'grid7': {},
+            'grid8': {},
+            'grid9': {},
+            'grid10': {},
+            'grid11': {},
+            'grid12': {},
+            'grid13': {},
+            'grid14': {},
+            'grid15': {},
+            'grid16': {},
+            'grid17': {},
+            'grid18': {},
+            'grid19': {},
+            'grid20': {},
+            'grid21': {},
+            'grid22': {},
+            'grid23': {},
+            'grid24': {},
+            'grid25': {},
+            'tilePhoto': {},
+        }
 
 class ProtocolWaterQualities(CollectionView):
     route_base      = 'protocol-water-qualities'

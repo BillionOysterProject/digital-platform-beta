@@ -203,7 +203,7 @@ $(function () {
                         var redirectTo = '/';
 
                         if (form.attr('data-debug-log') === 'true') {
-                            console.debug('DEBUG', data)
+                            console.dir(data)
                             return;
 
                         } else if (form.attr('data-redirect-to')) {
