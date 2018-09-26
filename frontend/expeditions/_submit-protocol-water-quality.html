@@ -43,20 +43,79 @@
                     </div>
                 </div>
             </div> -->
-            <p><strong>Water Quality Parameter Measurements</strong></p>
-            <p>For every water quality parameter you'd like to submit, select the method and then enter
+            <!-- <p><strong>Water Sample #1</strong></p> -->
+            <!-- <p>For every water quality parameter you'd like to submit, select the method and then enter
                 the three measurements in the table below.
-            </p>
+            </p> -->
             <!--
             <p>
                 You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
             </p>
             -->
-            <div class="spreadsheet"></div>
+            <!-- <div class="spreadsheet"></div>
                 <div
                     id="waterQualityTable"
                     data-field-name="protocols.waterQuality.samples"
-                ></div>
+                ></div> -->
+
+            <div class="form-group col-sm-3">
+                <label for="depthOfWaterSample">
+                    Depth of Water Sample (m)
+                </label>
+                <input
+                class="form-control"
+                name="protocols.waterQuality.depthOfWaterSample"
+                type="number"
+                step="0.1"
+                min="-40"
+                max="50"
+                id="depthOfWaterSample"
+                />
+                <small>Type 0 if at surface.</small>
+            </div>
+
+            <h4>Water Temperature</h4>
+            <div class="form-group">    
+                <label for="waterTemperatureResults">
+                        Results
+                </label>            
+                <div class="row">
+                    
+                    <input
+                    class="form-control col-sm-1 mr-3"
+                    name="protocols.waterQuality.waterTemperature.results"
+                    type="number"
+                    step="0.1"
+                    min="-40"
+                    max="50"
+                    id="waterTemperatureResults"
+                    />
+                    <input
+                    class="form-control col-sm-1 mr-3"
+                    name="protocols.waterQuality.waterTemperature.results"
+                    type="number"
+                    step="0.1"
+                    min="-40"
+                    max="50"
+                    id="waterTemperatureResults"
+                    />
+                    <input
+                    class="form-control col-sm-1"
+                    name="protocols.waterQuality.waterTemperature.results"
+                    type="number"
+                    step="0.1"
+                    min="-40"
+                    max="50"
+                    id="waterTemperatureResults"
+                    />
+                </div>
+                
+            </div>
+            
+
+            <h4>Dissolved Oxygen</h4>
+
+
 
             <div class="form-group mt-4">
                 <a

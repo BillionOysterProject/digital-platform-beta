@@ -110,7 +110,7 @@ includes:
             rid of the dummy ORS.
         -->
 
-        <div class="form-group mt-4">
+        <!-- <div class="form-group mt-4">
             <fieldset>
                 <legend>
                     Select your structure type
@@ -139,11 +139,10 @@ includes:
                 </div>
                 {{ end }}
             </fieldset>
-        </div>
+        </div> -->
 
-<!-- "Structure Name" field displays if user answers "YES" to "Are you reporting data related to a structure, like an Oyster Research Station (ORS)?"-->
         <div class="form-group">
-            <label for="structureName">Structure Name</label>
+            <label for="structureName">Oyster Research Station Name (or other oyster structure name)</label>
             <div class="input-group">
                 <input
                     type="text"
@@ -155,13 +154,13 @@ includes:
                     aria-describedby="structureNameHelp"
                 >
 
-                <small class="form-text mb-3" id="structureNameHelp">
+                <small class="form-text" id="structureNameHelp">
                     Start typing your structure's name in the field above, then select it from the dropdown list.  Don't see your structure? You can add one on the <a class="font-weight-bold" href="#">Register Your Oysters</a> page.
                 </small>
             </div>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="siteName">Site Name</label>
             <div class="input-group">
                 <input
@@ -177,7 +176,7 @@ includes:
                     Start typing your site's name in the field above, then select it from the dropdown list.
                 </small>
             </div>
-        </div>
+        </div> -->
 
         <div class="form-group">
             <label for="team">Team</label>
@@ -191,7 +190,7 @@ includes:
                     id="team"
                     aria-describedby="teamHelp"
                 >
-                <small class="form-text mb-3" id="teamHelp">
+                <small class="form-text" id="teamHelp">
                     Start typing your team's name in the field above, then select it from the dropdown list.
                 </small>
             </div>
@@ -200,9 +199,6 @@ includes:
         {{ if $.bindings.expedition }}
         <input type="hidden" name="team._id" value="{{ $.bindings.expedition.team._id }}">
         {{ end }}
-
-        <!--If user selected "Community Reef" or "Other Reef" above, display fields "Number of
-            adults," "Number of students," and other fields from the field report -->
 
         <div class="form-group">
             <label for="numberAdults">Number of adults</label>
