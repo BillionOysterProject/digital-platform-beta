@@ -8,30 +8,27 @@ PATH        := "$(PATH):$(HOME)/go/bin:$(HOME)/bin:$(HOME)/.local/bin:$(HOME)/Li
 all:
 	cd backend && make
 
-run-pre:
-	test -d logs || mkdir logs
+run:
+	./scripts/stack.sh
 
-run: run-pre
-	./backend/env/bin/supervisord -c scripts/stack.ini
-
-run-development: run-pre
+run-development:
 	BOP_S3_PUBLIC_BUCKET=digital-platform-dev-files \
-	PIVOT_ENV=development ./backend/env/bin/supervisord -c scripts/stack.ini
+	PIVOT_ENV=development ./scripts/stack.sh
 
-run-production: run-pre
+run-production:
 	BOP_S3_PUBLIC_BUCKET=digital-platform-prod-files \
-	PIVOT_ENV=production ./backend/env/bin/supervisord -c scripts/stack.ini
+	PIVOT_ENV=production ./scripts/stack.sh
 
-run-db: run-pre
+run-db:
 	cd database && pivot -s schema -L debug -Q web
 
-run-backend: run-pre
+run-backend:
 	cd backend && ./env/bin/python server.py
 
-run-frontend: run-pre
+run-frontend:
 	cd frontend && diecast
 
-run-worker: run-pre
+run-worker:
 	cd backend && make run-worker
 
 tail:

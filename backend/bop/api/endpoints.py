@@ -66,6 +66,20 @@ class Endpoint(FlaskView):
 
 class CollectionView(Endpoint):
     default_sort = None
+    name_field = 'name'
+
+    @classmethod
+    def first_by_name(cls, name):
+        try:
+            results = cls.get_collection().query('{}/is:{}'.format(cls.name_field, name))
+
+            if len(results):
+                return results[0]
+        except:
+            logging.exception('first_by_name:')
+            pass
+
+        return None
 
     @classmethod
     def register(cls, app):

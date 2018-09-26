@@ -95,7 +95,12 @@ $(function () {
                         var toggle = input.closest('.btn-group-toggle');
 
                         if (toggle.length) {
+                            var inputs = toggle.find('input[type="radio"]');
+
+                            inputs.removeAttr('checked');
+
                             if (input.attr('value') && input.attr('name')) {
+                                input.attr('checked', 'checked')
                                 toggle.attr('data-field-value', input.attr('value'));
                                 this.syncToggleButtonStates();
                             }
@@ -105,6 +110,10 @@ $(function () {
             },
 
             syncToggleButtonStates: function() {
+                $('.btn-group-toggle input[type="radio"][checked]').each(function(i, e){
+                    $(e).closest('.btn-group-toggle').attr('data-field-value', $(e).attr('value'));
+                });
+
                 $('.btn-group-toggle[data-field-value]').each(function(i, e) {
                     var toggle = $(e);
                     var value = toggle.attr('data-field-value');

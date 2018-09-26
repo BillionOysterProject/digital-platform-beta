@@ -62,6 +62,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.meteorologicalConditions.weatherConditions"
                                         value="{{ $weatherCondition.id }}"
+                                        {{ if eqx $weatherCondition.id (get $.bindings.expedition "protocols.siteCondition.meteorologicalConditions.weatherConditions") }}
+                                        checked
+                                        {{ end }}
                                     >
                                     {{ $weatherCondition.label }}
                                 </label>
@@ -84,7 +87,7 @@
                             min="-40"
                             max="50"
                             id="airTemperature"
-
+                            value="{{ get $.bindings.expedition `protocols.siteCondition.meteorologicalConditions.airTemperatureC` }}"
                         />
                         <span class="help-block">
                             <p>Fahrenheit: <span id="temperatureF"></span>&deg;F</p>
@@ -117,6 +120,7 @@
                             min="0"
                             name="protocols.siteCondition.meteorologicalConditions.windSpeedMPH"
                             id="windSpeed"
+                            value="{{ get $.bindings.expedition `protocols.siteCondition.meteorologicalConditions.windSpeedMPH` }}"
                         />
                         <span class="help-block">Method: Anemometer</span>
                     </div>
@@ -137,6 +141,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.meteorologicalConditions.windDirection"
                                         value="{{ $windDirection.id }}"
+                                        {{ if eqx $windDirection.id (get $.bindings.expedition `protocols.siteCondition.meteorologicalConditions.windDirection`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     {{ $windDirection.label }}
                                 </label>
@@ -157,6 +164,7 @@
                             min="0"
                             name="protocols.siteCondition.meteorologicalConditions.humidityPer"
                             id="humidity"
+                            value="{{ get $.bindings.expedition `protocols.siteCondition.meteorologicalConditions.humidityPer` }}"
                         />
                         <span class="help-block">Method: Sling Psychrometer</span>
                     </div>
@@ -176,6 +184,9 @@
                                 type="radio"
                                 name="protocols.siteCondition.recentRainfall.rainedIn7Days"
                                 value="true"
+                                {{ if (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn7Days`) }}
+                                checked
+                                {{ end }}
                             >
                             Yes
                         </label>
@@ -186,6 +197,9 @@
                                 type="radio"
                                 name="recentRainfall.rainedIn7Days"
                                 value="false"
+                                {{ if not (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn7Days`) }}
+                                checked
+                                {{ end }}
                             >
                             No
                         </label>
@@ -203,6 +217,9 @@
                                 type="radio"
                                 name="protocols.siteCondition.recentRainfall.rainedIn72Hours"
                                 value="true"
+                                {{ if (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn72Hours`) }}
+                                checked
+                                {{ end }}
                             >
                             Yes
                         </label>
@@ -213,6 +230,9 @@
                                 type="radio"
                                 name="protocols.siteCondition.recentRainfall.rainedIn72Hours"
                                 value="false"
+                                {{ if not (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn72Hours`) }}
+                                checked
+                                {{ end }}
                             >
                             No
                         </label>
@@ -230,6 +250,9 @@
                                 type="radio"
                                 name="protocols.siteCondition.recentRainfall.rainedIn24Hours"
                                 value="true"
+                                {{ if (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn24Hours`) }}
+                                checked
+                                {{ end }}
                             >
                             Yes
                         </label>
@@ -240,6 +263,9 @@
                                 type="radio"
                                 name="protocols.siteCondition.recentRainfall.rainedIn24Hours"
                                 value="false"
+                                {{ if not (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn24Hours`) }}
+                                checked
+                                {{ end }}
                             >
                             No
                         </label>
@@ -261,6 +287,7 @@
                             min="0"
                             name="protocols.siteCondition.waterConditions.surfaceCurrentSpeedMPS"
                             id="surfaceCurrentSpeed"
+                            value="{{ get $.bindings.expedition `protocols.siteCondition.waterConditions.surfaceCurrentSpeedMPS` }}"
                         />
                     </div>
                 </div>
@@ -280,6 +307,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.waterColor"
                                         value="{{ $waterColor.id }}"
+                                        {{ if eqx $waterColor.id (get $.bindings.expedition `protocols.siteCondition.waterConditions.waterColor`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     {{ $waterColor.label }}
                                 </label>
@@ -303,6 +333,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.oilSheen"
                                         value="true"
+                                        {{ if (get $.bindings.expedition `protocols.siteCondition.waterConditions.oilSheen`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     Yes
                                 </label>
@@ -313,6 +346,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.oilSheen"
                                         value="false"
+                                        {{ if not (get $.bindings.expedition `protocols.siteCondition.waterConditions.oilSheen`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     No
                                 </label>
@@ -335,6 +371,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.garbage.garbagePresent"
                                         value="true"
+                                        {{ if (get $.bindings.expedition `protocols.siteCondition.waterConditions.garbage.garbagePresent`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     Yes
                                 </label>
@@ -345,6 +384,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.garbage.garbagePresent"
                                         value="false"
+                                        {{ if not (get $.bindings.expedition `protocols.siteCondition.waterConditions.garbage.garbagePresent`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     No
                                 </label>
@@ -370,6 +412,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.markedCombinedSewerOverflowPipes.howMuchFlowThrough"
                                         value="{{ $pipeFlow.id }}"
+                                        {{ if eqx $pipeFlow.id (get $.bindings.expedition `protocols.siteCondition.waterConditions.markedCombinedSewerOverflowPipes.howMuchFlowThrough`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     {{ $pipeFlow.label }}
                                 </label>
@@ -396,6 +441,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.unmarkedOutfallPipes.howMuchFlowThrough"
                                         value="{{ $pipeFlow.id }}"
+                                        {{ if eqx $pipeFlow.id (get $.bindings.expedition `protocols.siteCondition.waterConditions.unmarkedOutfallPipes.howMuchFlowThrough`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     {{ $pipeFlow.label }}
                                 </label>
@@ -414,7 +462,7 @@
                     name="protocols.siteCondition.notes"
                     maxlength="16536"
                     id="siteConditionsNotes"
-                ></textarea>
+                >{{ (get $.bindings.expedition `protocols.siteCondition.notes`) }}</textarea>
             </div>
         </div>
     </div>

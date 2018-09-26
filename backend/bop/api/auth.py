@@ -56,16 +56,6 @@ class Teams(CollectionView):
     collection_name = 'teams'
     results_only    = True
 
-    expand_fields   = {
-        'schoolOrg': (
-            'schoolorgs', ['_id', 'name'],
-        ),
-        'teamLeads': (
-            'users', ['_id', 'username', 'email', 'displayName', 'firstName',
-                      'lastName', 'profileImageURL', 'schoolOrg'],
-        )
-    }
-
     def index(self):
         """
         Retrieve a list of teams, optionally filtered by various criteria.

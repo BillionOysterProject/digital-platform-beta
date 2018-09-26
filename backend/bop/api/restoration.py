@@ -8,9 +8,10 @@ import dpath.util
 import io
 import logging
 import json
+from .auth import Teams
 from .. import env
 from ..time import Time
-from ..utils import dict_merge, compact
+from ..utils import dict_merge, compact, mutate_dict, autotype
 import unicodecsv
 from sortedcontainers import SortedList
 
@@ -203,10 +204,13 @@ class Expeditions(CollectionView):
         return jsonify(images)
 
     def post(self):
-        flatBody = request.form or request.json
+        flatBody = request.form or json.loads(request.data)
+        flatBody = mutate_dict(flatBody, valueFn=lambda v: autotype(v))
+
         body = {}
         expedition = None
         station = None
+        team = None
 
         for k, v in flatBody.items():
             dpath.util.new(body, k, v, separator='.')
@@ -230,14 +234,19 @@ class Expeditions(CollectionView):
         if flatBody.get('station._id'):
             station = flatBody.get('station._id')
         elif flatBody.get('station.name'):
-            stations = RestorationStations.get_collection().query('name/is:{}'.format(
-                flatBody.get('station.name')
-            ))
-
-            if len(stations) == 1:
-                station = stations[0].id
-            else:
+            try:
+                station = RestorationStations.first_by_name(flatBody.get('station.name')).id
+            except:
                 return 'Must specify an Oyster Research Station for this expedition', 400
+
+        # figure out which team this expedition belongs to
+        if flatBody.get('team._id'):
+            team = flatBody.get('team._id')
+        elif flatBody.get('team.name'):
+            try:
+                team = Teams.first_by_name(flatBody.get('team.name')).id
+            except:
+                return 'Must specify a team for this expedition', 400
 
         expedition.update(compact({
             'name'               : body.get('name'),
@@ -245,15 +254,15 @@ class Expeditions(CollectionView):
             'station'            : station,
             'status'             : body.get('status'),
             'monitoringStartDate': body.get('monitoringStartDate'),
-            'monitoringEndDate'  : body.get('monitoringEndDate'),
-            'team'               : body.get('team'),
+            'monitoringEndDate'  : body.get('monitoringStartDate'),
+            'team'               : team,
             'protocols'          : {},
         }))
 
         if 'teamLead' not in body:
             user = self.current_user
 
-            if user.has_role('admin') or user.has_role('team-lead'):
+            if user.has_any_role('admin', 'team-lead'):
                 expedition['teamLead'] = user.get_id()
             elif expedition['station']:
                 try:
@@ -313,13 +322,11 @@ class Expeditions(CollectionView):
             # cleanup the data we've processed from the input
             del body['protocols']
 
-        # TODO: team lists
-        # TODO: station
-        # TODO: team
-        # TODO: teamLead (current user)
-
         # WRITE
-        expedition = self.get_collection().update_or_create(expedition).records[0]
+        try:
+            expedition = self.get_collection().update_or_create(expedition).records[0]
+        except IndexError:
+            pass
 
         return jsonify(expedition)
 
@@ -341,7 +348,10 @@ class ProtocolSiteConditions(CollectionView):
         record.update(body)
 
         # WRITE
-        record = cls.get_collection().update_or_create(record).records[0]
+        try:
+            record = cls.get_collection().update_or_create(record).records[0]
+        except IndexError:
+            pass
 
         return record, create
 
@@ -374,7 +384,10 @@ class ProtocolOysterMeasurements(CollectionView):
             record.update(body)
 
             # WRITE
-            record = cls.get_collection().update_or_create(record).records[0]
+            try:
+                record = cls.get_collection().update_or_create(record).records[0]
+            except IndexError:
+                pass
 
         return record, create
 
@@ -490,7 +503,10 @@ class ProtocolMobileTraps(CollectionView):
             record['mobileOrganisms'] = neworgs
 
             # WRITE
-            record = cls.get_collection().update_or_create(record).records[0]
+            try:
+                record = cls.get_collection().update_or_create(record).records[0]
+            except IndexError:
+                pass
 
         return record, create
 
@@ -552,7 +568,10 @@ class ProtocolSettlementTiles(CollectionView):
             record['settlementTiles'].append(tileToSave)
 
             # WRITE
-            record = cls.get_collection().update_or_create(record).records[0]
+            try:
+                record = cls.get_collection().update_or_create(record).records[0]
+            except IndexError:
+                pass
 
         return record, create
 
@@ -600,6 +619,7 @@ class RestorationStations(GeoCollectionView):
     route_base      = 'restoration-stations'
     collection_name = 'restorationstations'
     results_only    = True
+
 
 class Sites(GeoCollectionView):
     route_base      = 'sites'

@@ -5,7 +5,8 @@ import logging
 import os
 import inspect
 import pivot
-from .utils import parse_docstring
+from traceback import format_exc
+from .utils import parse_docstring, as_bool
 from .api import *
 from flask import Flask, jsonify, url_for
 from werkzeug.exceptions import default_exceptions
@@ -29,7 +30,11 @@ def handle_error(e):
     if code not in [401, 403, 404]:
         logging.warning(e)
 
-    return jsonify(error=str(e)), code
+    response = {
+        'error': '{}'.format(e),
+    }
+
+    return jsonify(**response), code
 
 
 class API(Flask):
