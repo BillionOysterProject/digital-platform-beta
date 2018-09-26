@@ -49,11 +49,11 @@
             <h4>Meteorological Conditions</h4>
 
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-md-12">
                     <div class="form-group">
                         <fieldset>
                             <legend>Weather</legend>
-                            <div class="btn-group btn-group-toggle">
+                            <div class="btn-group btn-group-toggle row">
                                 {{ range $i, $weatherCondition := $.page.weatherConditions }}
                                 <label
                                     class="btn btn-primary"
@@ -128,7 +128,7 @@
                     <div class="form-group">
                         <fieldset>
                             <legend>Wind Direction</legend>
-                            <div class="btn-group btn-group-toggle">
+                            <div class="btn-group btn-group-toggle row">
                                 {{ range $i, $windDirection := $.page.windDirections }}
                                 <label
                                     class="btn btn-primary"
@@ -271,7 +271,7 @@
                     <div class="form-group">
                         <fieldset>
                             <legend>Describe the water color</legend>
-                            <div class="btn-group btn-group-toggle">
+                            <div class="btn-group btn-group-toggle row">
                                 {{ range $i, $waterColor := $.page.waterColors }}
                                 <label
                                     class="btn btn-primary"
@@ -361,7 +361,7 @@
                             <legend>
                                 Is there any flow through the Combined Sewer Overflow (CSO) pipes?
                             </legend>
-                            <div class="btn-group btn-group-toggle">
+                            <div class="btn-group btn-group-toggle row">
                                 {{ range $i, $pipeFlow := $.page.pipeFlows }}
                                 <label
                                     class="btn btn-primary"
@@ -387,7 +387,7 @@
                             <legend>
                                 Is there any flow through the unmarked or other outfall pipes?
                             </legend>
-                            <div class="btn-group btn-group-toggle">
+                            <div class="btn-group btn-group-toggle row">
                                 {{ range $i, $pipeFlow := $.page.pipeFlows }}
                                 <label
                                     class="btn btn-primary"

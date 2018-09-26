@@ -49,7 +49,7 @@ includes:
             </span>
 
             <span>
-                <h2>Enter information about your expedition.</h2>
+                <h2>Enter information about your expedition ("metadata").</h2>
             </span>
         </section>
 
@@ -67,7 +67,7 @@ includes:
         <div class="form-group">
             <label for="name">Expedition Name</label>
             <input
-                class="form-control"
+                class="form-control col-sm-8"
                 type="text"
                 id="name"
                 name="name"
@@ -83,7 +83,7 @@ includes:
         <div class="form-group">
             <label for="monitoringStartDate">Expedition Date and Time</label>
             <input
-                class="form-control col-4"
+                class="form-control col-md-8"
                 id="monitoringStartDate"
                 type="datetime-local"
                 name="monitoringStartDate"
@@ -146,7 +146,7 @@ includes:
             <div class="input-group">
                 <input
                     type="text"
-                    class="form-control typeahead w-100"
+                    class="form-control typeahead w-100 col-md-8"
                     name="station.name"
                     data-typeahead-url="/api/restoration-stations?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
                     data-typeahead-field="name"
@@ -179,11 +179,11 @@ includes:
         </div> -->
 
         <div class="form-group">
-            <label for="team">Team</label>
+            <label for="team">Team (optional)</label>
             <div class="input-group">
                 <input
                     type="text"
-                    class="form-control typeahead w-100"
+                    class="form-control typeahead w-100 col-md-8"
                     name="team.name"
                     data-typeahead-url="/api/teams?fields=name&amp;q=str:name/contains:{}&amp;sort=name&amp;teamsImOn=true"
                     data-typeahead-field="name"
@@ -492,7 +492,7 @@ includes:
                 if (target.find('#mobileOrganismsTable').length) {
                     if (!tables.mobileOrganisms) {
                         tables.mobileOrganisms = bop.createTable('#mobileOrganismsTable', [
-                            'Common OR Scientific Name',
+                            'Name (Common or Scientific)',
                             '# of Organisms',
                         ], [{
                             type:      'autocomplete',
@@ -540,7 +540,7 @@ includes:
                 if (target.find('#sessileOrganismsTable').length) {
                     if (!tables.sessileOrganisms) {
                         tables.sessileOrganisms = bop.createTable('#sessileOrganismsTable', [
-                            'Common or Scientific Name',
+                            'Name (Common or Scientific)',
                         ], [{
                             type:      'autocomplete',
                             strict:    false,
