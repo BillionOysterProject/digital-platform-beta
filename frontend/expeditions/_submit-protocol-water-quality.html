@@ -43,20 +43,143 @@
                     </div>
                 </div>
             </div> -->
-            <p><strong>Water Quality Parameter Measurements</strong></p>
-            <p>For every water quality parameter you'd like to submit, select the method and then enter
+            <!-- <p><strong>Water Sample #1</strong></p> -->
+            <!-- <p>For every water quality parameter you'd like to submit, select the method and then enter
                 the three measurements in the table below.
-            </p>
+            </p> -->
             <!--
             <p>
                 You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
             </p>
             -->
-            <div class="spreadsheet"></div>
+            <!-- <div class="spreadsheet"></div>
                 <div
                     id="waterQualityTable"
                     data-field-name="protocols.waterQuality.samples"
-                ></div>
+                ></div> -->
+
+            <div class="form-group">
+                <label for="depthOfWaterSample">
+                    Depth of Water Sample (m)
+                </label>
+                
+                <input
+                class="form-control col-md-2"
+                name="protocols.waterQuality.depthOfWaterSample"
+                type="number"
+                step="0.1"
+                min="-40"
+                max="50"
+                id="depthOfWaterSample"
+                />
+                
+                <small>Type 0 if at surface.</small>
+            </div>
+
+            {{ range $i, $waterQualityParameter := $.page.waterQualityParameters }}
+            {{   var "units" }}
+            {{   range $id, $method := $.page.testingMethods }}
+            {{     if has $id $waterQualityParameter.methods }}
+            {{       push "units" $method.units }}
+            {{     end }}
+            {{   end }}
+            {{   $units := uniqByKey (compact (flatten $.vars.units)) "id" }}
+            <h4>{{ $waterQualityParameter.label }}</h4>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            Method
+                            {{ if eq (count $units) 1 }}
+                            <div>
+                                <p>Unit: {{ get (first $units) "label" }}</p>
+                            </div>                        
+                            {{ end }}
+                        </label>
+                        <div class="btn-group btn-group-toggle w-100">
+                            {{ range $i, $methodId  := $waterQualityParameter.methods }}
+                            {{   $method := mapify (get $.page.testingMethods $methodId) }}                              
+                            <label
+                                class="btn btn-primary"
+                            >
+                                <input
+                                    type="radio"
+                                    name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.method"
+                                    value="{{ $methodId }}"
+                                >
+                                {{ $method.label }}
+                            </label>
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+
+                {{ if gt (count $units) 1 }}
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Units</label>
+
+                        <div class="btn-group btn-group-toggle w-100">
+                            
+                            {{ range $i, $unit := uniqByKey $units "id" }}
+                            <label
+                                class="btn btn-primary"
+                            >
+                                <input
+                                    type="radio"
+                                    name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.unit"
+                                    value="{{ $unit.id }}"
+                                >
+                                {{ $unit.label }}
+                            </label>
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+                {{ else }}
+                <input
+                    type="hidden"
+                    name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.unit"
+                    value="{{ get (first $units) `id` }}"
+                >
+                {{ end }}
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Result #1</label>
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.result1"
+                        >
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Result #2</label>
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.result2"
+                        >
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Result #3</label>
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.result3"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            {{ end }}
 
             <div class="form-group mt-4">
                 <a

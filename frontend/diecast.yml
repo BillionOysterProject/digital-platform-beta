@@ -138,14 +138,14 @@ header:
       - id:    'water-temperature'
         label: 'Water Temperature'
         methods:
-        - digital-thermometer
+        - digitalThermometer
         - sensor
-        - analog-thermometer
+        - analogThermometer
 
       - id:    'dissolved-oxygen'
         label: 'Dissolved Oxygen'
         methods:
-        - colormetric-ampules
+        - colorimetricAmpoules
         - sensor
         - winkler
 
@@ -159,93 +159,89 @@ header:
       - id:    'pH'
         label: 'pH'
         methods:
-        - test-strips-ph
+        - testStripsPh
         - sensor
-        - sensor-ro
+        - sensorRo
 
       - id:    'turbidity'
         label: 'Turbidity'
         methods:
-        - turbidity-tube
+        - turbidityTube
 
       - id:    'ammonia'
         label: 'Ammonia'
         methods:
-        - test-strips
+        - testStrips
         - photometer
 
       - id:    'nitrates'
         label: 'Nitrates'
         methods:
-        - test-strips
+        - testStrips
         - photometer
 
       testingMethods:
-      - id:    'test-strips'
-        label: Test Strips
-        units:
-        - id: ppm
-          label: PPM
+        testStrips:
+          label: Test Strips
+          units:
+          - id: ppm
+            label: PPM
 
-      - id:    test-strips-ph
-        label: pH Test Strips
-        units:
-        - id:    phLogscale
-          label: pH (Log Scale)
+        testStripsPh:
+          label: pH Test Strips
+          units:
+          - id:    phLogscale
+            label: pH (Log Scale)
 
-      - id: photometer
-        label: Photometer
+        photometer:
+          label: Photometer
 
-      - id: colormetric-ampules
-        label: Colormetric Ampules
-        units:
-        - id: saturation
-          label: Saturation (%)
+        colorimetricAmpoules:
+          label: Colorimetric Ampoules
+          units:
+          - id: ppm
+            label: ppm
+          - id: saturation
+            label: Saturation (%)
 
-      - id: sensor
-        label: Sensor
+        sensor:
+          label: Sensor
 
-      - id: sensor-ro
-        label: Sensor (Read Only)
+        sensorRo:
+          label: Sensor (Read Only)
 
-      - id: winkler
-        label: Winkler
+        winkler:
+          label: Winkler
 
-      - id: refractometer
-        label: Refractometer
-        units:
-        - id: ppt
-          label: PPT
+        refractometer:
+          label: Refractometer
+          units:
+          - id: ppt
+            label: PPT
 
-      - id: hydrometer
-        label: Hydrometer
-        units:
-        - id: ppt
-          label: PPT
+        hydrometer:
+          label: Hydrometer
+          units:
+          - id: ppt
+            label: PPT
 
-      - id: turbidity-tube
-        label: Turbidity Tube
-        units:
-        - id: cm
-          label: Visibility (cm)
+        turbidityTube:
+          label: Turbidity Tube
+          units:
+          - id: cm
+            label: Visibility (cm)
 
-      - id: digital-thermometer
-        label: Digital Thermometer
-        units:
-        - id: celsius
-          label: Degrees (C)
+        digitalThermometer:
+          label: Digital Thermometer
+          units:
+          - id: celsius
+            label: Degrees (C)
 
-        - id: fahrenheit
-          label: Degrees (F)
-
-      - id: analog-thermometer
-        label: Analog Thermometer
-        units:
-        - id: celsius
-          label: Degrees (C)
-
-        - id: fahrenheit
-          label: Degrees (F)
+        analogThermometer:
+          label: Analog Thermometer
+          units:
+          - id: celsius
+            label: Degrees (C)
 
       protocols:
       - name: 'Protocol 1: Site Conditions'
