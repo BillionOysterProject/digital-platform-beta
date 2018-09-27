@@ -1811,6 +1811,36 @@ li.loading-dialog {
     color: white !important;
 }
 
+@media (max-width: 992px) {
+    .btn-group {
+        display: block;
+    }
+
+    .btn-group .btn {
+        width: 100%;
+        border-radius: 0;
+        margin: 0 !important;
+        height: 4em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn-group .btn + .btn {
+        margin-top: -1px !important;
+    }
+
+    .btn-group .btn:first-child:not(.dropdown-toggle) {
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+    }
+
+    .btn-group .btn:last-child:not(.dropdown-toggle) {
+        border-bottom-left-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+}
+
 /* fix Handsontable height issues (see: https://github.com/handsontable/handsontable/issues/3432#issuecomment-218442750) */
 .ht_master .wtHolder {
     width: auto !important;

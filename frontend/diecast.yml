@@ -54,6 +54,23 @@ header:
       - id:    'retired'
         label: 'Retired'
 
+      bioaccumulations:
+      - id:      'none'
+        name:    'None/clean'
+        summary: 'No macroalgae or animals present.'
+
+      - id:      'light'
+        name:    'Light'
+        summary: 'Macroalgae or minimal animals present that do not encroach on mesh openings.'
+
+      - id:      'medium'
+        name:    'Medium'
+        summary: 'Some encrusting macroalgae/animals reducing size of mesh opening up to 25%.'
+
+      - id:      'heavy'
+        name:    'Heavy'
+        summary: 'Encrusting macroalgae/animals reducing mesh opening by over 50%.'
+
       oysterSources:
       - id:    'muscongus'
         label: 'Muscongus Bay, Maine'

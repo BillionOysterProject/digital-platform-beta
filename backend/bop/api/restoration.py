@@ -8,6 +8,7 @@ import dpath.util
 import io
 import logging
 import json
+import six
 from .auth import Teams
 from .. import env
 from ..time import Time
@@ -122,7 +123,7 @@ class Expeditions(CollectionView):
                 'fields': 'protocols',
             },
             raw=True,
-            expand=False
+            noexpand=True
         )
 
         images = []
@@ -225,7 +226,7 @@ class Expeditions(CollectionView):
 
         # load any existing expedition
         if '_id' in body:
-            expedition = Expeditions.get_collection().get(body['_id'])
+            expedition = Expeditions.get_collection().get(body['_id'], noexpand=True)
             station = expedition['station']
         else:
             expedition = {}
@@ -274,7 +275,17 @@ class Expeditions(CollectionView):
                     pass
 
             if 'teamLists' in body:
-                expedition['teamLists'] = body.get('teamLists')
+                expedition['teamLists'] = body.get('teamLists', [])
+
+            if 'teamLists' in expedition:
+                lists = expedition['teamLists']
+
+                for protocol, members in lists.items():
+                    lists[protocol] = list(set([
+                        m for m in members if isinstance(m, six.string_types)
+                    ]))
+
+                expedition['teamLists'] = lists
 
         if 'protocols' in body:
             # for each protocol, delegate processing that protocol's data to its
@@ -371,6 +382,9 @@ class ProtocolOysterMeasurements(CollectionView):
             record = {}
 
         observations = body.pop('observations', [])
+
+        # reject null observations
+        record['measuringOysterGrowth']['substrateShells'] = []
 
         if len(observations):
             for pair in observations:

@@ -6,6 +6,11 @@ set -o errtrace
 
 cleanup() {
     echo "Quitting..."
+
+    if [ -e log.fifo ]; then
+        rm log.fifo
+    fi
+
     kill -- -$$ 2> /dev/null
 }
 
@@ -13,7 +18,7 @@ trap cleanup EXIT
 root="$(pwd)"
 LOGLEVEL="${LOGLEVEL:-info}"
 
-color_db='1 0'
+color_dal='1 0'
 color_api='6 0'
 color_web='2 0'
 
@@ -50,22 +55,53 @@ color() {
     fi
 }
 
+if [ -e log.fifo ]; then
+    rm log.fifo
+fi
+
+mkfifo log.fifo
+
+while true; do
+    if read; then
+        c='reset'
+
+        case "${REPLY}" in
+        dal:*)
+            c=$color_dal;;
+        api:*)
+            c=$color_api;;
+        web:*)
+            c=$color_web;;
+        esac
+
+        if [ -n "${REPLY}" ]; then
+
+            if [ "${c}" != "reset" ]; then
+                tag="${REPLY%%:*}"
+                msg="${REPLY#*:}"
+
+                echo -n "    "
+                color $c
+                echo -n "[${tag}]"
+                color reset
+                echo "  ${msg}" 1>&2
+            else
+                echo "${REPLY}" 1>&2
+            fi
+        fi
+    fi
+done < log.fifo &
+
 while true; do
     echo "Starting Pivot (database abstraction layer)"
     cd "${root}/database"
 
     pivot -s schema -L "${LOGLEVEL}" -Q web 2>&1 | while read; do
-        if [ -n "${REPLY}" ]; then
-                echo -n "       "
-                color $color_db
-                echo -n "[db]"
-                color reset
-                echo "  ${REPLY}" 1>&2
-        fi
+        echo "dal:${REPLY}"
     done
 
     sleep 1s
-done &
+done >> log.fifo 2>&1 &
 
 while true; do
     if tryget 'http://localhost:29029/api/status'; then
@@ -77,18 +113,12 @@ while true; do
         cd "${root}/backend"
 
         make debug 2>&1 | while read; do
-            if [ -n "${REPLY}" ]; then
-                echo -n "      "
-                color $color_api
-                echo -n "[api]"
-                color reset
-                echo "  ${REPLY}" 1>&2
-            fi
+            echo "api:${REPLY}"
         done
     fi
 
     sleep 1s
-done &
+done >> log.fifo 2>&1 &
 
 while true; do
     if tryget 'http://localhost:5000/api/routes'; then
@@ -96,18 +126,12 @@ while true; do
         cd "${root}/frontend"
 
         diecast -a :28419 -L "${LOGLEVEL}" 2>&1 | while read; do
-            if [ -n "${REPLY}" ]; then
-                echo -n "      "
-                color $color_web
-                echo -n "[web]"
-                color reset
-                echo "  ${REPLY}" 1>&2
-            fi
+            echo "web:${REPLY}"
         done
     fi
 
     sleep 1s
-done &
+done >> log.fifo 2>&1 &
 
 while true; do
     if tryget 'http://localhost:29029/api/status'; then
@@ -136,6 +160,6 @@ while true; do
     fi
 
     sleep 1s
-done &
+done 2>&1 &
 
 wait

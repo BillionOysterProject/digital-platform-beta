@@ -7,7 +7,7 @@ bindings:
   resource: '/api/units'
   params:
     limit:  false
-    expand: false
+    noexpand: true
     sort:
     - title
 
@@ -16,7 +16,7 @@ bindings:
   fallback: []
   params:
     limit: false
-    expand: false
+    noexpand: true
     q:      'status/published'
 ---
 

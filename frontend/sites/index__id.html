@@ -19,7 +19,7 @@ bindings:
   params:
     q: 'teamLeads/{{ join (uniq (pluck $.bindings.stations "teamLead._id")) "|" }}'
     fields: 'teamLead,teamLeads,name'
-    expand: false
+    noexpand: true
 
 - name:     'relatedExpeditions'
   resource: '/api/expeditions'
@@ -27,7 +27,7 @@ bindings:
   params:
     q:      'station/{{ join (pluck $.bindings.stations "_id") "|" }}/status/published'
     sort:   '-monitoringStartDate'
-    expand: false
+    noexpand: true
     limit:  100
 
 - name: 'photos'

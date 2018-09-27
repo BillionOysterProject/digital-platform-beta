@@ -97,10 +97,10 @@ $(function () {
                         if (toggle.length) {
                             var inputs = toggle.find('input[type="radio"]');
 
-                            inputs.removeAttr('checked');
+                            inputs.prop('checked', false);
 
                             if (input.attr('value') && input.attr('name')) {
-                                input.attr('checked', 'checked')
+                                input.prop('checked', true)
                                 toggle.attr('data-field-value', input.attr('value'));
                                 this.syncToggleButtonStates();
                             }

@@ -115,12 +115,6 @@ class Users(CollectionView):
     route_base      = 'users'
     collection_name = 'users'
 
-    expand_fields   = {
-        'schoolOrg': (
-            'schoolorgs', [],
-        ),
-    }
-
     @classmethod
     def register(cls, app):
         super(Users, cls).register(app)

@@ -495,13 +495,12 @@ includes:
                             'Name (Common or Scientific)',
                             '# of Organisms',
                         ], [{
-                            type:      'autocomplete',
+                            editor:    'select',
                             data:      'organism',
                             strict:    false,
-                            source:    [
-                            {{ range $i, $organism := $.bindings.mobileOrganisms }}
-                                '{{ $organism.commonName }}',
-                                '{{ $organism.latinName }}',
+                            selectOptions:    [
+                            {{ range $i, $name := sort (pluck $.bindings.mobileOrganisms "commonName" "latinName") }}
+                                '{{ $name }}',
                             {{ end }}
                             ],
                             width:     20,
