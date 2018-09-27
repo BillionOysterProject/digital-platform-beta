@@ -227,7 +227,8 @@ bindings:
             <div class="card-body">
                 <p>
                     This protocol captures data on oyster mortality (how many oysters survived)
-                    and growth (how long each live oyster is, measured in millimeters) since the baseline expedition (the first expedition). Learn more.
+                    and growth (how long each live oyster is, measured in millimeters). 
+                    <!-- Learn more. -->
                 </p>
 
                 <p>
@@ -243,27 +244,51 @@ bindings:
                 {{ end }}
 
                 {{ if $oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage }}
-                <p>
-                    <strong>Bioaccumulation on Cage:</strong>
-                    {{ $oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage }}
-                </p>
+                <div class="row">
+                    <div class="col-6">
+                        <li class="media">
+                            {{ if $expedition.station.photo }}
+                            <img
+                                class="img-thumbnail mr-3"
+                                style="max-width: 100px; height: auto;"
+                                src="{{ $expedition.station.photo.path }}"
+                                alt="{{ $expedition.teamLead.displayName }}'s ORS"
+                            >
+                            {{ else }}
+                            <img
+                                class="img-thumbnail mr-3"
+                                style="max-width: 100px; height: auto;"
+                                src="assets/img/placeholders/ors.jpg"
+                                alt="Placeholder image">
+                            {{ end }}
+                            <div class="media-body">
+                                <p class="mt-0 mb-1">
+                                    <strong>Bioaccumulation on Cage:</strong>
+                                    <br/>
+                                    {{ $oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage }}
+                                </p>
+                            </div>
+                        </li>
+                    </div>
+                </div>
                 {{ end }}
-
+                
                 <div class="mt-3">
                     <!--Need a function here to hide this entire section if there is no oyster mortality or growth data (unlikely but possible)-->
                     <h4>Summary Data for This Expedition</h4>
                     <table class="table table-bordered">
-                        <caption>Summary data on oyster mortality and growth, including the average oyster length and smallest and largest oysters.</caption>
+                        <caption>Summary data including the total number of live oysters and the average, largest, and smallest oyster lengths.</caption>
                         <tbody>
                             <!--Need a function to hide Mortality and Growth Rate if this is the first expedition to this station-->
                             <tr>
-                                <th scope="row">Mortality (from baseline)</th>
-                                <td> %</td>
+                                <th scope="row">Total # of Live Oysters</th>
+                                <td>{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</td>
                             </tr>
+                            <!--
                             <tr>
                                 <th scope="row">Growth Rate (from baseline)</th>
                                 <td> %</td>
-                            </tr>
+                            </tr> -->
 
                             {{ if $oysterMeasurement.averageSizeOfAllLiveOysters }}
                             <tr>
@@ -398,7 +423,8 @@ bindings:
                     <li>The line in the middle of the box represents the mean oyster measurement. </li>
                     <li>The top and bottom lines of the box represent the "standard deviation" above and below the mean oyster measurement.
                         (It's okay if you don't know what a standard deviation is- it's a way of showing what's considered "normal" in a dataset.
-                        You can learn about standard deviation here.)</li>
+                        <!-- You can learn about standard deviation here. -->
+                        )</li>
                     </ul>
 
                 <div>
@@ -437,10 +463,13 @@ bindings:
                     </table>
                 </div>
 
+                
+                {{ if or (count (compact (apply (pluck $substrateShells "outerSidePhoto.path") "trim"))) (count (compact (apply (pluck $substrateShells "innerSidePhoto.path") "trim"))) }}
+                <h4>Oyster Measurements Photos</h4>
+                {{ range $i, $substrateShell := $substrateShells }}
                 <div class="mt-3">
-                    <h4>Oyster Measurements Photos</h4>
                     <div class="row">
-                    {{ range $i, $substrateShell := $substrateShells }}
+                    
                     {{  if $substrateShell.outerSidePhoto.path }}
                         <figure class="col-xl-3 col-lg-4 col-md-6 col-sm-12 text-center figure">
                             <img
@@ -459,10 +488,10 @@ bindings:
                             <figcaption class="figure-caption">Substrate Shell #{{ $substrateShell.substrateShellNumber }}, inner side</figcaption>
                         </figure>
                     {{  end }}
-                    {{ end }}
                     </div>
                 </div>
-
+                {{ end }}
+                {{ end }}
             </div>
         </div>
     </div>
@@ -485,7 +514,8 @@ bindings:
                     <p>
                         This protocol captures data on meteorological conditions, recent rainfall,
                         and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
-                        can affect oysters by impacting water quality, particularly through Combined Sewer Overflows. Learn more.
+                        can affect oysters by impacting water quality, particularly through Combined Sewer Overflows. 
+                        <!-- Learn more. -->
                     </p>
 
                     <p>
@@ -592,7 +622,8 @@ bindings:
                 <p>
                     This protocol captures data on the abundance (how many) and composition (which species) of the mobile organisms (like crustaceans and fish)
                     that were in the Oyster Research Station during this expedition.
-                    This tells us about how oysters might impact biodiversity in New York Harbor.  Learn more.
+                    This tells us about how oysters might impact biodiversity in New York Harbor.  
+                    <!-- Learn more. -->
                 </p>
                 <p>
                     <strong>Contributor for this protocol:</strong>
@@ -606,6 +637,7 @@ bindings:
                 </p>
                 {{ end }}
 
+                {{ if $mobileOrganisms }}
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
@@ -615,20 +647,22 @@ bindings:
                             <th scope="col">Notes</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {{ range $i, $mobileOrganism := $mobileOrganisms }}
-                            <tr>
-                                <td>{{ $mobileOrganism.organism.commonName }}</td>
-                                <td><i>{{ $mobileOrganism.organism.latinName }}</i></td>
-                                <td>{{ $mobileOrganism.count }}</td>
-                                <td>{{ $mobileOrganism.notesQuestions }}</td>
-                            </tr>
+                    <tbody> 
+                        {{ range $i, $mobileOrganism := $mobileOrganisms }}     
+                        <tr>
+                            <td>{{ $mobileOrganism.organism.commonName }}</td>
+                            <td><i>{{ $mobileOrganism.organism.latinName }}</i></td>
+                            <td>{{ $mobileOrganism.count }}</td>
+                            <td>{{ $mobileOrganism.notesQuestions }}</td>
+                        </tr>
                         {{ end }}
                     </tbody>
                 </table>
+                {{ end }}
+                
 
+                {{ if or (count (pluck $mobileOrganisms "sketchPhoto.path")) (count (pluck $mobileOrganisms "organism.image.path")) }}
                 <h4>Mobile Organisms Photos</h4>
-
                 <div class="row">
                 {{ range $i, $mobileOrganism := $mobileOrganisms }}
                 {{  if or (get $mobileOrganism "sketchPhoto.path") (get $mobileOrganism "organism.image.path") }}
@@ -649,6 +683,7 @@ bindings:
                 {{  end }}
                 {{ end }}
                 </div>
+                {{ end }}
             </div>
         </div>
     </div>
@@ -669,10 +704,11 @@ bindings:
         <div id="sessileOrganisms" class="collapse" aria-labelledby="sessileOrganismsData" data-parent="#accordion">
             <div class="card-body">
                 <p>
-                    This protocol captures data on the sessile organisms (creatures that after anchoring to one spot don't move again, like sponges, tunicates, and barnacles)
-                    that colonized the tiles of the Oyster Research Station during this expedition.
+                    This protocol captures data on sessile organisms, which are creatures that don't move again after they anchor to one spot, like sponges, tunicates, and barnacles.
+                    To measure this, we place a transparent grid with 25 points over each of the ORS's tiles, and identify which species is underneath each grid point.
                     This tells us about the potential for oyster reefs to provide a substrate for a variety of sessile species,
-                    as well as how those species might change over time ("ecological succession").  Learn more.
+                    as well as how those species might change over time ("ecological succession").  
+                    <!-- Learn more. -->
                 </p>
 
                 <p>
@@ -687,7 +723,7 @@ bindings:
                 </p>
                 {{ end }}
 
-
+                {{ if $sessileOrganism.settlementTiles }}
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
@@ -709,6 +745,7 @@ bindings:
                         </tr>
                         {{ end }}
                 </table>
+                {{ end }}
 
                 <div class="mt-3">
                     <h4>Sessile Organisms Photos</h4>
@@ -747,7 +784,8 @@ bindings:
             <div class="card-body">
                     <p>
                         This protocol captures data on several different water quality parameters (temperature, salinity, dissolved oxygen, etc.)
-                        that might affect oyster mortality and growth. Learn more.
+                        that might affect oyster mortality and growth. 
+                        <!-- Learn more. -->
                     </p>
 
                     <p>
@@ -763,8 +801,9 @@ bindings:
                     {{ end }}
 
                     <!--Put something in to repeat for each sample-->
-                    <h4>Water Sample # </h4>
+                    <!-- <h4>Water Sample # </h4> -->
 
+                    {{ if $waterQuality.samples }}
                     <table class="table table-bordered table-sm">
                         <thead>
                             <tr>
@@ -836,6 +875,7 @@ bindings:
                             {{ end }}
                         </tbody>
                     </table>
+                    {{ end }}
             </div>
         </div>
     </div>
