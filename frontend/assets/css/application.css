@@ -179,7 +179,7 @@ form legend {
         height:          54px;
         display:         flex;
         flex-direction:  row;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 
     .site-navbar > * {
@@ -190,7 +190,7 @@ form legend {
         display:         flex;
         flex-direction:  row;
         flex:            1;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 
     .site-navbar .navbar-brand {
@@ -207,6 +207,20 @@ form legend {
 
     .site-navbar .nav-link i {
         display:         none;
+    }
+
+    .site-navbar .nav-item {
+        margin-right: 1rem;
+    }
+
+    .site-navbar .dropdown-menu {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        margin-top: 6px;
+    }
+
+    .site-navbar .dropdown-menu.show {
+        position: absolute !important;
     }
 }
 
@@ -251,6 +265,7 @@ form legend {
     .site-navbar .navbar-nav {
         display:         flex;
         flex-direction:  column;
+        flex:            1;
         width:           100%;
     }
 
@@ -292,7 +307,6 @@ form legend {
     }
 
     .site-navbar .navbar-nav .dropdown-menu {
-        position:    relative;
         background:  transparent;
         border:      0;
         width:       100%;
@@ -320,7 +334,7 @@ form legend {
         top:             0;
         right:           0;
         height:          50px;
-        z-index:         10000;
+        z-index:         999;
     }
 
     .content-body {
@@ -329,7 +343,7 @@ form legend {
 }
 
 .site-navbar .navbar-nav .nav-link {
-    color:       #FFFFFF;
+    color:       #FFFFFF !important;
 }
 
 nav + .content {
@@ -660,6 +674,7 @@ table.expeditions-data-table .protocol-5-bg {
 .navbar-default.user-navbar {
     border-bottom:   1px solid rgba(66, 108, 169, 0.5);
     height:          50px;
+    z-index:         999;
 }
 
 .multiDemo ul[dnd-list],
@@ -706,6 +721,11 @@ table.expeditions-data-table .protocol-5-bg {
     width: 50px;
     border-radius: 50%;
     margin-right: 5px
+}
+
+.alert [data-notify="title"] {
+    display: block;
+    font-weight: bold;
 }
 
 .alert,
@@ -1809,6 +1829,36 @@ li.loading-dialog {
 .btn-group-toggle .btn:active {
     background-color: #2c3c56 !important;
     color: white !important;
+}
+
+@media (max-width: 992px) {
+    .btn-group {
+        display: block;
+    }
+
+    .btn-group .btn {
+        width: 100%;
+        border-radius: 0;
+        margin: 0 !important;
+        height: 4em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn-group .btn + .btn {
+        margin-top: -1px !important;
+    }
+
+    .btn-group .btn:first-child:not(.dropdown-toggle) {
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+    }
+
+    .btn-group .btn:last-child:not(.dropdown-toggle) {
+        border-bottom-left-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
 }
 
 /* fix Handsontable height issues (see: https://github.com/handsontable/handsontable/issues/3432#issuecomment-218442750) */

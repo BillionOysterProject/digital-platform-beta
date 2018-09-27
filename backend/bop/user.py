@@ -69,6 +69,13 @@ class User(dict):
     def is_anonymous(self):
         return False
 
+    def has_any_role(self, *roles):
+        for role in roles:
+            if self.has_role(role):
+                return True
+
+        return False
+
     def has_role(self, role):
         try:
             for r in self['roles']:

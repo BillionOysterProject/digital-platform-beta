@@ -9,12 +9,6 @@ includes:
     expeditions:        _includes/home/expeditions.html
     contribute:         _includes/home/contribute.html
     questions:          _includes/home/questions.html
-
-# switch:
-# - condition: '{{ $.flags.loggedIn }}'
-#   use:       _logged_in_homepage.html
-#
-# - use:       _logged_out_homepage.html
 ---
 {{ template "restore-our-harbor" . }}
 {{ template "events" . }}

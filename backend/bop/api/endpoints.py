@@ -23,7 +23,6 @@ class Endpoint(FlaskView):
     results_only = True
     strict_slashes = False
     route_prefix = '/api/'
-    expand_fields = {}
     _app = None
     aggregateFns = (
         'sum',
@@ -66,6 +65,20 @@ class Endpoint(FlaskView):
 
 class CollectionView(Endpoint):
     default_sort = None
+    name_field = 'name'
+
+    @classmethod
+    def first_by_name(cls, name):
+        try:
+            results = cls.get_collection().query('{}/is:{}'.format(cls.name_field, name))
+
+            if len(results):
+                return results[0]
+        except:
+            logging.exception('first_by_name:')
+            pass
+
+        return None
 
     @classmethod
     def register(cls, app):
@@ -121,11 +134,8 @@ class CollectionView(Endpoint):
 
         # specify whether embedded results should be expanded
         # ----------------------------------------------------------------------
-        if 'expand' in request.args:
-            if as_bool(request.args['expand']):
-                params['noexpand'] = False
-            else:
-                params['noexpand'] = True
+        if 'noexpand' in request.args:
+            params['noexpand'] = as_bool(request.args['noexpand'])
 
         return params
 
@@ -133,16 +143,21 @@ class CollectionView(Endpoint):
     def query_results_params(self):
         params = {}
 
-        if 'expand' in request.args:
-            params['expand'] = as_bool(request.args['expand'])
+        if 'noexpand' in request.args:
+            params['noexpand'] = as_bool(request.args['noexpand'])
 
         return params
 
     @property
     def single_result_params(self):
-        return {}
+        params = {}
 
-    def _prepare_query_results(self, results, expand=True, raw=False):
+        if 'noexpand' in request.args:
+            params['noexpand'] = as_bool(request.args['noexpand'])
+
+        return params
+
+    def _prepare_query_results(self, results, noexpand=False, raw=False):
         data = [
             self._prepare_single_result(r) for r in results
         ]
@@ -215,7 +230,7 @@ class CollectionView(Endpoint):
         if 'limit' not in params:
             params['limit'] = False
 
-        if not request.args.get('expand', has_nested_fields):
+        if request.args.get('noexpand', not has_nested_fields):
             params['noexpand'] = True
         else:
             params['noexpand'] = False
@@ -313,8 +328,8 @@ class CollectionView(Endpoint):
 
         :param record_id: The ID of the object to retrieve.
         """
-        result = self.collection.get(record_id)
-        result = self._prepare_single_result(result, **self.single_result_params)
+        result = self.collection.get(record_id, **self.single_result_params)
+        result = self._prepare_single_result(result)
 
         return jsonify(result)
 
@@ -329,7 +344,7 @@ class CollectionView(Endpoint):
     def delete(self):
         abort(501, 'This endpoint has not been implemented')
 
-    def _get_query_results(self, query=None, params=None, raw=None, expand=None):
+    def _get_query_results(self, query=None, params=None, raw=None, noexpand=None):
         query = g.get('query', (query or 'all'))
         qrp = self.query_results_params
 
@@ -342,11 +357,8 @@ class CollectionView(Endpoint):
         if isinstance(params, dict):
             filters.update(params)
 
-        if isinstance(expand, bool):
-            if expand:
-                filters['noexpand'] = False
-            else:
-                filters['noexpand'] = True
+        if isinstance(noexpand, bool):
+            filters['noexpand'] = noexpand
 
         results = self.collection.query(query, **filters)
         return self._prepare_query_results(results, **qrp)

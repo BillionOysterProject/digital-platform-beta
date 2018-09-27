@@ -3,7 +3,7 @@ bindings:
 -   name: expeditions
     resource: '/api/expeditions'
     params:
-        expand: false
+        noexpand: true
         limit: 100
         q:    'status/is:published'
         sort: '-monitoringStartDate'

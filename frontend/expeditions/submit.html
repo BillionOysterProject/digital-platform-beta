@@ -31,12 +31,18 @@ includes:
     protocolWaterQuality:       '/expeditions/_submit-protocol-water-quality.html'
 ---
 <p class="mt-3">
-    Expand the steps below to submit data from your monitoring expedition. 
+    Expand the steps below to submit data from your monitoring expedition.
     <!-- This form saves automatically and is editable by you, your team, and anyone else you invite to the expedition. -->
     To make your expedition public, click "Save and Publish" at the bottom of this page.
 </p>
 
-<form class="form mt-4" action="/api/expeditions/" data-debug-log="true" method="post">
+<form
+    class="form mt-4"
+    action="/api/expeditions/"
+    data-redirect-to="/data/field-reports/{id}"
+    data-redirect-data-id="id"
+    method="post"
+>
     <!-- ########################################################################################### -->
     <!-- Step 1: Enter Expedition Metadata-->
     <!--         Enter information (like date and location) about the expedition. -->
@@ -71,6 +77,7 @@ includes:
                 type="text"
                 id="name"
                 name="name"
+                required
                 {{ if $.bindings.expedition }}
                 value="{{ $.bindings.expedition.name }}"
                 {{ end }}
@@ -87,6 +94,7 @@ includes:
                 id="monitoringStartDate"
                 type="datetime-local"
                 name="monitoringStartDate"
+                required
                 {{ if $.bindings.expedition }}
                 value="{{ $.bindings.expedition.monitoringStartDate }}"
                 {{ else }}
@@ -152,6 +160,7 @@ includes:
                     data-typeahead-field="name"
                     id="structureName"
                     aria-describedby="structureNameHelp"
+                    required
                 >
 
                 <small class="form-text" id="structureNameHelp">
@@ -400,11 +409,19 @@ includes:
                 <button
                     type="submit"
                     class="btn btn-primary mr-2"
+                    onclick="this.form.submitSource='saveAndContinue'"
+                >Save &amp; Continue Editing</button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                    onclick="this.form.submitSource='save'"
                 >Save Expedition</button>
 
                 <button
                     type="submit"
                     class="btn btn-success ml-2"
+                    onclick="this.form.submitSource='saveAndPublish'"
                 >Save &amp; Publish Expedition</button>
             </div>
         </div>
@@ -495,13 +512,12 @@ includes:
                             'Name (Common or Scientific)',
                             '# of Organisms',
                         ], [{
-                            type:      'autocomplete',
+                            editor:    'select',
                             data:      'organism',
                             strict:    false,
-                            source:    [
-                            {{ range $i, $organism := $.bindings.mobileOrganisms }}
-                                '{{ $organism.commonName }}',
-                                '{{ $organism.latinName }}',
+                            selectOptions: [
+                            {{ range $i, $name := sort (pluck $.bindings.mobileOrganisms "commonName" "latinName") }}
+                                '{{ $name }}',
                             {{ end }}
                             ],
                             width:     20,
@@ -540,8 +556,41 @@ includes:
                 if (target.find('#sessileOrganismsTable').length) {
                     if (!tables.sessileOrganisms) {
                         tables.sessileOrganisms = bop.createTable('#sessileOrganismsTable', [
-                            'Name (Common or Scientific)',
+                            'Organism (Tile #1)',
+                            'Organism (Tile #2)',
+                            'Organism (Tile #3)',
+                            'Organism (Tile #4)',
                         ], [{
+                            type:      'autocomplete',
+                            strict:    false,
+                            source:    [
+                            {{ range $i, $organism := $.bindings.sessileOrganisms }}
+                                '{{ $organism.commonName }}',
+                                '{{ $organism.latinName }}',
+                            {{ end }}
+                            ],
+                            width:     20,
+                        }, {
+                            type:      'autocomplete',
+                            strict:    false,
+                            source:    [
+                            {{ range $i, $organism := $.bindings.sessileOrganisms }}
+                                '{{ $organism.commonName }}',
+                                '{{ $organism.latinName }}',
+                            {{ end }}
+                            ],
+                            width:     20,
+                        }, {
+                            type:      'autocomplete',
+                            strict:    false,
+                            source:    [
+                            {{ range $i, $organism := $.bindings.sessileOrganisms }}
+                                '{{ $organism.commonName }}',
+                                '{{ $organism.latinName }}',
+                            {{ end }}
+                            ],
+                            width:     20,
+                        }, {
                             type:      'autocomplete',
                             strict:    false,
                             source:    [
@@ -556,6 +605,37 @@ includes:
                             startRows:    25,
                             maxRows:      100,
                             width:        width,
+                        }, function(table) {
+                        {{ if $.bindings.expedition }}
+                            var input = JSON.parse('{{ jsonify (get $.bindings.expedition "protocols.settlementTiles.settlementTiles") }}');
+                            var data = [];
+
+                            if (input && input.length) {
+                                for(var i = 0; i < 25; i++) {
+                                    var row = [];
+
+                                    for(var j = 0; j < input.length; j++) {
+                                        try {
+                                            var cell = input[j]['grid' + (i+1).toString()];
+
+                                            if (cell) {
+                                                row.push(cell.organism.latinName);
+                                            }
+                                        } catch(e) {
+                                            ;
+                                        }
+
+                                        if (j == 3) {
+                                            break;
+                                        }
+                                    }
+
+                                    data.push(row);
+                                }
+                            }
+
+                            table.loadData(data);
+                        {{ end }}
                         });
                     }
                 }

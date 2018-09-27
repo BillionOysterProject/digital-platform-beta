@@ -5,7 +5,8 @@ import logging
 import os
 import inspect
 import pivot
-from .utils import parse_docstring
+from traceback import format_exc
+from .utils import parse_docstring, as_bool
 from .api import *
 from flask import Flask, jsonify, url_for
 from werkzeug.exceptions import default_exceptions
@@ -14,7 +15,9 @@ from .api.endpoints import Endpoint, CollectionView
 from collections import OrderedDict
 from flask_login import LoginManager
 from flask_session import Session
+import sentry_sdk
 from raven.contrib.flask import Sentry
+from raven.conf import setup_logging
 
 
 def handle_error(e):
@@ -29,7 +32,11 @@ def handle_error(e):
     if code not in [401, 403, 404]:
         logging.warning(e)
 
-    return jsonify(error=str(e)), code
+    response = {
+        'error': '{}'.format(e),
+    }
+
+    return jsonify(**response), code
 
 
 class API(Flask):
@@ -41,7 +48,9 @@ class API(Flask):
 
     def setup_sentry_reporting(self):
         # setup Sentry error reporting (only works if SENTRY_DSN envvar is set)
-        self.sentry = Sentry(self, logging=True, level=logging.INFO)
+        # self.sentry = Sentry(self, logging=True, level=logging.INFO)
+        # sentry_sdk.init(os.getenv('SENTRY_DSN'))
+        pass
 
     def setup_persistent_sessions(self):
         self.session_manager = Session()
