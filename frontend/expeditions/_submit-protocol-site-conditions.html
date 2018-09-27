@@ -86,9 +86,9 @@
                             id="airTemperature"
                             value="{{ get $.bindings.expedition `protocols.siteCondition.meteorologicalConditions.airTemperatureC` }}"
                         />
-                        <span class="help-block">
+                        <!-- <span class="help-block">
                             <p>Fahrenheit: <span id="temperatureF"></span>&deg;F</p>
-                        </span>
+                        </span> -->
                     </div>
                 </div>
 
@@ -180,6 +180,7 @@
                         >
                             <input
                                 type="radio"
+                                id="r7_yes"
                                 name="protocols.siteCondition.recentRainfall.rainedIn7Days"
                                 value="true"
                                 {{ if (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn7Days`) }}
@@ -193,7 +194,8 @@
                         >
                             <input
                                 type="radio"
-                                name="recentRainfall.rainedIn7Days"
+                                id="r7_no"
+                                name="protocols.siteCondition.recentRainfall.rainedIn7Days"
                                 value="false"
                                 {{ if not (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn7Days`) }}
                                 checked
@@ -213,6 +215,7 @@
                         >
                             <input
                                 type="radio"
+                                id="r72_yes"
                                 name="protocols.siteCondition.recentRainfall.rainedIn72Hours"
                                 value="true"
                                 {{ if (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn72Hours`) }}
@@ -226,6 +229,7 @@
                         >
                             <input
                                 type="radio"
+                                id="r72_no"
                                 name="protocols.siteCondition.recentRainfall.rainedIn72Hours"
                                 value="false"
                                 {{ if not (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn72Hours`) }}
@@ -246,6 +250,7 @@
                         >
                             <input
                                 type="radio"
+                                id="r24_yes"
                                 name="protocols.siteCondition.recentRainfall.rainedIn24Hours"
                                 value="true"
                                 {{ if (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn24Hours`) }}
@@ -259,6 +264,7 @@
                         >
                             <input
                                 type="radio"
+                                id="r24_no"
                                 name="protocols.siteCondition.recentRainfall.rainedIn24Hours"
                                 value="false"
                                 {{ if not (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn24Hours`) }}

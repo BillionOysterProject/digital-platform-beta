@@ -252,14 +252,22 @@ $(function () {
                             redirectTo = '/' + form.attr('name');
                         }
 
-                        // location.href = redirectTo;
+                        location.href = redirectTo;
                     }.bind(this),
                     error: function (data) {
+                        var message = 'Unknown Error';
+
                         try {
-                            console.error('Form Error:', data.responseJSON.error);
+                            message = data.responseJSON.error;
                         } catch (e) {
-                            console.error('Form Error:', data.statusText);
+                            message = data.statusText;
                         }
+
+                        this.notify(message, 'danger', {
+                            title: 'Expedition save Error',
+                        }, {
+                            delay: 10000,
+                        });
                     }.bind(this),
                 })
             },
