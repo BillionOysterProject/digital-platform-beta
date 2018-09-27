@@ -462,7 +462,6 @@ class ProtocolMobileTraps(CollectionView):
 
     @classmethod
     def record_from_submit(cls, body):
-        create = (False if '_id' in body else True)
         _id = body.get('_id')
 
         if _id:
@@ -470,6 +469,7 @@ class ProtocolMobileTraps(CollectionView):
         else:
             record = {}
 
+        record['notes'] = body.get('notes')
         organisms = body.pop('mobileOrganisms', [])
 
         if len(organisms):
@@ -509,6 +509,7 @@ class ProtocolSettlementTiles(CollectionView):
         else:
             record = {}
 
+        record['notes'] = body.get('notes')
         grids = body.pop('settlementTiles', [])
 
         # junky "cache"

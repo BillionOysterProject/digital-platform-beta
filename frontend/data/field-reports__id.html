@@ -277,12 +277,15 @@ bindings:
                     <!--Need a function here to hide this entire section if there is no oyster mortality or growth data (unlikely but possible)-->
                     <h4>Summary Data for This Expedition</h4>
                     <table class="table table-bordered">
+                        {{ $allCounts       := (pluck (get $oysterMeasurement "measuringOysterGrowth.substrateShells") "totalNumberOfLiveOystersOnShell") }}
+                        {{ $allMeasurements := (pluck (flatten (pluck (get $oysterMeasurement "measuringOysterGrowth.substrateShells") "measurements")) "sizeOfLiveOysterMM") }}
+
                         <caption>Summary data including the total number of live oysters and the average, largest, and smallest oyster lengths.</caption>
                         <tbody>
                             <!--Need a function to hide Mortality and Growth Rate if this is the first expedition to this station-->
                             <tr>
                                 <th scope="row">Total # of Live Oysters</th>
-                                <td>{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</td>
+                                <td>{{ sum $allCounts }}</td>
                             </tr>
                             <!--
                             <tr>
@@ -290,26 +293,20 @@ bindings:
                                 <td> %</td>
                             </tr> -->
 
-                            {{ if $oysterMeasurement.averageSizeOfAllLiveOysters }}
                             <tr>
                                 <th scope="row">Average Oyster Length (the "mean")</th>
-                                <td>{{ $oysterMeasurement.averageSizeOfAllLiveOysters }} mm</td>
+                                <td>{{ mean $allMeasurements }} mm</td>
                             </tr>
-                            {{ end }}
 
-                            {{ if $oysterMeasurement.minimumSizeOfAllLiveOysters }}
                             <tr>
                                 <th scope="row">Smallest Oyster (the "minimum" or "min")</th>
-                                <td>{{ $oysterMeasurement.minimumSizeOfAllLiveOysters }} mm</td>
+                                <td>{{ minimum $allMeasurements }} mm</td>
                             </tr>
-                            {{ end }}
 
-                            {{ if $oysterMeasurement.maximumSizeOfAllLiveOysters }}
                             <tr>
                                 <th scope="row">Largest Oyster (the "maximum" or "max")</th>
-                                <td>{{ $oysterMeasurement.maximumSizeOfAllLiveOysters }} mm</td>
+                                <td>{{ maximum $allMeasurements }} mm</td>
                             </tr>
-                            {{ end }}
 
                         </tbody>
                     </table>
@@ -670,8 +667,10 @@ bindings:
                         <img
                             {{ if get $mobileOrganism "sketchPhoto.path" }}
                             src="{{ rxreplace $mobileOrganism.sketchPhoto.path `^http:` `https:` }}"
-                            {{ else if get $mobileOrganism "organism.image.path" }}
+                            {{ else if hasPrefix (get $mobileOrganism "organism.image.path") "http" }}
                             src="{{ rxreplace $mobileOrganism.organism.image.path `^http:` `https:` }}"
+                            {{ else if hasPrefix (get $mobileOrganism "organism.image.path") "./" }}
+                            src="/assets/img/placeholders/mobile-organisms/{{ underscore (rtrim (basename $mobileOrganism.organism.image.path) (extname $mobileOrganism.organism.image.path)) }}.png"
                             {{ end }}
                             alt="mobile organism photo"
                         >
@@ -751,10 +750,14 @@ bindings:
                     <h4>Sessile Organisms Photos</h4>
                     <div class="row">
                     {{ range $i, $settlementTile := $settlementTiles }}
-                    {{  if $settlementTile.tilePhoto.path }}
+                    {{  if get $settlementTile "tilePhoto.path" }}
                         <figure class="col-xl-3 col-lg-4 col-md-6 col-sm-12 text-center figure">
                             <img
+                                {{ if hasPrefix $settlementTile.tilePhoto.path "http" }}
                                 src="{{ rxreplace $settlementTile.tilePhoto.path `^http:` `https:` }}"
+                                {{ else if hasPrefix $settlementTile.tilePhoto.path "./" }}
+                                src="/assets/img/placeholders/sessile-organisms/{{ underscore (rtrim (basename $settlementTile.tilePhoto.path) (extname $settlementTile.tilePhoto.path)) }}.png"
+                                {{ end }}
                                 alt="settlement tile photo"
                             >
                             <figcaption class="figure-caption">Settlement Tile #{{ add $i 1 }}</figcaption>
