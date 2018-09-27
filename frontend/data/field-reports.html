@@ -1,5 +1,13 @@
 ---
 bindings:
+-   name: myexpeditions
+    resource: '/api/expeditions'
+    params:
+        noexpand: true
+        limit: 100
+        q:    ''
+        sort: '-monitoringStartDate'
+
 -   name: expeditions
     resource: '/api/expeditions'
     params:

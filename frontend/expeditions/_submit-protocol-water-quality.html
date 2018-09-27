@@ -63,7 +63,7 @@
                 <label for="depthOfWaterSample">
                     Depth of Water Sample (m)
                 </label>
-                
+
                 <input
                 class="form-control col-md-2"
                 name="protocols.waterQuality.depthOfWaterSample"
@@ -73,7 +73,7 @@
                 max="50"
                 id="depthOfWaterSample"
                 />
-                
+
                 <small>Type 0 if at surface.</small>
             </div>
 
@@ -94,7 +94,7 @@
                         </label>
                         <div class="btn-group btn-group-toggle w-100">
                             {{ range $i, $methodId  := $waterQualityParameter.methods }}
-                            {{   $method := mapify (get $.page.testingMethods $methodId) }}                              
+                            {{   $method := mapify (get $.page.testingMethods $methodId) }}
                             <label
                                 class="btn btn-primary"
                             >
@@ -113,7 +113,7 @@
                 {{ if eq (count $units) 1 }}
                 <div class="col-md-12">
                     <p><strong>Unit: {{ get (first $units) "label" }}</strong></p>
-                </div>                        
+                </div>
                 {{ end }}
 
                 {{ if gt (count $units) 1 }}
@@ -122,7 +122,7 @@
                         <label>Unit</label>
 
                         <div class="btn-group btn-group-toggle w-100">
-                            
+
                             {{ range $i, $unit := uniqByKey $units "id" }}
                             <label
                                 class="btn btn-primary"
