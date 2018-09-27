@@ -384,7 +384,8 @@ class ProtocolOysterMeasurements(CollectionView):
         observations = body.pop('observations', [])
 
         # reject null observations
-        record['measuringOysterGrowth']['substrateShells'] = []
+        if 'measuringOysterGrowth' in record and isinstance(record['measuringOysterGrowth'], dict):
+            record['measuringOysterGrowth']['substrateShells'] = []
 
         if len(observations):
             for pair in observations:
