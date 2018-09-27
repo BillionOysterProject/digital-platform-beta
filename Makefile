@@ -43,6 +43,7 @@ shell:
 
 tools-dist:
 	GO111MODULE=on GOOS=darwin go build -o bin/darwin/pivot   -ldflags="-s -w" github.com/ghetzel/pivot/v3/pivot
-	GO111MODULE=on GOOS=darwin go build -o bin/darwin/diecast -ldflags="-s -w" github.com/ghetzel/diecast/diecast
 	GO111MODULE=on GOOS=linux  go build -o bin/linux/pivot    -ldflags="-s -w" github.com/ghetzel/pivot/v3/pivot
-	GO111MODULE=on GOOS=linux  go build -o bin/linux/diecast  -ldflags="-s -w" github.com/ghetzel/diecast/diecast
+
+	GOOS=darwin go build -o bin/darwin/diecast -ldflags="-s -w" github.com/ghetzel/diecast/diecast
+	GOOS=linux  go build -o bin/linux/diecast  -ldflags="-s -w" github.com/ghetzel/diecast/diecast
