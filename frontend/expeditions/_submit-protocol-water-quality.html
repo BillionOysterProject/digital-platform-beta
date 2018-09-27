@@ -89,24 +89,25 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>
-                            Method
-                        </label>
-                        <div class="btn-group btn-group-toggle w-100">
-                            {{ range $i, $methodId  := $waterQualityParameter.methods }}
-                            {{   $method := mapify (get $.page.testingMethods $methodId) }}
-                            <label
-                                class="btn btn-primary"
-                            >
-                                <input
-                                    type="radio"
-                                    name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.method"
-                                    value="{{ $methodId }}"
+                        <fieldset>
+                            <legend>Method</legend>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                {{ range $i, $methodId  := $waterQualityParameter.methods }}
+                                {{   $method := mapify (get $.page.testingMethods $methodId) }}
+                                <label
+                                    class="btn btn-primary"
                                 >
-                                {{ $method.label }}
-                            </label>
-                            {{ end }}
-                        </div>
+                                    <input
+                                        type="radio"
+                                        autocomplete="off"
+                                        name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.method"
+                                        value="{{ $methodId }}"
+                                    >
+                                    {{ $method.label }}
+                                </label>
+                                {{ end }}
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
 
@@ -119,23 +120,26 @@
                 {{ if gt (count $units) 1 }}
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Unit</label>
+                        <fieldset>
+                            <legend>Unit</legend>
 
-                        <div class="btn-group btn-group-toggle w-100">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
 
-                            {{ range $i, $unit := uniqByKey $units "id" }}
-                            <label
-                                class="btn btn-primary"
-                            >
-                                <input
-                                    type="radio"
-                                    name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.unit"
-                                    value="{{ $unit.id }}"
+                                {{ range $i, $unit := uniqByKey $units "id" }}
+                                <label
+                                    class="btn btn-primary"
                                 >
-                                {{ $unit.label }}
-                            </label>
-                            {{ end }}
-                        </div>
+                                    <input
+                                        type="radio"
+                                        autocomplete="off"
+                                        name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.unit"
+                                        value="{{ $unit.id }}"
+                                    >
+                                    {{ $unit.label }}
+                                </label>
+                                {{ end }}
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
                 {{ else }}

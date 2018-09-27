@@ -89,42 +89,18 @@ $(function () {
             // turns "btn-group-toggle" elements into a kind of radio button
             handleToggleButtons: function () {
                 $('.btn-group-toggle input').on('click', function(e) {
-                    var input = $(e.target);
-
-                    if (input.length) {
-                        var toggle = input.closest('.btn-group-toggle');
-
-                        if (toggle.length) {
-                            var inputs = toggle.find('input[type="radio"]');
-
-                            inputs.prop('checked', false);
-
-                            if (input.attr('value') && input.attr('name')) {
-                                input.prop('checked', true)
-                                toggle.attr('data-field-value', input.attr('value'));
-                                this.syncToggleButtonStates();
-                            }
-                        }
-                    }
+                    this.syncToggleButtonStates();
                 }.bind(this));
             },
 
             syncToggleButtonStates: function() {
-                $('.btn-group-toggle input[type="radio"][checked]').each(function(i, e){
-                    $(e).closest('.btn-group-toggle').attr('data-field-value', $(e).attr('value'));
-                });
-
-                $('.btn-group-toggle[data-field-value]').each(function(i, e) {
-                    var toggle = $(e);
-                    var value = toggle.attr('data-field-value');
-
-                    if (toggle.length && value.length) {
-                        var input = toggle.find('input[value="' + value + '"]');
-
-                        toggle.find('.btn').removeClass('active');
-                        input.closest('.btn').addClass('active');
+                $('.btn-group-toggle input[type="radio"]').each(function(i, e){
+                    if ($(e).prop('checked')) {
+                        $(e).closest('.btn').addClass('active');
+                    } else {
+                        $(e).closest('.btn').removeClass('active');
                     }
-                }.bind(this));
+                });
             },
 
             setupAjaxIntercept: function () {
@@ -220,12 +196,21 @@ $(function () {
 
                         switch (subsrc) {
                         case 'saveAndContinue':
-                            this.notify('Click to view this expedition in Field Reports.', 'success', {
-                                title: 'Expedition Saved',
-                                url: '/data/field-reports/' + data.id,
-                            }, {
-                                delay: 7500,
-                            });
+                            if (data.id) {
+                                if (window.history) {
+                                    window.history.replaceState(null, '', URI(window.location.href).addSearch({
+                                        'id': data.id,
+                                    }).toString())
+                                }
+
+                                this.notify('Click to view this expedition in Field Reports.', 'success', {
+                                    title: 'Expedition Saved',
+                                    url: '/data/field-reports/' + data.id,
+                                }, {
+                                    delay: 7500,
+                                });
+                            }
+
                             return;
                         }
 

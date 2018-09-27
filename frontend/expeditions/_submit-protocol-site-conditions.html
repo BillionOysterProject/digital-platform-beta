@@ -1,7 +1,7 @@
 <!-- BEGIN Site Conditions -->
 <div class="card border-1 mb-2">
     {{ if get $.bindings.expedition `protocols.siteCondition._id` }}
-    <input type="hidden" name="protocols.siteCondition._id" value="{{ get $.bindings.expedition `protocols.siteCondition._id` }}">
+    <input type="hidden" name="protocols.siteCondition.id" value="{{ get $.bindings.expedition `protocols.siteCondition._id` }}">
     {{ end }}
 
     <div class="card-header" id="addSiteConditions">
@@ -51,23 +51,26 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Weather</label>
-                        <div class="btn-group btn-group-toggle w-100">
-                            {{ range $i, $weatherCondition := $.page.weatherConditions }}
-                            <label class="btn btn-primary">
-                                <input
-                                    type="radio"
-                                    id="sc_weather_{{ $i }}"
-                                    name="protocols.siteCondition.meteorologicalConditions.weatherConditions"
-                                    value="{{ $weatherCondition.id }}"
-                                    {{ if eqx $weatherCondition.id (get $.bindings.expedition "protocols.siteCondition.meteorologicalConditions.weatherConditions") }}
-                                    checked="checked"
-                                    {{ end }}
-                                />
-                                {{ $weatherCondition.label }}
-                            </label>
-                            {{ end }}
-                        </div>
+                        <fieldset>
+                            <legend>Weather</legend>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                {{ range $i, $weatherCondition := $.page.weatherConditions }}
+                                <label class="btn btn-primary">
+                                    <input
+                                        type="radio"
+                                        autocomplete="off"
+                                        id="sc_weather_{{ $i }}"
+                                        name="protocols.siteCondition.meteorologicalConditions.weatherConditions"
+                                        value="{{ $weatherCondition.id }}"
+                                        {{ if eqx $weatherCondition.id (get $.bindings.expedition "protocols.siteCondition.meteorologicalConditions.weatherConditions") }}
+                                        checked="checked"
+                                        {{ end }}
+                                    />
+                                    {{ $weatherCondition.label }}
+                                </label>
+                                {{ end }}
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
             </div>
@@ -129,13 +132,14 @@
                     <div class="form-group">
                         <fieldset>
                             <legend>Wind Direction</legend>
-                            <div class="btn-group btn-group-toggle">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 {{ range $i, $windDirection := $.page.windDirections }}
                                 <label
                                     class="btn btn-primary"
                                 >
                                     <input
                                         type="radio"
+                                        autocomplete="off"
                                         name="protocols.siteCondition.meteorologicalConditions.windDirection"
                                         id="sc_weather_wind_{{ $i }}"
                                         value="{{ $windDirection.id }}"
@@ -174,13 +178,14 @@
             <div class="form-group">
                 <fieldset>
                     <legend>Has it rained in the past <span class="blue">7</span> days?</legend>
-                    <div class ="btn-group btn-group-toggle">
+                    <div class ="btn-group btn-group-toggle" data-toggle="buttons">
                         <label
                             class="btn btn-primary"
                         >
                             <input
                                 type="radio"
                                 id="r7_yes"
+                                autocomplete="off"
                                 name="protocols.siteCondition.recentRainfall.rainedIn7Days"
                                 value="true"
                                 {{ if (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn7Days`) }}
@@ -195,6 +200,7 @@
                             <input
                                 type="radio"
                                 id="r7_no"
+                                autocomplete="off"
                                 name="protocols.siteCondition.recentRainfall.rainedIn7Days"
                                 value="false"
                                 {{ if not (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn7Days`) }}
@@ -209,13 +215,14 @@
             <div class="form-group">
                 <fieldset>
                     <legend>Has it rained in the past <span class="blue">72</span> hours?</legend>
-                    <div class ="btn-group btn-group-toggle">
+                    <div class ="btn-group btn-group-toggle" data-toggle="buttons">
                         <label
                             class="btn btn-primary"
                         >
                             <input
                                 type="radio"
                                 id="r72_yes"
+                                autocomplete="off"
                                 name="protocols.siteCondition.recentRainfall.rainedIn72Hours"
                                 value="true"
                                 {{ if (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn72Hours`) }}
@@ -230,6 +237,7 @@
                             <input
                                 type="radio"
                                 id="r72_no"
+                                autocomplete="off"
                                 name="protocols.siteCondition.recentRainfall.rainedIn72Hours"
                                 value="false"
                                 {{ if not (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn72Hours`) }}
@@ -244,13 +252,14 @@
             <div class="form-group">
                 <fieldset>
                     <legend>Has it rained in the past <span class="blue">24</span> hours?</legend>
-                    <div class ="btn-group btn-group-toggle">
+                    <div class ="btn-group btn-group-toggle" data-toggle="buttons">
                         <label
                             class="btn btn-primary"
                         >
                             <input
                                 type="radio"
                                 id="r24_yes"
+                                autocomplete="off"
                                 name="protocols.siteCondition.recentRainfall.rainedIn24Hours"
                                 value="true"
                                 {{ if (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn24Hours`) }}
@@ -265,6 +274,7 @@
                             <input
                                 type="radio"
                                 id="r24_no"
+                                autocomplete="off"
                                 name="protocols.siteCondition.recentRainfall.rainedIn24Hours"
                                 value="false"
                                 {{ if not (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn24Hours`) }}
@@ -302,13 +312,14 @@
                     <div class="form-group">
                         <fieldset>
                             <legend>Describe the water color</legend>
-                            <div class="btn-group btn-group-toggle">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 {{ range $i, $waterColor := $.page.waterColors }}
                                 <label
                                     class="btn btn-primary"
                                 >
                                     <input
                                         type="radio"
+                                        autocomplete="off"
                                         name="protocols.siteCondition.waterConditions.waterColor"
                                         value="{{ $waterColor.id }}"
                                         {{ if eqx $waterColor.id (get $.bindings.expedition `protocols.siteCondition.waterConditions.waterColor`) }}
@@ -329,12 +340,13 @@
                     <div class="form-group">
                         <fieldset>
                             <legend>Is there an oil sheen present?</legend>
-                            <div class="btn-group btn-group-toggle">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label
                                     class="btn btn-primary"
                                 >
                                     <input
                                         type="radio"
+                                        autocomplete="off"
                                         name="protocols.siteCondition.waterConditions.oilSheen"
                                         value="true"
                                         {{ if (get $.bindings.expedition `protocols.siteCondition.waterConditions.oilSheen`) }}
@@ -348,6 +360,7 @@
                                 >
                                     <input
                                         type="radio"
+                                        autocomplete="off"
                                         name="protocols.siteCondition.waterConditions.oilSheen"
                                         value="false"
                                         {{ if not (get $.bindings.expedition `protocols.siteCondition.waterConditions.oilSheen`) }}
@@ -367,12 +380,13 @@
                     <div class="form-group">
                         <fieldset>
                             <legend>Is there any garbage in the water?</legend>
-                            <div class="btn-group btn-group-toggle">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label
                                     class="btn btn-primary"
                                 >
                                     <input
                                         type="radio"
+                                        autocomplete="off"
                                         name="protocols.siteCondition.waterConditions.garbage.garbagePresent"
                                         value="true"
                                         {{ if (get $.bindings.expedition `protocols.siteCondition.waterConditions.garbage.garbagePresent`) }}
@@ -386,6 +400,7 @@
                                 >
                                     <input
                                         type="radio"
+                                        autocomplete="off"
                                         name="protocols.siteCondition.waterConditions.garbage.garbagePresent"
                                         value="false"
                                         {{ if not (get $.bindings.expedition `protocols.siteCondition.waterConditions.garbage.garbagePresent`) }}
@@ -407,13 +422,14 @@
                             <legend>
                                 Is there any flow through the Combined Sewer Overflow (CSO) pipes?
                             </legend>
-                            <div class="btn-group btn-group-toggle">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 {{ range $i, $pipeFlow := $.page.pipeFlows }}
                                 <label
                                     class="btn btn-primary"
                                 >
                                     <input
                                         type="radio"
+                                        autocomplete="off"
                                         name="protocols.siteCondition.waterConditions.markedCombinedSewerOverflowPipes.howMuchFlowThrough"
                                         value="{{ $pipeFlow.id }}"
                                         {{ if eqx $pipeFlow.id (get $.bindings.expedition `protocols.siteCondition.waterConditions.markedCombinedSewerOverflowPipes.howMuchFlowThrough`) }}
@@ -436,13 +452,14 @@
                             <legend>
                                 Is there any flow through the unmarked or other outfall pipes?
                             </legend>
-                            <div class="btn-group btn-group-toggle">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 {{ range $i, $pipeFlow := $.page.pipeFlows }}
                                 <label
                                     class="btn btn-primary"
                                 >
                                     <input
                                         type="radio"
+                                        autocomplete="off"
                                         name="protocols.siteCondition.waterConditions.unmarkedOutfallPipes.howMuchFlowThrough"
                                         value="{{ $pipeFlow.id }}"
                                         {{ if eqx $pipeFlow.id (get $.bindings.expedition `protocols.siteCondition.waterConditions.unmarkedOutfallPipes.howMuchFlowThrough`) }}

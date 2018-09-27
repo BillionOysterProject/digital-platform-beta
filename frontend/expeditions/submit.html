@@ -161,6 +161,9 @@ includes:
                     id="structureName"
                     aria-describedby="structureNameHelp"
                     required
+                    {{ if and $.bindings.expedition $.bindings.expedition.station }}
+                    value="{{ $.bindings.expedition.station.name }}"
+                    {{ end }}
                 >
 
                 <small class="form-text" id="structureNameHelp">
@@ -198,6 +201,9 @@ includes:
                     data-typeahead-field="name"
                     id="team"
                     aria-describedby="teamHelp"
+                    {{ if and $.bindings.expedition $.bindings.expedition.team }}
+                    value="{{ $.bindings.expedition.team.name }}"
+                    {{ end }}
                 >
                 <small class="form-text" id="teamHelp">
                     Start typing your team's name in the field above, then select it from the dropdown list.

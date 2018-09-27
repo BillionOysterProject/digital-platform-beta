@@ -85,6 +85,14 @@ class CollectionView(Endpoint):
         super(CollectionView, cls).register(app)
 
     @classmethod
+    def save(cls, record):
+        if 'id' in record:
+            cls.get_collection().update(record)
+            return record, False
+        else:
+            return cls.get_collection().create(record).records[0], True
+
+    @classmethod
     def get_collection(cls):
         return cls.client.collection(cls.collection_name)
 

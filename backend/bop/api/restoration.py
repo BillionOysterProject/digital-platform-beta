@@ -348,23 +348,7 @@ class ProtocolSiteConditions(CollectionView):
 
     @classmethod
     def record_from_submit(cls, body):
-        create = (False if '_id' in body else True)
-        _id = body.get('_id')
-
-        if _id:
-            record = cls.get_collection().get(_id)
-        else:
-            record = {}
-
-        record.update(body)
-
-        # WRITE
-        try:
-            record = cls.get_collection().update_or_create(record).records[0]
-        except IndexError:
-            pass
-
-        return record, create
+        return cls.save(body)
 
 
 class ProtocolOysterMeasurements(CollectionView):
@@ -373,7 +357,6 @@ class ProtocolOysterMeasurements(CollectionView):
 
     @classmethod
     def record_from_submit(cls, body):
-        create = (False if '_id' in body else True)
         _id = body.get('_id')
 
         if _id:
@@ -398,13 +381,7 @@ class ProtocolOysterMeasurements(CollectionView):
 
             record.update(body)
 
-            # WRITE
-            try:
-                record = cls.get_collection().update_or_create(record).records[0]
-            except IndexError:
-                pass
-
-        return record, create
+        return cls.save(record)
 
     @classmethod
     def append_oyster_measurement(cls, record, shellNumber, mm):
@@ -517,13 +494,7 @@ class ProtocolMobileTraps(CollectionView):
 
             record['mobileOrganisms'] = neworgs
 
-            # WRITE
-            try:
-                record = cls.get_collection().update_or_create(record).records[0]
-            except IndexError:
-                pass
-
-        return record, create
+        return cls.save(record)
 
 class ProtocolSettlementTiles(CollectionView):
     route_base      = 'protocol-settlement-tiles'
@@ -531,7 +502,6 @@ class ProtocolSettlementTiles(CollectionView):
 
     @classmethod
     def record_from_submit(cls, body):
-        create = (False if '_id' in body else True)
         _id = body.get('_id')
 
         if _id:
@@ -582,13 +552,7 @@ class ProtocolSettlementTiles(CollectionView):
 
             record['settlementTiles'].append(tileToSave)
 
-            # WRITE
-            try:
-                record = cls.get_collection().update_or_create(record).records[0]
-            except IndexError:
-                pass
-
-        return record, create
+        return cls.save(record)
 
     @classmethod
     def make_empty_tile(cls, n):
@@ -627,7 +591,6 @@ class ProtocolWaterQualities(CollectionView):
 
     @classmethod
     def record_from_submit(cls, body):
-        create = (False if '_id' in body else True)
         _id = body.get('_id')
 
         if _id:
@@ -659,14 +622,7 @@ class ProtocolWaterQualities(CollectionView):
             oneSampleOnly,
         ]
 
-        # WRITE
-        try:
-            record = cls.get_collection().update_or_create(record).records[0]
-        except IndexError:
-            pass
-
-        return record, create
-
+        return cls.save(record)
 
 
 class RestorationStations(GeoCollectionView):
