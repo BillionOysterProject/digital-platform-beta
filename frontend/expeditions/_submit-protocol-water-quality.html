@@ -15,6 +15,7 @@
     </div>
     <div id="waterQuality" class="collapse" aria-labelledby="addWaterQuality" data-parent="#accordion">
         <div class="card-body">
+            <p>Select or enter in as much Water Quality data as you can.</p>
             <!-- <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
                 <div class="row">
                     <div class="col-sm-12 col-md-6 form-group">
@@ -90,11 +91,6 @@
                     <div class="form-group">
                         <label>
                             Method
-                            {{ if eq (count $units) 1 }}
-                            <div>
-                                <p>Unit: {{ get (first $units) "label" }}</p>
-                            </div>                        
-                            {{ end }}
                         </label>
                         <div class="btn-group btn-group-toggle w-100">
                             {{ range $i, $methodId  := $waterQualityParameter.methods }}
@@ -114,10 +110,16 @@
                     </div>
                 </div>
 
+                {{ if eq (count $units) 1 }}
+                <div class="col-md-12">
+                    <p><strong>Unit: {{ get (first $units) "label" }}</strong></p>
+                </div>                        
+                {{ end }}
+
                 {{ if gt (count $units) 1 }}
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Units</label>
+                        <label>Unit</label>
 
                         <div class="btn-group btn-group-toggle w-100">
                             
@@ -181,13 +183,13 @@
             <hr>
             {{ end }}
 
-            <div class="form-group mt-4">
+            <!-- <div class="form-group mt-4">
                 <a
                     href="#"
                     class="btn btn-primary"
                     onclick="return false"
                 >Add Water Sample</a>
-            </div>
+            </div> -->
             <div class="form-group mt-4">
                 <label for="waterQualityNotes">Water Quality Notes</label>
                 <textarea
