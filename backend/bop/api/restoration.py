@@ -626,7 +626,46 @@ class ProtocolWaterQualities(CollectionView):
 
     @classmethod
     def record_from_submit(cls, body):
-        return body, False
+        create = (False if '_id' in body else True)
+        _id = body.get('_id')
+
+        if _id:
+            record = cls.get_collection().get(_id)
+        else:
+            record = {}
+
+        # for the time being, we're only going to accept one water quality
+        # sample suite per expedition
+        data = body.pop('waterQuality', {})
+        oneSampleOnly = {}
+
+        record['notes'] = data.pop('notes', None)
+
+        for parameter, measurement in data.items():
+            oneSampleOnly[parameter] = {
+                'method': measurement.get('method'),
+                'units':  measurement.get('unit'),
+                'results': [
+                    measurement.get('result1', 0),
+                    measurement.get('result2', 0),
+                    measurement.get('result3', 0),
+                ]
+            }
+
+            oneSampleOnly[parameter]['average'] = float(sum(oneSampleOnly[parameter]['results'])) / float(len(oneSampleOnly[parameter]['results']))
+
+        record['samples'] = [
+            oneSampleOnly,
+        ]
+
+        # WRITE
+        try:
+            record = cls.get_collection().update_or_create(record).records[0]
+        except IndexError:
+            pass
+
+        return record, create
+
 
 
 class RestorationStations(GeoCollectionView):

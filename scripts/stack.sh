@@ -14,6 +14,19 @@ cleanup() {
     kill -- -$$ 2> /dev/null
 }
 
+function os() {
+    case "$(uname -s)" in
+    Darwin)
+        echo 'darwin';;
+    Linux)
+        echo 'linux';;
+    FreeBSD)
+        echo 'freebsd';;
+    *)
+        echo 'unknown';;
+    esac
+}
+
 trap cleanup EXIT
 root="$(pwd)"
 LOGLEVEL="${LOGLEVEL:-info}"
@@ -96,7 +109,7 @@ while true; do
     echo "Starting Pivot (database abstraction layer)"
     cd "${root}/database"
 
-    pivot -s schema -L "${LOGLEVEL}" -Q web 2>&1 | while read; do
+    ../bin/$(os)/pivot -s schema -L "${LOGLEVEL}" -Q web 2>&1 | while read; do
         echo "dal:${REPLY}"
     done
 
@@ -125,7 +138,7 @@ while true; do
         echo "Starting Diecast (frontend templating engine)"
         cd "${root}/frontend"
 
-        diecast -a :28419 -L "${LOGLEVEL}" 2>&1 | while read; do
+        ../bin/$(os)/diecast -a :28419 -L "${LOGLEVEL}" 2>&1 | while read; do
             echo "web:${REPLY}"
         done
     fi
