@@ -3,28 +3,81 @@ bindings:
 -   name: myexpeditions
     resource: '/api/expeditions'
     params:
-        noexpand: true
-        limit: 100
-        q:    ''
-        sort: '-monitoringStartDate'
+        limit:       10
+        q:           'teamLead/{{ $.bindings.user.id }}/teamLists.mobileTrap/{{ $.bindings.user.id }}/teamLists.oysterMeasurement/{{ $.bindings.user.id }}/teamLists.settlementTiles/{{ $.bindings.user.id }}/teamLists.siteCondition/{{ $.bindings.user.id }}/teamLists.waterQuality/{{ $.bindings.user.id }}'
+        conjunction: 'or'
+        sort:        '-monitoringStartDate'
 
--   name: expeditions
+-   name: publishedExpeditions
     resource: '/api/expeditions'
+    limit: 25
     params:
         noexpand: true
-        limit: 100
-        q:    'status/is:published'
-        sort: '-monitoringStartDate'
+        q:        'status/published'
+        sort:     '-monitoringStartDate'
 ---
+<h1 class="text-left pb-2">Field Reports</h1>
 
-<section class="content">
-    <div class="col-6 offset-3">
+<section class="content row">
+    <div class="col-md-12 col-lg-6">
+        <h2>My Recent Expeditions</h2>
+
         <ul class="list-group w-100">
-            {{ range $i, $expedition := $.bindings.expeditions }}
+            {{ range $i, $expedition := $.bindings.myexpeditions }}
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="mr-4 col-2 d-none d-lg-flex flex-column justify-content-center align-items-center">
+                        <i class="fa fa-3x fa-fw fa-circle expeditions-status-{{ $expedition.status }}"></i>
+                        <br>
+                        {{ titleize $expedition.status }}
+                    </div>
+
+                    <div class="col">
+                        <a href="/data/field-reports/{{ $expedition._id }}" class="mb-2 d-inline-block">
+                            <h3>
+                                <i class="fa d-inline d-lg-none fa-fw fa-circle expeditions-status-{{ $expedition.status }}"></i>
+                                {{ or $expedition.name "Untitled Expedition" }}
+                            </h3>
+                        </a>
+
+                        <dl class="row">
+                            {{ if isTime $expedition.monitoringStartDate }}
+                            <dt class="col-3">Date</dt>
+                            <dd class="col-9">{{ time $expedition.monitoringStartDate "Monday, January 1, 2006" }}</dd>
+                            {{ end }}
+
+                            {{ if $expedition.station }}
+                            <dt class="col-3">Location</dt>
+                            <dd class="col-9">
+                                {{ if isMap $expedition.station.siteId }}
+                                {{ $expedition.station.siteId.name }} &ndash;
+                                {{ end }}
+
+                                <a href="/sites/{{ $expedition.station._id }}">
+                                    {{ $expedition.station.name }}
+                                </a>
+                            </dd>
+                            {{ end }}
+                        </dl>
+                    </div>
+                </div>
+            </li>
+            {{ end }}
+        </ul>
+    </div>
+
+    <div class="col-md-12 col-lg-6">
+        <h2>Published Expeditions</h2>
+
+        <ul class="list-group w-100">
+            {{ range $i, $expedition := $.bindings.publishedExpeditions }}
             <li class="list-group-item">
                 <i class="fa fa-fw fa-circle expeditions-status-{{ $expedition.status }}"></i>
-                <a href="/data/field-report/{{ $expedition._id }}">
-                    {{ $expedition.name }}
+                <a href="/data/field-reports/{{ $expedition._id }}">
+                    <strong>{{ or $expedition.name "Untitled Expedition" }}</strong>
+                    {{ if isTime $expedition.monitoringStartDate }}
+                    &ndash; {{ time $expedition.monitoringStartDate "Monday, January 1, 2006" }}
+                    {{ end }}
                 </a>
             </li>
             {{ end }}

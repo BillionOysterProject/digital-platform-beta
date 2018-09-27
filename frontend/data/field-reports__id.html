@@ -8,10 +8,6 @@ bindings:
 -   name:	  'expedition'
     resource: '/api/expeditions/{{ param 1 }}'
 
--   name:     'site'
-    resource: '/api/sites/{{ $.bindings.expedition.station.siteId._id }}'
-    fallback: {}
-
 -   name:     'schoolOrg'
     resource: '/api/expeditions/{{ $.bindings.expedition.teamLead.schoolOrg }}'
     only_if:  '{{ isEmpty $.bindings.expedition.team }}'
@@ -23,7 +19,6 @@ bindings:
 ---
 
 {{ $expedition        := $.bindings.expedition }}
-{{ $site              := $.bindings.site }}
 {{ $schoolOrg         := or $.bindings.expedition.team.schoolOrg $.bindings.schoolOrg }}
 {{ $oysterMeasurement := get $.bindings.expedition "protocols.oysterMeasurement" }}
 {{ $siteCondition     := get $.bindings.expedition "protocols.siteCondition" }}
@@ -63,10 +58,14 @@ bindings:
 {{   end }}
 {{ end }}
 
-<h1 class="text-left pb-2">Expedition Field Report: {{ $expedition.name}}</h1>
+<h1 class="text-left pb-2">Expedition Field Report: {{ $expedition.name }}</h1>
 <section class="content shaded pt-1">
-    <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>{{ $site.name }}, {{ $site.bodyOfWater }}</p>
-    <p class="mb-1"><i class="fa fa-fw fa-globe"></i>{{ $site.boroughCounty }}, {{ $site.state }}</p>
+    {{ if isMap $expedition.station.siteId }}
+    <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
+        {{ $expedition.station.siteId.name }}, {{ $expedition.station.siteId.bodyOfWater }}
+    </p>
+    <p class="mb-1"><i class="fa fa-fw fa-globe"></i>{{ $expedition.station.siteId.boroughCounty }}, {{ $expedition.station.siteId.state }}</p>
+    {{ end }}
     <p class="mb-1"><i class="fa fa-fw fa-calendar"></i>{{ time $expedition.monitoringEndDate "January 1, 2006, 3:04pm"  }}</p>
 </section>
 
