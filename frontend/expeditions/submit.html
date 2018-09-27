@@ -541,7 +541,7 @@ includes:
                             if (input && input.length) {
                                 for(var i = 0; i < input.length; i++) {
                                     data.push({
-                                        organism      : input[i].organism.latinName,
+                                        organism      : input[i].organism.commonName,
                                         countOfSpecies: input[i].count,
                                     });
                                 }
@@ -619,7 +619,7 @@ includes:
                                             var cell = input[j]['grid' + (i+1).toString()];
 
                                             if (cell) {
-                                                row.push(cell.organism.latinName);
+                                                row.push(cell.organism.commonName);
                                             }
                                         } catch(e) {
                                             ;
