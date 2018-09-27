@@ -179,7 +179,7 @@ form legend {
         height:          54px;
         display:         flex;
         flex-direction:  row;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 
     .site-navbar > * {
@@ -190,7 +190,7 @@ form legend {
         display:         flex;
         flex-direction:  row;
         flex:            1;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 
     .site-navbar .navbar-brand {
@@ -207,6 +207,20 @@ form legend {
 
     .site-navbar .nav-link i {
         display:         none;
+    }
+
+    .site-navbar .nav-item {
+        margin-right: 1rem;
+    }
+
+    .site-navbar .dropdown-menu {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        margin-top: 6px;
+    }
+
+    .site-navbar .dropdown-menu.show {
+        position: absolute !important;
     }
 }
 
@@ -251,6 +265,7 @@ form legend {
     .site-navbar .navbar-nav {
         display:         flex;
         flex-direction:  column;
+        flex:            1;
         width:           100%;
     }
 
@@ -292,7 +307,6 @@ form legend {
     }
 
     .site-navbar .navbar-nav .dropdown-menu {
-        position:    relative;
         background:  transparent;
         border:      0;
         width:       100%;
@@ -320,7 +334,7 @@ form legend {
         top:             0;
         right:           0;
         height:          50px;
-        z-index:         10000;
+        z-index:         999;
     }
 
     .content-body {
@@ -329,7 +343,7 @@ form legend {
 }
 
 .site-navbar .navbar-nav .nav-link {
-    color:       #FFFFFF;
+    color:       #FFFFFF !important;
 }
 
 nav + .content {
@@ -660,6 +674,7 @@ table.expeditions-data-table .protocol-5-bg {
 .navbar-default.user-navbar {
     border-bottom:   1px solid rgba(66, 108, 169, 0.5);
     height:          50px;
+    z-index:         999;
 }
 
 .multiDemo ul[dnd-list],
@@ -706,6 +721,11 @@ table.expeditions-data-table .protocol-5-bg {
     width: 50px;
     border-radius: 50%;
     margin-right: 5px
+}
+
+.alert [data-notify="title"] {
+    display: block;
+    font-weight: bold;
 }
 
 .alert,

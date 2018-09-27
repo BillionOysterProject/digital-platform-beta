@@ -10,6 +10,7 @@ bindings:
 
 -   name:     'site'
     resource: '/api/sites/{{ $.bindings.expedition.station.siteId._id }}'
+    fallback: {}
 
 -   name:     'schoolOrg'
     resource: '/api/expeditions/{{ $.bindings.expedition.teamLead.schoolOrg }}'
@@ -24,16 +25,16 @@ bindings:
 {{ $expedition        := $.bindings.expedition }}
 {{ $site              := $.bindings.site }}
 {{ $schoolOrg         := or $.bindings.expedition.team.schoolOrg $.bindings.schoolOrg }}
-{{ $oysterMeasurement := $.bindings.expedition.protocols.oysterMeasurement }}
-{{ $siteCondition     := $.bindings.expedition.protocols.siteCondition }}
-{{ $mobileTrap        := $.bindings.expedition.protocols.mobileTrap }}
-{{ $sessileOrganism   := $.bindings.expedition.protocols.settlementTiles }}
-{{ $waterQuality      := $.bindings.expedition.protocols.waterQuality }}
-{{ $substrateShells   := $.bindings.expedition.protocols.oysterMeasurement.measuringOysterGrowth.substrateShells }}
-{{ $baselines         := $.bindings.expedition.station.baselines }}
-{{ $mobileOrganisms   := $.bindings.expedition.protocols.mobileTrap.mobileOrganisms }}
-{{ $settlementTiles   := $.bindings.expedition.protocols.settlementTiles.settlementTiles }}
-{{ $samples           := $.bindings.expedition.protocols.waterQuality.samples }}
+{{ $oysterMeasurement := get $.bindings.expedition "protocols.oysterMeasurement" }}
+{{ $siteCondition     := get $.bindings.expedition "protocols.siteCondition" }}
+{{ $mobileTrap        := get $.bindings.expedition "protocols.mobileTrap" }}
+{{ $sessileOrganism   := get $.bindings.expedition "protocols.settlementTiles" }}
+{{ $waterQuality      := get $.bindings.expedition "protocols.waterQuality" }}
+{{ $substrateShells   := get $.bindings.expedition "protocols.oysterMeasurement.measuringOysterGrowth.substrateShells" }}
+{{ $baselines         := get $.bindings.expedition "station.baselines" }}
+{{ $mobileOrganisms   := get $.bindings.expedition "protocols.mobileTrap.mobileOrganisms" }}
+{{ $settlementTiles   := get $.bindings.expedition "protocols.settlementTiles.settlementTiles" }}
+{{ $samples           := get $.bindings.expedition "protocols.waterQuality.samples" }}
 
 {{ range $i, $tile := $settlementTiles }}
 {{   $tileKey  := (printf "tileTotals.%d" $i) }}
@@ -227,7 +228,7 @@ bindings:
             <div class="card-body">
                 <p>
                     This protocol captures data on oyster mortality (how many oysters survived)
-                    and growth (how long each live oyster is, measured in millimeters). 
+                    and growth (how long each live oyster is, measured in millimeters).
                     <!-- Learn more. -->
                 </p>
 
@@ -272,7 +273,7 @@ bindings:
                     </div>
                 </div>
                 {{ end }}
-                
+
                 <div class="mt-3">
                     <!--Need a function here to hide this entire section if there is no oyster mortality or growth data (unlikely but possible)-->
                     <h4>Summary Data for This Expedition</h4>
@@ -463,13 +464,13 @@ bindings:
                     </table>
                 </div>
 
-                
+
                 {{ if or (count (compact (apply (pluck $substrateShells "outerSidePhoto.path") "trim"))) (count (compact (apply (pluck $substrateShells "innerSidePhoto.path") "trim"))) }}
                 <h4>Oyster Measurements Photos</h4>
                 {{ range $i, $substrateShell := $substrateShells }}
                 <div class="mt-3">
                     <div class="row">
-                    
+
                     {{  if $substrateShell.outerSidePhoto.path }}
                         <figure class="col-xl-3 col-lg-4 col-md-6 col-sm-12 text-center figure">
                             <img
@@ -514,7 +515,7 @@ bindings:
                     <p>
                         This protocol captures data on meteorological conditions, recent rainfall,
                         and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
-                        can affect oysters by impacting water quality, particularly through Combined Sewer Overflows. 
+                        can affect oysters by impacting water quality, particularly through Combined Sewer Overflows.
                         <!-- Learn more. -->
                     </p>
 
@@ -622,7 +623,7 @@ bindings:
                 <p>
                     This protocol captures data on the abundance (how many) and composition (which species) of the mobile organisms (like crustaceans and fish)
                     that were in the Oyster Research Station during this expedition.
-                    This tells us about how oysters might impact biodiversity in New York Harbor.  
+                    This tells us about how oysters might impact biodiversity in New York Harbor.
                     <!-- Learn more. -->
                 </p>
                 <p>
@@ -647,8 +648,8 @@ bindings:
                             <th scope="col">Notes</th>
                         </tr>
                     </thead>
-                    <tbody> 
-                        {{ range $i, $mobileOrganism := $mobileOrganisms }}     
+                    <tbody>
+                        {{ range $i, $mobileOrganism := $mobileOrganisms }}
                         <tr>
                             <td>{{ $mobileOrganism.organism.commonName }}</td>
                             <td><i>{{ $mobileOrganism.organism.latinName }}</i></td>
@@ -659,7 +660,7 @@ bindings:
                     </tbody>
                 </table>
                 {{ end }}
-                
+
 
                 {{ if or (count (pluck $mobileOrganisms "sketchPhoto.path")) (count (pluck $mobileOrganisms "organism.image.path")) }}
                 <h4>Mobile Organisms Photos</h4>
@@ -707,7 +708,7 @@ bindings:
                     This protocol captures data on sessile organisms, which are creatures that don't move again after they anchor to one spot, like sponges, tunicates, and barnacles.
                     To measure this, we place a transparent grid with 25 points over each of the ORS's tiles, and identify which species is underneath each grid point.
                     This tells us about the potential for oyster reefs to provide a substrate for a variety of sessile species,
-                    as well as how those species might change over time ("ecological succession").  
+                    as well as how those species might change over time ("ecological succession").
                     <!-- Learn more. -->
                 </p>
 
@@ -784,7 +785,7 @@ bindings:
             <div class="card-body">
                     <p>
                         This protocol captures data on several different water quality parameters (temperature, salinity, dissolved oxygen, etc.)
-                        that might affect oyster mortality and growth. 
+                        that might affect oyster mortality and growth.
                         <!-- Learn more. -->
                     </p>
 

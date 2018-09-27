@@ -175,6 +175,7 @@ $(function () {
 
                 var createNew = true;
                 var record = {};
+                var subsrc = event.target.submitSource;
 
                 $.each(form.serializeArray(), function (i, field) {
                     if (field.value == '' || field.value == '0') {
@@ -201,15 +202,32 @@ $(function () {
                     }
                 });
 
-                console.debug('Submitting', record)
+                switch (subsrc) {
+                case 'saveAndPublish':
+                    record['status'] = 'published';
+                    break;
+                }
+
+                console.debug(subsrc, record)
 
                 $.ajax(url, {
-                    method: (form.attr('method') || (createNew ? 'POST' : 'PUT')),
-                    data:  JSON.stringify(record),
+                    method:      (form.attr('method') || (createNew ? 'POST' : 'PUT')),
+                    data:        JSON.stringify(record),
                     contentType: "application/json; charset=utf-8",
-                    dataType: "json",
+                    dataType:    "json",
                     success: function (data) {
                         var redirectTo = '/';
+
+                        switch (subsrc) {
+                        case 'saveAndContinue':
+                            this.notify('Click to view this expedition in Field Reports.', 'success', {
+                                title: 'Expedition Saved',
+                                url: '/data/field-reports/' + data.id,
+                            }, {
+                                delay: 7500,
+                            });
+                            return;
+                        }
 
                         if (form.attr('data-debug-log') === 'true') {
                             console.dir(data)
@@ -217,11 +235,24 @@ $(function () {
 
                         } else if (form.attr('data-redirect-to')) {
                             redirectTo = form.attr('data-redirect-to');
+
+                            form.each(function() {
+                                $.each(this.attributes, function(i,a){
+                                    if (a.name.startsWith('data-redirect-data-')) {
+                                        var key = a.name.replace(/^data-redirect-data-/, '');
+                                        redirectTo = redirectTo.replace('{' + key + '}', (data[a.value] || ''));
+                                    } else if (a.name.startsWith('data-redirect-param-')) {
+                                        var key = a.name.replace(/^data-redirect-param-/, '');
+                                        redirectTo = redirectTo.replace('{' + key + '}', a.value);
+                                    }
+                                })
+                            });
+
                         } else if (form.attr('name')) {
                             redirectTo = '/' + form.attr('name');
                         }
 
-                        location.href = redirectTo;
+                        // location.href = redirectTo;
                     }.bind(this),
                     error: function (data) {
                         try {
