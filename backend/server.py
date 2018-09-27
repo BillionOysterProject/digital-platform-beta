@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from bop import API
 import os
 import logging
-from gevent.wsgi import WSGIServer
+from gevent.pywsgi import WSGIServer
 from flask_cors import CORS
 from gevent import monkey
 

@@ -9,7 +9,7 @@ flask-classy
 flask-cors
 flask-login
 geojson>=2.3.0
-gevent<1.3.0
+gevent==1.3.6
 git+https://github.com/ghetzel/pivot.git@v3.0.4#subdirectory=lib/python
 import_string==0.1.0
 ipython
