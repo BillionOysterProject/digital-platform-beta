@@ -161,7 +161,7 @@ includes:
                     id="structureName"
                     aria-describedby="structureNameHelp"
                     required
-                    {{ if and $.bindings.expedition $.bindings.expedition.station }}
+                    {{ if isMap (get $.bindings `expedition.station`) }}
                     value="{{ $.bindings.expedition.station.name }}"
                     {{ end }}
                 >
@@ -201,7 +201,7 @@ includes:
                     data-typeahead-field="name"
                     id="team"
                     aria-describedby="teamHelp"
-                    {{ if and $.bindings.expedition $.bindings.expedition.team }}
+                    {{ if isMap (get $.bindings `expedition.team`) }}
                     value="{{ $.bindings.expedition.team.name }}"
                     {{ end }}
                 >
