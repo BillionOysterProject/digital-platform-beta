@@ -1,4 +1,5 @@
 ---
+debug: true
 bindingPrefix: 'http://127.0.0.1:5000/'
 patterns:
   - '*.html'
@@ -54,6 +55,23 @@ header:
       - id:    'retired'
         label: 'Retired'
 
+      bioaccumulations:
+      - id:      'none'
+        name:    'None/clean'
+        summary: 'No macroalgae or animals present.'
+
+      - id:      'light'
+        name:    'Light'
+        summary: 'Macroalgae or minimal animals present that do not encroach on mesh openings.'
+
+      - id:      'medium'
+        name:    'Medium'
+        summary: 'Some encrusting macroalgae/animals reducing size of mesh opening up to 25%.'
+
+      - id:      'heavy'
+        name:    'Heavy'
+        summary: 'Encrusting macroalgae/animals reducing mesh opening by over 50%.'
+
       oysterSources:
       - id:    'muscongus'
         label: 'Muscongus Bay, Maine'
@@ -93,15 +111,15 @@ header:
       windDirections:
       - id:    'north'
         label: 'North'
-      - id:    'north-east'
+      - id:    'northeast'
         label: 'North East'
-      - id:    'north-west'
+      - id:    'northwest'
         label: 'North West'
       - id:    'south'
         label: 'South'
-      - id:    'south-east'
+      - id:    'southeast'
         label: 'South East'
-      - id:    'south-west'
+      - id:    'southwest'
         label: 'South West'
       - id:    'east'
         label: 'East'
@@ -123,15 +141,15 @@ header:
         label: 'Dark Brown'
 
       pipeFlows:
-      - id:    'no-flow'
+      - id:    'noFlow'
         label: 'No Flow'
       - id:    'trickle'
         label: 'Trickle'
-      - id:    'light-stream'
+      - id:    'lightStream'
         label: 'Light Stream'
-      - id:    'steady-stream'
+      - id:    'steadyStream'
         label: 'Steady Stream'
-      - id:    'full-flow'
+      - id:    'fullFlow'
         label: 'Full Flow'
 
       waterQualityParameters:

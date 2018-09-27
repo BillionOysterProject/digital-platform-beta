@@ -81,7 +81,7 @@
             <ul>
                 <li>Column 1: enter the <strong>tag number</strong> (#1-10).
                     <br/>
-                    <small>Tip: after you type in a number, hit enter, then move your cursor to the bottom right corner of the cell until a "+" appears.  
+                    <small>Tip: after you type in a number, hit enter, then move your cursor to the bottom right corner of the cell until a "+" appears.
                         Click the + and drag it down to repeat the tag number for each oyster on that shell.</small>
                 </li>
                 <li>Column 2: enter the <strong>length (in millimeters) of
@@ -115,51 +115,23 @@
                         Bioaccumulation on Cage
                     </legend>
 
+                    {{ range $i, $bioaccumulation := $.page.bioaccumulations }}
                     <div class="custom-control custom-radio">
                         <input
                             type="radio"
                             name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
-                            id="ba1"
+                            id="ba{{ $i }}"
                             class="custom-control-input"
+                            value="{{ $bioaccumulation.id }}"
+                            {{ if eqx $bioaccumulation.id (get $.bindings.expedition `protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage`) }}
+                            checked
+                            {{ end }}
                         >
                         <label class="custom-control-label w-100" for="ba1">
-                            <strong>None/clean:</strong> No macroalgae or animals present.
+                            <strong>{{ $bioaccumulation.name }}:</strong> {{ $bioaccumulation.summary }}
                         </label>
                     </div>
-
-                    <div class="custom-control custom-radio">
-                        <input
-                            type="radio"
-                            name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
-                            class="custom-control-input"
-                            id="ba2"
-                        >
-                        <label class="custom-control-label w-100" for="ba2">
-                            <strong>Light:</strong> Macroalgae or minimal animals present that do not encroach on mesh openings.
-                        </label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input
-                            type="radio"
-                            name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
-                            class="custom-control-input"
-                            id="ba3"
-                        >
-                        <label class="custom-control-label w-100" for="ba3">
-                            <strong>Medium:</strong> Some encrusting macroalgae/animals reducing size of mesh opening up to 25%.
-                        </label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input
-                            type="radio"
-                            name="protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage"
-                            class="custom-control-input"
-                            id="ba4"
-                        >
-                        <label class="custom-control-label w-100" for="ba4">
-                            <strong>Heavy:</strong> Encrusting macroalgae/animals reducing mesh opening by over 50%.
-                        </label>
-                    </div>
+                    {{ end }}
                 </fieldset>
             </div>
 
@@ -169,10 +141,10 @@
                 <textarea
                     class="form-control"
                     type="text"
-                    name="oysterMeasurement.notes"
+                    name="protocols.oysterMeasurement.notes"
+                    id="protocols.oysterMeasurement.notes"
                     maxlength="16536"
-                    id="oysterMeasurementNotes"
-                ></textarea>
+                >{{ (get $.bindings.expedition `protocols.oysterMeasurement.notes`) }}</textarea>
             </div>
 
         </div>

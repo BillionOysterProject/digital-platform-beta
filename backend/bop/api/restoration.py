@@ -8,9 +8,11 @@ import dpath.util
 import io
 import logging
 import json
+import six
+from .auth import Teams
 from .. import env
 from ..time import Time
-from ..utils import dict_merge, compact
+from ..utils import dict_merge, compact, mutate_dict, autotype
 import unicodecsv
 from sortedcontainers import SortedList
 
@@ -30,7 +32,7 @@ class Organisms(CollectionView):
     def first_by_name(cls, commonOrLatin):
         try:
             results = cls.get_collection().query(
-                'latinName/is:{}/commonName/is:{}'.format(commonOrLatin, commonOrLatin),
+                'latinName/like:{}/commonName/like:{}'.format(commonOrLatin, commonOrLatin),
                 conjunction='or'
             )
 
@@ -121,7 +123,7 @@ class Expeditions(CollectionView):
                 'fields': 'protocols',
             },
             raw=True,
-            expand=False
+            noexpand=True
         )
 
         images = []
@@ -203,10 +205,13 @@ class Expeditions(CollectionView):
         return jsonify(images)
 
     def post(self):
-        flatBody = request.form or request.json
+        flatBody = request.form or json.loads(request.data)
+        flatBody = mutate_dict(flatBody, valueFn=lambda v: autotype(v))
+
         body = {}
         expedition = None
         station = None
+        team = None
 
         for k, v in flatBody.items():
             dpath.util.new(body, k, v, separator='.')
@@ -221,7 +226,7 @@ class Expeditions(CollectionView):
 
         # load any existing expedition
         if '_id' in body:
-            expedition = Expeditions.get_collection().get(body['_id'])
+            expedition = Expeditions.get_collection().get(body['_id'], noexpand=True)
             station = expedition['station']
         else:
             expedition = {}
@@ -230,14 +235,19 @@ class Expeditions(CollectionView):
         if flatBody.get('station._id'):
             station = flatBody.get('station._id')
         elif flatBody.get('station.name'):
-            stations = RestorationStations.get_collection().query('name/is:{}'.format(
-                flatBody.get('station.name')
-            ))
-
-            if len(stations) == 1:
-                station = stations[0].id
-            else:
+            try:
+                station = RestorationStations.first_by_name(flatBody.get('station.name')).id
+            except:
                 return 'Must specify an Oyster Research Station for this expedition', 400
+
+        # figure out which team this expedition belongs to
+        if flatBody.get('team._id'):
+            team = flatBody.get('team._id')
+        elif flatBody.get('team.name'):
+            try:
+                team = Teams.first_by_name(flatBody.get('team.name')).id
+            except:
+                return 'Must specify a team for this expedition', 400
 
         expedition.update(compact({
             'name'               : body.get('name'),
@@ -245,15 +255,15 @@ class Expeditions(CollectionView):
             'station'            : station,
             'status'             : body.get('status'),
             'monitoringStartDate': body.get('monitoringStartDate'),
-            'monitoringEndDate'  : body.get('monitoringEndDate'),
-            'team'               : body.get('team'),
+            'monitoringEndDate'  : body.get('monitoringStartDate'),
+            'team'               : team,
             'protocols'          : {},
         }))
 
         if 'teamLead' not in body:
             user = self.current_user
 
-            if user.has_role('admin') or user.has_role('team-lead'):
+            if user.has_any_role('admin', 'team-lead'):
                 expedition['teamLead'] = user.get_id()
             elif expedition['station']:
                 try:
@@ -265,7 +275,17 @@ class Expeditions(CollectionView):
                     pass
 
             if 'teamLists' in body:
-                expedition['teamLists'] = body.get('teamLists')
+                expedition['teamLists'] = body.get('teamLists', [])
+
+            if 'teamLists' in expedition:
+                lists = expedition['teamLists']
+
+                for protocol, members in lists.items():
+                    lists[protocol] = list(set([
+                        m for m in members if isinstance(m, six.string_types)
+                    ]))
+
+                expedition['teamLists'] = lists
 
         if 'protocols' in body:
             # for each protocol, delegate processing that protocol's data to its
@@ -287,10 +307,10 @@ class Expeditions(CollectionView):
                             except Skip:
                                 continue
 
-                            # expedition['protocols'][name] = subrecord.get('_id')
+                            expedition['protocols'][name] = subrecord.get('id')
 
                             # TODO: temp, remove this in favor of the line above
-                            expedition['protocols'][name] = subrecord
+                            #expedition['protocols'][name] = subrecord
 
                             if created:
                                 creates[name] = expedition['protocols'][name]
@@ -313,13 +333,11 @@ class Expeditions(CollectionView):
             # cleanup the data we've processed from the input
             del body['protocols']
 
-        # TODO: team lists
-        # TODO: station
-        # TODO: team
-        # TODO: teamLead (current user)
-
-
-        # cls.get_collection().update(expedition)
+        # WRITE
+        try:
+            expedition = self.get_collection().update_or_create(expedition).records[0]
+        except IndexError:
+            pass
 
         return jsonify(expedition)
 
@@ -339,7 +357,12 @@ class ProtocolSiteConditions(CollectionView):
             record = {}
 
         record.update(body)
-        # record = cls.get_collection().update(record)
+
+        # WRITE
+        try:
+            record = cls.get_collection().update_or_create(record).records[0]
+        except IndexError:
+            pass
 
         return record, create
 
@@ -360,6 +383,9 @@ class ProtocolOysterMeasurements(CollectionView):
 
         observations = body.pop('observations', [])
 
+        # reject null observations
+        record['measuringOysterGrowth']['substrateShells'] = []
+
         if len(observations):
             for pair in observations:
                 if len(pair) == 2:
@@ -370,7 +396,12 @@ class ProtocolOysterMeasurements(CollectionView):
                         dict_merge(record, cls.append_oyster_measurement(record, shellNumber, mm))
 
             record.update(body)
-            # record = cls.get_collection().update(record)
+
+            # WRITE
+            try:
+                record = cls.get_collection().update_or_create(record).records[0]
+            except IndexError:
+                pass
 
         return record, create
 
@@ -471,12 +502,12 @@ class ProtocolMobileTraps(CollectionView):
                     commonOrLatin = pair[0]
                     count = int(pair[1])
 
-                    mo = MobileOrganisms.first_by_name(commonOrLatin)
+                    mobileOrganism = MobileOrganisms.first_by_name(commonOrLatin)
 
-                    if mo:
+                    if mobileOrganism:
                         neworgs.append({
                             'count': count,
-                            'organism': mo.id,
+                            'organism': mobileOrganism.id,
                             'notesQuestions': None,
                             'sketchPhoto': {
                                 'path': '',
@@ -485,7 +516,11 @@ class ProtocolMobileTraps(CollectionView):
 
             record['mobileOrganisms'] = neworgs
 
-            # record = cls.get_collection().update(record)
+            # WRITE
+            try:
+                record = cls.get_collection().update_or_create(record).records[0]
+            except IndexError:
+                pass
 
         return record, create
 
@@ -503,36 +538,87 @@ class ProtocolSettlementTiles(CollectionView):
         else:
             record = {}
 
-        tiles = body.pop('settlementTiles', [])
+        grids = body.pop('settlementTiles', [])
 
-        if len(tiles):
-            record['settlementTiles'] = []
+        # junky "cache"
+        organisms = {}
 
-            for tile in tiles:
-                tileToSave = {
-                    'description': tile.get('description')
-                }
+        if len(grids):
+            # get the total number of populated tiles in the submitted data
+            tileCount = max([
+                len([
+                    i for i in t if i is not None and i.lower() != 'n/a'
+                ]) for t in grids
+            ])
 
-                for j, grid in enumerate(tile['grids']):
-                    if len(grid):
-                        commonOrLatin = grid[0]
-                        mo = SessileOrganisms.first_by_name(commonOrLatin)
-                        notes = ''
+            # build that many empty settlement tiles
+            record['settlementTiles'] = [cls.make_empty_tile(i) for i in range(tileCount)]
 
-                        if len(grid) > 1:
-                            notes = grid[1]
+            # for each grid square...
+            for i, grid in enumerate(grids):
+                tileToSave = {}
 
-                        if mo:
-                            tileToSave['grid{}'.format(j)] = {
-                                'organism': mo._id,
-                                'notes': notes
-                            }
+                # for each tile...
+                for j, commonOrLatin in enumerate(grid):
+                    if not commonOrLatin:
+                        continue
 
-                record['settlementTiles'].append(tileToSave)
+                    sessileOrganism = None
 
-            # record = cls.get_collection().update(record)
+                    if commonOrLatin.lower() == 'n/a':
+                        continue
+                    elif commonOrLatin in organisms:
+                        sessileOrganism = organisms[commonOrLatin]
+                    else:
+                        sessileOrganism = SessileOrganisms.first_by_name(commonOrLatin)
+
+                    if sessileOrganism:
+                        organisms[commonOrLatin] = sessileOrganism
+                        record['settlementTiles'][j]['grid{}'.format(i+1)] = {
+                            'organism': sessileOrganism.id,
+                            'notes':    '',
+                        }
+
+            record['settlementTiles'].append(tileToSave)
+
+            # WRITE
+            try:
+                record = cls.get_collection().update_or_create(record).records[0]
+            except IndexError:
+                pass
 
         return record, create
+
+    @classmethod
+    def make_empty_tile(cls, n):
+        return {
+            'grid1': {},
+            'grid2': {},
+            'grid3': {},
+            'grid4': {},
+            'grid5': {},
+            'grid6': {},
+            'grid7': {},
+            'grid8': {},
+            'grid9': {},
+            'grid10': {},
+            'grid11': {},
+            'grid12': {},
+            'grid13': {},
+            'grid14': {},
+            'grid15': {},
+            'grid16': {},
+            'grid17': {},
+            'grid18': {},
+            'grid19': {},
+            'grid20': {},
+            'grid21': {},
+            'grid22': {},
+            'grid23': {},
+            'grid24': {},
+            'grid25': {},
+            'tilePhoto': {},
+        }
 
 class ProtocolWaterQualities(CollectionView):
     route_base      = 'protocol-water-qualities'
@@ -547,6 +633,7 @@ class RestorationStations(GeoCollectionView):
     route_base      = 'restoration-stations'
     collection_name = 'restorationstations'
     results_only    = True
+
 
 class Sites(GeoCollectionView):
     route_base      = 'sites'

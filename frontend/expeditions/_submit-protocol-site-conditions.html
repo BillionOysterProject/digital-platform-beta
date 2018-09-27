@@ -51,23 +51,23 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <fieldset>
-                            <legend>Weather</legend>
-                            <div class="btn-group btn-group-toggle row">
-                                {{ range $i, $weatherCondition := $.page.weatherConditions }}
-                                <label
-                                    class="btn btn-primary"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="protocols.siteCondition.meteorologicalConditions.weatherConditions"
-                                        value="{{ $weatherCondition.id }}"
-                                    >
-                                    {{ $weatherCondition.label }}
-                                </label>
-                                {{ end }}
-                            </div>
-                        </fieldset>
+                        <label>Weather</label>
+                        <div class="btn-group btn-group-toggle w-100">
+                            {{ range $i, $weatherCondition := $.page.weatherConditions }}
+                            <label class="btn btn-primary">
+                                <input
+                                    type="radio"
+                                    id="sc_weather_{{ $i }}"
+                                    name="protocols.siteCondition.meteorologicalConditions.weatherConditions"
+                                    value="{{ $weatherCondition.id }}"
+                                    {{ if eqx $weatherCondition.id (get $.bindings.expedition "protocols.siteCondition.meteorologicalConditions.weatherConditions") }}
+                                    checked="checked"
+                                    {{ end }}
+                                />
+                                {{ $weatherCondition.label }}
+                            </label>
+                            {{ end }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                             min="-40"
                             max="50"
                             id="airTemperature"
-
+                            value="{{ get $.bindings.expedition `protocols.siteCondition.meteorologicalConditions.airTemperatureC` }}"
                         />
                         <span class="help-block">
                             <p>Fahrenheit: <span id="temperatureF"></span>&deg;F</p>
@@ -117,6 +117,7 @@
                             min="0"
                             name="protocols.siteCondition.meteorologicalConditions.windSpeedMPH"
                             id="windSpeed"
+                            value="{{ get $.bindings.expedition `protocols.siteCondition.meteorologicalConditions.windSpeedMPH` }}"
                         />
                         <span class="help-block">Method: Anemometer</span>
                     </div>
@@ -128,7 +129,7 @@
                     <div class="form-group">
                         <fieldset>
                             <legend>Wind Direction</legend>
-                            <div class="btn-group btn-group-toggle row">
+                            <div class="btn-group btn-group-toggle">
                                 {{ range $i, $windDirection := $.page.windDirections }}
                                 <label
                                     class="btn btn-primary"
@@ -136,7 +137,11 @@
                                     <input
                                         type="radio"
                                         name="protocols.siteCondition.meteorologicalConditions.windDirection"
+                                        id="sc_weather_wind_{{ $i }}"
                                         value="{{ $windDirection.id }}"
+                                        {{ if eqx $windDirection.id (get $.bindings.expedition `protocols.siteCondition.meteorologicalConditions.windDirection`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     {{ $windDirection.label }}
                                 </label>
@@ -157,6 +162,7 @@
                             min="0"
                             name="protocols.siteCondition.meteorologicalConditions.humidityPer"
                             id="humidity"
+                            value="{{ get $.bindings.expedition `protocols.siteCondition.meteorologicalConditions.humidityPer` }}"
                         />
                         <span class="help-block">Method: Sling Psychrometer</span>
                     </div>
@@ -176,6 +182,9 @@
                                 type="radio"
                                 name="protocols.siteCondition.recentRainfall.rainedIn7Days"
                                 value="true"
+                                {{ if (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn7Days`) }}
+                                checked
+                                {{ end }}
                             >
                             Yes
                         </label>
@@ -186,6 +195,9 @@
                                 type="radio"
                                 name="recentRainfall.rainedIn7Days"
                                 value="false"
+                                {{ if not (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn7Days`) }}
+                                checked
+                                {{ end }}
                             >
                             No
                         </label>
@@ -203,6 +215,9 @@
                                 type="radio"
                                 name="protocols.siteCondition.recentRainfall.rainedIn72Hours"
                                 value="true"
+                                {{ if (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn72Hours`) }}
+                                checked
+                                {{ end }}
                             >
                             Yes
                         </label>
@@ -213,6 +228,9 @@
                                 type="radio"
                                 name="protocols.siteCondition.recentRainfall.rainedIn72Hours"
                                 value="false"
+                                {{ if not (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn72Hours`) }}
+                                checked
+                                {{ end }}
                             >
                             No
                         </label>
@@ -230,6 +248,9 @@
                                 type="radio"
                                 name="protocols.siteCondition.recentRainfall.rainedIn24Hours"
                                 value="true"
+                                {{ if (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn24Hours`) }}
+                                checked
+                                {{ end }}
                             >
                             Yes
                         </label>
@@ -240,6 +261,9 @@
                                 type="radio"
                                 name="protocols.siteCondition.recentRainfall.rainedIn24Hours"
                                 value="false"
+                                {{ if not (get $.bindings.expedition `protocols.siteCondition.recentRainfall.rainedIn24Hours`) }}
+                                checked
+                                {{ end }}
                             >
                             No
                         </label>
@@ -261,6 +285,7 @@
                             min="0"
                             name="protocols.siteCondition.waterConditions.surfaceCurrentSpeedMPS"
                             id="surfaceCurrentSpeed"
+                            value="{{ get $.bindings.expedition `protocols.siteCondition.waterConditions.surfaceCurrentSpeedMPS` }}"
                         />
                     </div>
                 </div>
@@ -271,7 +296,7 @@
                     <div class="form-group">
                         <fieldset>
                             <legend>Describe the water color</legend>
-                            <div class="btn-group btn-group-toggle row">
+                            <div class="btn-group btn-group-toggle">
                                 {{ range $i, $waterColor := $.page.waterColors }}
                                 <label
                                     class="btn btn-primary"
@@ -280,6 +305,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.waterColor"
                                         value="{{ $waterColor.id }}"
+                                        {{ if eqx $waterColor.id (get $.bindings.expedition `protocols.siteCondition.waterConditions.waterColor`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     {{ $waterColor.label }}
                                 </label>
@@ -303,6 +331,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.oilSheen"
                                         value="true"
+                                        {{ if (get $.bindings.expedition `protocols.siteCondition.waterConditions.oilSheen`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     Yes
                                 </label>
@@ -313,6 +344,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.oilSheen"
                                         value="false"
+                                        {{ if not (get $.bindings.expedition `protocols.siteCondition.waterConditions.oilSheen`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     No
                                 </label>
@@ -335,6 +369,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.garbage.garbagePresent"
                                         value="true"
+                                        {{ if (get $.bindings.expedition `protocols.siteCondition.waterConditions.garbage.garbagePresent`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     Yes
                                 </label>
@@ -345,6 +382,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.garbage.garbagePresent"
                                         value="false"
+                                        {{ if not (get $.bindings.expedition `protocols.siteCondition.waterConditions.garbage.garbagePresent`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     No
                                 </label>
@@ -361,7 +401,7 @@
                             <legend>
                                 Is there any flow through the Combined Sewer Overflow (CSO) pipes?
                             </legend>
-                            <div class="btn-group btn-group-toggle row">
+                            <div class="btn-group btn-group-toggle">
                                 {{ range $i, $pipeFlow := $.page.pipeFlows }}
                                 <label
                                     class="btn btn-primary"
@@ -370,6 +410,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.markedCombinedSewerOverflowPipes.howMuchFlowThrough"
                                         value="{{ $pipeFlow.id }}"
+                                        {{ if eqx $pipeFlow.id (get $.bindings.expedition `protocols.siteCondition.waterConditions.markedCombinedSewerOverflowPipes.howMuchFlowThrough`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     {{ $pipeFlow.label }}
                                 </label>
@@ -387,7 +430,7 @@
                             <legend>
                                 Is there any flow through the unmarked or other outfall pipes?
                             </legend>
-                            <div class="btn-group btn-group-toggle row">
+                            <div class="btn-group btn-group-toggle">
                                 {{ range $i, $pipeFlow := $.page.pipeFlows }}
                                 <label
                                     class="btn btn-primary"
@@ -396,6 +439,9 @@
                                         type="radio"
                                         name="protocols.siteCondition.waterConditions.unmarkedOutfallPipes.howMuchFlowThrough"
                                         value="{{ $pipeFlow.id }}"
+                                        {{ if eqx $pipeFlow.id (get $.bindings.expedition `protocols.siteCondition.waterConditions.unmarkedOutfallPipes.howMuchFlowThrough`) }}
+                                        checked
+                                        {{ end }}
                                     >
                                     {{ $pipeFlow.label }}
                                 </label>
@@ -414,7 +460,7 @@
                     name="protocols.siteCondition.notes"
                     maxlength="16536"
                     id="siteConditionsNotes"
-                ></textarea>
+                >{{ (get $.bindings.expedition `protocols.siteCondition.notes`) }}</textarea>
             </div>
         </div>
     </div>
