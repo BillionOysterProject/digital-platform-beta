@@ -309,6 +309,11 @@ class Expeditions(CollectionView):
 
                             expedition['protocols'][name] = subrecord.get('id')
 
+                            if expedition.get('status') is 'published':
+                                expedition['protocols'][name]['status'] = 'published'
+                            else:
+                                expedition['protocols'][name]['status'] = 'incomplete'
+
                             # TODO: temp, remove this in favor of the line above
                             #expedition['protocols'][name] = subrecord
 
