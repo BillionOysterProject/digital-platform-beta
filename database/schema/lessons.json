@@ -8,6 +8,33 @@
             "displayName",
             "username"
         ]
+    }, {
+        "key": "standards.cclsElaScienceTechnicalSubjects.*",
+        "collection": "metacclselasciencetechnicalsubjects"
+    }, {
+        "key": "standards.cclsMathematics.*",
+        "collection": "metacclsmathematics"
+    }, {
+        "key": "standards.ngssCrossCuttingConcepts.*",
+        "collection": "metangsscrosscuttingconcepts"
+    }, {
+        "key": "standards.ngssDisciplinaryCoreIdeas.*",
+        "collection": "metangssdisciplinarycoreideas"
+    }, {
+        "key": "standards.ngssScienceEngineeringPractices.*",
+        "collection": "metangssscienceengineeringpractices"
+    }, {
+        "key": "standards.nycsssUnits.*",
+        "collection": "metanycssunits"
+    }, {
+        "key": "standards.nysssKeyIdeas.*",
+        "collection": "metanyssskeyideas"
+    }, {
+        "key": "standards.nysssMajorUnderstandings.*",
+        "collection": "metanysssmajorunderstandings"
+    }, {
+        "key": "standards.nysssMst.*",
+        "collection": "metanysssmsts"
     }],
     "fields": [{
         "name":       "created",

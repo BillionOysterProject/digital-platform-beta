@@ -25,6 +25,7 @@ ANONYMOUS_ROUTES = (
     ('GET', re.compile('^/api/.*lesson.*/?')),
     ('GET', re.compile('^/api/glossaries/?')),
     ('GET', re.compile('^/api/subject-areas/?')),
+    ('GET', re.compile('^/api/standards-.*/?')),
 
     # permit public access to restoration data
     # --------------------------------------------------------------------------
