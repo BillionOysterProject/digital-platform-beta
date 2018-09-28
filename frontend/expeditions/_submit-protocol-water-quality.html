@@ -65,13 +65,13 @@
                 </label>
 
                 <input
-                class="form-control col-md-2"
-                name="protocols.waterQuality.depthOfWaterSample"
-                type="number"
-                step="0.1"
-                min="-40"
-                max="50"
-                id="depthOfWaterSample"
+                    class="form-control col-md-2"
+                    name="protocols.waterQuality.depthOfWaterSample"
+                    type="number"
+                    step="0.1"
+                    min="-40"
+                    max="50"
+                    id="depthOfWaterSample"
                 />
 
                 <small>Type 0 if at surface.</small>
@@ -124,7 +124,6 @@
                             <legend>Unit</legend>
 
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
                                 {{ range $i, $unit := uniqByKey $units "id" }}
                                 <label
                                     class="btn btn-primary"
@@ -187,13 +186,6 @@
             <hr>
             {{ end }}
 
-            <!-- <div class="form-group mt-4">
-                <a
-                    href="#"
-                    class="btn btn-primary"
-                    onclick="return false"
-                >Add Water Sample</a>
-            </div> -->
             <div class="form-group mt-4">
                 <label for="waterQualityNotes">Water Quality Notes</label>
                 <textarea

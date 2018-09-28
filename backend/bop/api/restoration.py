@@ -501,6 +501,7 @@ class ProtocolMobileTraps(CollectionView):
 
         return cls.save(record)
 
+
 class ProtocolSettlementTiles(CollectionView):
     route_base      = 'protocol-settlement-tiles'
     collection_name = 'protocolsettlementtiles'
@@ -594,6 +595,7 @@ class ProtocolSettlementTiles(CollectionView):
             'tilePhoto': {},
         }
 
+
 class ProtocolWaterQualities(CollectionView):
     route_base      = 'protocol-water-qualities'
     collection_name = 'protocolwaterqualities'
@@ -613,6 +615,7 @@ class ProtocolWaterQualities(CollectionView):
         oneSampleOnly = {}
 
         record['notes'] = data.pop('notes', None)
+        record['depthOfWaterSample'] = data.pop('depthOfWaterSample', None)
 
         for parameter, measurement in data.items():
             oneSampleOnly[parameter] = {
