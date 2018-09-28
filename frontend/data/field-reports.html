@@ -3,7 +3,8 @@ bindings:
 -   name: myexpeditions
     resource: '/api/expeditions'
     params:
-        limit:       10
+        noexpand:    true
+        limit:       25
         q:           'teamLead/{{ $.bindings.user.id }}/teamLists.mobileTrap/{{ $.bindings.user.id }}/teamLists.oysterMeasurement/{{ $.bindings.user.id }}/teamLists.settlementTiles/{{ $.bindings.user.id }}/teamLists.siteCondition/{{ $.bindings.user.id }}/teamLists.waterQuality/{{ $.bindings.user.id }}'
         conjunction: 'or'
         sort:        '-monitoringStartDate'
@@ -46,7 +47,7 @@ bindings:
                             <dd class="col-9">{{ time $expedition.monitoringStartDate "Monday, January 1, 2006" }}</dd>
                             {{ end }}
 
-                            {{ if $expedition.station }}
+                            {{ if isMap $expedition.station }}
                             <dt class="col-3">Location</dt>
                             <dd class="col-9">
                                 {{ if isMap $expedition.station.siteId }}
