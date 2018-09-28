@@ -23,7 +23,9 @@ bindings:
         </div>
         <div class="media-body">
             <h3 class="mt-0 mb-1">{{ $person.displayName }}</h3>
+            {{ if isMap $person.schoolOrg }}
             <i class="fa fa-fw fa-building"></i> {{ $person.schoolOrg.name }}
+            {{ end }}
             <br/>
         </div>
     </div>

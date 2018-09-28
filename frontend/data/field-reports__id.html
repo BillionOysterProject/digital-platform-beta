@@ -265,7 +265,9 @@ bindings:
                                 <p class="mt-0 mb-1">
                                     <strong>Bioaccumulation on Cage:</strong>
                                     <br/>
-                                    {{ $oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage }}
+
+                                    {{ $bio := (firstByKey $.page.bioaccumulations "id" $oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage) }}
+                                    {{ get $bio "name" }} &ndash; {{ get $bio "summary" }}
                                 </p>
                             </div>
                         </li>
