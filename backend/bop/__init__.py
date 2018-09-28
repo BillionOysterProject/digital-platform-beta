@@ -18,6 +18,7 @@ from flask_session import Session
 import sentry_sdk
 from raven.contrib.flask import Sentry
 from raven.conf import setup_logging
+import redis
 
 
 def handle_error(e):
@@ -56,8 +57,11 @@ class API(Flask):
         self.session_manager = Session()
 
         self.secret_key = os.urandom(32)
-        self.config['SESSION_TYPE'] = 'filesystem'
-        # self.config['SESSION_USE_SIGNER'] = True
+        self.config['SESSION_TYPE'] = 'redis'
+        self.config['SESSION_REDIS'] = redis.Redis(
+            host=os.getenv('SESSION_REDIS_HOST', 'localhost'),
+            port=int(os.getenv('SESSION_REDIS_PORT', 6379))
+        )
 
         self.session_manager.init_app(self)
 
