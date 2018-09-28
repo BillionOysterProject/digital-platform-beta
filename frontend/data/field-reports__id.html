@@ -107,10 +107,10 @@ bindings:
                         alt="Placeholder image">
                     {{ end }}
                     <div class="media-body">
-                        <p class="mt-0 mb-1">
+                        <!-- <p class="mt-0 mb-1">
                             <strong>Type of structure:</strong>
                             {{ get (firstByKey $.page.structureTypes "id" $expedition.station.structureType) "label" }}
-                        </p>
+                        </p> -->
                         <strong>Structure name:</strong> {{ $expedition.station.name }}
                     </div>
                 </li>
@@ -134,7 +134,7 @@ bindings:
                     {{ end }}
                     <div class="media-body">
                         <p class="mt-0 mb-1"><strong>Team Lead:</strong> {{ $expedition.teamLead.displayName }} </p>
-                        <p class="mt-0 mb-1"><strong>Team Lead Type:</strong> {{ $expedition.teamLead.teamLeadType }} </p>
+                        <!-- <p class="mt-0 mb-1"><strong>Team Lead Type:</strong> {{ $expedition.teamLead.teamLeadType }} </p> -->
                         <strong>Team Name:</strong> {{ $expedition.team.name}}
                     </div>
                 </li>
