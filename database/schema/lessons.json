@@ -8,22 +8,6 @@
             "displayName",
             "username"
         ]
-    }, {
-        "key": "unit",
-        "collection": "units",
-        "fields": [
-            "title",
-            "color",
-            "icon"
-        ]
-    }, {
-        "key": "units.*",
-        "collection": "units",
-        "fields": [
-            "title",
-            "color",
-            "icon"
-        ]
     }],
     "fields": [{
         "name":       "created",

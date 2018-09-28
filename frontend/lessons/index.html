@@ -3,21 +3,22 @@ page:
     view: Lessons
 
 bindings:
-- name:     'units'
-  resource: '/api/units'
-  params:
-    limit:  false
-    noexpand: true
-    sort:
-    - title
+-   name:     'units'
+    resource: '/api/units'
+    params:
+        limit:  false
+        noexpand: true
+        sort:
+        - title
 
-- name:     'lessons'
-  resource: '/api/lessons'
-  fallback: []
-  params:
-    limit: false
-    noexpand: true
-    q:      'status/published'
+
+-   name:     'lessons'
+    resource: '/api/lessons'
+    fallback: []
+    params:
+        limit: false
+        noexpand: true
+        q:      'status/published'
 ---
 
 <section class="content container-fluid lessons-list">
