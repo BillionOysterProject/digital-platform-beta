@@ -3,7 +3,7 @@ Description=BOP Digital Platform: Diecast Frontend
 
 [Service]
 Type=simple
-ExecStart=/home/ubuntu/bin/diecast -a 0.0.0.0:28419
+ExecStart=/home/ubuntu/platform/bin/linux/diecast -a 0.0.0.0:28419
 Environment="HOME=/home/ubuntu"
 User=ubuntu
 WorkingDirectory=/home/ubuntu/platform/frontend

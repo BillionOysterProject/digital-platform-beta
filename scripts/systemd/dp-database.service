@@ -3,7 +3,7 @@ Description=BOP Digital Platform: Pivot Database API
 
 [Service]
 Type=simple
-ExecStart=/home/ubuntu/bin/pivot -s schema -L debug -Q web
+ExecStart=/home/ubuntu/platform/bin/linux/pivot -s schema -L debug -Q web
 Environment="PIVOT_ENV=production"
 Environment="HOME=/home/ubuntu"
 User=ubuntu
