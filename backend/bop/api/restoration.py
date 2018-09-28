@@ -532,24 +532,27 @@ class ProtocolSettlementTiles(CollectionView):
 
                 # for each tile...
                 for j, commonOrLatin in enumerate(grid):
-                    if not commonOrLatin:
+                    try:
+                        if not commonOrLatin:
+                            continue
+
+                        sessileOrganism = None
+
+                        if commonOrLatin.lower() == 'n/a':
+                            continue
+                        elif commonOrLatin in organisms:
+                            sessileOrganism = organisms[commonOrLatin]
+                        else:
+                            sessileOrganism = SessileOrganisms.first_by_name(commonOrLatin)
+
+                        if sessileOrganism:
+                            organisms[commonOrLatin] = sessileOrganism
+                            record['settlementTiles'][j]['grid{}'.format(i+1)] = {
+                                'organism': sessileOrganism.id,
+                                'notes':    '',
+                            }
+                    except IndexError:
                         continue
-
-                    sessileOrganism = None
-
-                    if commonOrLatin.lower() == 'n/a':
-                        continue
-                    elif commonOrLatin in organisms:
-                        sessileOrganism = organisms[commonOrLatin]
-                    else:
-                        sessileOrganism = SessileOrganisms.first_by_name(commonOrLatin)
-
-                    if sessileOrganism:
-                        organisms[commonOrLatin] = sessileOrganism
-                        record['settlementTiles'][j]['grid{}'.format(i+1)] = {
-                            'organism': sessileOrganism.id,
-                            'notes':    '',
-                        }
 
             record['settlementTiles'].append(tileToSave)
 

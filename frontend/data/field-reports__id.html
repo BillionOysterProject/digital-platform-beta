@@ -118,7 +118,7 @@ bindings:
 
             <div class="col-6">
                 <li class="media">
-                    {{ if $expedition.teamLead.profileImageURL }}
+                    {{ if and ($expedition.teamLead.profileImageURL) (not (contains $expedition.teamLead.profileImageURL `modules/`)) }}
                     <img
                         class="img-thumbnail mr-3"
                         style="max-width: 100px; height: auto;"
@@ -129,7 +129,7 @@ bindings:
                     <img
                         class="img-thumbnail mr-3"
                         style="max-width: 100px; height: auto;"
-                        src="https://raw.githubusercontent.com/BillionOysterProject/digital-platform-beta/master/oysterfriend-happy.png"
+                        src="/assets/img/placeholders/oysterfriend-happy.png"
                         alt="Placeholder image">
                     {{ end }}
                     <div class="media-body">
