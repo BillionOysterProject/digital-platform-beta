@@ -8,6 +8,7 @@ Environment="HOME=/home/ubuntu"
 Environment="AWS_PROFILE=bop"
 Environment="WSGI=1"
 Environment="BOP_S3_PUBLIC_BUCKET=digital-platform-prod-files"
+Environment="SESSION_REDIS_HOST=172.31.51.127"
 User=ubuntu
 WorkingDirectory=/home/ubuntu/platform/backend
 Restart=always
