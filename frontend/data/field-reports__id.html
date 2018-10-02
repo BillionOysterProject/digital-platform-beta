@@ -529,45 +529,54 @@ bindings:
                     </p>
                     {{ end }}
 
-                    {{ if $siteCondition.meteorologicalConditions }}
-                    <h4>Meteorological Conditions</h4>
-                    {{ end }}
-                    {{ if $siteCondition.meteorologicalConditions.weatherConditions }}
-                    <p><strong>Weather:</strong> {{ get (firstByKey $.page.weatherConditions "id" $siteCondition.meteorologicalConditions.weatherConditions) "label" }}</p>
-                    {{ end }}
+                    <div class="card">
+                        {{ if $siteCondition.meteorologicalConditions }}
+                        <div class="card-header">
+                            <h4>Meteorological Conditions</h4>
+                        </div>
+                        {{ end }}
 
-                    {{ if $siteCondition.meteorologicalConditions.airTemperatureC }}
-                    <p><strong>Air temperature:</strong> {{ $siteCondition.meteorologicalConditions.airTemperatureC }} &#8451</p>
-                    {{ end }}
+                        {{ if $siteCondition.meteorologicalConditions.weatherConditions }}
+                        <p><i class="wi wi-fw {{ get (firstByKey $.page.weatherConditions `id` $siteCondition.meteorologicalConditions.weatherConditions ) `icon` }} mr-2"></i><strong>Weather:</strong> {{ get (firstByKey $.page.weatherConditions "id" $siteCondition.meteorologicalConditions.weatherConditions) "label" }}</p>
+                        {{ end }}
 
-                    {{ if $siteCondition.meteorologicalConditions.windSpeedMPH }}
-                    <p><strong>Wind speed:</strong> {{ $siteCondition.meteorologicalConditions.windSpeedMPH }} MPH</p>
-                    {{ end }}
+                        {{ if $siteCondition.meteorologicalConditions.airTemperatureC }}
+                        <p><i class="wi wi-fw wi-thermometer mr-2"></i><strong>Air temperature:</strong> {{ $siteCondition.meteorologicalConditions.airTemperatureC }} &#8451</p>
+                        {{ end }}
 
-                    {{ if $siteCondition.meteorologicalConditions.windDirection }}
-                    <p><strong>Wind direction:</strong> {{ $siteCondition.meteorologicalConditions.windDirection }}</p>
-                    {{ end }}
+                        {{ if $siteCondition.meteorologicalConditions.windSpeedMPH }}
+                        <p><i class="wi wi-fw wi-strong-wind mr-2"></i><strong>Wind speed:</strong> {{ $siteCondition.meteorologicalConditions.windSpeedMPH }} MPH</p>
+                        {{ end }}
 
-                    {{ if $siteCondition.meteorologicalConditions.humidityPer }}
-                    <p><strong>Humidity:</strong> {{ $siteCondition.meteorologicalConditions.humidityPer }}%</p>
-                    {{ end }}
+                        {{ if $siteCondition.meteorologicalConditions.windDirection }}
+                        <p><i class="wi wi-fw {{ get (firstByKey $.page.windDirections `id` $siteCondition.meteorologicalConditions.windDirection ) `icon` }} mr-2"></i><strong>Wind direction:</strong> {{ $siteCondition.meteorologicalConditions.windDirection }}</p>
+                        {{ end }}
+
+                        {{ if $siteCondition.meteorologicalConditions.humidityPer }}
+                        <p><i class="wi wi-fw wi-humidity mr-2"></i><strong>Humidity:</strong> {{ $siteCondition.meteorologicalConditions.humidityPer }}%</p>
+                        {{ end }}
+                    </div>
 
                     <!--Recent rainfall isn't showing up if the answer in the database is "false"-->
-                    {{ if $siteCondition.recentRainfall }}
-                    <h4>Recent Rainfall</h4>
-                    {{ end }}
+                    <div class="card">
+                        {{ if $siteCondition.recentRainfall }}
+                        <div class="card-header">
+                            <h4>Recent Rainfall</h4>
+                        </div>
+                        {{ end }}
 
-                    {{ if $siteCondition.recentRainfall.rainedIn7Days }}
-                    <p><strong>Has it rained in the past 7 days?</strong> {{ $siteCondition.recentRainfall.rainedIn7Days }}</p>
-                    {{ end }}
+                        {{ if $siteCondition.recentRainfall.rainedIn7Days }}
+                        <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 7 days?</strong> {{ $siteCondition.recentRainfall.rainedIn7Days }}</p>
+                        {{ end }}
 
-                    {{ if $siteCondition.recentRainfall.rainedIn72Hours }}
-                    <p><strong>Has it rained in the past 72 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn72Hours }}</p>
-                    {{ end }}
+                        {{ if $siteCondition.recentRainfall.rainedIn72Hours }}
+                        <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 72 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn72Hours }}</p>
+                        {{ end }}
 
-                    {{ if $siteCondition.recentRainfall.rainedIn24Hours }}
-                    <p><strong>Has it rained in the past 24 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn24Hours }}</p>
-                    {{ end }}
+                        {{ if $siteCondition.recentRainfall.rainedIn24Hours }}
+                        <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 24 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn24Hours }}</p>
+                        {{ end }}
+                    </div>
 
                     {{ if $siteCondition.waterConditions }}
                     <h4>Water Conditions</h4>
@@ -578,12 +587,12 @@ bindings:
                     {{ end }}
 
                     {{ if $siteCondition.waterConditions.waterColor }}
-                    <p><strong>Describe the water color:</strong> {{ get (firstByKey $.page.waterColors "id" $siteCondition.waterConditions.waterColor) "label" }}</p>
+                    <p></i><strong>Describe the water color:</strong> {{ get (firstByKey $.page.waterColors "id" $siteCondition.waterConditions.waterColor) "label" }}</p>
                     {{ end }}
 
                     <!--If there answer is "false" it doesn't show up-->
                     {{ if $siteCondition.waterConditions.oilSheen }}
-                    <p><strong>Is there an oil sheen present?</strong> {{ $siteCondition.waterConditions.oilSheen }}</p>
+                    <p><i class="wi wi-fw wi-raindrop mr-2"></i><strong>Is there an oil sheen present?</strong> {{ $siteCondition.waterConditions.oilSheen }}</p>
                     {{ end }}
 
                     <!--okay it looks like booleans just aren't showing up-->
@@ -592,11 +601,11 @@ bindings:
                     {{ end }}
 
                     {{ if $siteCondition }}
-                    <p><strong>Is there any flow through the Combined Sewer Overflow (CSO) pipes?</strong></p>
+                    <p><i class="wi wi-fw wi-sandstorm mr-2"></i><strong>Is there any flow through the Combined Sewer Overflow (CSO) pipes?</strong></p>
                     {{ end }}
 
                     {{ if $siteCondition }}
-                    <p><strong>Is there any flow through the unmarked/other pipes?</strong></p>
+                    <p><i class="wi wi-fw wi-sandstorm mr-2"></i><strong>Is there any flow through the unmarked/other pipes?</strong></p>
                     {{ end }}
 
             </div>

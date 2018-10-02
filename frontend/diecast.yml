@@ -93,38 +93,68 @@ header:
       weatherConditions:
       - id:    'sunny'
         label: 'Sunny'
+        icon:  'wi-day-sunny'
+
       - id:    'partly-cloudy'
         label: 'Partly Cloudy'
+        icon:  'wi-day-cloudy'
+
       - id:    'cloudy'
         label: 'Cloudy'
+        icon:  'wi-cloudy'
+
       - id:    'rain'
         label: 'Rain'
+        icon:  'wi-showers'
+
       - id:    'fog'
         label: 'Fog'
+        icon:  'wi-fog'
+
       - id:    'snow'
         label: 'Snow'
+        icon:  'wi-snoflake-cold'
+
       - id:    'hail'
         label: 'Hail'
+        icon:  'wi-hail'
+
       - id:    'thunderstorm'
         label: 'Thunderstorm'
+        icon:  'wi-thunderstorm'
 
       windDirections:
       - id:    'north'
         label: 'North'
+        icon:  'wi-towards-n'
+
       - id:    'northeast'
         label: 'North East'
+        icon:  'wi-towards-ne'
+
       - id:    'northwest'
         label: 'North West'
+        icon:  'wi-towards-nw'
+
       - id:    'south'
         label: 'South'
+        icon:  'wi-towards-s'
+
       - id:    'southeast'
         label: 'South East'
+        icon:  'wi-towards-se'
+
       - id:    'southwest'
         label: 'South West'
+        icon:  'wi-towards-sw'
+
       - id:    'east'
         label: 'East'
+        icon:  'wi-towards-e'
+
       - id:    'west'
         label: 'West'
+        icon:  'wi-towards-w'
 
       waterColors:
       - id:    'lightBlue'
