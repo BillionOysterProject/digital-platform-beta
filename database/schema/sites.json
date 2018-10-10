@@ -37,6 +37,7 @@
         "type":     "str"
     }, {
         "name":     "created",
+        "not_user_editable": true,
         "type":     "date",
         "formatters": {
             "current-time-if-unset": true
