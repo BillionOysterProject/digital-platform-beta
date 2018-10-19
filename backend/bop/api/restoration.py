@@ -249,13 +249,17 @@ class Expeditions(CollectionView):
             except:
                 return 'Must specify a team for this expedition', 400
 
+        dateTime = '{}T{}'.format(body.get('monitoringStartDateDate'), body.get('monitoringStartDateTime'))
+
         expedition.update(compact({
             'name'               : body.get('name'),
             'notes'              : body.get('notes'),
             'station'            : station,
             'status'             : body.get('status'),
-            'monitoringStartDate': body.get('monitoringStartDate'),
-            'monitoringEndDate'  : body.get('monitoringStartDate'),
+            'monitoringStartDate': dateTime,
+            'monitoringEndDate'  : dateTime,
+            'adultCount'         : body.get('adultCount'),
+            'childCount'         : body.get('childCount'),
             'team'               : team,
             'protocols'          : {},
         }))
