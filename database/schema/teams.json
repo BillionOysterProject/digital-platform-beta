@@ -3,18 +3,7 @@
     "allow_missing_embedded_records": true,
     "embed": [{
         "key":        "schoolOrg",
-        "collection": "schoolorgs",
-        "fields": [
-            "name",
-            "organizationType",
-            "schoolType",
-            "streetAddress",
-            "neighborhood",
-            "city",
-            "state",
-            "zip",
-            "syncId"
-        ]
+        "collection": "schoolorgs"
     }, {
         "key":        "teamLeads.*",
         "collection": "users"

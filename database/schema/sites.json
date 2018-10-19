@@ -36,6 +36,9 @@
         "name":     "propertyOwner",
         "type":     "str"
     }, {
+        "name":     "notes",
+        "type":     "str"
+    }, {    
         "name":     "created",
         "not_user_editable": true,
         "type":     "date",
