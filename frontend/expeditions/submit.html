@@ -88,19 +88,37 @@ includes:
         </div>
 
         <div class="form-group">
-            <label for="monitoringStartDate">Expedition Date and Time</label>
+            <label for="monitoringStartDate">
+                Expedition Date and Time
+            </label>
+
+            <div class="form-row">
             <input
-                class="form-control col-md-8"
+                class="form-control col-md-3"
                 id="monitoringStartDate"
-                type="datetime-local"
-                name="monitoringStartDate"
+                type="date"
+                name="monitoringStartDateDate"
                 required
                 {{ if $.bindings.expedition }}
-                value="{{ $.bindings.expedition.monitoringStartDate }}"
+                value="{{ time $.bindings.expedition.monitoringStartDate `ymd` }}"
                 {{ else }}
                 value="{{ now `ymd` }}"
                 {{ end }}
             >
+
+            <input
+                class="form-control col-md-2"
+                id="monitoringStartDate"
+                type="time"
+                name="monitoringStartDateTime"
+                required
+                {{ if $.bindings.expedition }}
+                value="{{ time $.bindings.expedition.monitoringStartDate `15:04` }}"
+                {{ else }}
+                value="{{ now `15:04` }}"
+                {{ end }}
+            >
+            </div>
         </div>
 
         {{ if $.bindings.expedition }}
@@ -220,10 +238,10 @@ includes:
             <input
                 class="form-control col-2"
                 type="number"
-                min="0" n
-                ame="numberAdults"
-                id="numberAdults"
-                value=""
+                min="0"
+                name="adultCount"
+                id="adultCount"
+                value="{{ $.bindings.expedition.adultCount }}"
             >
         </div>
         <div class="form-group">
@@ -232,9 +250,9 @@ includes:
                 class="form-control col-2"
                 type="number"
                 min="0"
-                name="numberStudents"
-                id="numberStudents"
-                value=""
+                name="childCount"
+                id="childCount"
+                value="{{ $.bindings.expedition.childCount }}"
             >
         </div>
 

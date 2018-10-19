@@ -1946,3 +1946,23 @@ li.loading-dialog {
 .text-callout {
     color: blue;
 }
+
+.dl-horizontal dd:before,
+.dl-horizontal dd:after {
+    clear: both;
+}
+
+@media (min-width: 768px) {
+    .dl-horizontal dt {
+        float: left;
+        width: 160px;
+        overflow: hidden;
+        clear: left;
+        text-align: right;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .dl-horizontal dd {
+        margin-left: 180px;
+    }
+}

@@ -58,22 +58,43 @@ bindings:
 {{   end }}
 {{ end }}
 
-<h1 class="text-left pb-2">Expedition Field Report: {{ $expedition.name }}</h1>
-<section class="content shaded pt-1">
-    {{ if isMap $expedition.station.siteId }}
-    <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
-        {{ $expedition.station.siteId.name }}, {{ $expedition.station.siteId.bodyOfWater }}
-    </p>
-    <p class="mb-1"><i class="fa fa-fw fa-globe"></i>{{ $expedition.station.siteId.boroughCounty }}, {{ $expedition.station.siteId.state }}</p>
-    {{ end }}
-    <p class="mb-1"><i class="fa fa-fw fa-calendar"></i>{{ time $expedition.monitoringEndDate "January 1, 2006, 3:04pm"  }}</p>
+<section class="content shaded pt-1 row">
+    <div class="col-md-6 col-sm-12">
+        <h1 class="text-left pb-2">Expedition Field Report: {{ $expedition.name }}</h1>
+
+        {{ if isMap $expedition.station.siteId }}
+        <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
+            {{ $expedition.station.siteId.name }}, {{ $expedition.station.siteId.bodyOfWater }}
+        </p>
+        <p class="mb-1"><i class="fa fa-fw fa-globe"></i>{{ $expedition.station.siteId.boroughCounty }}, {{ $expedition.station.siteId.state }}</p>
+        {{ end }}
+        <p class="mb-1"><i class="fa fa-fw fa-calendar"></i>{{ time $expedition.monitoringEndDate "January 1, 2006, 3:04pm"  }}</p>
+    </div>
+
+    <div class="col-md-6 col-sm-12 text-right pt-2">
+        {{ if or (eqx $expedition.teamLead._id $.bindings.user._id) $.flags.admin }}
+        <a
+            href="/expeditions/submit?id={{ $expedition._id }}&step=enterdata1"
+            class="btn btn-primary mb-2"
+        >
+            <i class="fa fa-pencil"></i>
+            Edit Expedition
+        </a>
+        {{ end }}
+
+        <br >
+        <a href="/api/expeditions/{{ $expedition._id }}" target="_blank">
+            <i class="fa fa-external-link-square"></i>
+            View in API
+        </a>
+    </div>
 </section>
 
 <div class="row no-gutters site-jumbotron">
     <div class="col">
         <div id="siteMap">
             <iframe
-                src="https://platform-beta.bop.nyc/sites/map"
+                src="/sites/map"
                 frameborder="0"
                 style="width: 100%; height: 250px;"
             ></iframe>
@@ -88,106 +109,95 @@ bindings:
         who conducted the expedition, the type of structure, and the date/location information above.
     </p>
 
-    <ul class="list-unstyled">
-        <div class="row">
-            <div class="col-6">
-                <li class="media">
-                    {{ if $expedition.station.photo }}
-                    <img
-                        class="img-thumbnail mr-3"
-                        style="max-width: 100px; height: auto;"
-                        src="{{ $expedition.station.photo.path }}"
-                        alt="{{ $expedition.teamLead.displayName }}'s ORS"
-                    >
-                    {{ else }}
-                    <img
-                        class="img-thumbnail mr-3"
-                        style="max-width: 100px; height: auto;"
-                        src="assets/img/placeholders/ors.jpg"
-                        alt="Placeholder image">
-                    {{ end }}
-                    <div class="media-body">
-                        <!-- <p class="mt-0 mb-1">
-                            <strong>Type of structure:</strong>
-                            {{ get (firstByKey $.page.structureTypes "id" $expedition.station.structureType) "label" }}
-                        </p> -->
-                        <strong>Structure name:</strong> {{ $expedition.station.name }}
-                    </div>
-                </li>
-            </div>
-
-            <div class="col-6">
-                <li class="media">
-                    {{ if and ($expedition.teamLead.profileImageURL) (not (contains $expedition.teamLead.profileImageURL `modules/`)) }}
-                    <img
-                        class="img-thumbnail mr-3"
-                        style="max-width: 100px; height: auto;"
-                        src="{{ $expedition.teamLead.profileImageURL }}"
-                        alt="Generic placeholder image"
-                    >
-                    {{ else }}
-                    <img
-                        class="img-thumbnail mr-3"
-                        style="max-width: 100px; height: auto;"
-                        src="/assets/img/placeholders/oysterfriend-happy.png"
-                        alt="Placeholder image">
-                    {{ end }}
-                    <div class="media-body">
-                        <p class="mt-0 mb-1"><strong>Team Lead:</strong> {{ $expedition.teamLead.displayName }} </p>
-                        <!-- <p class="mt-0 mb-1"><strong>Team Lead Type:</strong> {{ $expedition.teamLead.teamLeadType }} </p> -->
-                        <strong>Team Name:</strong> {{ $expedition.team.name}}
-                    </div>
-                </li>
-            </div>
-
-            <div class="col-6 mt-3">
-                <li class="media">
-                    <!--A lot of photos have http instead of https and aren't showing up!-->
-                    {{ if $schoolOrg.photo.path }}
-                    <img
-                        class="img-thumbnail mr-3"
-                        style="max-width: 100px; height: auto;"
-                        src="{{ $expedition.team.schoolOrg.profileImageURL }}"
-                        alt="{{ $expedition.schoolOrg.name }}'s profile picture"
-                    >
-                    {{ else }}
-                    <img
-                        class="img-thumbnail mr-3"
-                        style="max-width: 100px; height: auto;"
-                        src="assets/img/placeholders/ors.jpg"
-                        alt="Placeholder image"
-                    >
-                    {{ end }}
-                    <div class="media-body">
-                        <p class="mt-0 mb-1"><strong>Organization Name:</strong> {{ $schoolOrg.name }}</p>
-                        <strong>Organization Location:</strong> {{ $schoolOrg.streetAddress }}, {{ $schoolOrg.city }}, {{ $schoolOrg.state }}
-                        <br/>
-                        <strong>Organization Type:</strong> {{ $schoolOrg.organizationType }}
-                        <br/>
-                        {{ if $schoolOrg.schoolType }}
-                        <strong>School Type:</strong> {{ $schoolOrg.schoolType }}
-                        {{ end }}
-
-                    </div>
-                </li>
-            </div>
-            {{ if $expedition.numberOfAdults }}
-            <div class="col-6 mt-3">
-                <li class="media">
-                    <img
-                    class="img-thumbnail mr-3"
-                    src="https://avatars0.githubusercontent.com/u/16782836?s=200&v=4"
-                    alt="Generic placeholder image"
-                    >
-                    <div class="media-body">
-                        <p class="mt-0 mb-1"><strong>Number of Adults:</strong></p>
-                        <strong>Number of Students:</strong>
-                    </div>
-                </li>
-            </div>
+    <ul class="list-unstyled row">
+        <li class="media col-6 mt-4">
+            {{ if $expedition.station.photo }}
+            <img
+                class="img-thumbnail mr-3"
+                style="max-width: 100px; height: auto;"
+                src="{{ $expedition.station.photo.path }}"
+                alt="{{ $expedition.teamLead.displayName }}'s ORS"
+            >
+            {{ else }}
+            <img
+                class="img-thumbnail mr-3"
+                style="max-width: 100px; height: auto;"
+                src="assets/img/placeholders/ors.jpg"
+                alt="Placeholder image">
             {{ end }}
+            <div class="media-body">
+                <strong>Structure name:</strong> {{ $expedition.station.name }}
+                {{ if $expedition.station.structureType }}
+                <br>
+                <strong>Structure Type:</strong> {{ titleize (replace $expedition.station.structureType "-" " " -1) }}
+                {{ end }}
+            </div>
+        </li>
 
-        </div>
+        <li class="media col-6 mt-4">
+            {{ if and ($expedition.teamLead.profileImageURL) (not (contains $expedition.teamLead.profileImageURL `modules/`)) }}
+            <img
+                class="img-thumbnail mr-3"
+                style="max-width: 100px; height: auto;"
+                src="{{ $expedition.teamLead.profileImageURL }}"
+                alt="Generic placeholder image"
+            >
+            {{ else }}
+            <img
+                class="img-thumbnail mr-3"
+                style="max-width: 100px; height: auto;"
+                src="/assets/img/placeholders/oysterfriend-happy.png"
+                alt="Placeholder image">
+            {{ end }}
+            <div class="media-body">
+                <p class="mt-0 mb-1"><strong>Team Lead:</strong> {{ $expedition.teamLead.displayName }} </p>
+                <!-- <p class="mt-0 mb-1"><strong>Team Lead Type:</strong> {{ $expedition.teamLead.teamLeadType }} </p> -->
+                <strong>Team Name:</strong> {{ $expedition.team.name}}
+            </div>
+        </li>
+
+        <li class="media col-6 mt-4">
+            <!--A lot of photos have http instead of https and aren't showing up!-->
+            {{ if $schoolOrg.photo.path }}
+            <img
+                class="img-thumbnail mr-3"
+                style="max-width: 100px; height: auto;"
+                src="{{ $expedition.team.schoolOrg.profileImageURL }}"
+                alt="{{ $expedition.schoolOrg.name }}'s profile picture"
+            >
+            {{ else }}
+            <img
+                class="img-thumbnail mr-3"
+                style="max-width: 100px; height: auto;"
+                src="assets/img/placeholders/ors.jpg"
+                alt="Placeholder image"
+            >
+            {{ end }}
+            <div class="media-body">
+                <strong>Organization Name:</strong> {{ $schoolOrg.name }}
+                <br >
+                <strong>Organization Location:</strong>
+                <a href="https://www.google.com/maps/search/?api=1&amp;query={{ $schoolOrg.streetAddress }}, {{ $schoolOrg.city }}, {{ $schoolOrg.state }}" target="_blank">
+                    {{ $schoolOrg.streetAddress }}, {{ $schoolOrg.city }}, {{ $schoolOrg.state }}
+                </a>
+                <br/>
+                <strong>Organization Type:</strong> {{ titleize (replace $schoolOrg.organizationType "-" " " -1) }}
+                <br/>
+                {{ if $schoolOrg.schoolType }}
+                <strong>School Type:</strong> {{ titleize (replace $schoolOrg.schoolType "-" " " -1) }}
+                {{ end }}
+            </div>
+        </li>
+
+        <li class="media col-6 mt-4">
+            <div class="media-body">
+                <strong>Number of Adults:</strong> {{ $expedition.adultCount }}
+                <br >
+
+                <strong>Number of Students:</strong> {{ $expedition.childCount }}
+                <br >
+            </div>
+        </li>
     </ul>
     {{ if $expedition.notes }}
     <p>
@@ -233,7 +243,7 @@ bindings:
 
                 <p>
                     <strong>Contributor for this protocol:</strong>
-                        {{ $oysterMeasurement.scribeMember.displayName }}
+                        {{ get $oysterMeasurement `scribeMember.displayName` }}
                 </p>
 
                 {{ if $oysterMeasurement.notes }}
@@ -519,7 +529,7 @@ bindings:
 
                     <p>
                         <strong>Contributor for this protocol:</strong>
-                            {{ $siteCondition.scribeMember.displayName }}
+                            {{ get $siteCondition `scribeMember.displayName` }}
                     </p>
 
                     {{ if $siteCondition.notes }}
@@ -635,7 +645,7 @@ bindings:
                 </p>
                 <p>
                     <strong>Contributor for this protocol:</strong>
-                        {{ $mobileTrap.scribeMember.displayName }}
+                        {{ get $mobileTrap `scribeMember.displayName` }}
                 </p>
 
                 {{ if $mobileTrap.notes }}
@@ -723,7 +733,7 @@ bindings:
 
                 <p>
                     <strong>Contributor for this protocol:</strong>
-                        {{ $sessileOrganism.scribeMember.displayName }}
+                        {{ get $sessileOrganism `scribeMember.displayName` }}
                 </p>
 
                 {{ if $sessileOrganism.notes }}
@@ -806,7 +816,7 @@ bindings:
 
                     <p>
                         <strong>Contributor for this protocol:</strong>
-                            {{ $waterQuality.scribeMember.displayName }}
+                            {{ get $waterQuality `scribeMember.displayName` }}
                     </p>
 
                     {{ if $waterQuality.notes }}
