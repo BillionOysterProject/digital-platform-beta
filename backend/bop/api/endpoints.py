@@ -202,7 +202,7 @@ class CollectionView(Endpoint):
             if len(parts) == 2:
                 fn, field = parts
 
-                if  fn in self.aggregateFns:
+                if fn in self.aggregateFns:
                     output[fn] = getattr(self.collection, fn)(field, query)
 
         return jsonify(output)
