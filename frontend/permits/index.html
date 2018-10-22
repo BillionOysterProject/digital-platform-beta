@@ -1,0 +1,136 @@
+---
+page:
+    body_class: 'site-details'
+    view: 'DEC Permit Report'
+    notitle: false
+
+bindings:
+-   name:     sites
+    resource: '/api/sites'
+    params:   
+        limit:    false
+        noexpand: true
+
+-   name: stations
+    resource: '/api/restoration-stations'
+    params: 
+        limit:    false
+        noexpand: true
+
+---
+
+{{ $sites    := $.bindings.sites }}
+{{ $stations := $.bindings.stations }}
+
+<section class="content">
+    <div class="col-sm-10">
+        <p><strong>Name of Licensee:</strong> Sam Janis / Tanasia Swift</p> 
+
+        <p><strong>License Number:</strong> 1133</p>
+
+        <p><strong>Abstract:</strong>
+            BOP is a restoration, education, and citizen science initiative that engages residents of the region in growing small populations of oysters and environmental monitoring at permitted waterfront sites around the New York Harbor. 
+            The goal of the program is to increase the overall breeding population of native oysters in the Harbor and to engage young people and adults in active stewardship and citizen science.
+            By adopting a BOP Oyster Restoration Station (ORS), participants agree to conduct monthly visits at their site using standard procedures and datasets covering oyster growth and mortality, basic water quality parameters, and marine ecology observations. 
+            In this way, the project will eventually result in a comparative dataset on ecological health, viability of oyster restoration, and water quality at 28 sites across New York Harbor.
+        </p>
+
+        <p><strong>Common name of animal:</strong> Eastern oyster (<em>Crassostrea virginica</em>)</p>
+
+        <p><strong>Source of oysters:</strong>
+            All ORS were stocked with spat-on-shell oysters produced by New York Harbor School’s oyster hatchery and remote setting facility located on Governors Island. Harbor School oysters are grown from a mix of wild broodstock (Bronx River) and aquaculture stock (from Fishers Island and Muscongus Bay). Collection and importation of these broodstocks have been permitted under separate Shellfish Importation Permits and NYHS Marine Hatchery Permits # 65-P, 2017 and # 65-P, 2018. 
+            Prior to adoption and installation of their ORS, all prospective participants attended a one-day training on Governors Island on how to stock, install, and monitor their ORS. Upon successful completion of the training, participants signed a contract, stocked their cage with  New York Harbor School oysters, and transported the cage to a designated and permitted waterfront site for installation.
+        </p>
+    </div>
+
+    <div class="col-sm-12">
+        <h4>Table: Oyster Research Stations by Site</h4>
+        <table class="table table-sm table-bordered table-striped">
+            <caption>The number of Oyster Research Stations (ORS) and oyster larvae sources at each site.</caption>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Site Name</th>
+                    <th>Body of Water</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th># of ORS at this site</th>
+                    <th>Source(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range $i, $site := $sites }}
+                
+                <tr>
+                    <th>{{ add $i 1 }}</th>
+                    <td>{{ $site.name }}</td>
+                    <td>{{ $site.bodyOfWater }}</td>
+                    <td>{{ $site.latitude }}</td>
+                    <td>{{ $site.longitude }}</td>
+                    <td>
+                        {{ count (filterByKey (filterByKey $stations "siteId" $site._id) "status" "Active" ) }}
+                    </td>
+                    <td>
+                        {{ join (uniq (pluck (filterByKey $stations "siteId" $site._id) "baselines.*.*.source")) "; " }}
+                    </td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+
+        <h4>Table: Organizations Stewarding Oyster Research Stations (ORS)</h4>
+        <table class="table table-sm table-bordered table-striped">
+            <caption>The organization name, site and body of water, and organization address.</caption>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Organization Name</th>
+                    <th>ORS Site</th>
+                    <th>Body of Water</th>
+                    <th>Group Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>{1}</th>
+                    <td>{Billion Oyster Project}</td>
+                    <td>{Pier 101, Governors Island}</td>
+                    <td>{Buttermilk Channel}</td>
+                    <td>{10 South Street Slip 7}, {New York}, {NY} {10004}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Table: Oyster Monitoring Data</h4>
+        <table class="table table-sm table-bordered table-striped">
+            <caption>The ORS name, monitoring date, site, body of water, number of live oysters at time of monitoring, and the minimum, average, and maxium oyster lengths.</caption>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ORS Name</th>
+                    <th>Monitoring Date</th>
+                    <th>ORS Site</th>
+                    <th>Body of Water</th>
+                    <th>Number of Live Oysters</th>
+                    <th>Minimum Oyster Length</th>
+                    <th>Average Oyster Length</th>
+                    <th>Maxium Oyster Length</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>{1}</th>
+                    <td>{Test ORS}</td>
+                    <td>{10/22/2018}</td>
+                    <td>{Pier 101, Governors Island}</td>
+                    <td>{Buttermilk Channel}</td>
+                    <td>{10}</td>
+                    <td>{15}</td>
+                    <td>{25}</td>
+                    <td>{35}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
