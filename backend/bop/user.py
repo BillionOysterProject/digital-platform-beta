@@ -69,6 +69,9 @@ class User(dict):
     def is_anonymous(self):
         return False
 
+    def save(self):
+        return self.collection.update(self)
+
     def has_any_role(self, *roles):
         for role in roles:
             if self.has_role(role):

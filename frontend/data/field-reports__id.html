@@ -329,7 +329,7 @@ bindings:
                 <h4>Oyster Mortality Data and Visualizations</h4>
                 <p>
                     We can represent data on oyster mortality (how many oysters survived) in multiple ways.
-                    One format is a bar chart- this one shows the number of live oysters on each substrate shell during this expedition.
+                    One format is a <strong>bar chart</strong>- this one shows the number of live oysters on each substrate shell during this expedition.
                 </p>
                 <figure class="figure">
                     <div id="div_barplot_number_oysters"></div>
@@ -409,8 +409,8 @@ bindings:
                 </figure>
 
                 <p>
-                    A "frequency distribution histogram" is a different way to visualize the lengths of the live oysters.
-                    The "frequency" is how many times an observation appeared in the dataset, and the "distribution" is the grouping of the observations.
+                    A <strong>frequency distribution histogram</strong> is a different way to visualize the lengths of the live oysters.
+                    The <strong>frequency</strong> is how many times an observation appeared in the dataset, and the <strong>distribution</strong> is the grouping of the observations.
                     This one splits all of the oyster measurements into even-sized groups, or "bins," by length (in 5mm increments)
                     and tells you how many oysters are in each group.
                     A histogram is a good way to view patterns and to condense a large dataset into a smaller, more readable graph.
@@ -422,15 +422,15 @@ bindings:
                 </figure>
 
                 <p>
-                    A box plot is another way to visualize the oyster measurement dataset.
+                    A <strong>box plot</strong> is another way to visualize the oyster measurement dataset.
                     This box plot shows you what the smallest (min), largest (max), average (mean), and "normal" range of oyster measurements were for this expedition.
                 </p>
                     <ul>
-                    <li>The bottom and top lines represent the min and max oyster measurements.
-                        These lines show us the "range" of oyster measurements for this expedition.
+                    <li>The bottom and top lines represent the <strong>min</strong> and <strong>max</strong> oyster measurements.
+                        These lines show us the <strong>range</strong> of oyster measurements for this expedition.
                     </li>
-                    <li>The line in the middle of the box represents the mean oyster measurement. </li>
-                    <li>The top and bottom lines of the box represent the "standard deviation" above and below the mean oyster measurement.
+                    <li>The line in the middle of the box represents the <strong>mean</strong> oyster measurement. </li>
+                    <li>The top and bottom lines of the box represent the <strong>standard deviation</strong> above and below the mean oyster measurement.
                         (It's okay if you don't know what a standard deviation is- it's a way of showing what's considered "normal" in a dataset.
                         <!-- You can learn about standard deviation here. -->
                         )</li>
@@ -539,54 +539,49 @@ bindings:
                     </p>
                     {{ end }}
 
-                    <div class="card">
-                        {{ if $siteCondition.meteorologicalConditions }}
-                        <div class="card-header">
-                            <h4>Meteorological Conditions</h4>
-                        </div>
-                        {{ end }}
+                    
+                    {{ if $siteCondition.meteorologicalConditions }}
+                    <h4>Meteorological Conditions</h4>
+                    {{ end }}
 
-                        {{ if $siteCondition.meteorologicalConditions.weatherConditions }}
-                        <p><i class="wi wi-fw {{ get (firstByKey $.page.weatherConditions `id` $siteCondition.meteorologicalConditions.weatherConditions ) `icon` }} mr-2"></i><strong>Weather:</strong> {{ get (firstByKey $.page.weatherConditions "id" $siteCondition.meteorologicalConditions.weatherConditions) "label" }}</p>
-                        {{ end }}
+                    {{ if $siteCondition.meteorologicalConditions.weatherConditions }}
+                    <p><i class="wi wi-fw {{ get (firstByKey $.page.weatherConditions `id` $siteCondition.meteorologicalConditions.weatherConditions ) `icon` }} mr-2"></i><strong>Weather:</strong> {{ get (firstByKey $.page.weatherConditions "id" $siteCondition.meteorologicalConditions.weatherConditions) "label" }}</p>
+                    {{ end }}
 
-                        {{ if $siteCondition.meteorologicalConditions.airTemperatureC }}
-                        <p><i class="wi wi-fw wi-thermometer mr-2"></i><strong>Air temperature:</strong> {{ $siteCondition.meteorologicalConditions.airTemperatureC }} &#8451</p>
-                        {{ end }}
+                    {{ if $siteCondition.meteorologicalConditions.airTemperatureC }}
+                    <p><i class="wi wi-fw wi-thermometer mr-2"></i><strong>Air temperature:</strong> {{ $siteCondition.meteorologicalConditions.airTemperatureC }} &#8451</p>
+                    {{ end }}
 
-                        {{ if $siteCondition.meteorologicalConditions.windSpeedMPH }}
-                        <p><i class="wi wi-fw wi-strong-wind mr-2"></i><strong>Wind speed:</strong> {{ $siteCondition.meteorologicalConditions.windSpeedMPH }} MPH</p>
-                        {{ end }}
+                    {{ if $siteCondition.meteorologicalConditions.windSpeedMPH }}
+                    <p><i class="wi wi-fw wi-strong-wind mr-2"></i><strong>Wind speed:</strong> {{ $siteCondition.meteorologicalConditions.windSpeedMPH }} MPH</p>
+                    {{ end }}
 
-                        {{ if $siteCondition.meteorologicalConditions.windDirection }}
-                        <p><i class="wi wi-fw {{ get (firstByKey $.page.windDirections `id` $siteCondition.meteorologicalConditions.windDirection ) `icon` }} mr-2"></i><strong>Wind direction:</strong> {{ $siteCondition.meteorologicalConditions.windDirection }}</p>
-                        {{ end }}
+                    {{ if $siteCondition.meteorologicalConditions.windDirection }}
+                    <p><i class="wi wi-fw {{ get (firstByKey $.page.windDirections `id` $siteCondition.meteorologicalConditions.windDirection ) `icon` }} mr-2"></i><strong>Wind direction:</strong> {{ $siteCondition.meteorologicalConditions.windDirection }}</p>
+                    {{ end }}
 
-                        {{ if $siteCondition.meteorologicalConditions.humidityPer }}
-                        <p><i class="wi wi-fw wi-humidity mr-2"></i><strong>Humidity:</strong> {{ $siteCondition.meteorologicalConditions.humidityPer }}%</p>
-                        {{ end }}
-                    </div>
+                    {{ if $siteCondition.meteorologicalConditions.humidityPer }}
+                    <p><i class="wi wi-fw wi-humidity mr-2"></i><strong>Humidity:</strong> {{ $siteCondition.meteorologicalConditions.humidityPer }}%</p>
+                    {{ end }}
+                    
 
                     <!--Recent rainfall isn't showing up if the answer in the database is "false"-->
-                    <div class="card">
-                        {{ if $siteCondition.recentRainfall }}
-                        <div class="card-header">
-                            <h4>Recent Rainfall</h4>
-                        </div>
-                        {{ end }}
+                    {{ if $siteCondition.recentRainfall }}
+                    <h4>Recent Rainfall</h4>
+                    {{ end }}
 
-                        {{ if $siteCondition.recentRainfall.rainedIn7Days }}
-                        <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 7 days?</strong> {{ $siteCondition.recentRainfall.rainedIn7Days }}</p>
-                        {{ end }}
+                    {{ if $siteCondition.recentRainfall.rainedIn7Days }}
+                    <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 7 days?</strong> {{ $siteCondition.recentRainfall.rainedIn7Days }}</p>
+                    {{ end }}
 
-                        {{ if $siteCondition.recentRainfall.rainedIn72Hours }}
-                        <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 72 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn72Hours }}</p>
-                        {{ end }}
+                    {{ if $siteCondition.recentRainfall.rainedIn72Hours }}
+                    <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 72 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn72Hours }}</p>
+                    {{ end }}
 
-                        {{ if $siteCondition.recentRainfall.rainedIn24Hours }}
-                        <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 24 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn24Hours }}</p>
-                        {{ end }}
-                    </div>
+                    {{ if $siteCondition.recentRainfall.rainedIn24Hours }}
+                    <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 24 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn24Hours }}</p>
+                    {{ end }}
+                    
 
                     {{ if $siteCondition.waterConditions }}
                     <h4>Water Conditions</h4>

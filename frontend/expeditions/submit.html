@@ -241,7 +241,9 @@ includes:
                 min="0"
                 name="adultCount"
                 id="adultCount"
+                {{ if $.bindings.expedition }}
                 value="{{ $.bindings.expedition.adultCount }}"
+                {{ end }}
             >
         </div>
         <div class="form-group">
@@ -252,7 +254,9 @@ includes:
                 min="0"
                 name="childCount"
                 id="childCount"
+                {{ if $.bindings.expedition }}
                 value="{{ $.bindings.expedition.childCount }}"
+                {{ end }}
             >
         </div>
 
