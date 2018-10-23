@@ -98,6 +98,8 @@ github.com/ghetzel/pivot/v3 v3.0.13 h1:oWmC0Uvc43WRyqBu+tAB5TLrPplypWo97Ect/tIUY
 github.com/ghetzel/pivot/v3 v3.0.13/go.mod h1:2NIo6GZpeB/rswiUs7urjYHxGb8pcVQhxL0TT+BpvFg=
 github.com/ghetzel/pivot/v3 v3.0.16 h1:/l05Ilze6I9d30PL4Pyp/zt1vjPNjZGFaQ93yA5SC1c=
 github.com/ghetzel/pivot/v3 v3.0.16/go.mod h1:44DZvOwnjS3a+uXRFG63cj7dDuCje4x5rOgQt7Ezy3w=
+github.com/ghetzel/pivot/v3 v3.0.17 h1:hJ7WVhG1gXMZvMrUCOkGaEa7x3SAa6shf84PlG9YQck=
+github.com/ghetzel/pivot/v3 v3.0.17/go.mod h1:44DZvOwnjS3a+uXRFG63cj7dDuCje4x5rOgQt7Ezy3w=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d h1:YVJe7KwVYazt90hCc/q2dYJVS3062AY6QdT6iHd+Kh8=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d/go.mod h1:7CCemW/spiphukVWb/v2WWYeZkydh30TwSRBh48irZQ=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=
