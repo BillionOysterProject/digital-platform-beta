@@ -9,7 +9,7 @@
 
 <section class="content">
     <div class="col-sm-12">
-        <table class="table table-sm table-bordered table-striped">
+        <table class="table table-sm table-bordered table-striped table-hover" id="sites">
             <caption>List of sites including name, body of water, latitude, longitude, count of Oyster Research Stations (ORS), and oyster larvae sources at each site.</caption>
             <thead>
                 <tr>
@@ -78,3 +78,13 @@
         </table>
     </div>
 </section>
+
+<script type="text/javascript">
+    $(function(){
+        $('#sites').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>

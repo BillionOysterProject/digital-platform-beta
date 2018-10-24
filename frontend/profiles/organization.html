@@ -3,12 +3,20 @@ page:
     body_class: 'orgs-list fill-content'
 
 bindings:
-- name:     'organizations'
+- name:     'orgs'
   resource: '/api/school-orgs/'
   only_if:  '{{ eqx (qs "v") "list" }}'
   params:
     limit:  false
     sort:   ['name']
+
+-  name:     stations
+   resource: '/api/restoration-stations'
+   params: 
+     limit:    false
+     noexpand: teamLead
+     fields:   status,schoolOrg,siteId
+     q:        schoolOrg/not:571f6f3181ab586140097247    
 
 flags:
     viewOrgsMap:  '{{ eqx (qs "v" "map") "map" }}'

@@ -1966,3 +1966,11 @@ li.loading-dialog {
         margin-left: 180px;
     }
 }
+
+.marker-org {
+    color: seagreen;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+}

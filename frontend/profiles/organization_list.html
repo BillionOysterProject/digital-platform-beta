@@ -1,51 +1,90 @@
-<table class="table table-sm table-hover table-striped" id="organizations">
-    <thead>
-        <tr>
-            <th>Org. Type</th>
-            <th>School Type</th>
-            <th>ATS Code</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Created At</th>
-        </tr>
-    </thead>
+{{ $sites       := $.bindings.sites }}
+{{ $stations    := $.bindings.stations }}
+{{ $orgs        := $.bindings.orgs }}
 
-    <tbody>
-        {{ range .bindings.organizations }}
-        <tr>
-            <td>
-                {{ .organizationType }}
-            </td>
-            <td>
-                {{ .schoolType }}
-            </td>
-            <td>
-                {{ .syncId }}
-            </td>
-            <td>
-                {{ .name }}
-            </td>
-            <td>
-                {{ if .streetAddress }}
-                <address>
-                    {{ .streetAddress }}
-                    {{ if .neighborhood }}
-                    <span>, {{ .neighborhood }}</span>
-                    {{ end }}
-                    {{ .city }}, {{ .state }}
-                    {{ if .zip }}
-                    <span>&nbsp;&nbsp;{{ .zip }}</span>
-                    {{ end }}
-                </address>
+<section class="content">
+    <table class="table table-sm table-bordered table-striped table-hover" id="organizations">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Org. Type</th>
+                <th>School Type</th>
+                <th>ORS Site(s)</th>
+                <th>Neighborhood</th>
+                <th>Address</th>
+                <th>Borough/City</th>
+                <th>State</th>
+                <th>Zipcode</th>
+                <!--<th>Created At</th>-->
+                <th>ATS Code</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {{ range $i, $org := $orgs }}
+            {{ $orgStations := filterByKey (filterByKey $stations "schoolOrg._id" $org._id) "status" "Active" }}
+            <tr>
+                <td>
+                    <a href="/profiles/{{ $org._id }}">
+                    {{ $org.name }}
+                    </a>
+                </td>
+                <td>
+                    {{ $org.organizationType }}
+                </td>
+                <td>
+                    {{ $org.schoolType }}
+                </td>
+                
+                {{ if join (uniq (sort (pluck $orgStations "siteId.name"))) "; " }}
+                <td>
+                    {{ join (uniq (sort (pluck $orgStations "siteId.name"))) "; " }}
+                </td>
+                {{ else }}
+                <td></td>
                 {{ end }}
-            </td>
-            <td>
-                {{ time .created `ymd` }}
-            </td>
-        </tr>
-        {{ end }}
-    </tbody>
-</table>
+
+                {{ if $org.neighborhood }}
+                <td>
+                    {{ $org.neighborhood }}
+                </td>
+                {{ else }}
+                <td></td>
+                {{ end }}
+                
+                <td>
+                    {{ if $org.streetAddress }}
+                    <address>
+                        {{ $org.streetAddress }}
+                    </address>
+                    {{ end }}
+                </td>
+                <td>
+                    {{ $org.city }}
+                </td>
+                <td>
+                    {{ $org.state }}
+                </td>
+                {{ if $org.zip }}
+                <td>
+                    {{ $org.zip }}
+                </td>
+                {{ else }}
+                <td></td>
+                {{ end }}
+                <!--
+                <td>
+                    {{ time $org.created `ymd` }}
+                </td>
+                -->
+                <td>
+                    {{ $org.syncId }}
+                </td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</section>
 
 <script type="text/javascript">
     $(function(){
