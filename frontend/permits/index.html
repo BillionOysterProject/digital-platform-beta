@@ -18,6 +18,7 @@ bindings:
     resource: '/api/sites'
     params:   
         limit:    false
+        sort:     name
 
 -   name:     baselines
     resource: '/api/restoration-stations'
@@ -90,7 +91,7 @@ bindings:
     </div>
 
     <div class="col-sm-12">
-        <h4>Table: Oyster Research Stations by Site, with Larvae Sources</h4>
+        <h4>Table: Sites, with Count of Oyster Research Stations and Larvae Sources</h4>
         <table class="table table-sm table-bordered table-striped">
             <caption>The number of Oyster Research Stations (ORS) and oyster larvae sources at each site.</caption>
             <thead>
@@ -120,7 +121,11 @@ bindings:
                 <tr>
                     <!--Use this to number the rows-->
                     <th>{{ $.vars.siteNumber }}</th>
-                    <td>{{ $site.name }}</td>
+                    <td>
+                        <a href="/sites/{{ $site._id }}">
+                            {{ $site.name }}
+                        </a>
+                    </td>
                     <td>{{ $site.bodyOfWater }}</td>
                     <td>{{ $site.latitude }}</td>
                     <td>{{ $site.longitude }}</td>

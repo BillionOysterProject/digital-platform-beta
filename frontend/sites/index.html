@@ -7,6 +7,15 @@ bindings:
   resource: '/api/sites'
   params:
     limit: false
+    sort:  name
+
+-  name:     baselines
+   resource: '/api/restoration-stations'
+   params: 
+     limit:    false
+     noexpand: true
+     fields:   status,siteId,baselines
+     q:        schoolOrg/not:571f6f3181ab586140097247
 
 flags:
     viewSitesMap:  '{{ eqx (qs "v" "map") "map" }}'

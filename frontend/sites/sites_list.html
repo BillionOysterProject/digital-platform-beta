@@ -1,15 +1,80 @@
-<ul class="list-unstyled m-4">
-    {{ range $i, $site := $.bindings.sites }}
-    <li class="media mb-2">
-        <img class="img-fluid img-muted" src="assets/img/placeholders/oyster.png" alt="BOP Logo">
-        <div class="media-body">
-            <h3 class="m-3">
-                <a href="/sites/{{ $site._id }}">
-                    {{ $site.name }}
-                </a>
-            </h3>
-        </div>
+
+
+
+{{ $sites       := $.bindings.sites }}
+{{ $baselines   := $.bindings.baselines }}
+{{ $stations    := $.bindings.stations }}
+{{ $orgs        := $.bindings.orgs }}
+
+
+<section class="content">
+    <div class="col-sm-12">
+        <table class="table table-sm table-bordered table-striped">
+            <caption>List of sites including name, body of water, latitude, longitude, count of Oyster Research Stations (ORS), and oyster larvae sources at each site.</caption>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Site Name</th>
+                    <th>Body of Water</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th># of Active ORS at this site</th>
+                    <th>Larvae Source(s)</th>
+                    <th>Borough/City</th>
+                    <th>NYC Park Name</th>
+                    <th>Property Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Range through each site in the sites table-->
+                {{ range $i, $site := $sites }}
+                <!--First: filter the $baselines array (stations) to find stations where the siteId = current site id (site id from the range,
+                    creating a new array of stations)
+                    Second: filter that array to find stations where the station's status = active to create a new array
+                    Third: count how many stations are in that array
+                    Fourth: create a new variable, $count that represents this value -->
+                {{ $count := count (filterByKey (filterByKey $baselines "siteId" $site._id) "status" "Active" ) }}
+                <!--Use this to number the rows-->
+                {{  increment "siteNumber" }}
+                <tr>
+                    <!--Use this to number the rows-->
+                    <th>{{ $.vars.siteNumber }}</th>
+                    <td>                        
+                        <a href="/sites/{{ $site._id }}">
+                        {{ $site.name }}
+                        </a>
+                    </td>
+                    <td>{{ $site.bodyOfWater }}</td>
+                    <td>{{ $site.latitude }}</td>
+                    <td>{{ $site.longitude }}</td>
+                    <td>
+                        {{ $count }}
+                    </td>
+                    <!--First: filter the $baselines arrary (stations) to find stations where the siteId = current site id (site id from the range,
+                        creating a new array of stations)
+                        Second: from that array, pluck the sources from the baselines to create a new array
+                        Third: from that array, only show unique sources (don't repeat any sources) to create a new array
+                        Fourth: from that array, join all of the sources into one string, separating each source with a semi-colon 
+                        
+                        TODO Fifth- sub in "Muscongus Bay" if the source is "Other" or "?"
+                    -->
+                    <td>
+                        {{ join (uniq (pluck (filterByKey $baselines "siteId" $site._id) "baselines.*.*.source")) "; " }}
+                    </td>
+                    <td>{{ $site.boroughCounty }}</td>
+                    {{if $site.nycParkName }}
+                    <td>{{ $site.nycParkName }}</td>
+                    {{ else }}
+                    <td></td>
+                    {{ end }}
+                    {{if $site.propertyOwner }}
+                    <td>{{ $site.propertyOwner }}</td>
+                    {{ else }}
+                    <td></td>
+                    {{ end }}
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
     </div>
-  </li>
-  {{ end }}
-</ul>
+</section>
