@@ -1,12 +1,15 @@
 ---
 layout:     '{{ qs "layout" "default" }}'
-renderer:   '{{ qs "renderer" "html" }}' 
+renderer:   '{{ qs "renderer" "html" }}'
 
 page:
     body_class: 'site-details'
     view: 'DEC Permit Report'
     notitle: false
-    validBoroughs: 
+    skipStation: 571f6f3181ab586140097247
+    startDate: '{{ qs "start" "2017-09-08" }}'
+    endDate:   '{{ qs "end" "2018-09-08" }}'
+    validBoroughs:
     - Manhattan
     - Brooklyn
     - Bronx
@@ -16,41 +19,41 @@ page:
 bindings:
 -   name:     sites
     resource: '/api/sites'
-    params:   
+    params:
         limit:    false
         sort:     name
 
 -   name:     baselines
     resource: '/api/restoration-stations'
-    params: 
+    params:
         limit:    false
         noexpand: true
         fields:   status,siteId,baselines
-        q:        schoolOrg/not:571f6f3181ab586140097247
+        q:        'schoolOrg/not:{{ $.page.skipStation }}'
 
 -   name:     stations
     resource: '/api/restoration-stations'
-    params: 
+    params:
         limit:    false
         noexpand: teamLead
         fields:   status,schoolOrg,siteId
-        q:        schoolOrg/not:571f6f3181ab586140097247
+        q:        'schoolOrg/not:{{ $.page.skipStation }}'
 
 -   name:     orgs
     resource: '/api/school-orgs'
     params:
         limit:    false
         sort:     name
-        q:        _id/not:571f6f3181ab586140097247
+        q:        '_id/not:{{ $.page.skipStation }}'
 
 -   name:     expeditions
     resource: '/api/expeditions'
     param_joiner: ","
     params:
         limit:    false
-        q:        status/published/monitoringStartDate/gte:2017-09-08/monitoringStartDate/lte:2018-09-08/schoolOrg/not:571f6f3181ab586140097247
+        q:        'status/published/monitoringStartDate/gte:{{ $.page.startDate }}/monitoringStartDate/lte:{{ $.page.endDate }}/schoolOrg/not:{{ $.page.skipStation }}'
         sort:     "-monitoringStartDate"
-        fields:  
+        fields:
         - name
         - monitoringStartDate
         - station
@@ -71,21 +74,21 @@ bindings:
 
 <section class="content">
     <div class="col-sm-10">
-        <p><strong>Name of Licensee:</strong> Sam Janis / Tanasia Swift</p> 
+        <p><strong>Name of Licensee:</strong> Sam Janis / Tanasia Swift</p>
 
         <p><strong>License Number:</strong> 1133</p>
 
         <p><strong>Abstract:</strong>
-            BOP is a restoration, education, and citizen science initiative that engages residents of the region in growing small populations of oysters and environmental monitoring at permitted waterfront sites around the New York Harbor. 
+            BOP is a restoration, education, and citizen science initiative that engages residents of the region in growing small populations of oysters and environmental monitoring at permitted waterfront sites around the New York Harbor.
             The goal of the program is to increase the overall breeding population of native oysters in the Harbor and to engage young people and adults in active stewardship and citizen science.
-            By adopting a BOP Oyster Restoration Station (ORS), participants agree to conduct monthly visits at their site using standard procedures and datasets covering oyster growth and mortality, basic water quality parameters, and marine ecology observations. 
+            By adopting a BOP Oyster Restoration Station (ORS), participants agree to conduct monthly visits at their site using standard procedures and datasets covering oyster growth and mortality, basic water quality parameters, and marine ecology observations.
             In this way, the project will eventually result in a comparative dataset on ecological health, viability of oyster restoration, and water quality at 28 sites across New York Harbor.
         </p>
 
         <p><strong>Common name of animal:</strong> Eastern oyster (<em>Crassostrea virginica</em>)</p>
 
         <p><strong>Source of oysters:</strong>
-            All ORS were stocked with spat-on-shell oysters produced by New York Harbor School’s oyster hatchery and remote setting facility located on Governors Island. Harbor School oysters are grown from a mix of wild broodstock (Bronx River) and aquaculture stock (from Fishers Island and Muscongus Bay). Collection and importation of these broodstocks have been permitted under separate Shellfish Importation Permits and NYHS Marine Hatchery Permits # 65-P, 2017 and # 65-P, 2018. 
+            All ORS were stocked with spat-on-shell oysters produced by New York Harbor School’s oyster hatchery and remote setting facility located on Governors Island. Harbor School oysters are grown from a mix of wild broodstock (Bronx River) and aquaculture stock (from Fishers Island and Muscongus Bay). Collection and importation of these broodstocks have been permitted under separate Shellfish Importation Permits and NYHS Marine Hatchery Permits # 65-P, 2017 and # 65-P, 2018.
             Prior to adoption and installation of their ORS, all prospective participants attended a one-day training on Governors Island on how to stock, install, and monitor their ORS. Upon successful completion of the training, participants signed a contract, stocked their cage with  New York Harbor School oysters, and transported the cage to a designated and permitted waterfront site for installation.
         </p>
     </div>
@@ -136,8 +139,8 @@ bindings:
                         creating a new array of stations)
                         Second: from that array, pluck the sources from the baselines to create a new array
                         Third: from that array, only show unique sources (don't repeat any sources) to create a new array
-                        Fourth: from that array, join all of the sources into one string, separating each source with a semi-colon 
-                        
+                        Fourth: from that array, join all of the sources into one string, separating each source with a semi-colon
+
                         TODO Fifth- sub in "Muscongus Bay" if the source is "Other" or "?"
                     -->
                     <td>
@@ -170,7 +173,7 @@ bindings:
                 {{ $orgStations := filterByKey (filterByKey $stations "schoolOrg._id" $org._id) "status" "Active" }}
                 {{ $boroughs := pluck $orgStations "siteId.boroughCounty" }}
                 <!--If orgStations has anything in it at all and if the site is in the five boroughs, display it.
-                
+
                 TODO: BUT NOT IF THE ORG IS BILLION OYSTER PROJECT
                 -->
                 {{   if and (count $orgStations) (intersect $.page.validBoroughs $boroughs) }}
@@ -183,7 +186,7 @@ bindings:
                     <td>{{ join (uniq (sort (pluck $orgStations "siteId.bodyOfWater"))) "; " }}</td>
                     <td>
                         {{ if and $org.streetAddress $org.city $org.state }}
-                        {{ $org.streetAddress }}, {{ $org.city }}, {{ $org.state }} {{ $org.zip }}  
+                        {{ $org.streetAddress }}, {{ $org.city }}, {{ $org.state }} {{ $org.zip }}
                         {{ end }}
                     </td>
                 </tr>
