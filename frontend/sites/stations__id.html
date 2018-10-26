@@ -1,0 +1,174 @@
+---
+page:
+    body_class: 'site-details'
+    notitle: true
+
+bindings:
+-   name:	  'org'
+    resource: '/api/school-orgs'
+
+-  name:     station
+   resource: '/api/restoration-stations/{{ param 1 }}'
+   params: 
+    limit:    false
+    q:        'api/sites/stations/{{ param 1 }}'
+---
+  
+{{ $site     := $.bindings.site }}
+{{ $station := $.bindings.station }}
+{{ $org := $.bindings.org }}
+
+<section class="content">
+<h1 class="text-left pb-0">Oyster Research Station: {{ $station.name }}</h1>
+<p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
+    {{ $station.siteId.name }}, {{ $station.siteId.bodyOfWater }}
+</p>
+<p class="mb-1">
+    <i class="fa fa-fw fa-globe"></i>
+    {{ $station.siteId.boroughCounty }}, {{ $station.siteId.state }}
+</p>
+</section>
+
+{{ if $station.siteId.latitude }}
+<div class="row no-gutters site-jumbotron">
+    <div class="col">
+        <div id="siteMap"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        mapboxgl.accessToken = '{{ $.page.mapbox.key }}';
+
+        var map = new mapboxgl.Map({
+            container: 'siteMap',
+            style: 'mapbox://styles/{{ qs "style" $.page.mapbox.style }}',
+            failIfMajorPerformanceCaveat: true,
+            center: [{{ $station.siteId.longitude }}, {{ $station.siteId.latitude }}],
+            zoom:   11,
+        });
+
+        // load everyone but us; e.g.: our "neighbors"
+        // $.ajax({
+        //     url: '/api/sites/export.geojson?' + $.param({
+        //         fields: 'name,bodyOfWater,latitude,longitude,nycParkName',
+        //         q:      '_id/not:{{ $site._id }}',
+        //     }),
+        //     success: function(collection) {
+        //         var layer = {
+        //             "id": "neighbors",
+        //             "type": "circle",
+        //             "source": {
+        //                 "type": "geojson",
+        //                 "data": collection,
+        //             },
+        //             "paint": {
+        //                 "circle-radius": 4,
+        //                 "circle-color": "#EA5F56",
+        //                 "circle-stroke-width": 1,
+        //                 "circle-stroke-color": "#FFFFFF",
+        //             },
+        //         };
+
+        //         map.addLayer(layer);
+        //     },
+        // });
+
+        map.on('load', function(){
+            // create a HTML element for each feature
+            var el = document.createElement('i');
+            el.className = 'fa fa-circle marker-site';
+
+            // make a marker for each feature and add to the map
+            new mapboxgl.Marker(el)
+            .setLngLat([
+                {{ $station.siteId.longitude }},
+                {{ $station.siteId.latitude }},
+            ])
+            .addTo(map);
+        });
+    });
+</script>
+{{ end }}
+
+<section class="content">
+    <table class="table table-sm table-bordered table-hover">
+        <tr>
+            <th scope="row">ORS Name</th>
+            <td>{{ $station.name }}</td>     
+        </tr>
+        
+        {{ if $station.tagNumber }}
+        <tr>
+            <th scope="row">Tag Number</th>
+            <td>{{ $station.tagNumber }}</td>     
+        </tr>
+        {{ end }}
+
+        {{ if $station.status }}
+        <tr>
+            <th scope="row">Status</th>
+            <td>{{ $station.status }}</td>     
+        </tr>
+        {{ end }}
+
+        {{ if $station.schoolOrg.name }}
+        <tr>
+            <th scope="row">Organization</th>
+            <a href="/profiles/{{ $station.schoolOrg._id }}">
+                <td>{{ $station.schoolOrg.name }}</td>   
+            </a>  
+        </tr>
+        {{ end }} 
+
+        {{ if $station.teamLead.displayName }}
+        <tr>
+            <th scope="row">Steward</th>
+            <td>{{ $station.teamLead.displayName }}</td>     
+        </tr>
+        {{ end }}
+
+        {{ if $station.siteId.name }}
+        <tr>
+            <th scope="row">
+                Site
+            </th>
+            <td>{{ $station.siteId.name }}</td>     
+        </tr>
+        {{ end }}
+
+        {{ if $station.siteId.bodyOfWater }}
+        <tr>
+            <th scope="row">Body of Water</th>
+            <td>{{ $station.siteId.bodyOfWater }}</td>     
+        </tr>
+        {{ end }}
+
+        {{ if and $station.siteId.latitude $station.siteId.longitude }}
+        <tr>
+            <th scope="row">Latitude, Longitude</th>
+            <td>{{ $station.siteId.latitude }}, {{ $station.siteId.longitude }}</td>     
+        </tr>
+        {{ end }}
+
+        {{ if $station.siteId.boroughCounty }}
+        <tr>
+            <th scope="row">Borough/City</th>
+            <td>{{ $station.siteId.boroughCounty }}</td>     
+        </tr>
+        {{ end }} 
+
+        <tr>
+            <th scope="row">Registered On</th>
+            <td>{{ time $station.created "slash" }}</td>     
+        </tr>
+        
+        {{ if $station.notes }}
+        <tr>
+            <th scope="row">Notes</th>
+            <td>{{ $station.notes }}</td>     
+        </tr>
+        {{ end }}
+ 
+    </table>
+</section>
