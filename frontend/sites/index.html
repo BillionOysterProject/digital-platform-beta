@@ -9,23 +9,30 @@ bindings:
     limit: false
     sort:  name
 
--  name:     baselines
+-  name:     stations
    resource: '/api/restoration-stations'
    params: 
      limit:    false
-     noexpand: true
-     fields:   status,siteId,baselines
+     fields:   name,status,schoolOrg,siteId,teamLead,created
      q:        schoolOrg/not:571f6f3181ab586140097247
+     sort:     name
 
 flags:
     viewSitesMap:  '{{ eqx (qs "v" "map") "map" }}'
     viewSitesList: '{{ eqx (qs "v" "map") "list" }}'
+    viewStations:  '{{ eqx (qs "v" "map") "stations" }}'
 
 includes:
     sitesMap:  '/sites/sites_map.html'
     sitesList: '/sites/sites_list.html'
+    stations:  '/sites/stations.html'
 ---
+{{ if $.flags.viewStations }}
+<h1>Oyster Research Stations</h1>
+{{ else }}
 <h1>Research Sites</h1>
+{{end }}
+
 
 <ul class="nav nav-tabs mt-2 pl-1 pr-1">
     <li class="nav-item">
@@ -38,9 +45,16 @@ includes:
     <li class="nav-item">
         <a class="nav-link{{ if $.flags.viewSitesList }} active{{ end }}" href="/sites?v=list">
             <i class="fa fa-list"></i>
-            List
+            Site List
         </a>
     </li>
+
+    <li class="nav-item">
+            <a class="nav-link{{ if $.flags.viewStations }} active{{ end }}" href="/sites?v=stations">
+                <i class="fa fa-list"></i>
+                ORS List
+            </a>
+        </li>
 </ul>
 
 <section class="content sites-list-view">
@@ -48,6 +62,8 @@ includes:
     {{   template "sitesMap" . }}
     {{ else if $.flags.viewSitesList }}
     {{   template "sitesList" . }}
+    {{ else if $.flags.viewStations }}
+    {{   template "stations" . }}
     {{ else }}
     <h2>Invalid view "{{ qs "v" }}"</h2>
     {{ end }}

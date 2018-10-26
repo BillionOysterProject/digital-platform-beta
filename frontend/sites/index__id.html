@@ -55,9 +55,12 @@ bindings:
 {{ $expeditions := $.bindings.relatedExpeditions }}
 {{ $photos      := head (compact (flatten (shuffle $.bindings.photos))) 25 }}
 
-<h1 class="text-left pb-0">{{ $site.name }}, {{ $site.bodyOfWater }}</h1>
+<h1 class="text-left pb-0">Site: {{ $site.name }}, {{ $site.bodyOfWater }}</h1>
 <section class="content shaded pt-1">
     <i class="fa fa-fw fa-map-marker"></i>
+    {{ $site.latitude }}, {{ $site.longitude }}
+    <br/>
+    <i class="fa fa-fw fa-globe"></i>
     {{ $site.boroughCounty }}, {{ $site.state }}
 </section>
 

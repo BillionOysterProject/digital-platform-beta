@@ -1975,6 +1975,14 @@ li.loading-dialog {
     text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
 }
 
+.marker-site {
+    color: #415980;
+    font-size: 12px;
+    width: 12px;
+    height: 12px;
+    text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+}
+
 .dataTables_filter {
     text-align: left !important;
 }
