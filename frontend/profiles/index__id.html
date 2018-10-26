@@ -31,8 +31,10 @@ bindings:
         {{ if $org.city }}
             {{ $org.city }},
         {{ end }}
-        {{if $org.state }}
+        {{if and $org.state $org.zip }}
             {{ $org.state }},
+        {{ else if $org.state }}
+            {{ $org.state }}
         {{ end }} 
         {{ if $org.zip }}
             {{ $org.zip }}

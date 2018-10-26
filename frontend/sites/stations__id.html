@@ -115,9 +115,13 @@ bindings:
         {{ if $station.schoolOrg.name }}
         <tr>
             <th scope="row">Organization</th>
-            <a href="/profiles/{{ $station.schoolOrg._id }}">
-                <td>{{ $station.schoolOrg.name }}</td>   
-            </a>  
+            
+                <td>
+                    <a href="/profiles/{{ $station.schoolOrg._id }}">
+                    {{ $station.schoolOrg.name }}
+                    </a>
+                </td>   
+              
         </tr>
         {{ end }} 
 
@@ -133,7 +137,11 @@ bindings:
             <th scope="row">
                 Site
             </th>
-            <td>{{ $station.siteId.name }}</td>     
+            <td>
+                <a href="/sites/{{ $station.siteId._id }}">
+                {{ $station.siteId.name }}
+                </a>
+            </td>     
         </tr>
         {{ end }}
 
