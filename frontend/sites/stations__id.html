@@ -9,11 +9,11 @@ bindings:
 
 -  name:     station
    resource: '/api/restoration-stations/{{ param 1 }}'
-   params: 
+   params:
     limit:    false
     q:        'api/sites/stations/{{ param 1 }}'
 ---
-  
+
 {{ $site     := $.bindings.site }}
 {{ $station := $.bindings.station }}
 {{ $org := $.bindings.org }}
@@ -21,15 +21,15 @@ bindings:
 <section class="content">
 <h1 class="text-left pb-0">Oyster Research Station: {{ $station.name }}</h1>
 <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
-    {{ $station.siteId.name }}, {{ $station.siteId.bodyOfWater }}
+    {{ $station.site.name }}, {{ $station.site.bodyOfWater }}
 </p>
 <p class="mb-1">
     <i class="fa fa-fw fa-globe"></i>
-    {{ $station.siteId.boroughCounty }}, {{ $station.siteId.state }}
+    {{ $station.site.boroughCounty }}, {{ $station.site.state }}
 </p>
 </section>
 
-{{ if $station.siteId.latitude }}
+{{ if $station.site.latitude }}
 <div class="row no-gutters site-jumbotron">
     <div class="col">
         <div id="siteMap"></div>
@@ -44,7 +44,7 @@ bindings:
             container: 'siteMap',
             style: 'mapbox://styles/{{ qs "style" $.page.mapbox.style }}',
             failIfMajorPerformanceCaveat: true,
-            center: [{{ $station.siteId.longitude }}, {{ $station.siteId.latitude }}],
+            center: [{{ $station.site.longitude }}, {{ $station.site.latitude }}],
             zoom:   11,
         });
 
@@ -82,8 +82,8 @@ bindings:
             // make a marker for each feature and add to the map
             new mapboxgl.Marker(el)
             .setLngLat([
-                {{ $station.siteId.longitude }},
-                {{ $station.siteId.latitude }},
+                {{ $station.site.longitude }},
+                {{ $station.site.latitude }},
             ])
             .addTo(map);
         });
@@ -95,88 +95,88 @@ bindings:
     <table class="table table-sm table-bordered table-hover">
         <tr>
             <th scope="row">ORS Name</th>
-            <td>{{ $station.name }}</td>     
+            <td>{{ $station.name }}</td>
         </tr>
-        
+
         {{ if $station.tagNumber }}
         <tr>
             <th scope="row">Tag Number</th>
-            <td>{{ $station.tagNumber }}</td>     
+            <td>{{ $station.tagNumber }}</td>
         </tr>
         {{ end }}
 
         {{ if $station.status }}
         <tr>
             <th scope="row">Status</th>
-            <td>{{ $station.status }}</td>     
+            <td>{{ $station.status }}</td>
         </tr>
         {{ end }}
 
         {{ if $station.schoolOrg.name }}
         <tr>
             <th scope="row">Organization</th>
-            
+
                 <td>
                     <a href="/profiles/{{ $station.schoolOrg._id }}">
                     {{ $station.schoolOrg.name }}
                     </a>
-                </td>   
-              
+                </td>
+
         </tr>
-        {{ end }} 
+        {{ end }}
 
         {{ if $station.teamLead.displayName }}
         <tr>
             <th scope="row">Steward</th>
-            <td>{{ $station.teamLead.displayName }}</td>     
+            <td>{{ $station.teamLead.displayName }}</td>
         </tr>
         {{ end }}
 
-        {{ if $station.siteId.name }}
+        {{ if $station.site.name }}
         <tr>
             <th scope="row">
                 Site
             </th>
             <td>
-                <a href="/sites/{{ $station.siteId._id }}">
-                {{ $station.siteId.name }}
+                <a href="/sites/{{ $station.site._id }}">
+                {{ $station.site.name }}
                 </a>
-            </td>     
+            </td>
         </tr>
         {{ end }}
 
-        {{ if $station.siteId.bodyOfWater }}
+        {{ if $station.site.bodyOfWater }}
         <tr>
             <th scope="row">Body of Water</th>
-            <td>{{ $station.siteId.bodyOfWater }}</td>     
+            <td>{{ $station.site.bodyOfWater }}</td>
         </tr>
         {{ end }}
 
-        {{ if and $station.siteId.latitude $station.siteId.longitude }}
+        {{ if and $station.site.latitude $station.site.longitude }}
         <tr>
             <th scope="row">Latitude, Longitude</th>
-            <td>{{ $station.siteId.latitude }}, {{ $station.siteId.longitude }}</td>     
+            <td>{{ $station.site.latitude }}, {{ $station.site.longitude }}</td>
         </tr>
         {{ end }}
 
-        {{ if $station.siteId.boroughCounty }}
+        {{ if $station.site.boroughCounty }}
         <tr>
             <th scope="row">Borough/City</th>
-            <td>{{ $station.siteId.boroughCounty }}</td>     
+            <td>{{ $station.site.boroughCounty }}</td>
         </tr>
-        {{ end }} 
+        {{ end }}
 
         <tr>
             <th scope="row">Registered On</th>
-            <td>{{ time $station.created "slash" }}</td>     
+            <td>{{ time $station.created "slash" }}</td>
         </tr>
-        
+
         {{ if $station.notes }}
         <tr>
             <th scope="row">Notes</th>
-            <td>{{ $station.notes }}</td>     
+            <td>{{ $station.notes }}</td>
         </tr>
         {{ end }}
- 
+
     </table>
 </section>

@@ -6,7 +6,7 @@
         "collection": "restorationstations",
         "fields": [
             "name",
-            "siteId"
+            "site"
         ]
     }, {
         "key":        "team",

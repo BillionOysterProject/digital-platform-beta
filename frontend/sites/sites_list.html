@@ -37,18 +37,18 @@
             <tbody>
                 <!-- Range through each site in the sites table-->
                 {{ range $i, $site := $sites }}
-                <!--First: filter the $stations array (stations) to find stations where the siteId = current site id (site id from the range,
+                <!--First: filter the $stations array (stations) to find stations where the site = current site id (site id from the range,
                     creating a new array of stations)
                     Second: filter that array to find stations where the station's status = active to create a new array
                     Third: count how many stations are in that array
                     Fourth: create a new variable, $count that represents this value -->
-                {{ $count := count (filterByKey (filterByKey $stations "siteId._id" $site._id) "status" "Active" ) }}
+                {{ $count := count (filterByKey (filterByKey $stations "site._id" $site._id) "status" "Active" ) }}
                 <!--Use this to number the rows-->
                 {{  increment "siteNumber" }}
                 <tr>
                     <!--Use this to number the rows-->
                     <th>{{ $.vars.siteNumber }}</th>
-                    <td>                        
+                    <td>
                         <a href="/sites/{{ $site._id }}">
                         {{ $site.name }}
                         </a>

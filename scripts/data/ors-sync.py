@@ -38,7 +38,7 @@ with open('scripts/data/ors.tsv', 'rU') as file:
 
             ors = stations.get(row['ors_id'])
 
-            ors['siteId']        = site.id
+            ors['site']        = site.id
             # ors['status']        = status
             ors['latitude']      = float(site.latitude)
             ors['longitude']     = float(site.longitude)

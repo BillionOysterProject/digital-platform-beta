@@ -26,7 +26,7 @@ bindings:
     params:
         limit:    false
         noexpand: true
-        fields:   status,siteId,baselines
+        fields:   status,site,baselines
         q:        'schoolOrg/not:{{ $.page.skipStation }}'
 
 -   name:     stations
@@ -34,7 +34,7 @@ bindings:
     params:
         limit:    false
         noexpand: teamLead
-        fields:   status,schoolOrg,siteId
+        fields:   status,schoolOrg,site
         q:        'schoolOrg/not:{{ $.page.skipStation }}'
 
 -   name:     orgs
@@ -109,12 +109,12 @@ bindings:
             <tbody>
                 <!-- Range through each site in the sites table-->
                 {{ range $i, $site := $sites }}
-                <!--First: filter the $baselines array (stations) to find stations where the siteId = current site id (site id from the range,
+                <!--First: filter the $baselines array (stations) to find stations where the site = current site id (site id from the range,
                     creating a new array of stations)
                     Second: filter that array to find stations where the station's status = active to create a new array
                     Third: count how many stations are in that array
                     Fourth: create a new variable, $count that represents this value -->
-                {{ $count := count (filterByKey (filterByKey $baselines "siteId" $site._id) "status" "Active" ) }}
+                {{ $count := count (filterByKey (filterByKey $baselines "site" $site._id) "status" "Active" ) }}
                 <!--Only show sites with at least 1 active ORS and are within the five boroughs (we created "valid boroughs" under page-->
                 {{  if and $count (any $.page.validBoroughs $site.boroughCounty) }}
                 <!--Use this to number the rows-->
@@ -133,7 +133,7 @@ bindings:
                     <td>
                         {{ $count }}
                     </td>
-                    <!--First: filter the $baselines arrary (stations) to find stations where the siteId = current site id (site id from the range,
+                    <!--First: filter the $baselines arrary (stations) to find stations where the site = current site id (site id from the range,
                         creating a new array of stations)
                         Second: from that array, pluck the sources from the baselines to create a new array
                         Third: from that array, only show unique sources (don't repeat any sources) to create a new array
@@ -142,7 +142,7 @@ bindings:
                         TODO Fifth- sub in "Muscongus Bay" if the source is "Other" or "?"
                     -->
                     <td>
-                        {{ join (uniq (pluck (filterByKey $baselines "siteId" $site._id) "baselines.*.*.source")) "; " }}
+                        {{ join (uniq (pluck (filterByKey $baselines "site" $site._id) "baselines.*.*.source")) "; " }}
                     </td>
                 </tr>
                 {{  end }}
@@ -169,7 +169,7 @@ bindings:
                 then filter through that array to only show stations whose status is "Active."
                 Create the variable $orgStations from this filtered array.-->
                 {{ $orgStations := filterByKey (filterByKey $stations "schoolOrg._id" $org._id) "status" "Active" }}
-                {{ $boroughs := pluck $orgStations "siteId.boroughCounty" }}
+                {{ $boroughs := pluck $orgStations "site.boroughCounty" }}
                 <!--If orgStations has anything in it at all and if the site is in the five boroughs, display it.
 
                 TODO: BUT NOT IF THE ORG IS BILLION OYSTER PROJECT
@@ -180,8 +180,8 @@ bindings:
 
                     <th>{{ $.vars.orgNumber }}</th>
                     <td>{{ $org.name }}</td>
-                    <td>{{ join (uniq (sort (pluck $orgStations "siteId.name"))) "; " }}</td>
-                    <td>{{ join (uniq (sort (pluck $orgStations "siteId.bodyOfWater"))) "; " }}</td>
+                    <td>{{ join (uniq (sort (pluck $orgStations "site.name"))) "; " }}</td>
+                    <td>{{ join (uniq (sort (pluck $orgStations "site.bodyOfWater"))) "; " }}</td>
                     <td>
                         {{ if and $org.streetAddress $org.city $org.state }}
                         {{ $org.streetAddress }}, {{ $org.city }}, {{ $org.state }} {{ $org.zip }}
@@ -219,8 +219,8 @@ bindings:
                     <th>{{ $.vars.expeditionNumber }}</th>
                     <td>{{ $expedition.station.name }}</td>
                     <td>{{ $expedition.monitoringStartDate }}</td>
-                    <td>{{ $expedition.station.siteId.name }}</td>
-                    <td>{{ $expedition.station.siteId.bodyOfWater }}</td>
+                    <td>{{ $expedition.station.site.name }}</td>
+                    <td>{{ $expedition.station.site.bodyOfWater }}</td>
                     <td>{{ $expedition.protocols.oysterMeasurement.totalNumberOfAllLiveOysters }}</td>
                     <td>{{ $expedition.protocols.oysterMeasurement.minimumSizeOfAllLiveOysters }}</td>
                     <td>{{ round $expedition.protocols.oysterMeasurement.averageSizeOfAllLiveOysters 2 }}</td>

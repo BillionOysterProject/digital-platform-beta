@@ -31,37 +31,37 @@
                     <th>Registered On</th>
                 </tr>
             </thead>
-    
+
             <tbody>
                 {{ range $i, $station := $stations }}
                 <tr>
                     <th>
                         {{ add $i 1 }}
                     </th>
-                    
+
                         <td>
                             <a href="sites/stations/{{ $station._id }}">
                             {{ $station.name }}
-                            </a> 
+                            </a>
                         </td>
-                    
+
                     <td>
                         {{ $station.status }}
                     </td>
                     <td>
-                        {{ $station.siteId.name }}
+                        {{ $station.site.name }}
                     </td>
                     <td>
-                        {{ $station.siteId.bodyOfWater }}
+                        {{ $station.site.bodyOfWater }}
                     </td>
                     <td>
-                        {{ $station.siteId.boroughCounty }}
+                        {{ $station.site.boroughCounty }}
                     </td>
 
                     <td>
                         {{ $station.schoolOrg.name }}
                     </td>
-                    
+
                     {{ if $station.teamLead.displayName }}
                     <td>
                         {{ $station.teamLead.displayName }}
@@ -69,7 +69,7 @@
                     {{ else }}
                     <td></td>
                     {{ end }}
-                    
+
                     <td>
                         {{ time $station.created "slash" }}
                     </td>
@@ -78,7 +78,7 @@
             </tbody>
         </table>
     </section>
-    
+
     <script type="text/javascript">
         $(function(){
             $('#stations').DataTable({

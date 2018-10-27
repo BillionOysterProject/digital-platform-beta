@@ -12,11 +12,11 @@ bindings:
 
 -  name:     stations
    resource: '/api/restoration-stations'
-   params: 
+   params:
      limit:    false
      noexpand: teamLead
-     fields:   status,schoolOrg,siteId
-     q:        schoolOrg/not:571f6f3181ab586140097247    
+     fields:   status,schoolOrg,site
+     q:        schoolOrg/not:571f6f3181ab586140097247
 
 flags:
     viewOrgsMap:  '{{ eqx (qs "v" "map") "map" }}'

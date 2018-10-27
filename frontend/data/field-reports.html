@@ -50,8 +50,8 @@ bindings:
                             {{ if isMap $expedition.station }}
                             <dt class="col-3">Location</dt>
                             <dd class="col-9">
-                                {{ if isMap $expedition.station.siteId }}
-                                {{ $expedition.station.siteId.name }} &ndash;
+                                {{ if isMap $expedition.station.site }}
+                                {{ $expedition.station.site.name }} &ndash;
                                 {{ end }}
 
                                 <a href="/sites/{{ $expedition.station._id }}">

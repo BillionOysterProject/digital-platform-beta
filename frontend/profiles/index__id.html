@@ -9,18 +9,18 @@ bindings:
 
 -  name:     stations
    resource: '/api/restoration-stations'
-   params: 
+   params:
     limit:    false
     noexpand: teamLead
-    fields:   status,schoolOrg,siteId
+    fields:   status,schoolOrg,site
     q:        'schoolOrg/is:{{ param 1 }}/status/Active'
 ---
-  
+
 {{ $site     := $.bindings.site }}
 {{ $stations := $.bindings.stations }}
 {{ $teams    := $.bindings.relatedTeams }}
 {{ $org := $.bindings.org }}
-{{ $orgSites := uniqByKey $stations "siteId.name" }}
+{{ $orgSites := uniqByKey $stations "site.name" }}
 
 <section class="content">
     <h1 class="text-left pb-0">{{ $org.name }}</h1>
@@ -35,7 +35,7 @@ bindings:
             {{ $org.state }},
         {{ else if $org.state }}
             {{ $org.state }}
-        {{ end }} 
+        {{ end }}
         {{ if $org.zip }}
             {{ $org.zip }}
         {{ end }}
@@ -114,11 +114,11 @@ bindings:
                                 "geometry": {
                                     "type": "Point",
                                     "coordinates": [
-                                        {{ $orgSite.siteId.longitude }},
-                                        {{ $orgSite.siteId.latitude }}
+                                        {{ $orgSite.site.longitude }},
+                                        {{ $orgSite.site.latitude }}
                                     ],
                                 },
-                            },  
+                            },
                             {{ end }}
                         ],
                     },
@@ -141,20 +141,20 @@ bindings:
     <table class="table table-sm table-bordered table-hover">
         <tr>
             <th scope="row">Organization Name</th>
-            <td>{{ $org.name }}</td>     
+            <td>{{ $org.name }}</td>
         </tr>
         <tr>
             <th scope="row">Organization Type</th>
-            <td>{{ $org.organizationType }}</td>     
+            <td>{{ $org.organizationType }}</td>
         </tr>
 
         {{ if $org.schoolType}}
         <tr>
             <th scope="row">School Type</th>
-            <td>{{ $org.schoolType }}</td>     
+            <td>{{ $org.schoolType }}</td>
         </tr>
         {{ end }}
-        
+
 
         {{ if $stations }}
         <tr>
@@ -163,8 +163,8 @@ bindings:
             </th>
             <td>
                 {{ range $i, $orgSite := $orgSites }}
-                <a class="d-block" href="/sites/{{ $orgSite.siteId._id}}">
-                    {{ $orgSite.siteId.name }}
+                <a class="d-block" href="/sites/{{ $orgSite.site._id}}">
+                    {{ $orgSite.site.name }}
                 </a>
                 {{ end }}
             </td>
@@ -174,94 +174,94 @@ bindings:
         {{ if $org.neighborhood }}
         <tr>
             <th scope="row">Neighborhood</th>
-            <td>{{ $org.neighborhood }}</td>     
+            <td>{{ $org.neighborhood }}</td>
         </tr>
         {{ end }}
 
         {{ if $org.streetAddress }}
         <tr>
             <th scope="row">Address</th>
-            <td>{{ $org.streetAddress }}</td>     
+            <td>{{ $org.streetAddress }}</td>
         </tr>
-        {{ end }}        
+        {{ end }}
 
         {{ if $org.city }}
         <tr>
             <th scope="row">Borough/City</th>
-            <td>{{ $org.city }}</td>     
+            <td>{{ $org.city }}</td>
         </tr>
-        {{ end }} 
+        {{ end }}
 
         {{ if $org.state }}
         <tr>
             <th scope="row">State</th>
-            <td>{{ $org.state }}</td>     
+            <td>{{ $org.state }}</td>
         </tr>
-        {{ end }} 
+        {{ end }}
 
         {{ if $org.zip }}
         <tr>
             <th scope="row">Zipcode</th>
-            <td>{{ $org.zip }}</td>     
+            <td>{{ $org.zip }}</td>
         </tr>
-        {{ end }} 
+        {{ end }}
         {{ if $org.syncId }}
         <tr>
             <th scope="row">ATS Code (NYC DOE)</th>
-            <td>{{ $org.syncId }}</td>     
+            <td>{{ $org.syncId }}</td>
         </tr>
         {{ end }}
 
         {{ if $org.locationType }}
         <tr>
             <th scope="row">Location Type</th>
-            <td>{{ $org.locationType }}</td>     
+            <td>{{ $org.locationType }}</td>
         </tr>
-        {{ end }} 
+        {{ end }}
         {{ if $org.gradeLevels }}
         <tr>
             <th scope="row">Grade Levels</th>
-            <td>{{ $org.gradeLevels }}</td>     
+            <td>{{ $org.gradeLevels }}</td>
         </tr>
         {{ end }}
 
         {{ if $org.gradesTaught }}
         <tr>
             <th scope="row">Grades Taught</th>
-            <td>{{ $org.gradesTaught }}</td>     
+            <td>{{ $org.gradesTaught }}</td>
         </tr>
-        {{ end }} 
+        {{ end }}
 
         {{ if $org.principal }}
         <tr>
             <th scope="row">Principal Name</th>
-            <td>{{ $org.principal }}</td>     
+            <td>{{ $org.principal }}</td>
         </tr>
         {{ end }}
         {{ if $org.principalPhone }}
         <tr>
             <th scope="row">Principal Number</th>
-            <td>{{ $org.principalPhone }}</td>     
+            <td>{{ $org.principalPhone }}</td>
         </tr>
         {{ end }}
 
         {{ if $org.district }}
         <tr>
             <th scope="row">City Council District</th>
-            <td>{{ $org.district }}</td>     
+            <td>{{ $org.district }}</td>
         </tr>
-        {{ end }} 
+        {{ end }}
 
         {{ if $org.communityBoard }}
         <tr>
             <th scope="row">Community Board</th>
-            <td>{{ $org.communityBoard }}</td>     
+            <td>{{ $org.communityBoard }}</td>
         </tr>
         {{ end }}
         {{ if $org.description }}
         <tr>
             <th scope="row">Description</th>
-            <td>{{ $org.description }}</td>     
+            <td>{{ $org.description }}</td>
         </tr>
         {{ end }}
     </table>

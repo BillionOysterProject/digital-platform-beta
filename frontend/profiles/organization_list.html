@@ -48,10 +48,10 @@
                 <td>
                     {{ $org.schoolType }}
                 </td>
-                
-                {{ if join (uniq (sort (pluck $orgStations "siteId.name"))) "; " }}
+
+                {{ if join (uniq (sort (pluck $orgStations "site.name"))) "; " }}
                 <td>
-                    {{ join (uniq (sort (pluck $orgStations "siteId.name"))) "; " }}
+                    {{ join (uniq (sort (pluck $orgStations "site.name"))) "; " }}
                 </td>
                 {{ else }}
                 <td></td>
@@ -64,7 +64,7 @@
                 {{ else }}
                 <td></td>
                 {{ end }}
-                
+
                 <td>
                     {{ if $org.streetAddress }}
                     <address>

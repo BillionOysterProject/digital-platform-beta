@@ -62,11 +62,11 @@ bindings:
     <div class="col-md-6 col-sm-12">
         <h1 class="text-left pb-2">Expedition Field Report: {{ $expedition.name }}</h1>
 
-        {{ if isMap $expedition.station.siteId }}
+        {{ if isMap $expedition.station.site }}
         <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
-            {{ $expedition.station.siteId.name }}, {{ $expedition.station.siteId.bodyOfWater }}
+            {{ $expedition.station.site.name }}, {{ $expedition.station.site.bodyOfWater }}
         </p>
-        <p class="mb-1"><i class="fa fa-fw fa-globe"></i>{{ $expedition.station.siteId.boroughCounty }}, {{ $expedition.station.siteId.state }}</p>
+        <p class="mb-1"><i class="fa fa-fw fa-globe"></i>{{ $expedition.station.site.boroughCounty }}, {{ $expedition.station.site.state }}</p>
         {{ end }}
         <p class="mb-1"><i class="fa fa-fw fa-calendar"></i>{{ time $expedition.monitoringEndDate "January 1, 2006, 3:04pm"  }}</p>
     </div>
@@ -539,7 +539,7 @@ bindings:
                     </p>
                     {{ end }}
 
-                    
+
                     {{ if $siteCondition.meteorologicalConditions }}
                     <h4>Meteorological Conditions</h4>
                     {{ end }}
@@ -563,7 +563,7 @@ bindings:
                     {{ if $siteCondition.meteorologicalConditions.humidityPer }}
                     <p><i class="wi wi-fw wi-humidity mr-2"></i><strong>Humidity:</strong> {{ $siteCondition.meteorologicalConditions.humidityPer }}%</p>
                     {{ end }}
-                    
+
 
                     <!--Recent rainfall isn't showing up if the answer in the database is "false"-->
                     {{ if $siteCondition.recentRainfall }}
@@ -581,7 +581,7 @@ bindings:
                     {{ if $siteCondition.recentRainfall.rainedIn24Hours }}
                     <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 24 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn24Hours }}</p>
                     {{ end }}
-                    
+
 
                     {{ if $siteCondition.waterConditions }}
                     <h4>Water Conditions</h4>

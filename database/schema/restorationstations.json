@@ -2,7 +2,7 @@
     "name": "restorationstations",
     "allow_missing_embedded_records": true,
     "embed": [{
-        "key": "siteId",
+        "key": "site",
         "collection": "sites",
         "fields": [
             "name",
@@ -40,7 +40,7 @@
         "type":       "str",
         "required":   true
     }, {
-        "name":     "siteId",
+        "name":     "site",
         "type":     "str",
         "required": true
     }, {
@@ -77,11 +77,19 @@
         "required": true,
         "validators": {
             "one-of": [
+                "Active",
+                "Inactive",
+                "Damaged",
+                "Destroyed",
+                "Lost",
+                "Retired",
+                "Unknown",
                 "active",
                 "inactive",
                 "damaged-destroyed",
                 "lost",
-                "retired"
+                "retired",
+                "unknown"
             ]
         }
     }, {
