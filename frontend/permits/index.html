@@ -219,8 +219,16 @@ bindings:
                     <th>{{ $.vars.expeditionNumber }}</th>
                     <td>{{ $expedition.station.name }}</td>
                     <td>{{ $expedition.monitoringStartDate }}</td>
-                    <td>{{ $expedition.station.site.name }}</td>
-                    <td>{{ $expedition.station.site.bodyOfWater }}</td>
+                    <td>
+                        {{ if $expedition.station.site }}
+                        {{ $expedition.station.site.name }}
+                        {{ end }}
+                    </td>
+                    <td>
+                        {{ if $expedition.station.site }}
+                        {{ $expedition.station.site.bodyOfWater }}
+                        {{ end }}
+                    </td>
                     <td>{{ $expedition.protocols.oysterMeasurement.totalNumberOfAllLiveOysters }}</td>
                     <td>{{ $expedition.protocols.oysterMeasurement.minimumSizeOfAllLiveOysters }}</td>
                     <td>{{ round $expedition.protocols.oysterMeasurement.averageSizeOfAllLiveOysters 2 }}</td>
