@@ -1,8 +1,5 @@
 
-
-
 {{ $sites       := $.bindings.sites }}
-{{ $baselines   := $.bindings.baselines }}
 {{ $stations    := $.bindings.stations }}
 {{ $orgs        := $.bindings.orgs }}
 
@@ -32,7 +29,6 @@
                     <th>Latitude</th>
                     <th>Longitude</th>
                     <th># of Active ORS at this site</th>
-                    <th>Larvae Source(s)</th>
                     <th>Borough/City</th>
                     <th>NYC Park Name</th>
                     <th>Property Owner</th>
@@ -41,12 +37,12 @@
             <tbody>
                 <!-- Range through each site in the sites table-->
                 {{ range $i, $site := $sites }}
-                <!--First: filter the $baselines array (stations) to find stations where the siteId = current site id (site id from the range,
+                <!--First: filter the $stations array (stations) to find stations where the siteId = current site id (site id from the range,
                     creating a new array of stations)
                     Second: filter that array to find stations where the station's status = active to create a new array
                     Third: count how many stations are in that array
                     Fourth: create a new variable, $count that represents this value -->
-                {{ $count := count (filterByKey (filterByKey $baselines "siteId" $site._id) "status" "Active" ) }}
+                {{ $count := count (filterByKey (filterByKey $stations "siteId._id" $site._id) "status" "Active" ) }}
                 <!--Use this to number the rows-->
                 {{  increment "siteNumber" }}
                 <tr>
@@ -62,17 +58,6 @@
                     <td>{{ $site.longitude }}</td>
                     <td>
                         {{ $count }}
-                    </td>
-                    <!--First: filter the $baselines arrary (stations) to find stations where the siteId = current site id (site id from the range,
-                        creating a new array of stations)
-                        Second: from that array, pluck the sources from the baselines to create a new array
-                        Third: from that array, only show unique sources (don't repeat any sources) to create a new array
-                        Fourth: from that array, join all of the sources into one string, separating each source with a semi-colon 
-                        
-                        TODO Fifth- sub in "Muscongus Bay" if the source is "Other" or "?"
-                    -->
-                    <td>
-                        {{ join (uniq (pluck (filterByKey $baselines "siteId" $site._id) "baselines.*.*.source")) "; " }}
                     </td>
                     <td>{{ $site.boroughCounty }}</td>
                     {{if $site.nycParkName }}

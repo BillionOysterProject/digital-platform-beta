@@ -22,7 +22,25 @@ bindings:
 {{ $org := $.bindings.org }}
 {{ $orgSites := uniqByKey $stations "siteId.name" }}
 
-<h1 class="text-left pb-0">{{ $org.name }}</h1>
+<section class="content">
+    <h1 class="text-left pb-0">{{ $org.name }}</h1>
+    <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
+        {{ if $org.streetAddress }}
+            {{ $org.streetAddress }},
+        {{ end }}
+        {{ if $org.city }}
+            {{ $org.city }},
+        {{ end }}
+        {{if and $org.state $org.zip }}
+            {{ $org.state }},
+        {{ else if $org.state }}
+            {{ $org.state }}
+        {{ end }} 
+        {{ if $org.zip }}
+            {{ $org.zip }}
+        {{ end }}
+    </p>
+</section>
 
 {{ if $org.latitude }}
 <div class="row no-gutters site-jumbotron">
