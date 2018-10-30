@@ -11,6 +11,10 @@
         "teamLeadType",
         "schoolOrg"
     ],
+    "embed": [{
+        "key":        "schoolOrg",
+        "collection": "schoolorgs"
+    }],
     "fields": [{
         "name":     "firstName",
         "type":     "str",
