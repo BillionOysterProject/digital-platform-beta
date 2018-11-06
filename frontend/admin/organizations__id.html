@@ -3,6 +3,9 @@ page:
     view: Organization Editor
 
 bindings:
+-   name:     meta
+    resource: '/api/school-orgs/meta'
+
 -   name:     organization
     resource: '/api/school-orgs/{{ param 1 }}'
     params:
@@ -42,7 +45,19 @@ bindings:
             </div>
         </div>
 
-        <!--
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="pending">Pending</label>
+            <div class="col-10">
+                <select
+                    name="pending"
+                    class="form-control"
+                >
+                    <option value="true" {{ if b $.bindings.organization.pending }} selected{{ end }}>Yes</option>
+                    <option value="false" {{ if b $.bindings.organization.pending }} selected="selected" {{ end }}>No</option>
+                </select>
+            </div>
+        </div>
+
         <div class="form-group mt-4">
             <div class="text-right">
                 <button
@@ -58,6 +73,5 @@ bindings:
                 >Save</button>
             </div>
         </div>
-        -->
     </form>
 </div>
