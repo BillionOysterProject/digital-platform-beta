@@ -152,7 +152,7 @@ bindings:
             <div class="media-body">
                 <p class="mt-0 mb-1"><strong>Team Lead:</strong> {{ $expedition.teamLead.displayName }} </p>
                 <!-- <p class="mt-0 mb-1"><strong>Team Lead Type:</strong> {{ $expedition.teamLead.teamLeadType }} </p> -->
-                <strong>Team Name:</strong> {{ $expedition.team.name}}
+                <strong>Team Name:</strong> {{ $expedition.team.name }}
             </div>
         </li>
 
@@ -289,36 +289,37 @@ bindings:
                     <!--Need a function here to hide this entire section if there is no oyster mortality or growth data (unlikely but possible)-->
                     <h4>Summary Data for This Expedition</h4>
                     <table class="table table-bordered">
+                        
                         {{ $allCounts       := (pluck (get $oysterMeasurement "measuringOysterGrowth.substrateShells") "totalNumberOfLiveOystersOnShell") }}
                         {{ $allMeasurements := (pluck (flatten (pluck (get $oysterMeasurement "measuringOysterGrowth.substrateShells") "measurements")) "sizeOfLiveOysterMM") }}
 
                         <caption>Summary data including the total number of live oysters and the average, largest, and smallest oyster lengths.</caption>
                         <tbody>
-                            <!--Need a function to hide Mortality and Growth Rate if this is the first expedition to this station-->
+                            
                             <tr>
                                 <th scope="row">Total # of Live Oysters</th>
-                                <td>{{ sum $allCounts }}</td>
+                                <!--<td>{{ sum $allCounts }}</td>-->
+                                <td>{{ $expedition.protocols.oysterMeasurement.totalNumberOfAllLiveOysters }}</td>
                             </tr>
-                            <!--
-                            <tr>
-                                <th scope="row">Growth Rate (from baseline)</th>
-                                <td> %</td>
-                            </tr> -->
 
                             <tr>
                                 <th scope="row">Average Oyster Length (the "mean")</th>
-                                <td>{{ mean $allMeasurements }} mm</td>
+                                <!--<td>{{ mean $allMeasurements }} mm</td>-->
+                                <td>{{ round $expedition.protocols.oysterMeasurement.averageSizeOfAllLiveOysters 2 }}</td>
                             </tr>
 
                             <tr>
                                 <th scope="row">Smallest Oyster (the "minimum" or "min")</th>
-                                <td>{{ minimum $allMeasurements }} mm</td>
+                                <!--<td>{{ minimum $allMeasurements }} mm</td>-->
+                                <td>{{ $expedition.protocols.oysterMeasurement.minimumSizeOfAllLiveOysters }}</td>
                             </tr>
 
                             <tr>
                                 <th scope="row">Largest Oyster (the "maximum" or "max")</th>
-                                <td>{{ maximum $allMeasurements }} mm</td>
+                                <!--<td>{{ maximum $allMeasurements }} mm</td>-->
+                                <td>{{ $expedition.protocols.oysterMeasurement.maximumSizeOfAllLiveOysters }}</td>
                             </tr>
+
 
                         </tbody>
                     </table>

@@ -44,6 +44,13 @@ bindings:
         sort:     name
         q:        '_id/not:{{ $.page.skipStation }}'
 
+-   name:     notUnaffiliated
+    resource: '/api/school-orgs'
+    params:
+        limit:    false
+        sort:     name
+        q:        '_id/not:5722befed3444e216c62bcc1'
+
 -   name:     expeditions
     resource: '/api/expeditions'
     param_joiner: ","
@@ -60,18 +67,18 @@ bindings:
         - protocols.oysterMeasurement:minimumSizeOfAllLiveOysters
         - protocols.oysterMeasurement:averageSizeOfAllLiveOysters
         - protocols.oysterMeasurement:maximumSizeOfAllLiveOysters
-
-
 ---
 
 {{ $sites       := $.bindings.sites }}
 {{ $baselines   := $.bindings.baselines }}
 {{ $stations    := $.bindings.stations }}
 {{ $orgs        := $.bindings.orgs }}
+{{ $notUnaffiliated := $.bindings.notUnaffiliated }}
 {{ $expeditions := $.bindings.expeditions }}
 
+
 <section class="content">
-    <div class="col-sm-10">
+    <div class="col-sm-12">
         <p><strong>Name of Licensee:</strong> Sam Janis / Tanasia Swift</p>
 
         <p><strong>License Number:</strong> 1133</p>
@@ -89,10 +96,11 @@ bindings:
             All ORS were stocked with spat-on-shell oysters produced by New York Harbor School’s oyster hatchery and remote setting facility located on Governors Island. Harbor School oysters are grown from a mix of wild broodstock (Bronx River) and aquaculture stock (from Fishers Island and Muscongus Bay). Collection and importation of these broodstocks have been permitted under separate Shellfish Importation Permits and NYHS Marine Hatchery Permits # 65-P, 2017 and # 65-P, 2018.
             Prior to adoption and installation of their ORS, all prospective participants attended a one-day training on Governors Island on how to stock, install, and monitor their ORS. Upon successful completion of the training, participants signed a contract, stocked their cage with  New York Harbor School oysters, and transported the cage to a designated and permitted waterfront site for installation.
         </p>
+        
     </div>
-
+    <hr/>
     <div class="col-sm-12">
-        <h4>Table: Sites, with Count of Oyster Research Stations and Larvae Sources</h4>
+        <h3>Table: Sites, with Count of Oyster Research Stations and Larvae Sources</h3>
         <table class="table table-sm table-bordered table-striped">
             <caption>The number of Oyster Research Stations (ORS) and oyster larvae sources at each site.</caption>
             <thead>
@@ -149,51 +157,118 @@ bindings:
                 {{ end }}
             </tbody>
         </table>
+        <hr/>
+    </div>
 
-        <h4>Table: Organizations Stewarding Oyster Research Stations (ORS)</h4>
-        <table class="table table-sm table-bordered table-striped">
-            <caption>The organization name, site and body of water, and organization address.</caption>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Organization Name</th>
-                    <th>ORS Site</th>
-                    <th>Body of Water</th>
-                    <th>Organization Address</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--Range through the orgs table-->
-                {{ range $i, $org := $orgs }}
-                <!--Filter through the stations table, creating an array of each station whose "schoolOrg" field matches the org id,
-                then filter through that array to only show stations whose status is "Active."
-                Create the variable $orgStations from this filtered array.-->
-                {{ $orgStations := filterByKey (filterByKey $stations "schoolOrg._id" $org._id) "status" "Active" }}
-                {{ $boroughs := pluck $orgStations "site.boroughCounty" }}
-                <!--If orgStations has anything in it at all and if the site is in the five boroughs, display it.
+    <div class="col-sm-12"> 
+    <h2 text-align="center">Data by Site</h2>
+        {{ range $i, $site := $sites }}
+        <!--First: filter the $baselines array (stations) to find stations where the site = current site id (site id from the range,
+        creating a new array of stations)
+        Second: filter that array to find stations where the station's status = active to create a new array
+        Third: count how many stations are in that array
+        Fourth: create a new variable, $count that represents this value -->
+        {{ $count := count (filterByKey (filterByKey $baselines "site" $site._id) "status" "Active" ) }}
+        <!--Only show sites with at least 1 active ORS and are within the five boroughs (we created "valid boroughs" under page-->
+        {{  if and $count (any $.page.validBoroughs $site.boroughCounty) }}
+        
+        <!--Create an array of stations at this site, then pluck their org names, then leave only unique names, then join different organization names with a ;-->
+        {{ $siteOrgs := uniq (pluck (filterByKey $stations "site.name" $site.name) "schoolOrg.name") }}
 
-                TODO: BUT NOT IF THE ORG IS BILLION OYSTER PROJECT
-                -->
-                {{   if and (count $orgStations) (intersect $.page.validBoroughs $boroughs) }}
-                {{  increment "orgNumber" }}
-                <tr>
 
-                    <th>{{ $.vars.orgNumber }}</th>
-                    <td>{{ $org.name }}</td>
-                    <td>{{ join (uniq (sort (pluck $orgStations "site.name"))) "; " }}</td>
-                    <td>{{ join (uniq (sort (pluck $orgStations "site.bodyOfWater"))) "; " }}</td>
-                    <td>
-                        {{ if and $org.streetAddress $org.city $org.state }}
-                        {{ $org.streetAddress }}, {{ $org.city }}, {{ $org.state }} {{ $org.zip }}
-                        {{ end }}
-                    </td>
-                </tr>
-                {{   end }}
-                {{ end }}
-            </tbody>
-        </table>
+        <h3>{{ $site.name }}</h3>    
+        <p>
+            <strong>Source of oysters:</strong> Oyster Research Station (ORS) stocked with spat-on-shell produced by New York Harbor School’s oyster hatchery and remote setting facility located on Governors Island. 
+        </p>
 
-        <h4>Table: Oyster Monitoring Data</h4>
+        <p>
+            <strong>Broodstock was sourced from:</strong>
+            {{ join (uniq (pluck (filterByKey $baselines "site" $site._id) "baselines.*.*.source")) "; " }}
+        </p>
+        
+        <p>
+            <strong>Locations and date(s) of deployment of oysters:</strong> {{ $site.name}}
+        </p>
+        
+        <p>
+            <strong>Number of cages and oysters at this location:</strong> {{ $count }}
+        </p>
+        
+        <p>
+            <strong>Mortality rates and causes:</strong> 
+        </p>
+
+        <p>
+            <strong>Final disposition of all oysters at this location:</strong> 
+        </p>
+        
+        <p>
+            <strong>Groups involved at this location:</strong> 
+            {{ if and (eqx (count $siteOrgs) 1) (eqx (first $siteOrgs) "Unaffiliated/None") }}
+            Billion Oyster Project with support from community scientists
+            {{ else if and (any $siteOrgs "Unaffiliated/None") (ge (count $siteOrgs) 2) }}
+            Billion Oyster Project with support from community scientists and {{ join (filter $siteOrgs "nex . `Unaffiliated/None`") ", " }}
+            {{ else }}
+            Billion Oyster Project with support from {{ join $siteOrgs ", " }}
+            {{ end }}
+            (for more organization details, see Appendix A)
+        </p>
+        
+        <p>
+            <strong>Biological and environmental data collected at this site:</strong> See Appendix B
+        </p>     
+        <hr/>  
+        {{  end }}
+        {{ end }}
+    </div>
+
+
+    <h4>Appendix A: Organizations Stewarding Oyster Research Stations (ORS)</h4>
+    <table class="table table-sm table-bordered table-striped">
+        <caption>The organization name, site and body of water, and organization address.</caption>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Organization Name</th>
+                <th>ORS Site</th>
+                <th>Body of Water</th>
+                <th>Organization Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--Range through the orgs table-->
+            {{ range $i, $org := $orgs }}
+            <!--Filter through the stations table, creating an array of each station whose "schoolOrg" field matches the org id,
+            then filter through that array to only show stations whose status is "Active."
+            Create the variable $orgStations from this filtered array.-->
+            {{ $orgStations := filterByKey (filterByKey $stations "schoolOrg.name" $org.name) "status" "Active" }}
+            {{ $boroughs := pluck $orgStations "site.boroughCounty" }}
+            <!--If orgStations has anything in it at all and if the site is in the five boroughs, display it.
+
+            TODO: BUT NOT IF THE ORG IS BILLION OYSTER PROJECT
+            -->
+            {{   if and (count $orgStations) (intersect $.page.validBoroughs $boroughs) }}
+            {{  increment "orgNumber" }}
+            <tr>
+
+                <th>{{ $.vars.orgNumber }}</th>
+                <td>{{ $org.name }}</td>
+                <td>{{ join (uniq (sort (pluck $orgStations "site.name"))) "; " }}</td>
+                <td>{{ join (uniq (sort (pluck $orgStations "site.bodyOfWater"))) "; " }}</td>
+                <td>
+                    {{ if and $org.streetAddress $org.city $org.state }}
+                    {{ $org.streetAddress }}, {{ $org.city }}, {{ $org.state }} {{ $org.zip }}
+                    {{ end }}
+                </td>
+            </tr>
+            {{   end }}
+            {{ end }}
+        </tbody>
+    </table>
+
+
+    <div class="col-sm-12">
+        <h4>Appendix B: Oyster Monitoring Data</h4>
         <table class="table table-sm table-bordered table-striped">
             <caption>The ORS name, monitoring date, site, body of water, number of live oysters at time of monitoring, and the minimum, average, and maxium oyster lengths.</caption>
             <thead>
@@ -201,7 +276,7 @@ bindings:
                     <th>#</th>
                     <th>ORS Name</th>
                     <th>Monitoring Date</th>
-                    <th>ORS Site</th>
+                    <th>Site</th>
                     <th>Body of Water</th>
                     <th>Number of Live Oysters</th>
                     <th>Minimum Oyster Length (mm)</th>
@@ -218,7 +293,11 @@ bindings:
                 <tr>
                     <th>{{ $.vars.expeditionNumber }}</th>
                     <td>{{ $expedition.station.name }}</td>
-                    <td>{{ $expedition.monitoringStartDate }}</td>
+                    <td>
+                        <a href="/data/field-reports/{{ $expedition._id }}">
+                        {{ $expedition.monitoringStartDate }}
+                        </a>
+                    </td>
                     <td>
                         {{ if $expedition.station.site }}
                         {{ $expedition.station.site.name }}
@@ -234,7 +313,7 @@ bindings:
                     <td>{{ round $expedition.protocols.oysterMeasurement.averageSizeOfAllLiveOysters 2 }}</td>
                     <td>{{ $expedition.protocols.oysterMeasurement.maximumSizeOfAllLiveOysters }}</td>
                 </tr>
-                {{    end }}
+                {{      end }}
                 {{  end }}
                 {{ end }}
             </tbody>
