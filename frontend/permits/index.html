@@ -2,8 +2,7 @@
 layout:     '{{ qs "layout" "default" }}'
 page:
     body_class: 'site-details'
-    view: 'DEC Permit Report'
-    notitle: false
+    view:       'NYS DEC Permit Report: LCP'
     skipStation: 571f6f3181ab586140097247
     startDate: '{{ qs "start" "2017-09-08" }}'
     endDate:   '{{ qs "end" "2018-09-08" }}'
@@ -78,13 +77,30 @@ bindings:
 
 
 <section class="content">
+    <ul class="list-unstyled">
+        <li class="media">
+            <img class="mr-3" src="/assets/img/brand/logo.png" alt="BOP logo" height="175">
+            <div class="media-body">
+            <h2 class="mt-0 mb-1">New York Harbor Foundation d/b/a Billion Oyster Project (BOP)
+                    <br/>
+                    Report of Collection Activities for the BOP Oyster Restoration Station Program, 
+                    <br/>
+                    New York City
+                    <br/>
+                    September 8, 2017-September 7, 2018
+            </h2>
+            </div>
+        </li>
+    </ul>
+
     <div class="col-sm-12">
+        <h3>Summary Information</h3>
         <p><strong>Name of Licensee:</strong> Sam Janis / Tanasia Swift</p>
 
         <p><strong>License Number:</strong> 1133</p>
 
         <p><strong>Abstract:</strong>
-            BOP is a restoration, education, and citizen science initiative that engages residents of the region in growing small populations of oysters and environmental monitoring at permitted waterfront sites around the New York Harbor.
+            Billion Oyster Project (BOP) is a restoration, education, and citizen science initiative that engages residents of the region in growing small populations of oysters and environmental monitoring at permitted waterfront sites around the New York Harbor.
             The goal of the program is to increase the overall breeding population of native oysters in the Harbor and to engage young people and adults in active stewardship and citizen science.
             By adopting a BOP Oyster Restoration Station (ORS), participants agree to conduct monthly visits at their site using standard procedures and datasets covering oyster growth and mortality, basic water quality parameters, and marine ecology observations.
             In this way, the project will eventually result in a comparative dataset on ecological health, viability of oyster restoration, and water quality at 28 sites across New York Harbor.
@@ -96,7 +112,22 @@ bindings:
             All ORS were stocked with spat-on-shell oysters produced by New York Harbor School’s oyster hatchery and remote setting facility located on Governors Island. Harbor School oysters are grown from a mix of wild broodstock (Bronx River) and aquaculture stock (from Fishers Island and Muscongus Bay). Collection and importation of these broodstocks have been permitted under separate Shellfish Importation Permits and NYHS Marine Hatchery Permits # 65-P, 2017 and # 65-P, 2018.
             Prior to adoption and installation of their ORS, all prospective participants attended a one-day training on Governors Island on how to stock, install, and monitor their ORS. Upon successful completion of the training, participants signed a contract, stocked their cage with  New York Harbor School oysters, and transported the cage to a designated and permitted waterfront site for installation.
         </p>
-        
+        <p>
+            <strong>Mortality:</strong> Of the total 10,000 oysters distributed over the season, approximately 47% have survived.
+        </p>
+        <p>
+            <strong>Final disposition:</strong> Participants retained oysters at current sites with the exception of two transfers:
+            <ul>
+                <li>January 16th, 2018: 10 oysters were collected from BOP’s Sebago Canoe Club to use as broodstock for spat on shell for the Paerdegat Basin Community Reef. 
+                    Those oysters were strip spawned and disposed of in an upland facility.
+                </li>
+                <li>
+                    January 24th, 2018: 10 oysters were collected from the Richmond County Yacht Club to use as broodstock for spat on shell for BOP’s Great Kills Harbor Nursery. 
+                    Those oysters were strip spawned and disposed of in an upland facility.
+                </li>
+            </ul>
+            Upon renewal of LCP #1133,  all oysters will remain in cages for the next monitoring season.            
+        </p> 
     </div>
     <hr/>
     <div class="col-sm-12">
@@ -124,9 +155,16 @@ bindings:
                     Fourth: create a new variable, $count that represents this value -->
                 {{ $count := count (filterByKey (filterByKey $baselines "site" $site._id) "status" "Active" ) }}
                 <!--Only show sites with at least 1 active ORS and are within the five boroughs (we created "valid boroughs" under page-->
-                {{  if and $count (any $.page.validBoroughs $site.boroughCounty) }}
+                {{  if (any $.page.validBoroughs $site.boroughCounty) }}
                 <!--Use this to number the rows-->
                 {{  increment "siteNumber" }}
+
+                    <!--First: filter the $baselines arrary (stations) to find stations where the site = current site id (site id from the range,
+                        creating a new array of stations)
+                        Second: from that array, pluck the sources from the baselines to create a new array
+                        Third: from that array, only show unique sources (don't repeat any sources) to create a new array
+                    -->
+                {{ $broodstocks := uniq (pluck (filterByKey $baselines "site" $site._id) "baselines.*.*.source") }}
                 <tr>
                     <!--Use this to number the rows-->
                     <th>{{ $.vars.siteNumber }}</th>
@@ -141,16 +179,15 @@ bindings:
                     <td>
                         {{ $count }}
                     </td>
-                    <!--First: filter the $baselines arrary (stations) to find stations where the site = current site id (site id from the range,
-                        creating a new array of stations)
-                        Second: from that array, pluck the sources from the baselines to create a new array
-                        Third: from that array, only show unique sources (don't repeat any sources) to create a new array
-                        Fourth: from that array, join all of the sources into one string, separating each source with a semi-colon
-
-                        TODO Fifth- sub in "Muscongus Bay" if the source is "Other" or "?"
-                    -->
+                    <!--From the broodstocks array, join all of the sources into one string, separating each source with a semi-colon
+                    if there are no broodstock sources, enter in "Muscongus Bay, Maine"-->
                     <td>
+                        {{ if and $broodstocks $count }}
                         {{ join (uniq (pluck (filterByKey $baselines "site" $site._id) "baselines.*.*.source")) "; " }}
+                        {{ else if $count }}
+                        Muscongus Bay, Maine
+                        {{ else }}
+                        {{ end }}
                     </td>
                 </tr>
                 {{  end }}
@@ -161,7 +198,7 @@ bindings:
     </div>
 
     <div class="col-sm-12"> 
-    <h2 text-align="center">Data by Site</h2>
+    <h3 text-align="center">Data by Site</h3>
         {{ range $i, $site := $sites }}
         <!--First: filter the $baselines array (stations) to find stations where the site = current site id (site id from the range,
         creating a new array of stations)
@@ -175,15 +212,26 @@ bindings:
         <!--Create an array of stations at this site, then pluck their org names, then leave only unique names, then join different organization names with a ;-->
         {{ $siteOrgs := uniq (pluck (filterByKey $stations "site.name" $site.name) "schoolOrg.name") }}
 
+        <!--Create an array of unique broodstock sources-->
+        {{ $broodstocks := uniq (pluck (filterByKey $baselines "site" $site._id) "baselines.*.*.source") }}
 
-        <h3>{{ $site.name }}</h3>    
+
+        <h3>
+            <a href="/sites/{{ $site._id }}">
+            {{ $site.name }}
+            </a>
+        </h3>    
         <p>
             <strong>Source of oysters:</strong> Oyster Research Station (ORS) stocked with spat-on-shell produced by New York Harbor School’s oyster hatchery and remote setting facility located on Governors Island. 
         </p>
 
         <p>
             <strong>Broodstock was sourced from:</strong>
+            {{ if $broodstocks }}
             {{ join (uniq (pluck (filterByKey $baselines "site" $site._id) "baselines.*.*.source")) "; " }}
+            {{ else }}
+            Muscongus Bay, Maine
+            {{ end }}
         </p>
         
         <p>
@@ -191,7 +239,12 @@ bindings:
         </p>
         
         <p>
-            <strong>Number of cages and oysters at this location:</strong> {{ $count }}
+            <strong>Number of cages and oysters at this location:</strong> 
+            {{ if eqx $count 1 }}
+            {{ $count }} cage, ~{{ multiply $count 100 }} oysters
+            {{ else }}
+            {{ $count }} cages, ~{{ multiply $count 100 }} oysters
+            {{ end }}
         </p>
         
         <p>
@@ -223,7 +276,7 @@ bindings:
     </div>
 
 
-    <h4>Appendix A: Organizations Stewarding Oyster Research Stations (ORS)</h4>
+    <h3>Appendix A: Organizations Stewarding Oyster Research Stations (ORS)</h3>
     <table class="table table-sm table-bordered table-striped">
         <caption>The organization name, site and body of water, and organization address.</caption>
         <thead>
@@ -268,7 +321,7 @@ bindings:
 
 
     <div class="col-sm-12">
-        <h4>Appendix B: Oyster Monitoring Data</h4>
+        <h3>Appendix B: Oyster Monitoring Data</h3>
         <table class="table table-sm table-bordered table-striped">
             <caption>The ORS name, monitoring date, site, body of water, number of live oysters at time of monitoring, and the minimum, average, and maxium oyster lengths.</caption>
             <thead>

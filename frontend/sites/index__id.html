@@ -212,7 +212,11 @@ bindings:
                 {{ end }}
             </div>
             <div class="media-body">
-                <h3 class="mt-0 mb-1">{{ $station.name }}</h3>
+                <h3 class="mt-0 mb-1">
+                    <a href="/sites/stations/{{ $station._id }}">
+                    {{ $station.name }}
+                    </a>
+                </h3>
                 <i class="fa fa-fw fa-building"></i> {{ $station.schoolOrg.name }}
                 <br/>
                 {{ if isMap $station.teamLead }}
