@@ -1,0 +1,23 @@
+networks:
+  production:
+    hosts:
+    - ubuntu@34.239.122.46
+    - ubuntu@35.173.233.245
+
+commands:
+  pull:
+    desc:   Perform a deployment of the latest code from master
+    run:    cd platform && git pull
+
+  restart:
+    desc:   Restart all Digital Platform services
+    run:    sudo systemctl restart dp-backend dp-database dp-frontend
+
+  logs:
+    desc:   Tail the logs
+    run:    sudo journalctl -fu 'dp-*'
+
+targets:
+  deploy:
+  - pull
+  - restart

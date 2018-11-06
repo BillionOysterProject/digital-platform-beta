@@ -1,0 +1,58 @@
+---
+page:
+    view: Sites Editor
+    body_class: 'mt-0'
+
+bindings:
+-   name:     sites
+    resource: /api/sites
+    params:
+        noexpand: true
+        limit: false
+        sort: name
+---
+<table class="table table-sm table-striped w-100">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Coordinates</th>
+            <th>Location</th>
+            <th>Body of Water</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{ range $i, $site := $.bindings.sites }}
+        <tr>
+            <td>
+                <a href="/admin/sites/{{ $site._id }}">{{ or $site.name "(empty)" }}</a>
+            </td>
+            <td>
+                {{ if and $site.latitude $site.longitude }}
+                {{ $site.latitude }},{{ $site.longitude }}
+                {{ else }}
+                (empty)
+                {{ end }}
+            </td>
+            <td>{{ $site.boroughCounty }}, {{ $site.state }}</td>
+            <td>{{ or $site.bodyOfWater "(empty)" }}</td>
+            <td>
+                <a href="/admin/sites/{{ $site._id }}">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+        {{ end }}
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(function(){
+        $('table').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>

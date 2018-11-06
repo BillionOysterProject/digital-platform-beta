@@ -135,6 +135,17 @@ $(function () {
                 }.bind(this));
             },
 
+            request: function(method, url, data, success, error) {
+                $.ajax(url, {
+                    method:      method,
+                    data:        data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType:    "json",
+                    success:     success,
+                    error:       error,
+                });
+            },
+
             submitForm: function (event) {
                 var form = $(event.target);
                 var formEl = form.get(0);

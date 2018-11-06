@@ -112,7 +112,6 @@
     }, {
         "name":     "pending",
         "type":     "bool",
-        "default":  false,
         "required": true
     }, {
         "name": "creator",
