@@ -1,0 +1,224 @@
+---
+page:
+    body_class: 'site-details'
+    notitle: true
+
+bindings:
+-   name:	  'user'
+    resource: '/api/users/{{ param 1 }}'
+---
+{{ $user     := $.bindings.user }}
+{{ $org      := $.bindings.user.schoolOrg }}
+
+
+<section class="content">
+    <h1 class="text-left pb-0">{{ $user.displayName }}</h1>
+    <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
+        {{ if $org.streetAddress }}
+            {{ $org.streetAddress }},
+        {{ end }}
+        {{ if $org.city }}
+            {{ $org.city }},
+        {{ end }}
+        {{if and $org.state $org.zip }}
+            {{ $org.state }},
+        {{ else if $org.state }}
+            {{ $org.state }}
+        {{ end }}
+        {{ if $org.zip }}
+            {{ $org.zip }}
+        {{ end }}
+    </p>
+    {{ if $user.profileImageURL }}
+    <img
+    class="img-thumbnail mr-3"
+    style="max-width: 100px; height: auto;"
+    src="{{ $user.profileImageURL }}"
+    alt="Generic placeholder image"
+    >
+    {{ else }}
+    <img
+        class="img-thumbnail mr-3"
+        style="max-width: 100px; height: auto;"
+        src="/assets/img/placeholders/oysterfriend-happy.png"
+        alt="Placeholder image">
+    {{ end }}
+</section>
+
+{{ if $org.latitude }}
+<div class="row no-gutters site-jumbotron">
+    <div class="col">
+        <div id="siteMap"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        mapboxgl.accessToken = '{{ $.page.mapbox.key }}';
+
+        var map = new mapboxgl.Map({
+            container: 'siteMap',
+            style: 'mapbox://styles/{{ qs "style" $.page.mapbox.style }}',
+            failIfMajorPerformanceCaveat: true,
+            center: [{{ $org.longitude }}, {{ $org.latitude }}],
+            zoom:   11,
+        });
+
+        map.on('load', function(){
+            // create a HTML element for each feature
+            var el = document.createElement('i');
+            el.className = 'fa fa-star marker-org';
+
+            // make a marker for each feature and add to the map
+            new mapboxgl.Marker(el)
+            .setLngLat([
+                {{ $org.longitude }},
+                {{ $org.latitude }},
+            ])
+            .addTo(map);
+            });
+        });
+    });
+</script>
+{{ end }}
+
+<section class="content">
+    <table class="table table-sm table-bordered table-hover">
+        <tr>
+            <th scope="row">Name</th>
+            <td>{{ $user.displayName }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Username</th>
+            <td>{{ $user.username }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Email</th>
+            <td>{{ $user.email }}</td>
+        </tr>
+        <th scope="row">Approved/Pending</th>
+        {{ if $user.pending }}
+        <td>Pending</td>
+        {{ else }}
+        <td>Approved</td>
+        {{ end }}
+        
+        <tr>
+            <th scope="row">User Roles</th>
+            <td>{{ $user.roles }}</td>
+        </tr>    
+        <tr>
+            <th scope="row">Joined on</th>
+            <td>{{ $user.created }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Organization Name</th>
+            <td>{{ $org.name }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Organization Type</th>
+            <td>{{ $org.organizationType }}</td>
+        </tr>
+
+        {{ if $org.schoolType}}
+        <tr>
+            <th scope="row">School Type</th>
+            <td>{{ $org.schoolType }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.neighborhood }}
+        <tr>
+            <th scope="row">Organization Neighborhood</th>
+            <td>{{ $org.neighborhood }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.streetAddress }}
+        <tr>
+            <th scope="row">Organization Address</th>
+            <td>{{ $org.streetAddress }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.city }}
+        <tr>
+            <th scope="row">Organization Borough/City</th>
+            <td>{{ $org.city }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.state }}
+        <tr>
+            <th scope="row">Organization State</th>
+            <td>{{ $org.state }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.zip }}
+        <tr>
+            <th scope="row">Organization Zipcode</th>
+            <td>{{ $org.zip }}</td>
+        </tr>
+        {{ end }}
+        {{ if $org.syncId }}
+        <tr>
+            <th scope="row">School ATS Code (NYC DOE)</th>
+            <td>{{ $org.syncId }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.locationType }}
+        <tr>
+            <th scope="row">School Location Type</th>
+            <td>{{ $org.locationType }}</td>
+        </tr>
+        {{ end }}
+        {{ if $org.gradeLevels }}
+        <tr>
+            <th scope="row">School Grade Levels</th>
+            <td>{{ $org.gradeLevels }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.gradesTaught }}
+        <tr>
+            <th scope="row">School Grades Taught</th>
+            <td>{{ $org.gradesTaught }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.principal }}
+        <tr>
+            <th scope="row">School Principal Name</th>
+            <td>{{ $org.principal }}</td>
+        </tr>
+        {{ end }}
+        {{ if $org.principalPhone }}
+        <tr>
+            <th scope="row">School Principal Number</th>
+            <td>{{ $org.principalPhone }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.district }}
+        <tr>
+            <th scope="row">School City Council District</th>
+            <td>{{ $org.district }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.communityBoard }}
+        <tr>
+            <th scope="row">School Community Board</th>
+            <td>{{ $org.communityBoard }}</td>
+        </tr>
+        {{ end }}
+        {{ if $org.description }}
+        <tr>
+            <th scope="row">Organization Description</th>
+            <td>{{ $org.description }}</td>
+        </tr>
+        {{ end }}
+    </table>
+</section>
