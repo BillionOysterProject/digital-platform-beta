@@ -1,0 +1,57 @@
+---
+page:
+    view: Sites Editor
+
+bindings:
+-   name:     organizations
+    resource: /api/school-orgs
+    params:
+        fields: name,status,structureType,schoolOrg,teamLead,created
+        limit:  false
+        sort:   name
+---
+<table class="table table-sm table-striped w-100">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Address</th>
+            <th>Created At</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{ range $i, $org := $.bindings.organizations }}
+        <tr>
+            <td>
+                <a href="/admin/organizations/{{ $org._id }}">{{ or $org.name "(empty)" }}</a>
+            </td>
+            <td>
+                {{ $org.organizationType }}
+            </td>
+            <td> {{ or $org.streetAddress "(no address)" }}, {{ or $org.city "(no city)" }}, {{ or $org.city "(no state)" }}</td>
+            <td>
+                {{ if $org.created }}
+                {{ time $org.created "rfc3339" }}
+                {{ end }}
+            </td>
+            <td>
+                <a href="/admin/organizations/{{ $org._id }}">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+        {{ end }}
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(function(){
+        $('table').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>

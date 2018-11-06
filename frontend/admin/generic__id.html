@@ -1,0 +1,90 @@
+---
+page:
+    view: '{{ titleize (replace (qs "collection" "(unknown)") "-" " " -1) }} Record Editor'
+    body_class: 'mt-0 no-scroll'
+    scripts:
+    - codemirror.js
+    - codemirror/modes/javascript.js
+
+    stylesheets:
+    - codemirror.css
+    - editor/bop.css
+    - editor/monokai.css
+
+bindings:
+-   name:     record
+    resource: '/api/{{ qs "collection" }}/{{ param 1 }}'
+    only_if:  '{{ param 1 }}'
+    params:
+        noexpand: true
+---
+{{ $section := or (qs "section") (qs "collection") }}
+{{ $c       := qs "collection" }}
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/{{ $section }}/{{ $.bindings.record._id }}">Form</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/admin/generic/{{ $.bindings.record._id }}?collection={{ $c }}&section={{ $section }}">Raw Editor</a>
+    </li>
+</ul>
+
+<div class="editor-placeholder">
+    <div id="editor"></div>
+</div>
+
+<div class="editor-footer text-right pt-4 pb-4">
+    <button
+        type="submit"
+        class="btn btn-primary mr-2"
+        onclick="bop.request('post', '/api/{{ $c }}/', cm.getValue(), function(){
+            bop.notify('The record has been saved.', 'success', {
+                title: 'Record Saved',
+                url: '/admin/{{ $section }}',
+            }, {
+                delay: 7500,
+            });
+        })"
+    >Save &amp; Continue Editing</button>
+
+    <button
+        type="submit"
+        class="btn btn-primary mr-2"
+        onclick="bop.request('post', '/api/{{ $c }}/', cm.getValue(), function(){
+            window.location = '/admin/{{ $section }}';
+        })"
+    >Save</button>
+</div>
+
+<script>
+    $(function(){
+        window.cm = CodeMirror(document.getElementById('editor'), {
+            mode: {
+                name:       'javascript',
+                globalVars: true,
+            },
+            theme:             'monokai',
+            autoCloseBrackets: true,
+            matchBrackets:     true,
+            indentUnit:        4,
+            indentWithTabs:    false,
+            tabSize:           4,
+            lineNumbers:       true,
+            autofocus:         true,
+            styleActiveLine:   true,
+            styleSelectedText: true,
+            viewportMargin:    Infinity,
+        });
+
+        var autosize = function() {
+            var body = $('.editor-placeholder');
+            cm.setSize(null, $(window).height() - body.offset().top - $('.editor-footer').outerHeight());
+        }
+
+        $(window).on('resize', autosize);
+
+        autosize();
+        window.cm.setValue('{{ jsonify $.bindings.record "    " }}');
+    });
+</script>

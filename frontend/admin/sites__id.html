@@ -1,0 +1,143 @@
+---
+page:
+    view: Sites Editor
+
+bindings:
+-   name:     site
+    resource: '/api/sites/{{ param 1 }}'
+    params:
+        noexpand: true
+        limit: false
+        sort: name
+---
+<ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+        <a class="nav-link active" href="/admin/sites/{{ $.bindings.site._id }}">Form</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/generic/{{ $.bindings.site._id }}?collection=sites">Raw Editor</a>
+    </li>
+</ul>
+
+<div class="container">
+    <form
+        class="form m-4"
+        action="/api/sites/"
+        data-redirect-to="/admin/sites"
+        data-redirect-data-id="id"
+        method="post"
+    >
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="_id">ID</label>
+            <div class="col-10">
+                <input
+                    class="form-control"
+                    type="text"
+                    id="_id"
+                    name="_id"
+                    required
+                    readonly
+                    {{ if $.bindings.site }}
+                    value="{{ $.bindings.site._id }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="name">Site Name</label>
+            <div class="col-10">
+                <input
+                    class="form-control"
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    {{ if $.bindings.site }}
+                    value="{{ $.bindings.site.name }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="latitude">Latitude</label>
+            <div class="col-10">
+                <input
+                    class="form-control"
+                    type="text"
+                    id="latitude"
+                    name="latitude"
+                    required
+                    {{ if $.bindings.site.latitude }}
+                    value="{{ $.bindings.site.latitude }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="longitude">Longitude</label>
+            <div class="col-10">
+                <input
+                    class="form-control"
+                    type="text"
+                    id="longitude"
+                    name="longitude"
+                    required
+                    {{ if $.bindings.site.longitude }}
+                    value="{{ $.bindings.site.longitude }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="boroughCounty">Borough/County</label>
+            <div class="col-10">
+                <input
+                    class="form-control"
+                    type="text"
+                    id="boroughCounty"
+                    name="boroughCounty"
+                    required
+                    {{ if $.bindings.site.boroughCounty }}
+                    value="{{ $.bindings.site.boroughCounty }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="state">State</label>
+            <div class="col-10">
+                <input
+                    class="form-control"
+                    type="text"
+                    id="state"
+                    name="state"
+                    required
+                    {{ if $.bindings.site.state }}
+                    value="{{ $.bindings.site.state }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="form-group mt-4">
+            <div class="text-right">
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                    onclick="this.form.submitSource='saveAndContinue'"
+                >Save &amp; Continue Editing</button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                    onclick="this.form.submitSource='save'"
+                >Save</button>
+            </div>
+        </div>
+    </form>
+</div>

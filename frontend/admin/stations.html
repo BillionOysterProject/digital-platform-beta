@@ -1,0 +1,63 @@
+---
+page:
+    view: Sites Editor
+
+bindings:
+-   name:     stations
+    resource: /api/restoration-stations
+    params:
+        fields: name,status,structureType,schoolOrg,teamLead,created
+        limit:  false
+        sort:   name
+---
+<table class="table table-sm table-striped w-100">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Structure Type</th>
+            <th>Organization</th>
+            <th>Team Lead</th>
+            <th>Created At</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{ range $i, $station := $.bindings.stations }}
+        <tr>
+            <td>
+                <a href="/admin/stations/{{ $station._id }}">{{ or $station.name "(empty)" }}</a>
+            </td>
+            <td>
+                {{ $station.status }}
+            </td>
+            <td>{{ $station.structureType }}</td>
+            <td>
+                <a href="/admin/organizations/{{ $station.schoolOrg._id }}">{{ $station.schoolOrg.name }}</a>
+            </td>
+            <td>
+                <a href="/admin/users/{{ $station.teamLead._id }}">
+                    {{ $station.teamLead.displayName }}
+                </a>
+            </td>
+            <td>{{ time $station.created "rfc3339" }}</td>
+            <td>
+                <a href="/admin/stations/{{ $station._id }}">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+        {{ end }}
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(function(){
+        $('table').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>

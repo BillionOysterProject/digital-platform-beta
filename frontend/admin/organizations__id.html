@@ -1,0 +1,63 @@
+---
+page:
+    view: Organization Editor
+
+bindings:
+-   name:     organization
+    resource: '/api/school-orgs/{{ param 1 }}'
+    params:
+        noexpand: true
+---
+<ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+        <a class="nav-link active" href="/admin/organizations/{{ $.bindings.organization._id }}">Form</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/generic/{{ $.bindings.organization._id }}?collection=school-orgs&section=organizations">Raw Editor</a>
+    </li>
+</ul>
+
+<div class="container">
+    <form
+        class="form m-4"
+        action="/api/school-orgs/"
+        data-redirect-to="/admin/organizations"
+        data-redirect-data-id="id"
+        method="post"
+    >
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="_id">ID</label>
+            <div class="col-10">
+                <input
+                    class="form-control"
+                    type="text"
+                    id="_id"
+                    name="_id"
+                    required
+                    readonly
+                    {{ if $.bindings.organization }}
+                    value="{{ $.bindings.organization._id }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <!--
+        <div class="form-group mt-4">
+            <div class="text-right">
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                    onclick="this.form.submitSource='saveAndContinue'"
+                >Save &amp; Continue Editing</button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                    onclick="this.form.submitSource='save'"
+                >Save</button>
+            </div>
+        </div>
+        -->
+    </form>
+</div>

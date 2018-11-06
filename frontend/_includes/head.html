@@ -47,6 +47,9 @@
 <script type="text/javascript" src="assets/js/moment.min.js"></script>
 <script type="text/javascript" src="assets/js/uri.js"></script>
 <script type="text/javascript" src="assets/js/application.js?cache=H{{ now `15` }}"></script>
+{{- range $i, $js := sliceify $.page.scripts }}
+<script type="text/javascript" src="assets/js/{{ $js }}?cache=H{{ now `15` }}"></script>
+{{- end }}
 
 <!--Google Analytics-->
 <!--
@@ -80,4 +83,7 @@ ga('send', 'pageview');
 <link rel="stylesheet" href="assets/css/handsontable.full.min.css">
 <link rel="stylesheet" href="assets/css/application.css?cache=H{{ now `15` }}">
 <link rel="stylesheet" href="assets/css/api.css?cache=H{{ now `15` }}">
+{{- range $i, $css := sliceify $.page.stylesheets }}
+<link rel="stylesheet" href="assets/css/{{ $css }}?cache=H{{ now `15` }}">
+{{- end }}
 {{ end }}

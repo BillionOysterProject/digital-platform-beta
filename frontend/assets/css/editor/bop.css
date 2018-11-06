@@ -1,0 +1,136 @@
+/*
+
+    Name:       bop
+    Author:     Gary Hetzel (https://github.com/ghetzel)
+
+    Based on original dracula color scheme by:
+    Michael Kaminsky (http://github.com/mkaminsky11) and Zeno Rocha (https://github.com/zenorocha/dracula-theme)
+
+*/
+
+.cm-s-bop.CodeMirror,
+.cm-s-bop .CodeMirror-gutters {
+  background-color: #415980 !important;
+  color: #f8f8f2 !important;
+  border: none;
+}
+
+.cm-s-bop .CodeMirror-gutters {
+  color: #415980;
+}
+
+.cm-s-bop .CodeMirror-cursor {
+  border-left: solid thin #f8f8f0;
+}
+
+.cm-s-bop .CodeMirror-linenumber {
+  color: #6D8A88;
+}
+
+.cm-s-bop .CodeMirror-selected {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cm-s-bop .CodeMirror-line::selection,
+.cm-s-bop .CodeMirror-line>span::selection,
+.cm-s-bop .CodeMirror-line>span>span::selection {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cm-s-bop .CodeMirror-line::-moz-selection,
+.cm-s-bop .CodeMirror-line>span::-moz-selection,
+.cm-s-bop .CodeMirror-line>span>span::-moz-selection {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cm-s-bop span.cm-comment {
+  color: #6272a4;
+}
+
+.cm-s-bop span.cm-string,
+.cm-s-bop span.cm-string-2 {
+  color: #f1fa8c;
+}
+
+.cm-s-bop span.cm-number {
+  color: #79A4D9;
+}
+
+.cm-s-bop span.cm-variable {
+  color: #96D789;
+}
+
+.cm-s-bop span.cm-variable-2 {
+  color: white;
+}
+
+.cm-s-bop span.cm-def {
+  color: #96D789;
+}
+
+.cm-s-bop span.cm-operator {
+  color: #ff79c6;
+}
+
+.cm-s-bop span.cm-keyword {
+  color: #ff79c6;
+}
+
+.cm-s-bop span.cm-atom {
+  color: #79A4D9;
+}
+
+.cm-s-bop span.cm-meta {
+  color: #f8f8f2;
+}
+
+.cm-s-bop span.cm-tag {
+  color: #ffb86c;
+}
+
+.cm-s-bop span.cm-attribute {
+  color: #96D789;
+}
+
+.cm-s-bop span.cm-qualifier {
+  color: #96D789;
+}
+
+.cm-s-bop span.cm-property {
+  color: #66d9ef;
+}
+
+.cm-s-bop span.cm-builtin {
+  color: #96D789;
+}
+
+.cm-s-bop span.cm-variable-3,
+.cm-s-bop span.cm-type {
+  color: #ffb86c;
+}
+
+.cm-s-bop .CodeMirror-activeline-background {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cm-s-bop .CodeMirror-matchingbracket {
+  font-weight:        bold;
+  text-decoration:    none;
+  color:            #96D789 !important;
+}
+
+.CodeMirror-linewidget .fs-line-state {
+  background-color: #6272a4;
+  color: #f8f8f2;
+  padding: 0 0.33em;
+}
+
+.CodeMirror-linewidget .fs-state-succeeded {
+  background-color: #B6ED42;
+  color: black;
+}
+
+.CodeMirror-linewidget .fs-state-failed {
+  background-color: #ED5E4D;
+  color: white;
+}

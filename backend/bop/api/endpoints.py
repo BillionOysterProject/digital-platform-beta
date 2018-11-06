@@ -330,6 +330,9 @@ class CollectionView(Endpoint):
         """
         return self._get_query_results(request.args.get('q', 'all'))
 
+    def meta(self):
+        return jsonify(self.collection.definition)
+
     def get(self, record_id):
         """
         Retrieve a specific object.
@@ -343,8 +346,13 @@ class CollectionView(Endpoint):
 
     def post(self):
         body = request.form or request.json
+        rid = body.get('_id', body.get('id'))
 
-        return jsonify(body)
+        value = self.collection.get(rid, noexpand=True)
+        value.update(body)
+        value = self.collection.update(value)
+
+        return jsonify(value.records)
 
     def put(self):
         abort(501, 'This endpoint has not been implemented')
@@ -358,7 +366,6 @@ class CollectionView(Endpoint):
 
         if isinstance(raw, bool):
             qrp['raw'] = raw
-
 
         filters = self.filter_params
 

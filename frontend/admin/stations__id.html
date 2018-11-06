@@ -1,0 +1,169 @@
+---
+page:
+    view: Station Editor
+
+bindings:
+-   name:     meta
+    resource: '/api/restoration-stations/meta'
+
+-   name:     station
+    resource: '/api/restoration-stations/{{ param 1 }}'
+    params:
+        noexpand: true
+
+-   name:     sites
+    resource: /api/sites
+    params:
+        fields:   name
+        sort:     name
+        noexpand: true
+
+-   name:     teamLeads
+    resource: /api/users
+    params:
+        fields:   displayName
+        sort:     displayName
+        noexpand: true
+        q:        'roles/team lead'
+---
+<ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+        <a class="nav-link active" href="/admin/stations/{{ $.bindings.station._id }}">Form</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/generic/{{ $.bindings.station._id }}?collection=restoration-stations&section=stations">Raw Editor</a>
+    </li>
+</ul>
+
+<div class="container">
+    <form
+        class="form m-4"
+        action="/api/restoration-stations/"
+        data-redirect-to="/admin/stations"
+        data-redirect-data-id="id"
+        method="post"
+    >
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="_id">ID</label>
+            <div class="col-10">
+                <input
+                    class="form-control"
+                    type="text"
+                    id="_id"
+                    name="_id"
+                    required
+                    readonly
+                    {{ if $.bindings.station }}
+                    value="{{ $.bindings.station._id }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="name">Name</label>
+            <div class="col-10">
+                <input
+                    class="form-control"
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    {{ if $.bindings.station }}
+                    value="{{ $.bindings.station.name }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="status">Status</label>
+            <div class="col-10">
+                <select
+                    name="status"
+                    class="form-control"
+                >
+                    {{ range $i, $status := sort ( uniq (apply (sliceify (get (firstByKey $.bindings.meta.fields "name" "status") "validators.one-of")) "hyphenate")) }}
+                    <option value="{{ $status }}">{{ titleize $status }}</option>
+                    {{ end }}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="site">Site</label>
+            <div class="col-10">
+                <select
+                    name="site"
+                    class="form-control"
+                >
+                    {{ range $i, $site := $.bindings.sites }}
+                    <option value="{{ $site._id }}">{{ or $site.name $site._id }}</option>
+                    {{ end }}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="teamLead">Team Lead</label>
+            <div class="col-10">
+                <select
+                    name="teamLead"
+                    class="form-control"
+                >
+                    {{ range $i, $lead := $.bindings.teamLeads }}
+                    <option value="{{ $lead._id }}">{{ or $lead.displayName $lead._id }}</option>
+                    {{ end }}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="boroughCounty">Borough/County</label>
+            <div class="col-10">
+                <input
+                    class="form-control"
+                    type="text"
+                    id="boroughCounty"
+                    name="boroughCounty"
+                    required
+                    {{ if $.bindings.station }}
+                    value="{{ $.bindings.station.boroughCounty }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="bodyOfWater">Body of Water</label>
+            <div class="col-10">
+                <input
+                    class="form-control"
+                    type="text"
+                    id="bodyOfWater"
+                    name="bodyOfWater"
+                    required
+                    {{ if $.bindings.station }}
+                    value="{{ $.bindings.station.bodyOfWater }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="form-group mt-4">
+            <div class="text-right">
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                    onclick="this.form.submitSource='saveAndContinue'"
+                >Save &amp; Continue Editing</button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                    onclick="this.form.submitSource='save'"
+                >Save</button>
+            </div>
+        </div>
+    </form>
+</div>
