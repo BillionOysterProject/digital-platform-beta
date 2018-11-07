@@ -1,0 +1,53 @@
+---
+page:
+    body_class: 'orgs-list'
+
+bindings:
+-   name:     'basics'
+    resource: '/api/metrics/basic'
+    params:
+        limit:  false
+
+-   name:      'users'
+    resource:  '/api/users/metrics'
+---
+
+{{ $basics := $.bindings.basics }}
+
+<h1>Metrics</h1>
+
+<section class="content">
+    <h2>People</h2>
+    <table class="table table-sm table-bordered table-hover">
+        <tr>
+            <th scope="row">Number of All Users</th>
+            <td>{{ $basics.userCount }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Number of All Team Leads</th>
+            <td>{{ $basics.teamLeadCount }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Number of Approved Team Leads</th>
+            <td></td>
+        </tr>
+        <tr>
+            <th scope="row">Number of Pending Team Leads</th>
+            <td></td>
+        </tr>
+        <tr>
+            <th scope="row">Number of All Team Members</th>
+            <td>{{ $basics.teamMemberCount }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Number of Teachers</th>
+            <td>{{ $basics.teacherCount }}</td>
+        </tr>
+
+        <tr>
+            <th scope="row"></th>
+            <td></td>
+        </tr>
+    </table>
+</section>
+
