@@ -86,7 +86,14 @@ bindings:
                     class="form-control"
                 >
                     {{ range $i, $status := sort ( uniq (apply (sliceify (get (firstByKey $.bindings.meta.fields "name" "status") "validators.one-of")) "hyphenate")) }}
-                    <option value="{{ $status }}">{{ titleize $status }}</option>
+                    <option
+                        value="{{ $status }}"
+                        {{ if eqx $.bindings.station.status $status }}
+                        selected="selected"
+                        {{ end }}
+                    >
+                        {{ titleize $status }}
+                    </option>
                     {{ end }}
                 </select>
             </div>
@@ -98,9 +105,17 @@ bindings:
                 <select
                     name="site"
                     class="form-control"
+                    required
                 >
                     {{ range $i, $site := $.bindings.sites }}
-                    <option value="{{ $site._id }}">{{ or $site.name $site._id }}</option>
+                    <option
+                        value="{{ $site._id }}"
+                        {{ if eqx $site._id $.bindings.station.site }}
+                        selected="selected"
+                        {{ end }}
+                    >
+                        {{ or $site.name $site._id }}
+                    </option>
                     {{ end }}
                 </select>
             </div>
@@ -112,41 +127,55 @@ bindings:
                 <select
                     name="teamLead"
                     class="form-control"
+                    required
                 >
                     {{ range $i, $lead := $.bindings.teamLeads }}
-                    <option value="{{ $lead._id }}">{{ or $lead.displayName $lead._id }}</option>
+                    <option
+                        value="{{ $lead._id }}"
+                        {{ if eqx $lead._id $.bindings.station.teamLead }}
+                        selected="selected"
+                        {{ end }}
+                    >
+                        {{ or $lead.displayName $lead._id }}
+                    </option>
                     {{ end }}
                 </select>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-2 col-form-label" for="boroughCounty">Borough/County</label>
+            <label class="col-2 col-form-label" for="structureType">Structure Type</label>
             <div class="col-10">
-                <input
+                <select
+                    name="structureType"
                     class="form-control"
-                    type="text"
-                    id="boroughCounty"
-                    name="boroughCounty"
                     required
-                    {{ if $.bindings.station }}
-                    value="{{ $.bindings.station.boroughCounty }}"
-                    {{ end }}
                 >
+                    {{ range $i, $structureType := sort ( uniq (apply (sliceify (get (firstByKey $.bindings.meta.fields "name" "structureType") "validators.one-of")) "hyphenate")) }}
+                    <option
+                        value="{{ $structureType }}"
+                        {{ if eqx $.bindings.station.structureType $structureType }}
+                        selected="selected"
+                        {{ end }}
+                    >
+                        {{ titleize $structureType }}
+                    </option>
+                    {{ end }}
+                </select>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-2 col-form-label" for="bodyOfWater">Body of Water</label>
+            <label class="col-2 col-form-label" for="tagNumber">Tag Number</label>
             <div class="col-10">
                 <input
                     class="form-control"
-                    type="text"
-                    id="bodyOfWater"
-                    name="bodyOfWater"
+                    type="number"
+                    id="tagNumber"
+                    name="tagNumber"
                     required
                     {{ if $.bindings.station }}
-                    value="{{ $.bindings.station.bodyOfWater }}"
+                    value="{{ $.bindings.station.tagNumber }}"
                     {{ end }}
                 >
             </div>

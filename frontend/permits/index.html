@@ -131,7 +131,7 @@ bindings:
     </div>
     <hr/>
     <div class="col-sm-12">
-        <h3>Table: Sites, with Count of Oyster Research Stations and Larvae Sources</h3>
+        <h3>Table: Sites, with Count of Oyster Restoration Stations and Larvae Sources</h3>
         <table class="table table-sm table-bordered table-striped">
             <caption>The number of Oyster Research Stations (ORS) and oyster larvae sources at each site.</caption>
             <thead>
@@ -241,18 +241,18 @@ bindings:
         <p>
             <strong>Number of cages and oysters at this location:</strong> 
             {{ if eqx $count 1 }}
-            {{ $count }} cage, ~{{ multiply $count 100 }} oysters
+            {{ $count }} cage, ~{{ multiply $count 50 }} oysters
             {{ else }}
-            {{ $count }} cages, ~{{ multiply $count 100 }} oysters
+            {{ $count }} cages, ~{{ multiply $count 50 }} oysters
             {{ end }}
         </p>
         
         <p>
-            <strong>Mortality rates and causes:</strong> 
+            <strong>Mortality rates and causes:</strong> See Mortality information at beginning of report.
         </p>
 
         <p>
-            <strong>Final disposition of all oysters at this location:</strong> 
+            <strong>Final disposition of all oysters at this location:</strong> See Final Disposition information at top of report.
         </p>
         
         <p>

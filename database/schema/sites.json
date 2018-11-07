@@ -45,6 +45,9 @@
         "name":     "notes",
         "type":     "str"
     }, {
+        "name":     "permitYear",
+        "type":     "int"
+    }, {
         "name":     "created",
         "not_user_editable": true,
         "type":     "date",

@@ -65,7 +65,7 @@ bindings:
             <div class="col-10">
                 <input
                     class="form-control"
-                    type="text"
+                    type="number"
                     id="latitude"
                     name="latitude"
                     required
@@ -81,7 +81,7 @@ bindings:
             <div class="col-10">
                 <input
                     class="form-control"
-                    type="text"
+                    type="number"
                     id="longitude"
                     name="longitude"
                     required
@@ -124,6 +124,37 @@ bindings:
             </div>
         </div>
 
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="permitYear">Permit Year</label>
+            <div class="col-10">
+                <input
+                    class="form-control"
+                    type="number"
+                    min="2010"
+                    max="2100"
+                    id="permitYear"
+                    name="permitYear"
+                    {{ if $.bindings.site.permitYear }}
+                    value="{{ $.bindings.site.permitYear }}"
+                    {{ else }}
+                    value="{{ add (i (now `2006`)) -1 }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+    
+        <div class="form-group row">
+            <label class="col-2 col-form-label" for="notes">Notes</label>
+            <div class="col-10">
+                <textarea
+                    class="form-control"
+                    rows="5"
+                    id="notes"
+                    name="notes"
+                >{{ $.bindings.site.notes }}</textarea>
+            </div>
+        </div>
+        
         <div class="form-group mt-4">
             <div class="text-right">
                 <button
