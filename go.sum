@@ -113,6 +113,8 @@ github.com/ghetzel/diecast v1.9.22 h1:B1XOIyBmMseI1uk0jwB2Sgm15HCeMxO0L3YSDHHyeA
 github.com/ghetzel/diecast v1.9.22/go.mod h1:on65g76/vkfme0cdhj0/UIYSy97EBgJDFlIV+XozoZg=
 github.com/ghetzel/diecast v1.9.26 h1:xJhGY28lK2zXp+1+Hx+893G4wGDBKS2iJL0CIIR5R/w=
 github.com/ghetzel/diecast v1.9.26/go.mod h1:PdDagM210y+1qBMRwkxHIP59sdQx7B0OeeLF2Q51Tdw=
+github.com/ghetzel/diecast v1.9.27 h1:HCnyObyjkV5X+kRBzcGZFLj11rmwRkBF9oy9dZIEvRU=
+github.com/ghetzel/diecast v1.9.27/go.mod h1:EOjz5As4oCGkfomPbj9G88Oa619EJtG38gzB+PZbBCs=
 github.com/ghetzel/friendscript v0.5.0/go.mod h1:GZJ2FZRpgvURp4hUb/AdevNCnHKCWRpKLxtAl817F4g=
 github.com/ghetzel/friendscript v0.5.2 h1:N6qcdKq1Ast7QIraWWc79yOS08IiCZcye9wxMHP1g4E=
 github.com/ghetzel/friendscript v0.5.2/go.mod h1:F2dZJWxEHLg+AFilyUDWNWlet+Pf7h1rlFweJCbA3HY=
@@ -141,6 +143,10 @@ github.com/ghetzel/go-stockutil v1.6.3 h1:6V3XzrXP7U1e1mglrPNijxmz5c47mBYc98uJLL
 github.com/ghetzel/go-stockutil v1.6.3/go.mod h1:WWQnJTs0pzKtG2xqysVPYfPRdPhLwSU9f0oGG46Ji3I=
 github.com/ghetzel/go-stockutil v1.6.4 h1:+D9w1EqrBG2UgfKOYHGnHdfhZuHARCLnFR+lYuKGTRM=
 github.com/ghetzel/go-stockutil v1.6.4/go.mod h1:WWQnJTs0pzKtG2xqysVPYfPRdPhLwSU9f0oGG46Ji3I=
+github.com/ghetzel/go-stockutil v1.6.5 h1:vmwTn9sfoKAaQ4OpB2JN/Ggtu031c44I7SEbpOaaJqI=
+github.com/ghetzel/go-stockutil v1.6.5/go.mod h1:WWQnJTs0pzKtG2xqysVPYfPRdPhLwSU9f0oGG46Ji3I=
+github.com/ghetzel/go-stockutil v1.6.6 h1:SxQJw3cy/bM3ZpfbcJadmyBti7fTdhQTeX+XOpoSHUY=
+github.com/ghetzel/go-stockutil v1.6.6/go.mod h1:WWQnJTs0pzKtG2xqysVPYfPRdPhLwSU9f0oGG46Ji3I=
 github.com/ghetzel/go-webfriend v0.0.0-20180331030455-a02e0c9b1137 h1:07EcSO7JZG9k2kY/zUi1uf2LOhWb0YKTpc7GP14jmFA=
 github.com/ghetzel/go-webfriend v0.0.0-20180331030455-a02e0c9b1137/go.mod h1:beTYu3lp1LNlg6oO/76c5lvt8RiDY0NZ0Tdp/FwTYHI=
 github.com/ghetzel/go-webfriend v0.9.23/go.mod h1:4tjKFGdCtac9eXJ8Hz48DSCoiwjhzynwFFiyhsLfMnI=
@@ -183,6 +189,8 @@ github.com/ghetzel/pivot/v3 v3.0.29 h1:ubPhn8gYmAZ+dRd4fgZeS6nIbPzByJ8D8jQoHBtBJ
 github.com/ghetzel/pivot/v3 v3.0.29/go.mod h1:6/w5u7FHQOe4/ak+6wqShKmpQn6czDz9mZOhCkL2VTM=
 github.com/ghetzel/pivot/v3 v3.0.30 h1:Gh3F+cOMTTlb2xDqkURDQlnGeVQEKQETH39bLNEsyUA=
 github.com/ghetzel/pivot/v3 v3.0.30/go.mod h1:+SWOOR5bjMYDjxaPa9o2k00a0YbdUdA6bxU5Vb+KQCw=
+github.com/ghetzel/pivot/v3 v3.0.31 h1:LeyzpqB0TQQ8WPwlTxUegp6tac5KrUkU5K2JdbfB6hw=
+github.com/ghetzel/pivot/v3 v3.0.31/go.mod h1:n3YjtlLtgVgOCVcw/v60ICE8KlbDIdQgx9mtrNCdDEI=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d h1:YVJe7KwVYazt90hCc/q2dYJVS3062AY6QdT6iHd+Kh8=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d/go.mod h1:7CCemW/spiphukVWb/v2WWYeZkydh30TwSRBh48irZQ=
 github.com/ghetzel/warp v0.0.3/go.mod h1:i4Biu8OdOR5J1DELI5tCaqoW/ekcDjwmoQ+xn38ZDOg=
