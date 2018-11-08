@@ -149,7 +149,7 @@ bindings:
             <tbody>
                 <!-- Group each site by its permit name-->
                 {{ range $permitName, $permitSites := groupBy $sites "permitName" }}
-                {{ $permitBaselines := filterByKey $baselines "site" (pluck $permitSites "_id") }}
+                {{ $permitBaselines := filterByKey (filterByKey $baselines "site" (pluck $permitSites "_id")) "status" "Active" }}
                 <!---->
                 <tr>
                     <th>number</th>
@@ -160,7 +160,7 @@ bindings:
                     <td>{{ first (pluck $permitSites "bodyOfWater") }}</td>
                     <td>{{ first (pluck $permitSites "latitude") }}</td>
                     <td>{{ first (pluck $permitSites "longitude") }}</td>
-                    <td></td>
+                    <td>{{ count $permitBaselines }}</td>
                     <td></td>
                 </tr>
                 {{ end }}
@@ -170,44 +170,21 @@ bindings:
     </div>
 
     <div class="col-sm-12"> 
-    <h3 text-align="center">Data by Site</h3>
-        {{ range $i, $site := $sites }}
-        <!--First: filter the $baselines array (stations) to find stations where the site = current site id (site id from the range,
-        creating a new array of stations)
-        Second: filter that array to find stations where the station's status = active to create a new array
-        Third: count how many stations are in that array
-        Fourth: create a new variable, $count that represents this value -->
-        {{ $count := count (filterByKey (filterByKey $baselines "site" $site._id) "status" "Active" ) }}
-        <!--Only show sites with at least 1 active ORS and are within the five boroughs (we created "valid boroughs" under page-->
-        {{  if and $count (any $.page.validBoroughs $site.boroughCounty) }}
-        
-        <!--Create an array of stations at this site, then pluck their org names, then leave only unique names, then join different organization names with a ;-->
-        {{ $siteOrgs := uniq (pluck (filterByKey $stations "site.name" $site.name) "schoolOrg.name") }}
-
-        <!--Create an array of unique broodstock sources-->
-        {{ $broodstocks := uniq (pluck (filterByKey $baselines "site" $site._id) "baselines.*.*.source") }}
-
-
-        <h3>
-            <a href="/sites/{{ $site._id }}">
-            {{ $site.name }}
-            </a>
-        </h3>    
+        <h3 text-align="center">Data by Site</h3>
+        {{ range $permitName, $permitSites := groupBy $sites "permitName" }}
+        {{ $permitBaselines := filterByKey (filterByKey $baselines "site" (pluck $permitSites "_id")) "status" "Active" }}
+        {{ $count := count $permitBaselines }}
+        <h4>{{ $permitName }}</h4>    
         <p>
             <strong>Source of oysters:</strong> Oyster Research Station (ORS) stocked with spat-on-shell produced by New York Harbor School’s oyster hatchery and remote setting facility located on Governors Island. 
         </p>
 
         <p>
             <strong>Broodstock was sourced from:</strong>
-            {{ if $broodstocks }}
-            {{ join (uniq (pluck (filterByKey $baselines "site" $site._id) "baselines.*.*.source")) "; " }}
-            {{ else }}
-            Muscongus Bay, Maine
-            {{ end }}
         </p>
         
         <p>
-            <strong>Locations and date(s) of deployment of oysters:</strong> {{ $site.name}}
+            <strong>Locations of deployment of oysters:</strong> {{ $permitName }}
         </p>
         
         <p>
@@ -229,67 +206,61 @@ bindings:
         
         <p>
             <strong>Groups involved at this location:</strong> 
-            {{ if and (eqx (count $siteOrgs) 1) (eqx (first $siteOrgs) "Unaffiliated/None") }}
-            Billion Oyster Project with support from community scientists
-            {{ else if and (any $siteOrgs "Unaffiliated/None") (ge (count $siteOrgs) 2) }}
-            Billion Oyster Project with support from community scientists and {{ join (filter $siteOrgs "nex . `Unaffiliated/None`") ", " }}
-            {{ else }}
-            Billion Oyster Project with support from {{ join $siteOrgs ", " }}
-            {{ end }}
+
             (for more organization details, see Appendix A)
         </p>
         
         <p>
             <strong>Biological and environmental data collected at this site:</strong> See Appendix B
         </p>     
-        <hr/>  
-        {{  end }}
-        {{ end }}
+        <hr/> 
+        {{ end }} 
     </div>
 
+    <div class="col-sm-12">
+        <h3>Appendix A: Organizations Stewarding Oyster Research Stations (ORS)</h3>
+        <table class="table table-sm table-bordered table-striped">
+            <caption>The organization name, site and body of water, and organization address.</caption>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Organization Name</th>
+                    <th>ORS Site</th>
+                    <th>Body of Water</th>
+                    <th>Organization Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--Range through the orgs table-->
+                {{ range $i, $org := $orgs }}
+                <!--Filter through the stations table, creating an array of each station whose "schoolOrg" field matches the org id,
+                then filter through that array to only show stations whose status is "Active."
+                Create the variable $orgStations from this filtered array.-->
+                {{ $orgStations := filterByKey (filterByKey $stations "schoolOrg.name" $org.name) "status" "Active" }}
+                {{ $boroughs := pluck $orgStations "site.boroughCounty" }}
+                <!--If orgStations has anything in it at all and if the site is in the five boroughs, display it.
 
-    <h3>Appendix A: Organizations Stewarding Oyster Research Stations (ORS)</h3>
-    <table class="table table-sm table-bordered table-striped">
-        <caption>The organization name, site and body of water, and organization address.</caption>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Organization Name</th>
-                <th>ORS Site</th>
-                <th>Body of Water</th>
-                <th>Organization Address</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!--Range through the orgs table-->
-            {{ range $i, $org := $orgs }}
-            <!--Filter through the stations table, creating an array of each station whose "schoolOrg" field matches the org id,
-            then filter through that array to only show stations whose status is "Active."
-            Create the variable $orgStations from this filtered array.-->
-            {{ $orgStations := filterByKey (filterByKey $stations "schoolOrg.name" $org.name) "status" "Active" }}
-            {{ $boroughs := pluck $orgStations "site.boroughCounty" }}
-            <!--If orgStations has anything in it at all and if the site is in the five boroughs, display it.
+                TODO: BUT NOT IF THE ORG IS BILLION OYSTER PROJECT
+                -->
+                {{   if and (count $orgStations) (intersect $.page.validBoroughs $boroughs) }}
+                {{  increment "orgNumber" }}
+                <tr>
 
-            TODO: BUT NOT IF THE ORG IS BILLION OYSTER PROJECT
-            -->
-            {{   if and (count $orgStations) (intersect $.page.validBoroughs $boroughs) }}
-            {{  increment "orgNumber" }}
-            <tr>
-
-                <th>{{ $.vars.orgNumber }}</th>
-                <td>{{ $org.name }}</td>
-                <td>{{ join (uniq (sort (pluck $orgStations "site.name"))) "; " }}</td>
-                <td>{{ join (uniq (sort (pluck $orgStations "site.bodyOfWater"))) "; " }}</td>
-                <td>
-                    {{ if and $org.streetAddress $org.city $org.state }}
-                    {{ $org.streetAddress }}, {{ $org.city }}, {{ $org.state }} {{ $org.zip }}
-                    {{ end }}
-                </td>
-            </tr>
-            {{   end }}
-            {{ end }}
-        </tbody>
-    </table>
+                    <th>{{ $.vars.orgNumber }}</th>
+                    <td>{{ $org.name }}</td>
+                    <td>{{ join (uniq (sort (pluck $orgStations "site.permitName"))) "; " }}</td>
+                    <td>{{ join (uniq (sort (pluck $orgStations "site.bodyOfWater"))) "; " }}</td>
+                    <td>
+                        {{ if and $org.streetAddress $org.city $org.state }}
+                        {{ $org.streetAddress }}, {{ $org.city }}, {{ $org.state }} {{ $org.zip }}
+                        {{ end }}
+                    </td>
+                </tr>
+                {{   end }}
+                {{ end }}
+            </tbody>
+        </table>
+    </div>
 
 
     <div class="col-sm-12">
@@ -318,14 +289,10 @@ bindings:
                 <tr>
                     <th>{{ $.vars.expeditionNumber }}</th>
                     <td>{{ $expedition.station.name }}</td>
-                    <td>
-                        <a href="/data/field-reports/{{ $expedition._id }}">
-                        {{ $expedition.monitoringStartDate }}
-                        </a>
-                    </td>
+                    <td>{{ $expedition.monitoringStartDate }}</td>
                     <td>
                         {{ if $expedition.station.site }}
-                        {{ $expedition.station.site.name }}
+                        {{ $expedition.station.site.permitName }}
                         {{ end }}
                     </td>
                     <td>

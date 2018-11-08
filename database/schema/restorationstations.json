@@ -11,7 +11,9 @@
             "bodyOfWater",
             "boroughCounty",
             "city",
-            "state"
+            "state",
+            "permitName",
+            "permitYear"
         ]
     }, {
         "key": "schoolOrg",
