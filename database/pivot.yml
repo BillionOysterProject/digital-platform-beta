@@ -1,5 +1,5 @@
+autoexpand: true
 backend: 'mongodb+scram://localhost:27017/bop?autoregister=true&authdb=admin'
-
 environments:
     development:
         backend: 'mongodb+scram://ds129146.mlab.com:29146/bop-dev?autoregister=true'

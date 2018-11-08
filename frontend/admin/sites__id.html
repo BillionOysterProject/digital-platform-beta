@@ -136,13 +136,11 @@ bindings:
                     name="permitYear"
                     {{ if $.bindings.site.permitYear }}
                     value="{{ $.bindings.site.permitYear }}"
-                    {{ else }}
-                    value="{{ add (i (now `2006`)) -1 }}"
                     {{ end }}
                 >
             </div>
         </div>
-    
+
         <div class="form-group row">
             <label class="col-2 col-form-label" for="notes">Notes</label>
             <div class="col-10">
@@ -154,7 +152,7 @@ bindings:
                 >{{ $.bindings.site.notes }}</textarea>
             </div>
         </div>
-        
+
         <div class="form-group mt-4">
             <div class="text-right">
                 <button
