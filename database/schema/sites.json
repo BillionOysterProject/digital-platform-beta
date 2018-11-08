@@ -48,6 +48,9 @@
         "name":     "permitYear",
         "type":     "int"
     }, {
+        "name":     "permitName",
+        "type":     "str"
+    }, {
         "name":     "created",
         "not_user_editable": true,
         "type":     "date",

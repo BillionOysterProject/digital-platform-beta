@@ -18,7 +18,8 @@ bindings:
     resource: '/api/sites'
     params:
         limit:    false
-        sort:     name
+        sort:     permitName
+        q:        'permitYear/2017'
 
 -   name:     baselines
     resource: '/api/restoration-stations'
@@ -146,51 +147,22 @@ bindings:
                 </tr>
             </thead>
             <tbody>
-                <!-- Range through each site in the sites table-->
-                {{ range $i, $site := $sites }}
-                <!--First: filter the $baselines array (stations) to find stations where the site = current site id (site id from the range,
-                    creating a new array of stations)
-                    Second: filter that array to find stations where the station's status = active to create a new array
-                    Third: count how many stations are in that array
-                    Fourth: create a new variable, $count that represents this value -->
-                {{ $count := count (filterByKey (filterByKey $baselines "site" $site._id) "status" "Active" ) }}
-                <!--Only show sites with at least 1 active ORS and are within the five boroughs (we created "valid boroughs" under page-->
-                {{  if (any $.page.validBoroughs $site.boroughCounty) }}
-                <!--Use this to number the rows-->
-                {{  increment "siteNumber" }}
-
-                    <!--First: filter the $baselines arrary (stations) to find stations where the site = current site id (site id from the range,
-                        creating a new array of stations)
-                        Second: from that array, pluck the sources from the baselines to create a new array
-                        Third: from that array, only show unique sources (don't repeat any sources) to create a new array
-                    -->
-                {{ $broodstocks := uniq (pluck (filterByKey $baselines "site" $site._id) "baselines.*.*.source") }}
+                <!-- Group each site by its permit name-->
+                {{ range $permitName, $permitSites := groupBy $sites "permitName" }}
+                {{ $permitBaselines := filterByKey $baselines "site" (pluck $permitSites "_id") }}
+                <!---->
                 <tr>
-                    <!--Use this to number the rows-->
-                    <th>{{ $.vars.siteNumber }}</th>
+                    <th>number</th>
                     <td>
-                        <a href="/sites/{{ $site._id }}">
-                            {{ $site.name }}
-                        </a>
+                        {{ $permitName }}
                     </td>
-                    <td>{{ $site.bodyOfWater }}</td>
-                    <td>{{ $site.latitude }}</td>
-                    <td>{{ $site.longitude }}</td>
-                    <td>
-                        {{ $count }}
-                    </td>
-                    <!--From the broodstocks array, join all of the sources into one string, separating each source with a semi-colon
-                    if there are no broodstock sources, enter in "Muscongus Bay, Maine"-->
-                    <td>
-                        {{ if and $broodstocks $count }}
-                        {{ join (uniq (pluck (filterByKey $baselines "site" $site._id) "baselines.*.*.source")) "; " }}
-                        {{ else if $count }}
-                        Muscongus Bay, Maine
-                        {{ else }}
-                        {{ end }}
-                    </td>
+                    <!--Get bodies of water from all sites, unique it, join it-->
+                    <td>{{ first (pluck $permitSites "bodyOfWater") }}</td>
+                    <td>{{ first (pluck $permitSites "latitude") }}</td>
+                    <td>{{ first (pluck $permitSites "longitude") }}</td>
+                    <td></td>
+                    <td></td>
                 </tr>
-                {{  end }}
                 {{ end }}
             </tbody>
         </table>
