@@ -5,6 +5,7 @@
         "key": "site",
         "collection": "sites",
         "fields": [
+            "_id",
             "name",
             "latitude",
             "longitude",

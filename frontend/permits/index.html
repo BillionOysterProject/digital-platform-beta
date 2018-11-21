@@ -84,7 +84,7 @@ bindings:
             <div class="media-body">
             <h2 class="mt-0 mb-1">New York Harbor Foundation d/b/a Billion Oyster Project (BOP)
                     <br/>
-                    Report of Collection Activities for the BOP Oyster Restoration Station Program, 
+                    Report of Collection Activities for the BOP Oyster Restoration Station Program,
                     <br/>
                     New York City
                     <br/>
@@ -119,16 +119,16 @@ bindings:
         <p>
             <strong>Final disposition:</strong> Participants retained oysters at current sites with the exception of two transfers:
             <ul>
-                <li>January 16th, 2018: 10 oysters were collected from BOP’s Sebago Canoe Club to use as broodstock for spat on shell for the Paerdegat Basin Community Reef. 
+                <li>January 16th, 2018: 10 oysters were collected from BOP’s Sebago Canoe Club to use as broodstock for spat on shell for the Paerdegat Basin Community Reef.
                     Those oysters were strip spawned and disposed of in an upland facility.
                 </li>
                 <li>
-                    January 24th, 2018: 10 oysters were collected from the Richmond County Yacht Club to use as broodstock for spat on shell for BOP’s Great Kills Harbor Nursery. 
+                    January 24th, 2018: 10 oysters were collected from the Richmond County Yacht Club to use as broodstock for spat on shell for BOP’s Great Kills Harbor Nursery.
                     Those oysters were strip spawned and disposed of in an upland facility.
                 </li>
             </ul>
-            Upon renewal of LCP #1133,  all oysters will remain in cages for the next monitoring season.            
-        </p> 
+            Upon renewal of LCP #1133,  all oysters will remain in cages for the next monitoring season.
+        </p>
     </div>
     <hr/>
     <div class="col-sm-12">
@@ -148,11 +148,13 @@ bindings:
             </thead>
             <tbody>
                 <!-- Group each site by its permit name-->
+                {{ var "siteNumber" 1 }}
                 {{ range $permitName, $permitSites := groupBy $sites "permitName" }}
                 {{ $permitBaselines := filterByKey (filterByKey $baselines "site" (pluck $permitSites "_id")) "status" "Active" }}
+                {{ $sources := sort (uniq (pluck $permitBaselines "baselines.*.*.source")) }}
                 <!---->
                 <tr>
-                    <th>number</th>
+                    <th>{{ $.vars.siteNumber }}</th>
                     <td>
                         {{ $permitName }}
                     </td>
@@ -161,41 +163,56 @@ bindings:
                     <td>{{ first (pluck $permitSites "latitude") }}</td>
                     <td>{{ first (pluck $permitSites "longitude") }}</td>
                     <td>{{ count $permitBaselines }}</td>
-                    <td></td>
+                    <td>
+                    {{ if $sources }}
+                    {{ join $sources "; " }}
+                    {{ else }}
+                    Muscongus Bay, Maine
+                    {{ end }}
+                    </td>
                 </tr>
+                {{  increment "siteNumber" }}
                 {{ end }}
             </tbody>
         </table>
         <hr/>
     </div>
 
-    <div class="col-sm-12"> 
+    <div class="col-sm-12">
         <h3 text-align="center">Data by Site</h3>
         {{ range $permitName, $permitSites := groupBy $sites "permitName" }}
         {{ $permitBaselines := filterByKey (filterByKey $baselines "site" (pluck $permitSites "_id")) "status" "Active" }}
+        {{ $permitStations := filterByKey (filterByKey $stations "site._id" (pluck $permitSites "_id")) "status" "Active" }}
+        {{ $permitOrgs := pluck $permitStations "schoolOrg" }}
+        {{ $sources := sort (uniq (pluck $permitBaselines "baselines.*.*.source")) }}
         {{ $count := count $permitBaselines }}
-        <h4>{{ $permitName }}</h4>    
+        <h4>{{ $permitName }}</h4>
         <p>
-            <strong>Source of oysters:</strong> Oyster Research Station (ORS) stocked with spat-on-shell produced by New York Harbor School’s oyster hatchery and remote setting facility located on Governors Island. 
+            <strong>Source of oysters:</strong> Oyster Research Station (ORS) stocked with spat-on-shell produced by New York Harbor School’s oyster hatchery and remote setting facility located on Governors Island.
         </p>
 
         <p>
             <strong>Broodstock was sourced from:</strong>
+            {{ if $sources }}
+            {{ join $sources "; " }}
+            {{ else }}
+            Muscongus Bay, Maine
+            {{ end }}
         </p>
-        
+
         <p>
             <strong>Locations of deployment of oysters:</strong> {{ $permitName }}
         </p>
-        
+
         <p>
-            <strong>Number of cages and oysters at this location:</strong> 
+            <strong>Number of cages and oysters at this location:</strong>
             {{ if eqx $count 1 }}
             {{ $count }} cage, ~{{ multiply $count 50 }} oysters
             {{ else }}
             {{ $count }} cages, ~{{ multiply $count 50 }} oysters
             {{ end }}
         </p>
-        
+
         <p>
             <strong>Mortality rates and causes:</strong> See Mortality information at beginning of report.
         </p>
@@ -203,18 +220,18 @@ bindings:
         <p>
             <strong>Final disposition of all oysters at this location:</strong> See Final Disposition information at top of report.
         </p>
-        
-        <p>
-            <strong>Groups involved at this location:</strong> 
 
+        <p>
+            <strong>Groups involved at this location:</strong>
+            {{ $permitStations }}
             (for more organization details, see Appendix A)
         </p>
-        
+
         <p>
             <strong>Biological and environmental data collected at this site:</strong> See Appendix B
-        </p>     
-        <hr/> 
-        {{ end }} 
+        </p>
+        <hr/>
+        {{ end }}
     </div>
 
     <div class="col-sm-12">
@@ -277,12 +294,13 @@ bindings:
                     <th>Number of Live Oysters</th>
                     <th>Minimum Oyster Length (mm)</th>
                     <th>Average Oyster Length (mm)</th>
-                    <th>Maxium Oyster Length (mm)</th>
+                    <th>Maximum Oyster Length (mm)</th>
                 </tr>
             </thead>
             <tbody>
                 <!--Limits the data to between 09/08/2017 and 09/08/2018-->
                 {{ range $i, $expedition := $expeditions }}
+                {{ if (get $expedition "station.site.permitYear" ) }}
                 {{ if eqx $expedition.status "published"}}
                 {{ if $expedition.protocols.oysterMeasurement }}
                 {{  increment "expeditionNumber" }}
@@ -305,8 +323,9 @@ bindings:
                     <td>{{ round $expedition.protocols.oysterMeasurement.averageSizeOfAllLiveOysters 2 }}</td>
                     <td>{{ $expedition.protocols.oysterMeasurement.maximumSizeOfAllLiveOysters }}</td>
                 </tr>
-                {{      end }}
-                {{  end }}
+                {{        end }}
+                {{     end }}
+                {{   end }}
                 {{ end }}
             </tbody>
         </table>
