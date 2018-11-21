@@ -26,7 +26,7 @@ bindings:
     params:
         limit:    false
         noexpand: true
-        fields:   status,site,baselines
+        fields:   status,site,baselines,schoolOrg
         q:        'schoolOrg/not:{{ $.page.skipStation }}'
 
 -   name:     stations
@@ -182,8 +182,7 @@ bindings:
         <h3 text-align="center">Data by Site</h3>
         {{ range $permitName, $permitSites := groupBy $sites "permitName" }}
         {{ $permitBaselines := filterByKey (filterByKey $baselines "site" (pluck $permitSites "_id")) "status" "Active" }}
-        {{ $permitStations := filterByKey (filterByKey $stations "site._id" (pluck $permitSites "_id")) "status" "Active" }}
-        {{ $permitOrgs := pluck $permitStations "schoolOrg" }}
+        {{ $permitOrgs := filterByKey $orgs "_id" (pluck $permitBaselines "schoolOrg") }}
         {{ $sources := sort (uniq (pluck $permitBaselines "baselines.*.*.source")) }}
         {{ $count := count $permitBaselines }}
         <h4>{{ $permitName }}</h4>
@@ -223,8 +222,14 @@ bindings:
 
         <p>
             <strong>Groups involved at this location:</strong>
-            {{ $permitStations }}
-            (for more organization details, see Appendix A)
+            {{ if $permitOrgs }}
+            Billion Oyster Project with support from
+            {{ join (sort (pluck $permitOrgs "name")) "; " }}
+            (for more organization details, see Appendix A).
+            {{ else }}
+            No groups were involved with ORS monitoring at this location during the report period.
+            {{ end }}
+
         </p>
 
         <p>
