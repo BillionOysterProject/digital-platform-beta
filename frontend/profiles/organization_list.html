@@ -30,12 +30,13 @@
                 <th>Zipcode</th>
                 <!--<th>Created At</th>-->
                 <th>ATS Code</th>
+                <th>City Council District</th>
             </tr>
         </thead>
 
         <tbody>
             {{ range $i, $org := $orgs }}
-            {{ $orgStations := filterByKey (filterByKey $stations "schoolOrg._id" $org._id) "status" "Active" }}
+            {{ $orgStations := filterByKey $stations "schoolOrg.name" $org.name }}
             <tr>
                 <td>
                     <a href="/profiles/{{ $org._id }}">
@@ -49,7 +50,7 @@
                     {{ $org.schoolType }}
                 </td>
 
-                {{ if join (uniq (sort (pluck $orgStations "site.name"))) "; " }}
+                {{ if $orgStations }}   
                 <td>
                     {{ join (uniq (sort (pluck $orgStations "site.name"))) "; " }}
                 </td>
@@ -93,6 +94,11 @@
                 <td>
                     {{ $org.syncId }}
                 </td>
+                {{ if $org.district }}
+                <td>{{ $org.district }}</td>
+                {{ else }}
+                <td></td>
+                {{ end }}
             </tr>
             {{ end }}
         </tbody>
