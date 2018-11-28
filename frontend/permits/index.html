@@ -117,7 +117,8 @@ bindings:
             <strong>Mortality:</strong> Of the total 10,000 oysters distributed over the season, approximately 47% have survived.
         </p>
         <p>
-            <strong>Final disposition:</strong> Participants retained oysters at current sites with the exception of two transfers:
+            <strong>Final disposition:</strong> ORS cages were not placed at Jefferson Park Bobby Wagner Walkway, Kings Plaza Marina, La Marina, Marina 59 Rockaways Queens, nor Princess Bay Marina Lemon Creek Park for this monitoring year.
+            Participants retained oysters at current sites with the exception of two transfers:
             <ul>
                 <li>January 16th, 2018: 10 oysters were collected from BOP’s Sebago Canoe Club to use as broodstock for spat on shell for the Paerdegat Basin Community Reef.
                     Those oysters were strip spawned and disposed of in an upland facility.
@@ -151,7 +152,7 @@ bindings:
                 {{ var "siteNumber" 1 }}
                 {{ range $permitName, $permitSites := groupBy $sites "permitName" }}
                 {{ $permitBaselines := filterByKey (filterByKey $baselines "site" (pluck $permitSites "_id")) "status" "Active" }}
-                {{ $sources := sort (uniq (pluck $permitBaselines "baselines.*.*.source")) }}
+                {{ $sources := sort (uniq (filter (pluck $permitBaselines "baselines.*.*.source") "{{ and (nex . `?`) (nex . `Other`) }}")) }}
                 <!---->
                 <tr>
                     <th>{{ $.vars.siteNumber }}</th>
@@ -166,8 +167,8 @@ bindings:
                     <td>
                     {{ if $sources }}
                     {{ join $sources "; " }}
-                    {{ else }}
-                    Muscongus Bay, Maine
+                    {{ else if $permitBaselines }}
+                    Muscongus Bay, Maine    
                     {{ end }}
                     </td>
                 </tr>
@@ -183,7 +184,7 @@ bindings:
         {{ range $permitName, $permitSites := groupBy $sites "permitName" }}
         {{ $permitBaselines := filterByKey (filterByKey $baselines "site" (pluck $permitSites "_id")) "status" "Active" }}
         {{ $permitOrgs := filterByKey $orgs "_id" (pluck $permitBaselines "schoolOrg") }}
-        {{ $sources := sort (uniq (pluck $permitBaselines "baselines.*.*.source")) }}
+        {{ $sources := sort (uniq (filter (pluck $permitBaselines "baselines.*.*.source") "{{ and (nex . `?`) (nex . `Other`) }}")) }}
         {{ $count := count $permitBaselines }}
         <h4>{{ $permitName }}</h4>
         <p>
@@ -194,8 +195,8 @@ bindings:
             <strong>Broodstock was sourced from:</strong>
             {{ if $sources }}
             {{ join $sources "; " }}
-            {{ else }}
-            Muscongus Bay, Maine
+            {{ else if $permitBaselines }}
+            Muscongus Bay, Maine    
             {{ end }}
         </p>
 

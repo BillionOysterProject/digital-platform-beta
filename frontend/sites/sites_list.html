@@ -42,7 +42,7 @@
                     Second: filter that array to find stations where the station's status = active to create a new array
                     Third: count how many stations are in that array
                     Fourth: create a new variable, $count that represents this value -->
-                {{ $count := count (filterByKey (filterByKey $stations "site._id" $site._id) "status" "Active" ) }}
+                {{ $count := count (filterByKey (filterByKey $stations "site.name" $site.name) "status" "Active" ) }}
                 <!--Use this to number the rows-->
                 {{  increment "siteNumber" }}
                 <tr>
