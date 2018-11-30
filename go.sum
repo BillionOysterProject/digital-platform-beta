@@ -115,9 +115,13 @@ github.com/ghetzel/diecast v1.9.26 h1:xJhGY28lK2zXp+1+Hx+893G4wGDBKS2iJL0CIIR5R/
 github.com/ghetzel/diecast v1.9.26/go.mod h1:PdDagM210y+1qBMRwkxHIP59sdQx7B0OeeLF2Q51Tdw=
 github.com/ghetzel/diecast v1.9.27 h1:HCnyObyjkV5X+kRBzcGZFLj11rmwRkBF9oy9dZIEvRU=
 github.com/ghetzel/diecast v1.9.27/go.mod h1:EOjz5As4oCGkfomPbj9G88Oa619EJtG38gzB+PZbBCs=
+github.com/ghetzel/diecast v1.9.29 h1:vFyIvZ0Ubdgvhh2Am92XdkAP8/XdCdG+qugYUk544XE=
+github.com/ghetzel/diecast v1.9.29/go.mod h1:4jekbcqdMQYfmJKxicvAD6NzPBFJwYw9Ijg8h/gNuag=
 github.com/ghetzel/friendscript v0.5.0/go.mod h1:GZJ2FZRpgvURp4hUb/AdevNCnHKCWRpKLxtAl817F4g=
 github.com/ghetzel/friendscript v0.5.2 h1:N6qcdKq1Ast7QIraWWc79yOS08IiCZcye9wxMHP1g4E=
 github.com/ghetzel/friendscript v0.5.2/go.mod h1:F2dZJWxEHLg+AFilyUDWNWlet+Pf7h1rlFweJCbA3HY=
+github.com/ghetzel/friendscript v0.5.5 h1:xQvgdHW7FckKhHZL4xU3LaPpBU0nHheBl96My1KhR+I=
+github.com/ghetzel/friendscript v0.5.5/go.mod h1:zYqGAS3vGMxM912/T9GP1S62VP+AXssMDv9dPzO0Ph0=
 github.com/ghetzel/go-defaults v1.2.0 h1:U1T64bxhBc6nVZ68QXch1hoHq43h6isqgbvG7kxY9Uc=
 github.com/ghetzel/go-defaults v1.2.0/go.mod h1:xWhTgOoc4UNWT7sl3oyNFqtKzEbUKI9C3rqbwtwdxFw=
 github.com/ghetzel/go-stockutil v0.0.0-20180920191201-20bafb696ed6 h1:D6tu0A73+h4OpOhBteaygOKiedzxSw4SQSFdDClwWqE=
@@ -147,6 +151,8 @@ github.com/ghetzel/go-stockutil v1.6.5 h1:vmwTn9sfoKAaQ4OpB2JN/Ggtu031c44I7SEbpO
 github.com/ghetzel/go-stockutil v1.6.5/go.mod h1:WWQnJTs0pzKtG2xqysVPYfPRdPhLwSU9f0oGG46Ji3I=
 github.com/ghetzel/go-stockutil v1.6.6 h1:SxQJw3cy/bM3ZpfbcJadmyBti7fTdhQTeX+XOpoSHUY=
 github.com/ghetzel/go-stockutil v1.6.6/go.mod h1:WWQnJTs0pzKtG2xqysVPYfPRdPhLwSU9f0oGG46Ji3I=
+github.com/ghetzel/go-stockutil v1.6.17 h1:PWaItT+zQrPQu/4fwiM+hAojvD7oo5PQA4IDONjaXD8=
+github.com/ghetzel/go-stockutil v1.6.17/go.mod h1:+m7v45hx86ukaOof7faN1mFqW+PtmUbRwBG9Lt8ftEk=
 github.com/ghetzel/go-webfriend v0.0.0-20180331030455-a02e0c9b1137 h1:07EcSO7JZG9k2kY/zUi1uf2LOhWb0YKTpc7GP14jmFA=
 github.com/ghetzel/go-webfriend v0.0.0-20180331030455-a02e0c9b1137/go.mod h1:beTYu3lp1LNlg6oO/76c5lvt8RiDY0NZ0Tdp/FwTYHI=
 github.com/ghetzel/go-webfriend v0.9.23/go.mod h1:4tjKFGdCtac9eXJ8Hz48DSCoiwjhzynwFFiyhsLfMnI=
@@ -158,6 +164,8 @@ github.com/ghetzel/go-webfriend v0.9.33 h1:0hheGPmewpPLGyREtf3mSRN6sGvLa0qc3IVhb
 github.com/ghetzel/go-webfriend v0.9.33/go.mod h1:S3S4MXRc4oPyI0Px6w+3AwFJp7gkvnz7JP2TJNCK0PA=
 github.com/ghetzel/go-webfriend v0.9.34 h1:1Tt5mWVgBHRFV7ClBmmKg0HZoCz1/7p/l+v6PBdr+ck=
 github.com/ghetzel/go-webfriend v0.9.34/go.mod h1:S3S4MXRc4oPyI0Px6w+3AwFJp7gkvnz7JP2TJNCK0PA=
+github.com/ghetzel/go-webfriend v0.9.40 h1:yTK+owpwiOycRSaZWzxWoQE3cDO/BX83mpvFPs9/bJ4=
+github.com/ghetzel/go-webfriend v0.9.40/go.mod h1:RDBxcAknpDWMJFOKS9AFiNldv+R6siUKFB4DDv+BGRI=
 github.com/ghetzel/pivot v2.5.0+incompatible h1:u8w8fc9T5DURYzJeWEZZucsBlsZinTXMzmpGGGieilA=
 github.com/ghetzel/pivot v2.5.0+incompatible/go.mod h1:WQSAPymR2LZs7w2sCTR6yinegKzeOMIhlPoXYN364as=
 github.com/ghetzel/pivot/v3 v3.0.5 h1:72QIHgl+As9rtq5xiO5ntjtMWzmgk8ZQ7NeKRunlseA=
@@ -191,6 +199,8 @@ github.com/ghetzel/pivot/v3 v3.0.30 h1:Gh3F+cOMTTlb2xDqkURDQlnGeVQEKQETH39bLNEsy
 github.com/ghetzel/pivot/v3 v3.0.30/go.mod h1:+SWOOR5bjMYDjxaPa9o2k00a0YbdUdA6bxU5Vb+KQCw=
 github.com/ghetzel/pivot/v3 v3.0.31 h1:LeyzpqB0TQQ8WPwlTxUegp6tac5KrUkU5K2JdbfB6hw=
 github.com/ghetzel/pivot/v3 v3.0.31/go.mod h1:n3YjtlLtgVgOCVcw/v60ICE8KlbDIdQgx9mtrNCdDEI=
+github.com/ghetzel/pivot/v3 v3.0.35 h1:+nQTIvf+RWscnP+BJcvNmdaafVi3aPvt9H9X0+vaYAE=
+github.com/ghetzel/pivot/v3 v3.0.35/go.mod h1:4QPET/lkZlOEoN03zGqUmVxNaFb6ki2KtHF7v5r10NI=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d h1:YVJe7KwVYazt90hCc/q2dYJVS3062AY6QdT6iHd+Kh8=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d/go.mod h1:7CCemW/spiphukVWb/v2WWYeZkydh30TwSRBh48irZQ=
 github.com/ghetzel/warp v0.0.3/go.mod h1:i4Biu8OdOR5J1DELI5tCaqoW/ekcDjwmoQ+xn38ZDOg=
@@ -253,6 +263,7 @@ github.com/hashicorp/golang-lru v0.0.0-20180201235237-0fb14efe8c47/go.mod h1:/m3
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
 github.com/husobee/vestigo v1.1.0 h1:HugdGUfco/gq7lfsQf3zUrPxAHpl7Be6xv79E57h4Es=
 github.com/husobee/vestigo v1.1.0/go.mod h1:JigD7C8lzUfpo1uzqYgefpyZLswrtJbAQxMw7ds7YCE=
+github.com/jackpal/gateway v1.0.5-0.20180407163008-cbcf4e3f3bae/go.mod h1:lTpwd4ACLXmpyiCTRtfiNyVnUmqT9RivzCDQetPfnjA=
 github.com/jbenet/go-base58 v0.0.0-20150317085156-6237cf65f3a6 h1:4zOlv2my+vf98jT1nQt4bT/yKWUImevYPJ2H344CloE=
 github.com/jbenet/go-base58 v0.0.0-20150317085156-6237cf65f3a6/go.mod h1:r/8JmuR0qjuCiEhAolkfvdZgmPiHTnJaG0UXCSeR1Zo=
 github.com/jdkato/prose v1.1.0 h1:LpvmDGwbKGTgdCH3a8VJL56sr7p/wOFPw/R4lM4PfFg=
@@ -408,6 +419,7 @@ golang.org/x/sys v0.0.0-20180524135853-04b83988a018/go.mod h1:STP8DvDyc/dI5b8T5h
 golang.org/x/sys v0.0.0-20180801221139-3dc4335d56c7/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20180830151530-49385e6e1522/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20180909124046-d0be0721c37e/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
+golang.org/x/sys v0.0.0-20181107165924-66b7b1311ac8/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/tools v0.0.0-20180828015842-6cd1fcedba52/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 golang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
