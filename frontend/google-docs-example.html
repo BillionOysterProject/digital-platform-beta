@@ -1,0 +1,12 @@
+---
+bindings:
+- name: document
+  resource: 'https://docs.google.com/document/{{ qs "id" }}/pub'
+  parser: text
+  params:
+    embedded: true
+---
+
+<section class="content">
+  {{ sanitize $.bindings.document }}
+</section>
