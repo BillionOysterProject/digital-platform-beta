@@ -35,6 +35,18 @@
     }, {
         "key": "standards.nysssMst.*",
         "collection": "metanysssmsts"
+    }, {
+        "key": "lessonOverview.subjectAreas.*",
+        "collection": "metasubjectareas"
+    }, {
+        "key": "units.*",
+        "collection": "units",
+        "fields": [
+            "title",
+            "icon",
+            "color",
+            "status"
+        ]
     }],
     "fields": [{
         "name":       "created",

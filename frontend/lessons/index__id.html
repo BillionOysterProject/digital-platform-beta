@@ -11,146 +11,195 @@ bindings:
     optional:  true
     fallback:  {}
 
--   name:     'units'
-    resource: '/api/units'
-    fallback: []
-    params:
-        noexpand: true
-
--   name:     subjectAreas
-    resource: '/api/subject-areas'
-    params:
-        limit: false
-
 postprocessors:
 - trim-empty-lines
 ---
 {{ $lesson := $.bindings.lesson }}
 {{ $lessonStats := $.bindings.lessonStats }}
+{{ $units := $.bindings.lesson.units }}
+{{ $subjectAreas := $.bindings.lesson.lessonOverview.subjectAreas }}
 
 <section class="content container">
-    <div class="lesson-main">
-        <div class="row">
-            <div style="width: 105px; text-align: center;">
-                <img
-                    alt="Billion Oyster Project"
-                    src="/assets/img/brand/logo.svg"
-                    class="img-fluid"
-                >
-            </div>
-
-            <div class="col pl-4">
-                <h1 class="blue" style="font-size: 30px;">{{ $lesson.title }}</h1>
-                <div>
-                    <b>{{ $lesson.user.displayName }}</b>
-                    <br/>
-                    <a href="mailto:{{ $lesson.user.email }}">{{ $lesson.user.email }}</a>
-                    {{ if $lesson.created }}
-                    <div class="text-muted">{{ time $lesson.created "Jan 2, 2006" }}</div>
-                    {{ end }}
-
-                    {{ if nex (qs "renderer") "pdf" }}
-                    <a
-                        class="btn btn-success float-right"
-                        href="/lessons/{{ param 1 }}?layout=print&renderer=pdf"
-                        download="{{ $lesson.title }}.pdf"
-                    >
-                        <i class="fa fa-download"></i>
-                        Download PDF
-                    </a>
-                    {{ end }}
-                </div>
-            </div>
+    <h1 class="blue" style="font-size: 30px;">{{ $lesson.title }}</h1>
+    <div class="row">   
+    <div class="col pl-4">     
+            <b>{{ $lesson.user.displayName }}</b>
+            <br/>
+            <a href="mailto:{{ $lesson.user.email }}">{{ $lesson.user.email }}</a>
+            {{ if $lesson.created }}
+            <div class="text-muted">{{ time $lesson.created "Jan 2, 2006" }}</div>
+            {{ end }}
         </div>
+        <div class="text-left">
+            {{ if nex (qs "renderer") "pdf" }}
+            <a
+                class="btn btn-primary float-right"
+                href="/lessons/{{ param 1 }}?layout=print&renderer=pdf"
+                download="{{ $lesson.title }}.pdf"
+            >
+                <i class="fa fa-download"></i>
+                Download PDF
+            </a>
+            {{ end }}
+        </div>
+    </div> 
 
-        <hr />
+    <hr/>
 
         <div class="row">
             <div class="col-sm-3">
                 <b>Unit</b>
                 <div>
-
-                    {{ range $i, $unitID := $lesson.units }}
-                    {{   $unit := mapify (firstByKey $.bindings.units "_id" $unitID) }}
-                    {{   if isMap $unit }}
+                    {{ range $i, $unit := $units }}
                     <h4 style="color: {{ $unit.color }}">
                         <i class="{{ $unit.icon }}"></i>
                         {{ $unit.title }}
                     </h4>
-                    {{   end }}
                     {{ end }}
                 </div>
             </div>
             <div class="col-sm-2">
-                <b>Grade</b>
+                <b>Grades</b>
                 <p>{{ $lesson.lessonOverview.grade }}</p>
-
             </div>
             <div class="col-sm-2">
                 <b>Class Periods</b>
                 <p>{{ $lesson.lessonOverview.classPeriods }}</p>
-
             </div>
             <div class="col-sm-2">
                 <b>Setting</b>
                 <p>{{ $lesson.lessonOverview.setting }}</p>
 
             </div>
-            <div class="col-sm-3">
+            {{ if $subjectAreas }}
+            <div class="col-sm-2">
                 <b>Subject Areas</b>
                 <div>
-                    {{ range $lesson.lessonOverview.subjectAreas }}
-                    {{   $subjectArea := mapify (firstByKey $.bindings.subjectAreas "_id" .) }}
-                    {{   if isMap $subjectArea }}
+                    {{ range $i, $subjectArea := $subjectAreas }}
+                    {{ if $subjectArea }}
                     <span class="badge badge-inverse" style="background-color: {{ $subjectArea.color }}; color: white;">{{ $subjectArea.subject }}</span>
-                    {{   end }}
+                    {{ end }}
                     {{ end }}
                 </div>
             </div>
+            {{ end }}
         </div>
         <hr/>
 
         <div class="row">
             <div class="col-sm-12">
-                <h2 style="font-weight: 700; font-size: 24px; ">Summary</h2>
+                
                 <!-- =============================================================================================== -->
                 <p>
                     {{ sanitize $lesson.lessonOverview.lessonSummary }}
                 </p>
 
                 {{ if $lesson.lessonObjectives }}
-                <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Objectives</h2>
+                <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#lessonObjectives">
+                    <section class="container-fluid">
+                    <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Objectives</h2>
+                    </section>
+                    <div class="step-toggle">
+                        <i class="fa"></i>
+                    </div>
+                </section>
                 <!-- =============================================================================================== -->
-                <p>
-                    {{ sanitize $lesson.lessonObjectives }}
-                </p>
+                <section class="content collapse" id="lessonObjectives">
+                    <p>
+                        {{ sanitize $lesson.lessonObjectives }}
+                    </p>
+                </section>
                 {{ end }}
 
-                <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Materials and Resources</h2>
+                {{ if sum (apply $lesson.standards "count") }}
+                <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#standards">
+                    <section class="container-fluid">
+                    <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Standards</h2>
+                    </section>
+                    <div class="step-toggle">
+                        <i class="fa"></i>
+                    </div>
+                </section>
+                
                 <!-- =============================================================================================== -->
+                    <!-- Loop through all "Standards Labels" as defined in diecast.yml -->
+                    {{ range $standard, $standardName := $.page.labels }}
+                    <!-- 1. Get the standard we're working on from the lesson -->
+                    <!-- 2. Remove empty results -->
+                    <!-- 3. Group the standard aspects by their headers -->
+                    {{   $aspectGroups := groupBy (compact (get $lesson.standards $standard)) `header` }}
 
-                {{ if $lesson.materialsResources.supplies }}
-                <h3 style="font-size: 21px;">Supplies</h3>
-                <p>
-                    {{ sanitize $lesson.materialsResources.supplies }}
-                </p>
+                    <!-- If the group has any items in it... -->
+                    {{   if $aspectGroups }}
+                    <section class="content collapse" id="standards">
+                    <h3 style="font-size: 21px;">{{ $standardName }}</h3>
+
+                    <ul>
+                        <!-- Loop through each header -->
+                        {{ range $header, $aspects := $aspectGroups }}
+                        <li>
+                            {{ if autotype $header }}
+                            <h4>{{ $header }}</h4>
+                            {{ end }}
+
+                            <ul>
+                                <!-- Output all aspects as sub-items under the current header -->
+                                {{ range $k, $aspect := $aspects }}
+                                <li>{{ $aspect.description }}</li>
+                                {{ end }}
+                            </ul>
+                        </li>
+                        {{ end }}
+                    </ul>
+                </section>
+                    {{   end }}
+                    {{ end }}
                 {{ end }}
 
-                {{ if nex (qs "renderer") "pdf" }}
-                <h3 style="font-size: 21px;">Handouts</h3>
-                <p>
-                    placeholder for handout 1
-                </p>
-
-                <h3 style="font-size: 21px;">Teacher Resources</h3>
-                <p>
-                    placeholder for teacher resources
-                </p>
+                {{ if $lesson.materialsResources }}
+                <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#materialsResources">
+                    <section class="container-fluid">
+                    <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Materials and Resources</h2>
+                    </section>
+                    <div class="step-toggle">
+                        <i class="fa"></i>
+                    </div>
+                </section>
                 {{ end }}
-
-                <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Before you get started</h2>
                 <!-- =============================================================================================== -->
+                <section class="content collapse" id="materialsResources">
+                    {{ if $lesson.materialsResources.supplies }}
+                    <h3 style="font-size: 21px;">Supplies</h3>
+                    <p>
+                        {{ sanitize $lesson.materialsResources.supplies }}
+                    </p>
+                    {{ end }}
 
+                    {{ if nex (qs "renderer") "pdf" }}
+                    <h3 style="font-size: 21px;">Handouts</h3>
+                    <p>
+                        placeholder for handout 1
+                    </p>
+
+                    <h3 style="font-size: 21px;">Teacher Resources</h3>
+                    <p>
+                        placeholder for teacher resources
+                    </p>
+                    {{ end }}
+                </section>
+
+
+            <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#before">
+                <section class="container-fluid">
+                    <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Before you get started</h2>
+                </section>
+                <div class="step-toggle">
+                    <i class="fa"></i>
+                </div>
+            </section>
+                
+                <!-- =============================================================================================== -->
+            <section class="content collapse" id="before">
                 {{ if $lesson.materialsResources.teacherTips }}
                 <h3 style="font-size: 21px;">Tips for Teachers</h3>
                 <p>
@@ -171,9 +220,12 @@ postprocessors:
                     {{ sanitize $lesson.background }}
                 </p>
                 {{ end }}
+            </section>
 
+            <!-- ===============================================================================================
+                <section class="content">
                 <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Instruction Plan</h2>
-                <!-- =============================================================================================== -->
+                 
 
                 {{ if $lesson.instructionPlan.engage }}
                 <h3 style="font-size: 21px;">Engage</h3>
@@ -216,43 +268,18 @@ postprocessors:
                     {{ sanitize $lesson.instructionPlan.extend }}
                 </p>
                 {{ end }}
-
-                {{ if sum (apply $lesson.standards "count") }}
-                <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Standards</h2>
-                <!-- =============================================================================================== -->
-                    <!-- Loop through all "Standards Labels" as defined in diecast.yml -->
-                    {{ range $standard, $standardName := $.page.labels }}
-                    <!-- 1. Get the standard we're working on from the lesson -->
-                    <!-- 2. Remove empty results -->
-                    <!-- 3. Group the standard aspects by their headers -->
-                    {{   $aspectGroups := groupBy (compact (get $lesson.standards $standard)) `header` }}
-
-                    <!-- If the group has any items in it... -->
-                    {{   if $aspectGroups }}
-                    <h3 style="font-size: 21px;">{{ $standardName }}</h3>
-
-                    <ul>
-                        <!-- Loop through each header -->
-                        {{ range $header, $aspects := $aspectGroups }}
-                        <li>
-                            {{ if autotype $header }}
-                            <h4>{{ $header }}</h4>
-                            {{ end }}
-
-                            <ul>
-                                <!-- Output all aspects as sub-items under the current header -->
-                                {{ range $k, $aspect := $aspects }}
-                                <li>{{ $aspect.description }}</li>
-                                {{ end }}
-                            </ul>
-                        </li>
-                        {{ end }}
-                    </ul>
-                    {{   end }}
-                    {{ end }}
-                {{ end }}
+            </section>
+            -->
             </div>
         </div>
-    </div>
+        <p>View or Download in Google Docs:</p>
 </section>
+<section class="embed-responsive embed-responsive-16by9">
+    <iframe 
+        src="https://docs.google.com/document/d/e/2PACX-1vTTtYX9FOmbb5B1dpn8eGESrceV8gBS3AD8V-N4JcD47Oo6D_rnoG-x4M77u63yGXxaOoO0AC_7bmWw/pub?embedded=true"
+        class="embed-responsive-item"
+        >
+    </iframe>
+</section>
+
 
