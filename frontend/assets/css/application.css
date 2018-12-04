@@ -31,6 +31,7 @@ body {
     font-family:     'Roboto', 'Helvetica Neue', 'Helvetica', 'Calibri', 'Arial', sans-serif;
     background:      #fff;
     color:           #2c3c56;
+    display:         flex;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -89,7 +90,7 @@ body > header {
 
 #main {
     width:           100%;
-    height:          calc(100% - 50px);
+    min-height:      calc(100vh - 50px);
 }
 
 h1, .h1 {
@@ -246,6 +247,7 @@ form legend {
     #main {
         width:           calc(100% - 220px);
         margin-left:     220px;
+        min-height:      100vh;
     }
 
     .site-navbar {
@@ -1786,6 +1788,8 @@ li.loading-dialog {
 .fill-content {
     display:         flex;
     flex-direction:  column;
+    width:           100%;
+    height:          100%;
 }
 
 .fill-content #map {

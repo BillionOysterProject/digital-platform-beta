@@ -15,186 +15,172 @@
     </div>
     <div id="waterQuality" class="collapse" aria-labelledby="addWaterQuality" data-parent="#accordion">
         <div class="card-body">
-            <p>Select or enter in as much Water Quality data as you can.</p>
-            <!-- <div class="container-fluid" style="border-radius: 2em; background-color: #EEEEEE; margin-bottom: 2em; padding: 1.5em;">
-                <div class="row">
-                    <div class="col-sm-12 col-md-6 form-group">
-                        <label>Invite team members to enter data for this protocol:</label>
-                        <input type="text" class="form-control">
-                        <br />
-                        <button tyle="button" class="btn btn-primary">
-                            <i class="fa fa-envelope"></i>
-                            Send Invite
-                        </button>
-                    </div>
+            <ul class="nav nav-tabs" role="tablist">
+                {{ range $i, $v := sequence 10 }}
+                {{   $index := add $i 1 }}
+                <li class="nav-item">
+                    <a
+                        class="nav-link{{ if eq $i 0 }} active{{ end }}"
+                        id="sample{{ $index }}_tab"
+                        data-toggle="tab"
+                        href="#sample{{ $index }}"
+                        role="tab"
+                        aria-controls="sample{{ $index }}"
+                        aria-selected="true"
+                    >
+                        Sample {{ $index }}
+                    </a>
+                </li>
+                {{ end }}
+            </ul>
 
-                    <div class="col-sm-12 col-md-6 form-group">
-                        <label>Team members who can edit this protocol:</label>
+            <div class="tab-content">
+                {{ range $i, $v := sequence 10 }}
+                {{   $index := add $i 1 }}
+                <div class="tab-pane{{ if eq $i 0 }} active{{ end }} mt-2" id="sample{{ $index }}" role="tabpanel" aria-labelledby="sample{{ $index }}_tab">
+                    <h3>Sample {{ $index }}</h3>
 
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                Johnny Userface
-                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
-                            </li>
-                            <li class="list-group-item">
-                                <i>Sally Shrimphead (has not accepted)</i>
-                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <p><strong>Water Sample #1</strong></p> -->
-            <!-- <p>For every water quality parameter you'd like to submit, select the method and then enter
-                the three measurements in the table below.
-            </p> -->
-            <!--
-            <p>
-                You can also copy and paste your data from a spreadsheet- <a href="https://docs.google.com/spreadsheets/d/1VwK2Slu4h7L3ZWU3LRwFWt7NvNb2HmWK3M3c8S0P-BI/edit?usp=sharing" target="_blank">click to view an example</a>.
-            </p>
-            -->
-            <!-- <div class="spreadsheet"></div>
-                <div
-                    id="waterQualityTable"
-                    data-field-name="protocols.waterQuality.samples"
-                ></div> -->
+                    <p>Select or enter in as much Water Quality data as you can.</p>
 
-            <div class="form-group">
-                <label for="depthOfWaterSample">
-                    Depth of Water Sample (m)
-                </label>
-
-                <input
-                    class="form-control col-md-2"
-                    name="protocols.waterQuality.depthOfWaterSample"
-                    type="number"
-                    step="0.1"
-                    min="-40"
-                    max="50"
-                    id="depthOfWaterSample"
-                />
-
-                <small>Type 0 if at surface.</small>
-            </div>
-
-            {{ range $i, $waterQualityParameter := $.page.waterQualityParameters }}
-            {{   var "units" }}
-            {{   range $id, $method := $.page.testingMethods }}
-            {{     if has $id $waterQualityParameter.methods }}
-            {{       push "units" $method.units }}
-            {{     end }}
-            {{   end }}
-            {{   $units := uniqByKey (compact (flatten $.vars.units)) "id" }}
-            <h4>{{ $waterQualityParameter.label }}</h4>
-            <div class="row">
-                <div class="col-md-12">
                     <div class="form-group">
-                        <fieldset>
-                            <legend>Method</legend>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                {{ range $i, $methodId  := $waterQualityParameter.methods }}
-                                {{   $method := mapify (get $.page.testingMethods $methodId) }}
-                                <label
-                                    class="btn btn-primary"
-                                >
-                                    <input
-                                        type="radio"
-                                        autocomplete="off"
-                                        name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.method"
-                                        value="{{ $methodId }}"
-                                    >
-                                    {{ $method.label }}
-                                </label>
-                                {{ end }}
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
+                        <label for="protocols.waterQuality.samples.{{ $i }}.depthOfWaterSampleM">
+                            Depth of Water Sample (m)
+                        </label>
 
-                {{ if eq (count $units) 1 }}
-                <div class="col-md-12">
-                    <p><strong>Unit: {{ get (first $units) "label" }}</strong></p>
+                        <input
+                            class="form-control col-md-2"
+                            name="protocols.waterQuality.samples.{{ $i }}.depthOfWaterSampleM"
+                            type="number"
+                            step="0.1"
+                            min="-40"
+                            max="50"
+                            id="protocols.waterQuality.samples.{{ $i }}.depthOfWaterSampleM"
+                        />
+
+                        <small>Type 0 if at surface.</small>
+                    </div>
+
+                    {{ range $i, $waterQualityParameter := $.page.waterQualityParameters }}
+                    {{   var "units" }}
+                    {{   range $id, $method := $.page.testingMethods }}
+                    {{     if has $id $waterQualityParameter.methods }}
+                    {{       push "units" $method.units }}
+                    {{     end }}
+                    {{   end }}
+                    {{   $units := uniqByKey (compact (flatten $.vars.units)) "id" }}
+                    <h4>{{ $waterQualityParameter.label }}</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <fieldset>
+                                    <legend>Method</legend>
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        {{ range $i, $methodId  := $waterQualityParameter.methods }}
+                                        {{   $method := mapify (get $.page.testingMethods $methodId) }}
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                autocomplete="off"
+                                                name="protocols.waterQuality.samples.{{ $i }}.{{ camelize $waterQualityParameter.id }}.method"
+                                                value="{{ $methodId }}"
+                                            >
+                                            {{ $method.label }}
+                                        </label>
+                                        {{ end }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        {{ if eq (count $units) 1 }}
+                        <div class="col-md-12">
+                            <p><strong>Unit: {{ get (first $units) "label" }}</strong></p>
+                        </div>
+                        {{ end }}
+
+                        {{ if gt (count $units) 1 }}
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <fieldset>
+                                    <legend>Unit</legend>
+
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        {{ range $i, $unit := uniqByKey $units "id" }}
+                                        <label
+                                            class="btn btn-primary"
+                                        >
+                                            <input
+                                                type="radio"
+                                                autocomplete="off"
+                                                name="protocols.waterQuality.samples.{{ $i }}{{ camelize $waterQualityParameter.id }}.unit"
+                                                value="{{ $unit.id }}"
+                                            >
+                                            {{ $unit.label }}
+                                        </label>
+                                        {{ end }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        {{ else }}
+                        <input
+                            type="hidden"
+                            name="protocols.waterQuality.samples.{{ $i }}{{ camelize $waterQualityParameter.id }}.unit"
+                            value="{{ get (first $units) `id` }}"
+                        >
+                        {{ end }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Result #1</label>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    name="protocols.waterQuality.samples.{{ $i }}{{ camelize $waterQualityParameter.id }}.result1"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Result #2</label>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    name="protocols.waterQuality.samples.{{ $i }}{{ camelize $waterQualityParameter.id }}.result2"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Result #3</label>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    name="protocols.waterQuality.samples.{{ $i }}{{ camelize $waterQualityParameter.id }}.result3"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    {{ end }}
+
+                    <div class="form-group mt-4">
+                        <label for="waterQualityNotes">Water Quality Notes</label>
+                        <textarea
+                            class="form-control"
+                            type="text"
+                            name="protocols.waterQuality.notes"
+                            maxlength="16536"
+                            id="waterQualityNotes"
+                        ></textarea>
+                    </div>
                 </div>
                 {{ end }}
-
-                {{ if gt (count $units) 1 }}
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <fieldset>
-                            <legend>Unit</legend>
-
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                {{ range $i, $unit := uniqByKey $units "id" }}
-                                <label
-                                    class="btn btn-primary"
-                                >
-                                    <input
-                                        type="radio"
-                                        autocomplete="off"
-                                        name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.unit"
-                                        value="{{ $unit.id }}"
-                                    >
-                                    {{ $unit.label }}
-                                </label>
-                                {{ end }}
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
-                {{ else }}
-                <input
-                    type="hidden"
-                    name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.unit"
-                    value="{{ get (first $units) `id` }}"
-                >
-                {{ end }}
-            </div>
-
-            <div class="row">
-                <div class="col-4">
-                    <div class="form-group">
-                        <label>Result #1</label>
-                        <input
-                            type="number"
-                            class="form-control"
-                            name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.result1"
-                        >
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label>Result #2</label>
-                        <input
-                            type="number"
-                            class="form-control"
-                            name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.result2"
-                        >
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label>Result #3</label>
-                        <input
-                            type="number"
-                            class="form-control"
-                            name="protocols.waterQuality.{{ camelize $waterQualityParameter.id }}.result3"
-                        >
-                    </div>
-                </div>
-            </div>
-
-            <hr>
-            {{ end }}
-
-            <div class="form-group mt-4">
-                <label for="waterQualityNotes">Water Quality Notes</label>
-                <textarea
-                    class="form-control"
-                    type="text"
-                    name="protocols.waterQuality.notes"
-                    maxlength="16536"
-                    id="waterQualityNotes"
-                ></textarea>
             </div>
         </div>
     </div>
