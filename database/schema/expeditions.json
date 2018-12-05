@@ -21,7 +21,8 @@
         "fields": [
             "displayName",
             "username",
-            "profileImageURL"
+            "profileImageURL",
+            "teamLeadType"
         ]
     }, {
         "key":        "protocols.mobileTrap",
