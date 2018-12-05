@@ -158,9 +158,13 @@ bindings:
                 alt="Placeholder image">
             {{ end }}
             <div class="media-body">
-                <p class="mt-0 mb-1"><strong>Team Lead:</strong> {{ $expedition.teamLead.displayName }} </p>
-                <!-- <p class="mt-0 mb-1"><strong>Team Lead Type:</strong> {{ $expedition.teamLead.teamLeadType }} </p> -->
-                <strong>Team Name:</strong> {{ $expedition.team.name }}
+                    <strong>Team Lead:</strong> {{ $expedition.teamLead.displayName }} 
+                    {{ if $expedition.teamLead.teamLeadType }}
+                    <br/>
+                    <strong>Team Lead Type:</strong> {{ $expedition.teamLead.teamLeadType }}
+                    {{ end }}
+                    <br/>
+                    <strong>Team Name:</strong> {{ $expedition.team.name }}
             </div>
         </li>
 
@@ -170,14 +174,14 @@ bindings:
             <img
                 class="img-thumbnail mr-3"
                 style="max-width: 100px; height: auto;"
-                src="{{ $expedition.team.schoolOrg.profileImageURL }}"
-                alt="{{ $expedition.schoolOrg.name }}'s profile picture"
+                src="{{ $expedition.team.schoolOrg.photo.path }}"
+                alt="{{ $expedition.team.schoolOrg.name }}'s profile picture"
             >
             {{ else }}
             <img
                 class="img-thumbnail mr-3"
                 style="max-width: 100px; height: auto;"
-                src="assets/img/placeholders/ors.jpg"
+                src="assets/img/placeholders/vertical-placeholder-org.png"
                 alt="Placeholder image"
             >
             {{ end }}
