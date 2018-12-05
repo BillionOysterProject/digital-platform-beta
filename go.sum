@@ -207,6 +207,8 @@ github.com/ghetzel/pivot/v3 v3.0.36 h1:HWnC4yR8ka0YpATC2uxCPQKoSyLJjSc3A5Og2tgU6
 github.com/ghetzel/pivot/v3 v3.0.36/go.mod h1:4QPET/lkZlOEoN03zGqUmVxNaFb6ki2KtHF7v5r10NI=
 github.com/ghetzel/pivot/v3 v3.0.37 h1:dMiQh5/VfIocyqvlhGP/u4EC17rAJ1g5jBEaXjT1/bc=
 github.com/ghetzel/pivot/v3 v3.0.37/go.mod h1:cDaNB47vHXvQamC63jQLhRR7ElSzOiBbs3quXlJSyoc=
+github.com/ghetzel/pivot/v3 v3.0.38 h1:J4yt5curUzD2WGchWIQ4q3vTtYE8s2hT/qkte1YtLio=
+github.com/ghetzel/pivot/v3 v3.0.38/go.mod h1:cDaNB47vHXvQamC63jQLhRR7ElSzOiBbs3quXlJSyoc=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d h1:YVJe7KwVYazt90hCc/q2dYJVS3062AY6QdT6iHd+Kh8=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d/go.mod h1:7CCemW/spiphukVWb/v2WWYeZkydh30TwSRBh48irZQ=
 github.com/ghetzel/warp v0.0.3/go.mod h1:i4Biu8OdOR5J1DELI5tCaqoW/ekcDjwmoQ+xn38ZDOg=
