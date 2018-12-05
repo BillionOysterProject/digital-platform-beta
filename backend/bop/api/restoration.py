@@ -640,7 +640,7 @@ class ProtocolWaterQualities(CollectionView):
                     if m1 or m2 or m3:
                         sample[parameter] = {
                             'method': measurement.get('method'),
-                            'units':  measurement.get('unit'),
+                            'units':  measurement.get('units'),
                             'results': [m1, m2, m3],
                         }
 

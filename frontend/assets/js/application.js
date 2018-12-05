@@ -95,7 +95,7 @@ $(function () {
 
             syncToggleButtonStates: function() {
                 $('.btn-group-toggle input[type="radio"]').each(function(i, e){
-                    if ($(e).prop('checked')) {
+                    if ($(e).attr('checked')) {
                         $(e).closest('.btn').addClass('active');
                     } else {
                         $(e).closest('.btn').removeClass('active');
