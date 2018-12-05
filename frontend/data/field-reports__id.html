@@ -59,19 +59,27 @@ bindings:
 {{ end }}
 
 <section class="content shaded pt-1 row">
-    <div class="col-md-6 col-sm-12">
-        <h1 class="text-left pb-2">Expedition Field Report: {{ $expedition.name }}</h1>
+    <div class="col-md-10 col-sm-12">
+        <h1 class="text-left pb-2">
+            Expedition Field Report: 
+            <br/>
+            "{{ $expedition.name }}"
+        </h1>
 
         {{ if isMap $expedition.station.site }}
         <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
             {{ $expedition.station.site.name }}, {{ $expedition.station.site.bodyOfWater }}
         </p>
-        <p class="mb-1"><i class="fa fa-fw fa-globe"></i>{{ $expedition.station.site.boroughCounty }}, {{ $expedition.station.site.state }}</p>
+        <p class="mb-1"><i class="fa fa-fw fa-globe"></i>
+            {{ $expedition.station.site.boroughCounty }}, {{ $expedition.station.site.state }}
+        </p>
         {{ end }}
-        <p class="mb-1"><i class="fa fa-fw fa-calendar"></i>{{ time $expedition.monitoringEndDate "January 1, 2006, 3:04pm"  }}</p>
+        <p class="mb-1"><i class="fa fa-fw fa-calendar"></i>
+            {{ time $expedition.monitoringEndDate "January 1, 2006, 3:04pm"  }}
+        </p>
     </div>
 
-    <div class="col-md-6 col-sm-12 text-right pt-2">
+    <div class="col-md-2 col-sm-12 text-right pt-2">
         {{ if or (eqx $expedition.teamLead._id $.bindings.user._id) $.flags.admin }}
         <a
             href="/expeditions/submit?id={{ $expedition._id }}&step=enterdata1"
@@ -126,10 +134,10 @@ bindings:
                 alt="Placeholder image">
             {{ end }}
             <div class="media-body">
-                <strong>Structure name:</strong> {{ $expedition.station.name }}
+                <strong>Oyster Structure Name:</strong> "{{ $expedition.station.name }}"
                 {{ if $expedition.station.structureType }}
                 <br>
-                <strong>Structure Type:</strong> {{ titleize (replace $expedition.station.structureType "-" " " -1) }}
+                <strong>Oyster Structure Type:</strong> {{ titleize (replace $expedition.station.structureType "-" " " -1) }}
                 {{ end }}
             </div>
         </li>
@@ -189,6 +197,7 @@ bindings:
             </div>
         </li>
 
+        {{ if or $expedition.adultCount $expedition.childCount }}
         <li class="media col-6 mt-4">
             <div class="media-body">
                 <strong>Number of Adults:</strong> {{ $expedition.adultCount }}
@@ -198,6 +207,7 @@ bindings:
                 <br >
             </div>
         </li>
+        {{ end }}
     </ul>
     {{ if $expedition.notes }}
     <p>
@@ -332,6 +342,10 @@ bindings:
                     We can represent data on oyster mortality (how many oysters survived) in multiple ways.
                     One format is a <strong>bar chart</strong>- this one shows the number of live oysters on each substrate shell during this expedition.
                 </p>
+                <p>
+                    (You can hover over a bar to display the exact number. 
+                    Click the <i class="fa fa-floppy-o"></i> icon to explore the graph in <a href="https://plot.ly/" target="blank">Plot.ly</a>).
+                </p>
                 <figure class="figure">
                     <div id="div_barplot_number_oysters"></div>
                     <figcaption class="figure-caption">The number of live oysters per substrate shell for this expedition.</figcaption>
@@ -401,7 +415,10 @@ bindings:
 
                     This chart uses one bar to represent each live oyster's length, so there are <span class="text-callout">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> bars.
                     The bars are sorted in order from smallest to largest.
-                    You can hover over a bar to display the exact measurement.
+                </p>
+                <p>
+                    (You can hover over a bar to display the exact measurement. 
+                    Click the <i class="fa fa-floppy-o"></i> icon to explore the graph in <a href="https://plot.ly/" target="blank">Plot.ly</a>).
                 </p>
 
                 <figure class="figure">
@@ -416,6 +433,12 @@ bindings:
                     and tells you how many oysters are in each group.
                     A histogram is a good way to view patterns and to condense a large dataset into a smaller, more readable graph.
                 </p>
+                    
+                <p>
+                    (You can hover over the graph to display the exact # of oysters in each bin.
+                    Click the <i class="fa fa-floppy-o"></i> icon to explore the graph in <a href="https://plot.ly/" target="blank">Plot.ly</a>).
+                </p>
+                
                 <figure class="figure">
                     <div id="div_oyster_size"></div>
                     <div id="div_number_oysters"></div>
@@ -426,16 +449,21 @@ bindings:
                     A <strong>box plot</strong> is another way to visualize the oyster measurement dataset.
                     This box plot shows you what the smallest (min), largest (max), average (mean), and "normal" range of oyster measurements were for this expedition.
                 </p>
-                    <ul>
-                    <li>The bottom and top lines represent the <strong>min</strong> and <strong>max</strong> oyster measurements.
-                        These lines show us the <strong>range</strong> of oyster measurements for this expedition.
-                    </li>
-                    <li>The line in the middle of the box represents the <strong>mean</strong> oyster measurement. </li>
-                    <li>The top and bottom lines of the box represent the <strong>standard deviation</strong> above and below the mean oyster measurement.
-                        (It's okay if you don't know what a standard deviation is- it's a way of showing what's considered "normal" in a dataset.
-                        <!-- You can learn about standard deviation here. -->
-                        )</li>
-                    </ul>
+                <ul>
+                <li>The bottom and top lines represent the <strong>min</strong> and <strong>max</strong> oyster measurements.
+                    These lines show us the <strong>range</strong> of oyster measurements for this expedition.
+                </li>
+                <li>The line in the middle of the box represents the <strong>mean</strong> oyster measurement. </li>
+                <li>The top and bottom lines of the box represent the <strong>standard deviation</strong> above and below the mean oyster measurement.
+                    (It's okay if you don't know what a standard deviation is- it's a way of showing what's considered "normal" in a dataset.
+                    <!-- You can learn about standard deviation here. -->
+                    )</li>
+                </ul>
+                <p>
+                    (You can hover over this graph to view exact numbers. 
+                    Click the <i class="fa fa-floppy-o"></i> icon to explore the graph in <a href="https://plot.ly/" target="blank">Plot.ly</a>.)
+                </p>
+
 
                 <div>
                     <figure class="figure">
@@ -521,106 +549,149 @@ bindings:
 
         <div id="siteConditions" class="collapse" aria-labelledby="siteConditionsData" data-parent="#accordion">
             <div class="card-body">
-                    <p>
-                        This protocol captures data on meteorological conditions, recent rainfall,
-                        and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
-                        can affect oysters by impacting water quality, particularly through Combined Sewer Overflows.
-                        <!-- Learn more. -->
-                    </p>
+                <p>
+                    This protocol captures data on meteorological conditions, recent rainfall,
+                    and the environmental conditions of the land and water, including pollution and garbage. Site Conditions
+                    can affect oysters by impacting water quality, particularly through Combined Sewer Overflows.
+                    <!-- Learn more. -->
+                </p>
 
-                    <p>
-                        <strong>Contributor for this protocol:</strong>
-                            {{ get $siteCondition `scribeMember.displayName` }}
-                    </p>
+                <p>
+                    <strong>Contributor for this protocol:</strong>
+                        {{ get $siteCondition `scribeMember.displayName` }}
+                </p>
 
-                    {{ if $siteCondition.notes }}
-                    <p><strong>Site Conditions Notes:</strong>
-                        <br/>
-                        {{ $siteCondition.notes }}
-                    </p>
-                    {{ end }}
-
-
-                    {{ if $siteCondition.meteorologicalConditions }}
-                    <h4>Meteorological Conditions</h4>
-                    {{ end }}
-
-                    {{ if $siteCondition.meteorologicalConditions.weatherConditions }}
-                    <p><i class="wi wi-fw {{ get (firstByKey $.page.weatherConditions `id` $siteCondition.meteorologicalConditions.weatherConditions ) `icon` }} mr-2"></i><strong>Weather:</strong> {{ get (firstByKey $.page.weatherConditions "id" $siteCondition.meteorologicalConditions.weatherConditions) "label" }}</p>
-                    {{ end }}
-
-                    {{ if $siteCondition.meteorologicalConditions.airTemperatureC }}
-                    <p><i class="wi wi-fw wi-thermometer mr-2"></i><strong>Air temperature:</strong> {{ $siteCondition.meteorologicalConditions.airTemperatureC }} &#8451</p>
-                    {{ end }}
-
-                    {{ if $siteCondition.meteorologicalConditions.windSpeedMPH }}
-                    <p><i class="wi wi-fw wi-strong-wind mr-2"></i><strong>Wind speed:</strong> {{ $siteCondition.meteorologicalConditions.windSpeedMPH }} MPH</p>
-                    {{ end }}
-
-                    {{ if $siteCondition.meteorologicalConditions.windDirection }}
-                    <p><i class="wi wi-fw {{ get (firstByKey $.page.windDirections `id` $siteCondition.meteorologicalConditions.windDirection ) `icon` }} mr-2"></i><strong>Wind direction:</strong> {{ $siteCondition.meteorologicalConditions.windDirection }}</p>
-                    {{ end }}
-
-                    {{ if $siteCondition.meteorologicalConditions.humidityPer }}
-                    <p><i class="wi wi-fw wi-humidity mr-2"></i><strong>Humidity:</strong> {{ $siteCondition.meteorologicalConditions.humidityPer }}%</p>
-                    {{ end }}
+                {{ if $siteCondition.notes }}
+                <p><strong>Site Conditions Notes:</strong>
+                    <br/>
+                    {{ $siteCondition.notes }}
+                </p>
+                {{ end }}
 
 
-                    <!--Recent rainfall isn't showing up if the answer in the database is "false"-->
-                    {{ if $siteCondition.recentRainfall }}
-                    <h4>Recent Rainfall</h4>
-                    {{ end }}
+                {{ if $siteCondition.meteorologicalConditions }}
+                <h4>Meteorological Conditions</h4>
+                {{ end }}
 
-                    {{ if $siteCondition.recentRainfall.rainedIn7Days }}
-                    <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 7 days?</strong> {{ $siteCondition.recentRainfall.rainedIn7Days }}</p>
-                    {{ end }}
+                <table class="table table-bordered table-sm w-75">
+                    <tbody>
+                        {{ if $siteCondition.meteorologicalConditions.weatherConditions }}
+                        <tr>
+                            <th scope="row"><i class="wi wi-fw {{ get (firstByKey $.page.weatherConditions `id` $siteCondition.meteorologicalConditions.weatherConditions ) `icon` }} mr-2"></i><strong>Weather</strong> </th>
+                            <td >{{ get (firstByKey $.page.weatherConditions "id" $siteCondition.meteorologicalConditions.weatherConditions) "label" }}</td>
+                        </tr>
+                        {{ end }}
+                        {{ if $siteCondition.meteorologicalConditions.airTemperatureC }}
+                        <tr>
+                            <th scope="row"><i class="wi wi-fw wi-thermometer mr-2"></i><strong>Air temperature</strong></th>
+                            <td>{{ $siteCondition.meteorologicalConditions.airTemperatureC }} &#8451</td>
+                        </tr>
+                        {{ end }}
+                        {{ if $siteCondition.meteorologicalConditions.windSpeedMPH }}
+                        <tr>
+                            <th scope="row"><i class="wi wi-fw wi-strong-wind mr-2"></i><strong>Wind speed</strong></th>
+                            <td>{{ $siteCondition.meteorologicalConditions.windSpeedMPH }} MPH</td>
+                        </tr>
+                        {{ end }}
+                        {{ if $siteCondition.meteorologicalConditions.windDirection }}
+                        <tr>
+                            <th scope="row">
+                                <i class="wi wi-fw wi-wind {{ get (firstByKey $.page.windDirections `id` $siteCondition.meteorologicalConditions.windDirection ) `icon` }} mr-2"></i>
+                                <strong>Wind direction</strong>
+                            </th>
+                            <td>{{ $siteCondition.meteorologicalConditions.windDirection }}</td>
+                        </tr>
+                        {{ end }}
+                        {{ if $siteCondition.meteorologicalConditions.humidityPer }}
+                        <tr>
+                            <th scope="row"><i class="wi wi-fw wi-humidity mr-2"></i><strong>Humidity</strong></th>
+                            <td>{{ $siteCondition.meteorologicalConditions.humidityPer }}%</td>
+                        </tr>
+                        {{ end }}
+                    </tbody>
+                </table>
 
-                    {{ if $siteCondition.recentRainfall.rainedIn72Hours }}
-                    <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 72 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn72Hours }}</p>
-                    {{ end }}
+                {{ if $siteCondition.recentRainfall }}
+                <h4>Recent Rainfall</h4>
+                {{ end }}
 
-                    {{ if $siteCondition.recentRainfall.rainedIn24Hours }}
-                    <p><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 24 hours?</strong> {{ $siteCondition.recentRainfall.rainedIn24Hours }}</p>
-                    {{ end }}
+                <table class="table table-bordered table-sm w-75">
+                    <tbody>
+                        
+                        {{ if $siteCondition.recentRainfall.rainedIn7Days }}
+                        <tr>
+                            <th scope="row"><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 7 days?</strong></th>
+                            <td>{{ $siteCondition.recentRainfall.rainedIn7Days }}</td>
+                        </tr>
+                        {{ end }}
+                        {{ if $siteCondition.recentRainfall.rainedIn72Hours }}
+                        <tr>    
+                            <th scope="row"><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 72 hours?</strong></th>
+                            <td>{{ $siteCondition.recentRainfall.rainedIn72Hours }}</td>
+                            
+                        </tr>
+                        {{ end }}
+                        {{ if $siteCondition.recentRainfall.rainedIn24Hours }}
+                        <tr>
+                            <th scope="row"><i class="wi wi-fw wi-raindrops mr-2"></i><strong>Has it rained in the past 24 hours?</strong></th>
+                            <td>{{ $siteCondition.recentRainfall.rainedIn24Hours }}</td>
+                        </tr>
+                        {{ end }}
+                    </tbody>
+                </table>
 
 
-                    {{ if $siteCondition.waterConditions }}
-                    <h4>Water Conditions</h4>
-                    {{ end }}
+                {{ if $siteCondition.waterConditions }}
+                <h4>Water Conditions</h4>
+                {{ end }}
 
-                    {{ if $siteCondition.waterConditions.surfaceCurrentSpeedMPS }}
-                    <p><strong>Surface current speed:</strong> {{ $siteCondition.waterConditions.surfaceCurrentSpeedMPS }} MPS</p>
-                    {{ end }}
-
-                    {{ if $siteCondition.waterConditions.waterColor }}
-                    <p></i><strong>Describe the water color:</strong> {{ get (firstByKey $.page.waterColors "id" $siteCondition.waterConditions.waterColor) "label" }}</p>
-                    {{ end }}
-
-                    <!--If there answer is "false" it doesn't show up-->
-                    {{ if $siteCondition.waterConditions.oilSheen }}
-                    <p><i class="wi wi-fw wi-raindrop mr-2"></i><strong>Is there an oil sheen present?</strong> {{ $siteCondition.waterConditions.oilSheen }}</p>
-                    {{ end }}
-
-                    <!--okay it looks like booleans just aren't showing up-->
-                    {{ if $siteCondition.garbage.garbagePresent }}
-                    <p><strong>Is there any garbage in the water?</strong> {{ $siteCondition.garbage.garbagePresent }}</p>
-                    {{ end }}
-
-                    {{ if $siteCondition }}
-                    <p><i class="wi wi-fw wi-sandstorm mr-2"></i><strong>Is there any flow through the Combined Sewer Overflow (CSO) pipes?</strong></p>
-                    {{ end }}
-
-                    {{ if $siteCondition }}
-                    <p><i class="wi wi-fw wi-sandstorm mr-2"></i><strong>Is there any flow through the unmarked/other pipes?</strong></p>
-                    {{ end }}
-
+                <table class="table table-bordered table-sm w-75">
+                    <tbody>
+                        {{ if $siteCondition.waterConditions.surfaceCurrentSpeedMPS }}
+                        <tr>
+                            <th scope="row">Surface current speed</th>
+                            <td>{{ $siteCondition.waterConditions.surfaceCurrentSpeedMPS }} MPS</td>
+                        </tr>
+                        {{ end }}
+                        {{ if $siteCondition.waterConditions.waterColor }}
+                        <tr>
+                            <th scope="row">Describe the water color</th>
+                            <td>{{ get (firstByKey $.page.waterColors "id" $siteCondition.waterConditions.waterColor) "label" }}</td>
+                        </tr>
+                        {{ end }}
+                        {{ if $siteCondition.waterConditions.oilSheen }}
+                        <tr>
+                            <th scope="row"><i class="wi wi-fw wi-raindrop mr-2"></i>Is there an oil sheen present?</th>
+                            <td>{{ $siteCondition.waterConditions.oilSheen }}</td>
+                        </tr>
+                        {{ end }}
+                        {{ if $siteCondition.garbage.garbagePresent }}
+                        <tr>
+                            <th scope="row">Is there any garbage in the water?</th>
+                            <td>{{ $siteCondition.garbage.garbagePresent }}</td>
+                        </tr>
+                        {{ end }}
+                        {{ if $siteCondition.waterConditions.markedCombinedSewerOverflowPipes.howMuchFlowThrough }}
+                        <tr>
+                            <th scope="row"><i class="wi wi-fw wi-sandstorm mr-2"></i>Is there any flow through the Combined Sewer Overflow (CSO) pipes?</th>
+                            <td>{{ $siteCondition.waterConditions.markedCombinedSewerOverflowPipes.howMuchFlowThrough }}</td>
+                        </tr>
+                        {{ end }}
+                        {{ if $siteCondition.waterConditions.unmarkedOutfallPipes.howMuchFlowThrough }}
+                        <tr>
+                            <th scope="row"><i class="wi wi-fw wi-sandstorm mr-2"></i>Is there any flow through the unmarked/other pipes?</th>
+                            <td>{{ $siteCondition.waterConditions.unmarkedOutfallPipes.howMuchFlowThrough }}</td>
+                        </tr>
+                        {{ end }}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
     {{ end }}
 
     <!--Mobile Organisms-->
-    {{ if $mobileTrap }}
+    {{ if or $mobileTrap.mobileOrganisms $mobileTrap.notes }}
     <div class="card border-1 mb-2">
         <div class="card-header" id="mobileOrganismsData">
             <section class="shaded collapsed" data-toggle="collapse" data-target="#mobileOrganisms">
@@ -692,8 +763,15 @@ bindings:
                             alt="mobile organism photo"
                         >
                         <figcaption class="figure-caption">
-                            {{ $mobileOrganism.organism.commonName }}
+                            {{ if get $mobileOrganism "sketchPhoto.path" }}
+                            <strong>{{ $mobileOrganism.organism.commonName }}</strong>
                             (<i>{{ $mobileOrganism.organism.latinName }}</i>)
+                            by {{ $schoolOrg.name }}
+                            {{ else }}
+                            <strong>{{ $mobileOrganism.organism.commonName }}</strong>
+                            (<i>{{ $mobileOrganism.organism.latinName }}</i>)
+                            from BOP's image gallery
+                            {{ end }}
                         </figcaption>
                     </figure>
                 {{  end }}
@@ -755,7 +833,7 @@ bindings:
                         {{   $latinName  := (get (firstByKey $.bindings.allSessileOrganisms "_id" $organismId ) "latinName") }}
                         <tr>
                             <td>{{ $commonName }}</td>
-                            <td>{{ $latinName }}</td>
+                            <td><i>{{ $latinName }}</i></td>
                             <td>{{ $count }} / {{ $.vars.populatedTileCount }}</td>
                             <td>{{ percent $count $.vars.populatedTileCount }}%</td>
                         </tr>

@@ -37,10 +37,14 @@
             <div class="tab-content">
                 {{ range $i, $v := sequence 10 }}
                 {{   $index := add $i 1 }}
-                <div class="tab-pane{{ if eq $i 0 }} active{{ end }} mt-2" id="sample{{ $index }}" role="tabpanel" aria-labelledby="sample{{ $index }}_tab">
-                    <h3>Sample {{ $index }}</h3>
+                <div class="tab-pane{{ if eq $i 0 }} active{{ end }} mt-4" id="sample{{ $index }}" role="tabpanel" aria-labelledby="sample{{ $index }}_tab">
+                    
 
-                    <p>Select or enter in as much Water Quality data as you can.</p>
+                    <p>
+                        Select or enter in as much Water Quality data as you can.
+                        You can enter data for up to 10 water samples.
+                        Click the tabs at the top to enter data for each new sample.
+                    </p>
 
                     <div class="form-group">
                         <label for="protocols.waterQuality.samples.{{ $i }}.depthOfWaterSampleM">

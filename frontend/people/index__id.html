@@ -14,6 +14,8 @@ bindings:
 <section class="content">
     <h1 class="text-left pb-0">{{ $user.displayName }}</h1>
     <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
+        {{ if or $org.streetAddress $org.city $org.state }}
+        Organization Location:
         {{ if $org.streetAddress }}
             {{ $org.streetAddress }},
         {{ end }}
@@ -27,24 +29,22 @@ bindings:
         {{ end }}
         {{ if $org.zip }}
             {{ $org.zip }}
+        {{   end }}
         {{ end }}
     </p>
-    {{ if $user.profileImageURL }}
-    <img
-    class="img-thumbnail mr-3"
-    style="max-width: 100px; height: auto;"
-    src="{{ $user.profileImageURL }}"
-    alt="Generic placeholder image"
-    >
+    
+    {{ if eqx $user.profileImageURL "modules/users/client/img/profile/avatar-gray.png" }}
     {{ else }}
     <img
-        class="img-thumbnail mr-3"
-        style="max-width: 100px; height: auto;"
-        src="/assets/img/placeholders/oysterfriend-happy.png"
-        alt="Placeholder image">
+    class="img-thumbnail mr-3"
+    style="max-width: 300px; height: auto;"
+    src="{{ $user.profileImageURL }}"
+    alt="user profile image"
+    >
     {{ end }}
 </section>
 
+<!--
 {{ if $org.latitude }}
 <div class="row no-gutters site-jumbotron">
     <div class="col">
@@ -81,6 +81,7 @@ bindings:
     });
 </script>
 {{ end }}
+-->
 
 <section class="content">
     <table class="table table-sm table-bordered table-hover">
@@ -92,6 +93,12 @@ bindings:
             <th scope="row">Username</th>
             <td>{{ $user.username }}</td>
         </tr>
+        {{ if $user.teamLeadType }}
+        <tr>
+            <th scope="row">Tead Lead Type</th>
+            <td>{{ $user.teamLeadType }}</td>
+        </tr>
+        {{ end }}
         <tr>
             <th scope="row">Email</th>
             <td>{{ $user.email }}</td>
@@ -105,7 +112,7 @@ bindings:
         
         <tr>
             <th scope="row">User Roles</th>
-            <td>{{ $user.roles }}</td>
+            <td>{{ join $user.roles ", " }}</td>
         </tr>    
         <tr>
             <th scope="row">Joined on</th>
@@ -113,7 +120,11 @@ bindings:
         </tr>
         <tr>
             <th scope="row">Organization Name</th>
-            <td>{{ $org.name }}</td>
+            <td>
+                <a href="/profiles/{{ $org._id }}">
+                {{ $org.name }}
+                </a>
+            </td>
         </tr>
         <tr>
             <th scope="row">Organization Type</th>
@@ -184,7 +195,7 @@ bindings:
         {{ if $org.gradesTaught }}
         <tr>
             <th scope="row">School Grades Taught</th>
-            <td>{{ $org.gradesTaught }}</td>
+            <td>{{ join $org.gradesTaught ", " }}</td>
         </tr>
         {{ end }}
 

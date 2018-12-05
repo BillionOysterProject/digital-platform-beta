@@ -228,7 +228,7 @@ bindings:
         {{ if $org.gradesTaught }}
         <tr>
             <th scope="row">Grades Taught</th>
-            <td>{{ $org.gradesTaught }}</td>
+            <td>{{ titleize (join $org.gradesTaught ", ") }}</td>
         </tr>
         {{ end }}
 
