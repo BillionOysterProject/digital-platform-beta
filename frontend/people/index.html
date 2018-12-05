@@ -8,7 +8,7 @@ bindings:
     params:
         limit:  false
         sort:   name
-        fields: firstName,lastName,pending,profileImageURL,username,email,schoolOrg,created
+        fields: firstName,lastName,pending,profileImageURL,username,email,schoolOrg,created,teamLeadType
         q:      roles/contains:lead
 
 -   name:     stations
@@ -46,6 +46,7 @@ bindings:
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Username</th>
+                <th>Team Lead Type</th>
                 <th>Pending/Approved</th>
                 <th>ORS Site(s)</th>
                 <th>Org Name</th>
@@ -73,6 +74,12 @@ bindings:
                     {{ $teamLead.username }}
                     </a>
                 </td>
+
+                {{ if $teamLead.teamLeadType }}
+                <td>{{ $teamLead.teamLeadType }}</td>
+                {{ else }}
+                <td></td>
+                {{ end }}
                 
                 {{ if $teamLead.pending }}
                 <td>Pending</td>
