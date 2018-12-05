@@ -629,7 +629,6 @@ class ProtocolWaterQualities(CollectionView):
             else:
                 sample = {}
 
-
             sample['depthOfWaterSample'] = data.pop('depthOfWaterSample', None)
 
             for parameter, measurement in data.items():
