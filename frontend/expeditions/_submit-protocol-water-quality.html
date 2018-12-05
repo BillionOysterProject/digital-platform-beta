@@ -38,7 +38,7 @@
                 {{ range $i, $v := sequence 10 }}
                 {{   $index := add $i 1 }}
                 <div class="tab-pane{{ if eq $i 0 }} active{{ end }} mt-4" id="sample{{ $index }}" role="tabpanel" aria-labelledby="sample{{ $index }}_tab">
-                    
+
 
                     <p>
                         Select or enter in as much Water Quality data as you can.
@@ -118,7 +118,7 @@
                                             <input
                                                 type="radio"
                                                 autocomplete="off"
-                                                name="protocols.waterQuality.samples.{{ $i }}{{ camelize $waterQualityParameter.id }}.unit"
+                                                name="protocols.waterQuality.samples.{{ $i }}.{{ camelize $waterQualityParameter.id }}.unit"
                                                 value="{{ $unit.id }}"
                                             >
                                             {{ $unit.label }}
@@ -131,7 +131,7 @@
                         {{ else }}
                         <input
                             type="hidden"
-                            name="protocols.waterQuality.samples.{{ $i }}{{ camelize $waterQualityParameter.id }}.unit"
+                            name="protocols.waterQuality.samples.{{ $i }}.{{ camelize $waterQualityParameter.id }}.unit"
                             value="{{ get (first $units) `id` }}"
                         >
                         {{ end }}
@@ -144,7 +144,7 @@
                                 <input
                                     type="number"
                                     class="form-control"
-                                    name="protocols.waterQuality.samples.{{ $i }}{{ camelize $waterQualityParameter.id }}.result1"
+                                    name="protocols.waterQuality.samples.{{ $i }}.{{ camelize $waterQualityParameter.id }}.result1"
                                 >
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                                 <input
                                     type="number"
                                     class="form-control"
-                                    name="protocols.waterQuality.samples.{{ $i }}{{ camelize $waterQualityParameter.id }}.result2"
+                                    name="protocols.waterQuality.samples.{{ $i }}.{{ camelize $waterQualityParameter.id }}.result2"
                                 >
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                                 <input
                                     type="number"
                                     class="form-control"
-                                    name="protocols.waterQuality.samples.{{ $i }}{{ camelize $waterQualityParameter.id }}.result3"
+                                    name="protocols.waterQuality.samples.{{ $i }}.{{ camelize $waterQualityParameter.id }}.result3"
                                 >
                             </div>
                         </div>

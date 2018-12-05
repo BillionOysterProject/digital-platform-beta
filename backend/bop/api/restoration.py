@@ -607,6 +607,7 @@ class ProtocolWaterQualities(CollectionView):
     @classmethod
     def record_from_submit(cls, body):
         _id = body.get('_id')
+        print(json.dumps(body, indent=4))
 
         if _id:
             record = cls.get_collection().get(_id)
@@ -615,28 +616,41 @@ class ProtocolWaterQualities(CollectionView):
 
         # for the time being, we're only going to accept one water quality
         # sample suite per expedition
-        data = body.pop('waterQuality', {})
-        oneSampleOnly = {}
+        record['notes'] = body.pop('notes', None)
 
-        record['notes'] = data.pop('notes', None)
-        record['depthOfWaterSample'] = data.pop('depthOfWaterSample', None)
+        if not len(record.get('samples', [])):
+            record['samples'] = []
 
-        for parameter, measurement in data.items():
-            oneSampleOnly[parameter] = {
-                'method': measurement.get('method'),
-                'units':  measurement.get('unit'),
-                'results': [
-                    measurement.get('result1', 0),
-                    measurement.get('result2', 0),
-                    measurement.get('result3', 0),
-                ]
-            }
+        for index, data in body.pop('samples', {}).items():
+            i = int(index)
 
-            oneSampleOnly[parameter]['average'] = float(sum(oneSampleOnly[parameter]['results'])) / float(len(oneSampleOnly[parameter]['results']))
+            if i < len(record['samples']):
+                sample = record['samples'][i]
+            else:
+                sample = {}
 
-        record['samples'] = [
-            oneSampleOnly,
-        ]
+
+            sample['depthOfWaterSample'] = data.pop('depthOfWaterSample', None)
+
+            for parameter, measurement in data.items():
+                if isinstance(measurement, dict):
+                    m1 = measurement.get('result1', 0)
+                    m2 = measurement.get('result2', 0)
+                    m3 = measurement.get('result3', 0)
+
+                    if m1 or m2 or m3:
+                        sample[parameter] = {
+                            'method': measurement.get('method'),
+                            'units':  measurement.get('unit'),
+                            'results': [m1, m2, m3],
+                        }
+
+                    sample[parameter]['average'] = float(sum(sample[parameter]['results'])) / float(len(sample[parameter]['results']))
+
+            if i < len(record['samples']):
+                record['samples'][i] = sample
+            else:
+                record['samples'].append(sample)
 
         return cls.save(record)
 
