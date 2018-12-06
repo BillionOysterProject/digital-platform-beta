@@ -98,17 +98,57 @@ bindings:
     </div>
 </section>
 
+
 <div class="row no-gutters site-jumbotron">
     <div class="col">
-        <div id="siteMap">
-            <iframe
-                src="/sites/map"
-                frameborder="0"
-                style="width: 100%; height: 250px;"
-            ></iframe>
-        </div>
+        <div id="siteMap"></div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function() {
+        mapboxgl.accessToken = '{{ $.page.mapbox.key }}';
+
+        var map = new mapboxgl.Map({
+            container: 'siteMap',
+            style: 'mapbox://styles/{{ qs "style" $.page.mapbox.style }}',
+            failIfMajorPerformanceCaveat: true,
+            center: [{{ $expedition.station.site.longitude }}, {{ $expedition.station.site.latitude }}],
+            zoom:   13,
+        });
+
+        map.on('load', function(){
+            map.addLayer({
+                "id": "sites",
+                "type": "circle",
+                "source": {
+                    "type": "geojson",
+                    "data": {
+                        "type": "FeatureCollection",
+                        "features": [{
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    {{ $expedition.station.site.longitude }},
+                                    {{ $expedition.station.site.latitude }}
+                                ],
+                            },
+                        }],
+                    },
+                },
+                "layout": {
+                },
+                "paint": {
+                    "circle-radius": 7,
+                    "circle-color": "#415980",
+                    "circle-stroke-width": 2,
+                    "circle-stroke-color": "#FFFFFF",
+                },
+            })
+        });
+    });
+</script>
 
 <section class="content shaded">
 <h2>Expedition Metadata</h2>
@@ -123,8 +163,8 @@ bindings:
             <img
                 class="img-thumbnail mr-3"
                 style="max-width: 100px; height: auto;"
-                src="{{ $expedition.station.photo.path }}"
-                alt="{{ $expedition.teamLead.displayName }}'s ORS"
+                src="{{ rxreplace $expedition.station.photo.path `^http:` `https:` }}"
+                alt="{{ $expedition.team.schoolOrg.name }}'s ORS"
             >
             {{ else }}
             <img
@@ -143,12 +183,19 @@ bindings:
         </li>
 
         <li class="media col-6 mt-4">
-            {{ if and ($expedition.teamLead.profileImageURL) (not (contains $expedition.teamLead.profileImageURL `modules/`)) }}
+            {{ if $expedition.team.photo.path }}
+            <img
+            class="img-thumbnail mr-3"
+            style="max-width: 100px; height: auto;"
+            src="{{ rxreplace $expedition.team.photo.path `^http:` `https:` }}"
+            alt="{{ $expedition.team.name }}'s profile image'"
+            >            
+            {{ else if and ($expedition.teamLead.profileImageURL) (not (contains $expedition.teamLead.profileImageURL `modules/`)) }}
             <img
                 class="img-thumbnail mr-3"
                 style="max-width: 100px; height: auto;"
-                src="{{ $expedition.teamLead.profileImageURL }}"
-                alt="Generic placeholder image"
+                src="{{ rxreplace $expedition.teamLead.profileImageURL `^http:` `https:` }}"
+                alt="{{ $expedition.teamLead }}'s profile image'"
             >
             {{ else }}
             <img
@@ -174,8 +221,8 @@ bindings:
             <img
                 class="img-thumbnail mr-3"
                 style="max-width: 100px; height: auto;"
-                src="{{ $expedition.team.schoolOrg.photo.path }}"
-                alt="{{ $expedition.team.schoolOrg.name }}'s profile picture"
+                src="{{ rxreplace $schoolOrg.photo.path `^http:` `https:` }}"
+                alt="{{ $schoolOrg.name }}'s profile picture"
             >
             {{ else }}
             <img
@@ -333,178 +380,211 @@ bindings:
                                 <!--<td>{{ maximum $allMeasurements }} mm</td>-->
                                 <td>{{ $expedition.protocols.oysterMeasurement.maximumSizeOfAllLiveOysters }}</td>
                             </tr>
-
-
                         </tbody>
                     </table>
-
                 </div>
 
-                <!--Need a function here to hide this entire section if there is no oyster mortality or growth data (unlikely but possible)-->
-                <h4>Oyster Mortality Data and Visualizations</h4>
-                <p>
-                    We can represent data on oyster mortality (how many oysters survived) in multiple ways.
-                    One format is a <strong>bar chart</strong>- this one shows the number of live oysters on each substrate shell during this expedition.
-                </p>
-                <p>
-                    (You can hover over a bar to display the exact number. 
-                    Click the <i class="fa fa-floppy-o"></i> icon to explore the graph in <a href="https://plot.ly/" target="blank">Plot.ly</a>).
-                </p>
-                <figure class="figure">
-                    <div id="div_barplot_number_oysters"></div>
-                    <figcaption class="figure-caption">The number of live oysters per substrate shell for this expedition.</figcaption>
-                </figure>
-
-
-                <!--Well this doesn't work
-                    Need a function here to hide this paragraph and chart if there is only one expedition
-                                <p>
-                                    We can also combine two bar charts to make comparisons between two datasets.
-                                    This one uses different color bars to compare the number of live oysters at baseline vs. this expedition:
+                <div class="card border-1 mb-2">
+                    <div class="card-header" id="oysterMortalityData">
+                        <section class="shaded collapsed" data-toggle="collapse" data-target="#oysterMortality">
+                            <h4>Oyster Mortality Data and Visualizations</h4>
+                            <div class="step-toggle">
+                                <i class="fa"></i>
+                            </div>
+                        </section>
+                    </div>
+                    <div id="oysterMortality" class="collapse" aria-labelledby="oysterMortalityData" data-parent="#accordion">
+                        <div class="card-body">
+                            <p>
+                                We can represent data on oyster mortality (how many oysters survived) in multiple ways.
+                                One format is a <strong>bar chart</strong>- this one shows the number of live oysters on each substrate shell during this expedition.
+                            </p>
+                            <p>
+                                (You can hover over a bar to display the exact number. 
+                                Click the <i class="fa fa-floppy-o"></i> icon to explore the graph in <a href="https://plot.ly/" target="blank">Plot.ly</a>).
+                            </p>
+                            <figure class="figure">
+                                <div id="div_barplot_number_oysters"></div>
+                                <figcaption class="figure-caption">The number of live oysters per substrate shell for this expedition.</figcaption>
+                            </figure>
+            
+            
+                            <!--Well this doesn't work
+                                Need a function here to hide this paragraph and chart if there is only one expedition
+                                            <p>
+                                                We can also combine two bar charts to make comparisons between two datasets.
+                                                This one uses different color bars to compare the number of live oysters at baseline vs. this expedition:
+                                            </p>
+                                <p><strong>Bar Chart: Number of Live Oysters, Baseline vs. This Expedition</strong></p>
+                            <div>
+                                <figure class="figure">
+                                    <div id="div_double_barplot_number_oysters"></div>
+                                    <figcaption class="figure-caption">The number of live oysters per substrate shell during the baseline expedition (in orange) and during this expedition (in blue).</figcaption>
+                                </figure>
+                            </div>
+                            -->
+            
+                            <div class="mt-3">
+                                <p>A table is another way to visualize data using rows and columns.
+                                        This table uses a different row for each tagged substrate shell.
+                                        It uses different columns to show the tag number, the source (where the oyster parents were from), and the number of live oysters during this expedition.
                                 </p>
-                    <p><strong>Bar Chart: Number of Live Oysters, Baseline vs. This Expedition</strong></p>
-                <div>
-                    <figure class="figure">
-                        <div id="div_double_barplot_number_oysters"></div>
-                        <figcaption class="figure-caption">The number of live oysters per substrate shell during the baseline expedition (in orange) and during this expedition (in blue).</figcaption>
-                    </figure>
-                </div>
-                -->
-
-                <div class="mt-3">
-                    <p>A table is another way to visualize data using rows and columns.
-                            This table uses a different row for each tagged substrate shell.
-                            It uses different columns to show the tag number, the source (where the oyster parents were from), and the number of live oysters during this expedition.
-                    </p>
-                    <strong>Table: Live Oysters Per Substrate Shell</strong>
-                    <table class="table table-bordered table-sm">
-                        <caption>The source and number of live oysters on each substrate shell for this expedition.
-                        </caption>
-                        <thead>
-                            <tr>
-                                <th scope="col">Tag #</th>
-                                <th scope="col">Source</th>
-                                <th scope="col"># of live oysters this expedition</th>
-                                <!--Commenting things out now that we know all of the baselines are a mess
-                                <th scope="col"># of live oysters last expedition</th>
-                                <th scope="col">Percent Mortality </th>-->
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {{ range $i, $substrateShell := $substrateShells }}
-                            <tr>
-                                <th scope="row">{{ $substrateShell.substrateShellNumber }}</th>
-                                <td>Muscongus Bay, ME</td>
-                                <td>{{ $substrateShell.totalNumberOfLiveOystersOnShell }}</td>
-                            </tr>
-                            {{ end }}
-
-                            <tr>
-                                <th scope="row">TOTAL</th>
-                                <td></td>
-                                <td>{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                <strong>Table: Live Oysters Per Substrate Shell</strong>
+                                <table class="table table-bordered table-sm">
+                                    <caption>The source and number of live oysters on each substrate shell for this expedition.
+                                    </caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Tag #</th>
+                                            <th scope="col">Source</th>
+                                            <th scope="col"># of live oysters this expedition</th>
+                                            <!--Commenting things out now that we know all of the baselines are a mess
+                                            <th scope="col"># of live oysters last expedition</th>
+                                            <th scope="col">Percent Mortality </th>-->
+                                        </tr>
+                                    </thead>
+            
+                                    <tbody>
+                                        {{ range $i, $substrateShell := $substrateShells }}
+                                        <tr>
+                                            <th scope="row">{{ $substrateShell.substrateShellNumber }}</th>
+                                            <td>Muscongus Bay, ME</td>
+                                            <td>{{ $substrateShell.totalNumberOfLiveOystersOnShell }}</td>
+                                        </tr>
+                                        {{ end }}
+            
+                                        <tr>
+                                            <th scope="row">TOTAL</th>
+                                            <td></td>
+                                            <td>{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!--Need a function here to hide this entire section if there is no oyster growth data (possible if all the live oysters die)-->
-                <h4>Oyster Growth Data and Visualizations</h4>
-                <p>
-                    Different types of graphs can help you assess how well the oysters are growing at your site.
+                <div class="card border-1 mb-2">
+                    <div class="card-header" id="oysterGrowthData">
+                        <section class="shaded collapsed" data-toggle="collapse" data-target="#oysterGrowth">
+                            <h4>Oyster Growth Data and Visualizations</h4>
+                            <div class="step-toggle">
+                                <i class="fa"></i>
+                            </div>
+                        </section>
+                    </div>
+                    <div id="oysterGrowth" class="collapse" aria-labelledby="oysterGrowthData" data-parent="#accordion">
+                        <div class="card-body">
+                            <p>
+                                Different types of graphs can help you assess how well the oysters are growing at your site.
+            
+                                A bar chart is one way to visualize the lengths of each oyster.
+                                During this expedition there were <span class="text-callout">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> live oysters total.
+            
+                                This chart uses one bar to represent each live oyster's length, so there are <span class="text-callout">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> bars.
+                                The bars are sorted in order from smallest to largest.
+                            </p>
+                            <p>
+                                (You can hover over a bar to display the exact measurement. 
+                                Click the <i class="fa fa-floppy-o"></i> icon to explore the graph in <a href="https://plot.ly/" target="blank">Plot.ly</a>).
+                            </p>
+            
+                            <figure class="figure">
+                                <div id="div_barplot_oyster_size"></div>
+                                <figcaption class="figure-caption">The length, in millimeters, of each live oyster measured during this expedition, sorted from smallest to largest.</figcaption>
+                            </figure>
+            
+                            <p>
+                                A <strong>frequency distribution histogram</strong> is a different way to visualize the lengths of the live oysters.
+                                The <strong>frequency</strong> is how many times an observation appeared in the dataset, and the <strong>distribution</strong> is the grouping of the observations.
+                                This one splits all of the oyster measurements into even-sized groups, or "bins," by length (in 5mm increments)
+                                and tells you how many oysters are in each group.
+                                A histogram is a good way to view patterns and to condense a large dataset into a smaller, more readable graph.
+                            </p>
+                                
+                            <p>
+                                (You can hover over the graph to display the exact # of oysters in each bin.
+                                Click the <i class="fa fa-floppy-o"></i> icon to explore the graph in <a href="https://plot.ly/" target="blank">Plot.ly</a>).
+                            </p>
+                            
+                            <figure class="figure">
+                                <div id="div_oyster_size"></div>
+                                <div id="div_number_oysters"></div>
+                                <figcaption class="figure-caption"></figcaption>
+                            </figure>
+            
+                            <p>
+                                A <strong>box plot</strong> is another way to visualize the oyster measurement dataset.
+                                This box plot shows you what the smallest (min), largest (max), average (mean), and "normal" range of oyster measurements were for this expedition.
+                            </p>
+                            <ul>
+                            <li>The bottom and top lines represent the <strong>min</strong> and <strong>max</strong> oyster measurements.
+                                These lines show us the <strong>range</strong> of oyster measurements for this expedition.
+                            </li>
+                            <li>The line in the middle of the box represents the <strong>mean</strong> oyster measurement. </li>
+                            <li>The top and bottom lines of the box represent the <strong>standard deviation</strong> above and below the mean oyster measurement.
+                                (It's okay if you don't know what a standard deviation is- it's a way of showing what's considered "normal" in a dataset.
+                                <!-- You can learn about standard deviation here. -->
+                                )</li>
+                            </ul>
+                            <p>
+                                (You can hover over this graph to view exact numbers. 
+                                Click the <i class="fa fa-floppy-o"></i> icon to explore the graph in <a href="https://plot.ly/" target="blank">Plot.ly</a>.)
+                            </p>
 
-                    A bar chart is one way to visualize the lengths of each oyster.
-                    During this expedition there were <span class="text-callout">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> live oysters total.
-
-                    This chart uses one bar to represent each live oyster's length, so there are <span class="text-callout">{{ $oysterMeasurement.totalNumberOfAllLiveOysters }}</span> bars.
-                    The bars are sorted in order from smallest to largest.
-                </p>
-                <p>
-                    (You can hover over a bar to display the exact measurement. 
-                    Click the <i class="fa fa-floppy-o"></i> icon to explore the graph in <a href="https://plot.ly/" target="blank">Plot.ly</a>).
-                </p>
-
-                <figure class="figure">
-                    <div id="div_barplot_oyster_size"></div>
-                    <figcaption class="figure-caption">The length, in millimeters, of each live oyster measured during this expedition, sorted from smallest to largest.</figcaption>
-                </figure>
-
-                <p>
-                    A <strong>frequency distribution histogram</strong> is a different way to visualize the lengths of the live oysters.
-                    The <strong>frequency</strong> is how many times an observation appeared in the dataset, and the <strong>distribution</strong> is the grouping of the observations.
-                    This one splits all of the oyster measurements into even-sized groups, or "bins," by length (in 5mm increments)
-                    and tells you how many oysters are in each group.
-                    A histogram is a good way to view patterns and to condense a large dataset into a smaller, more readable graph.
-                </p>
-                    
-                <p>
-                    (You can hover over the graph to display the exact # of oysters in each bin.
-                    Click the <i class="fa fa-floppy-o"></i> icon to explore the graph in <a href="https://plot.ly/" target="blank">Plot.ly</a>).
-                </p>
-                
-                <figure class="figure">
-                    <div id="div_oyster_size"></div>
-                    <div id="div_number_oysters"></div>
-                    <figcaption class="figure-caption"></figcaption>
-                </figure>
-
-                <p>
-                    A <strong>box plot</strong> is another way to visualize the oyster measurement dataset.
-                    This box plot shows you what the smallest (min), largest (max), average (mean), and "normal" range of oyster measurements were for this expedition.
-                </p>
-                <ul>
-                <li>The bottom and top lines represent the <strong>min</strong> and <strong>max</strong> oyster measurements.
-                    These lines show us the <strong>range</strong> of oyster measurements for this expedition.
-                </li>
-                <li>The line in the middle of the box represents the <strong>mean</strong> oyster measurement. </li>
-                <li>The top and bottom lines of the box represent the <strong>standard deviation</strong> above and below the mean oyster measurement.
-                    (It's okay if you don't know what a standard deviation is- it's a way of showing what's considered "normal" in a dataset.
-                    <!-- You can learn about standard deviation here. -->
-                    )</li>
-                </ul>
-                <p>
-                    (You can hover over this graph to view exact numbers. 
-                    Click the <i class="fa fa-floppy-o"></i> icon to explore the graph in <a href="https://plot.ly/" target="blank">Plot.ly</a>.)
-                </p>
-
-
-                <div>
-                    <figure class="figure">
-                        <div id="div_boxplot_oyster_size"></div>
-                        <figcaption class="figure-caption"></figcaption>
-                    </figure>
+                            <div>
+                                <figure class="figure">
+                                    <div id="div_boxplot_oyster_size"></div>
+                                    <figcaption class="figure-caption"></figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <p>
-                    The table below shows the length of each live oyster.
-                    This is the "raw data" that was used to make the bar chart, histogram, and box plot above.
-                </p>
-                <div class="mt-3">
-                    <h4>Table: Oyster Lengths</h4>
-                    <table class="table table-bordered table-sm">
-                        <caption>Oyster Lengths</caption>
-                        <thead>
-                            <tr>
-                                <th scope="col">Tag #</th>
-                                <th scope="col">Oyster Length (mm)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{ range $i, $substrateShell := $substrateShells }}
-                            {{   range $j, $measurement := $substrateShell.measurements  }}
-                            {{      if $measurement.sizeOfLiveOysterMM }}
-                            <tr>
-                                <td>{{ $substrateShell.substrateShellNumber }}</td>
-                                <td>{{ $measurement.sizeOfLiveOysterMM }}</td>
-                            </tr>
-                            {{      end }}
-                            {{   end }}
-                            {{ end }}
-                        </tbody>
-                    </table>
+                <div class="card mb-2">
+                    <div class="card-header" id="rawData">
+                        <section class="shaded collapsed" data-toggle="collapse" data-target="#raw">
+                            <h4>Raw Data</h4>
+                            <div class="step-toggle">
+                                <i class="fa"></i>
+                            </div>
+                        </section>
+                    </div>
+                    <div id="raw" class="collapse" aria-labelledby="rawData" data-parent="#accordion">
+                        <div class="card-body">
+                            <p>
+                                The table below shows the length of each live oyster.
+                                This is the "raw data" that was used to make the bar chart, histogram, and box plot above.
+                            </p>
+                            <div class="mt-3">
+                                <h4>Table: Oyster Lengths</h4>
+                                <table class="table table-bordered table-sm">
+                                    <caption>Oyster Lengths</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Tag #</th>
+                                            <th scope="col">Oyster Length (mm)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{ range $i, $substrateShell := $substrateShells }}
+                                        {{   range $j, $measurement := $substrateShell.measurements  }}
+                                        {{      if $measurement.sizeOfLiveOysterMM }}
+                                        <tr>
+                                            <td>{{ $substrateShell.substrateShellNumber }}</td>
+                                            <td>{{ $measurement.sizeOfLiveOysterMM }}</td>
+                                        </tr>
+                                        {{      end }}
+                                        {{   end }}
+                                        {{ end }}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
 
                 {{ if or (count (compact (apply (pluck $substrateShells "outerSidePhoto.path") "trim"))) (count (compact (apply (pluck $substrateShells "innerSidePhoto.path") "trim"))) }}
                 <h4>Oyster Measurements Photos</h4>

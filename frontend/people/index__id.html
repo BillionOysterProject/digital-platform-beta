@@ -6,16 +6,22 @@ page:
 bindings:
 -   name:	  'user'
     resource: '/api/users/{{ param 1 }}'
+
+-   name:     'stations'
+    resource: '/api/restoration-stations/export.geojson'
+    optional: true
+    fallback: {}
+    params:
+        q: "teamLead/{{ param 1 }}"
 ---
 {{ $user     := $.bindings.user }}
 {{ $org      := $.bindings.user.schoolOrg }}
+{{ $stations := $.bindings.stations }}
 
 
 <section class="content">
     <h1 class="text-left pb-0">{{ $user.displayName }}</h1>
-    <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
-        {{ if or $org.streetAddress $org.city $org.state }}
-        Organization Location:
+    <p class="mb-1"><i class="fa fa-fw fa-building"></i> {{ $org.name }}{{ if or $org.streetAddress $org.city $org.state }},{{ end }}
         {{ if $org.streetAddress }}
             {{ $org.streetAddress }},
         {{ end }}
@@ -30,58 +36,81 @@ bindings:
         {{ if $org.zip }}
             {{ $org.zip }}
         {{   end }}
-        {{ end }}
     </p>
-    
-    {{ if eqx $user.profileImageURL "modules/users/client/img/profile/avatar-gray.png" }}
-    {{ else }}
-    <img
-    class="img-thumbnail mr-3"
-    style="max-width: 300px; height: auto;"
-    src="{{ $user.profileImageURL }}"
-    alt="user profile image"
-    >
-    {{ end }}
-</section>
 
-<!--
-{{ if $org.latitude }}
-<div class="row no-gutters site-jumbotron">
-    <div class="col">
-        <div id="siteMap"></div>
+    <div class="row">
+        {{ if nex $user.profileImageURL "modules/users/client/img/profile/avatar-gray.png" }}
+        <div class="col-3 pr-0 d-flex justify-content-center">
+            <img
+            class=""
+            style="max-height: 40vh; width: 100%; object-fit: cover;"
+            src="{{ rxreplace $user.profileImageURL `^http:` `https:` }}"
+            alt="user profile image"
+            >
+        </div>
+        {{ end }}
+        {{ if or $org.latitude $stations }}
+        <div class="col" style="pointer-events: none; height: 40vh;">
+            <div id="orgSite" class="fill-content"></div>
+        </div>
+        {{ end }}
     </div>
-</div>
 
-<script type="text/javascript">
-    $(function() {
-        mapboxgl.accessToken = '{{ $.page.mapbox.key }}';
+    {{ if or $org.latitude $stations }}
+    <script type="text/javascript">
+        $(function() {
+            mapboxgl.accessToken = '{{ $.page.mapbox.key }}';
 
-        var map = new mapboxgl.Map({
-            container: 'siteMap',
-            style: 'mapbox://styles/{{ qs "style" $.page.mapbox.style }}',
-            failIfMajorPerformanceCaveat: true,
-            center: [{{ $org.longitude }}, {{ $org.latitude }}],
-            zoom:   11,
-        });
+            var map = new mapboxgl.Map({
+                container: 'orgSite',
+                style: 'mapbox://styles/{{ qs "style" $.page.mapbox.style }}',
+                failIfMajorPerformanceCaveat: true,
+                center: [
+                    {{ or $org.longitude (get $stations "features.0.geometry.coordinates.0") }},
+                    {{ or $org.latitude (get $stations "features.0.geometry.coordinates.1") }}
+                ],
+                zoom:   11,
+            });
 
-        map.on('load', function(){
-            // create a HTML element for each feature
-            var el = document.createElement('i');
-            el.className = 'fa fa-star marker-org';
+            map.on('load', function(){
+                // create a HTML element for each feature
+                var el = document.createElement('i');
+                el.className = 'fa fa-star marker-org';
 
-            // make a marker for each feature and add to the map
-            new mapboxgl.Marker(el)
-            .setLngLat([
-                {{ $org.longitude }},
-                {{ $org.latitude }},
-            ])
-            .addTo(map);
+                
+                {{ if $org.latitude }}
+                // make a marker for each feature and add to the map
+                new mapboxgl.Marker(el)
+                .setLngLat([
+                    {{ $org.longitude }},
+                    {{ $org.latitude }},
+                ])
+                .addTo(map);
+                {{ end }}
+                
+                {{ if $stations }}
+                map.addLayer({
+                    "id": "stations",
+                    "type": "circle",
+                    "source": {
+                        "type": "geojson",
+                        "data": JSON.parse({{ jsonify $stations "  " }}),
+                    },
+                    "layout": {
+                    },
+                    "paint": {
+                        "circle-radius": 7,
+                        "circle-color": "#415980",
+                        "circle-stroke-width": 2,
+                        "circle-stroke-color": "#FFFFFF",
+                    },
+                });
+                {{ end }}
             });
         });
-    });
-</script>
-{{ end }}
--->
+    </script>
+    {{ end }}
+</section>
 
 <section class="content">
     <table class="table table-sm table-bordered table-hover">

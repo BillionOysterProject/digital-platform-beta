@@ -13,7 +13,8 @@
         "collection": "teams",
         "fields": [
             "name",
-            "schoolOrg"
+            "schoolOrg",
+            "photo"
         ]
     }, {
         "key":        "teamLead",
