@@ -466,9 +466,9 @@ $(function () {
                     0.0,
                     200.0,
                     5.0,
-                    'Histogram: Oyster Measurements',
-                    'Live oyster size (mm)',
-                    'Number of oysters',
+                    'Histogram: Oyster Lengths',
+                    'Oyster lengths (mm), in bins',
+                    'Number of oysters in each bin',
                     'div_oyster_size'
                 );
 
@@ -481,9 +481,9 @@ $(function () {
 
                     Math.round(live_oyster_size.length/10),
                     10,
-                    'Bar Chart: Oyster Measurements',
-                    'Oyster',
-                    'Live oyster size (mm)',
+                    'Bar Chart: ALL Oyster Lengths',
+                    'Each Individual Oyster',
+                    'Oyster Lengths (mm)',
                     'div_barplot_oyster_size'
                 );
 
@@ -492,9 +492,9 @@ $(function () {
                     live_oyster_size,
                     Math.round(live_oyster_size.length/10),
                     10,
-                    'Box Plot: Oyster Measurements',
-                    'Oyster',
-                    'Live oyster size (mm)',
+                    'Box Plot: Oyster Lengths',
+                    '',
+                    'Oyster Lengths (mm)',
                     'div_boxplot_oyster_size'
                 );
 
@@ -517,9 +517,9 @@ $(function () {
                     number_live_oysters,
                     1,
                     1,
-                    'Bar Chart: Number of Live Oysters, This Expedition',
-                    'Substrate shell',
-                    'Number of live oysters',
+                    'Bar Chart: Number of Live Oysters per Substrate Shell, This Expedition',
+                    'Substrate Shell Tag Number',
+                    'Number of Live Oysters',
                     'div_barplot_number_oysters'
                 );
 
