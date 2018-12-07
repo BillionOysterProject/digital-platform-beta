@@ -52,8 +52,9 @@ ROUTES_BY_GROUP = {
     # team leads
     # --------------------------------------------------------------------------
     'team-lead': (
-        ('GET', re.compile('^/api/users/?')),
-        ('GET', re.compile('^/api/teams/?')),
+        ('GET',  re.compile('^/api/users/?')),
+        ('GET',  re.compile('^/api/teams/?')),
+        ('POST', re.compile('^/api/expedition/report/?')),
     ),
 }
 
