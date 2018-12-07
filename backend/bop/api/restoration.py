@@ -205,7 +205,12 @@ class Expeditions(CollectionView):
         return jsonify(images)
 
     def post(self):
-        flatBody = request.form or json.loads(request.data)
+        inData = request.data
+
+        if isinstance(inData, bytes):
+            inData = str(inData)
+
+        flatBody = request.form or json.loads(inData)
         flatBody = mutate_dict(flatBody, valueFn=lambda v: autotype(v))
 
         body = {}
