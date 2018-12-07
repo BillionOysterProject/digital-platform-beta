@@ -644,7 +644,7 @@ class ProtocolWaterQualities(CollectionView):
                             'results': [m1, m2, m3],
                         }
 
-                    sample[parameter]['average'] = float(sum(sample[parameter]['results'])) / float(len(sample[parameter]['results']))
+                        sample[parameter]['average'] = float(sum(sample[parameter]['results'])) / float(len(sample[parameter]['results']))
 
             if i < len(record['samples']):
                 record['samples'][i] = sample
