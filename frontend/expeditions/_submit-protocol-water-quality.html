@@ -35,9 +35,9 @@
             </ul>
 
             <div class="tab-content">
-                {{ range $i, $v := sequence 10 }}
-                {{   $index := add $i 1 }}
-                <div class="tab-pane{{ if eq $i 0 }} active{{ end }} mt-4" id="sample{{ $index }}" role="tabpanel" aria-labelledby="sample{{ $index }}_tab">
+                {{ range $sampleIndex, $v := sequence 10 }}
+                {{   $index := add $sampleIndex 1 }}
+                <div class="tab-pane{{ if eq $sampleIndex 0 }} active{{ end }} mt-4" id="sample{{ $index }}" role="tabpanel" aria-labelledby="sample{{ $index }}_tab">
                     <p>
                         Select or enter in as much Water Quality data as you can.
                         You can enter data for up to 10 water samples.
@@ -45,19 +45,19 @@
                     </p>
 
                     <div class="form-group">
-                        <label for="protocols.waterQuality.samples.{{ $i }}.depthOfWaterSampleM">
+                        <label for="protocols.waterQuality.samples.{{ $sampleIndex }}.depthOfWaterSampleM">
                             Depth of Water Sample (m)
                         </label>
 
                         <input
-                            id="protocols.waterQuality.samples.{{ $i }}.depthOfWaterSampleM"
+                            id="protocols.waterQuality.samples.{{ $sampleIndex }}.depthOfWaterSampleM"
                             class="form-control col-md-2"
-                            name="protocols.waterQuality.samples.{{ $i }}.depthOfWaterSampleM"
+                            name="protocols.waterQuality.samples.{{ $sampleIndex }}.depthOfWaterSampleM"
                             type="number"
                             step="0.1"
                             min="-40"
                             max="50"
-                            value="{{ get $.bindings.expedition (printf `protocols.waterQuality.samples.%d.depthOfWaterSampleM` $i) }}"
+                            value="{{ get $.bindings.expedition (printf `protocols.waterQuality.samples.%d.depthOfWaterSampleM` $sampleIndex) }}"
                         />
 
                         <small>Type 0 if at surface.</small>
@@ -78,7 +78,7 @@
                                 <fieldset>
                                     <legend>Method</legend>
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        {{ range $i, $methodId  := $waterQualityParameter.methods }}
+                                        {{ range $j, $methodId  := $waterQualityParameter.methods }}
                                         {{   $method := mapify (get $.page.testingMethods $methodId) }}
                                         <label
                                             class="btn btn-primary"
@@ -86,9 +86,9 @@
                                             <input
                                                 type="radio"
                                                 autocomplete="off"
-                                                name="protocols.waterQuality.samples.{{ $i }}.{{ camelize $waterQualityParameter.id }}.method"
+                                                name="protocols.waterQuality.samples.{{ $sampleIndex }}.{{ camelize $waterQualityParameter.id }}.method"
                                                 value="{{ $methodId }}"
-                                                {{ if eqx $methodId (get $.bindings.expedition (printf `protocols.waterQuality.samples.%d.%s.method` $i (camelize $waterQualityParameter.id) )) }}
+                                                {{ if eqx $methodId (get $.bindings.expedition (printf `protocols.waterQuality.samples.%d.%s.method` $sampleIndex (camelize $waterQualityParameter.id) )) }}
                                                 checked
                                                 {{ end }}
                                             >
@@ -120,9 +120,9 @@
                                             <input
                                                 type="radio"
                                                 autocomplete="off"
-                                                name="protocols.waterQuality.samples.{{ $i }}.{{ camelize $waterQualityParameter.id }}.units"
+                                                name="protocols.waterQuality.samples.{{ $sampleIndex }}.{{ camelize $waterQualityParameter.id }}.units"
                                                 value="{{ $unit.id }}"
-                                                {{ if eqx $unit.id (get $.bindings.expedition (printf `protocols.waterQuality.samples.%d.%s.units` $i (camelize $waterQualityParameter.id))) }}
+                                                {{ if eqx $unit.id (get $.bindings.expedition (printf `protocols.waterQuality.samples.%d.%s.units` $sampleIndex (camelize $waterQualityParameter.id))) }}
                                                 checked
                                                 {{ end }}
                                             >
@@ -136,7 +136,7 @@
                         {{ else }}
                         <input
                             type="hidden"
-                            name="protocols.waterQuality.samples.{{ $i }}.{{ camelize $waterQualityParameter.id }}.units"
+                            name="protocols.waterQuality.samples.{{ $sampleIndex }}.{{ camelize $waterQualityParameter.id }}.units"
                             value="{{ get (first $units) `id` }}"
                         >
                         {{ end }}
@@ -149,8 +149,8 @@
                                 <input
                                     type="number"
                                     class="form-control"
-                                    name="protocols.waterQuality.samples.{{ $i }}.{{ camelize $waterQualityParameter.id }}.result1"
-                                    value="{{ get $.bindings.expedition (printf `protocols.waterQuality.samples.%d.%s.results.0` $i (camelize $waterQualityParameter.id)) }}"
+                                    name="protocols.waterQuality.samples.{{ $sampleIndex }}.{{ camelize $waterQualityParameter.id }}.result1"
+                                    value="{{ get $.bindings.expedition (printf `protocols.waterQuality.samples.%d.%s.results.0` $sampleIndex (camelize $waterQualityParameter.id)) }}"
                                 >
                             </div>
                         </div>
@@ -160,8 +160,8 @@
                                 <input
                                     type="number"
                                     class="form-control"
-                                    name="protocols.waterQuality.samples.{{ $i }}.{{ camelize $waterQualityParameter.id }}.result2"
-                                    value="{{ get $.bindings.expedition (printf `protocols.waterQuality.samples.%d.%s.results.1` $i (camelize $waterQualityParameter.id)) }}"
+                                    name="protocols.waterQuality.samples.{{ $sampleIndex }}.{{ camelize $waterQualityParameter.id }}.result2"
+                                    value="{{ get $.bindings.expedition (printf `protocols.waterQuality.samples.%d.%s.results.1` $sampleIndex (camelize $waterQualityParameter.id)) }}"
                                 >
                             </div>
                         </div>
@@ -171,8 +171,8 @@
                                 <input
                                     type="number"
                                     class="form-control"
-                                    name="protocols.waterQuality.samples.{{ $i }}.{{ camelize $waterQualityParameter.id }}.result3"
-                                    value="{{ get $.bindings.expedition (printf `protocols.waterQuality.samples.%d.%s.results.2` $i (camelize $waterQualityParameter.id)) }}"
+                                    name="protocols.waterQuality.samples.{{ $sampleIndex }}.{{ camelize $waterQualityParameter.id }}.result3"
+                                    value="{{ get $.bindings.expedition (printf `protocols.waterQuality.samples.%d.%s.results.2` $sampleIndex (camelize $waterQualityParameter.id)) }}"
                                 >
                             </div>
                         </div>
