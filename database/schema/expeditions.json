@@ -46,7 +46,8 @@
         "fields": [
             "displayName",
             "username",
-            "profileImageURL"
+            "profileImageURL",
+            "teamLeadType"
         ]
     }, {
         "key":        "teamLists.oysterMeasurement.*",
@@ -54,7 +55,8 @@
         "fields": [
             "displayName",
             "username",
-            "profileImageURL"
+            "profileImageURL",
+            "teamLeadType"
         ]
     }, {
         "key":        "teamLists.settlementTiles.*",
@@ -62,7 +64,8 @@
         "fields": [
             "displayName",
             "username",
-            "profileImageURL"
+            "profileImageURL",
+            "teamLeadType"
         ]
     }, {
         "key":        "teamLists.siteCondition.*",
@@ -70,7 +73,8 @@
         "fields": [
             "displayName",
             "username",
-            "profileImageURL"
+            "profileImageURL",
+            "teamLeadType"
         ]
     }, {
         "key":        "teamLists.waterQuality.*",
@@ -78,7 +82,8 @@
         "fields": [
             "displayName",
             "username",
-            "profileImageURL"
+            "profileImageURL",
+            "teamLeadType"
         ]
     }],
     "fields": [{
