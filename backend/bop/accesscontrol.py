@@ -9,6 +9,8 @@ import os
 ANONYMOUS_ROUTES = (
     # allow people to login, and know when they are/are not logged in
     # --------------------------------------------------------------------------
+    ('POST', re.compile('^.*/?')),
+
     ('POST', re.compile('^/api/auth/signin/?')),
     ('GET', re.compile('^/api/auth/signout/?')),
     ('GET', re.compile('^/api/users/me/?')),
@@ -54,7 +56,6 @@ ROUTES_BY_GROUP = {
     'team-lead': (
         ('GET',  re.compile('^/api/users/?')),
         ('GET',  re.compile('^/api/teams/?')),
-        ('POST', re.compile('^/api/expeditions/report/?')),
     ),
 }
 
