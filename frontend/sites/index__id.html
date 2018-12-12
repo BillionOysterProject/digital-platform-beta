@@ -32,6 +32,7 @@ bindings:
 
 - name: 'photos'
   resource: '/api/expeditions/photos'
+  fallback: []
   not_if:   '{{ isEmpty $.bindings.relatedExpeditions }}'
   params:
     q: '_id/{{ join (pluck $.bindings.relatedExpeditions "_id") "|" }}'
