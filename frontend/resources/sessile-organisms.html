@@ -1,0 +1,85 @@
+---
+page:
+    view: 'Sessile Organisms'
+
+bindings:
+-   name:	  'sessileOrganisms'
+    resource: '/api/sessile-organisms'
+
+---
+
+{{ $sessileOrganisms := $.bindings.sessileOrganisms }}
+
+<section class="content">
+    <div class="text-left mb-3">
+        <a
+        href="/api/sessile-organisms/export.tsv"
+        class="btn btn-primary mb-2"
+        >
+            Download Sessile Organisms (.tsv)
+        </a>
+        <a href="/api/sessile-organisms?limit=25&offset=0&sort=name" target="_blank" class="ml-3">
+            <i class="fa fa-external-link-square"></i>
+            View in API
+        </a>
+    </div>
+
+    <table class="table table-sm table-bordered table-striped table-hover" id="sessileOrganisms">
+        <thead>
+            <tr>
+                {{ if $.flags.admin }}
+                <th>Edit</th>
+                {{ end }}
+                <th>Image</th>
+                <th>Common Name</th>
+                <th>Scientific Name</th>
+                <th>Category</th>
+                <th>Species Origin</th>
+                <th>Description</th>
+                <th>Habitat</th>
+                <th>Diet</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {{ range $i, $sessileOrganism := $sessileOrganisms }}
+            <tr>
+                {{ if $.flags.admin }}
+                <td>
+                    <a href="/admin/generic/{{ $sessileOrganism._id }}?collection=sessile-organisms">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                {{ end }}
+                <td>
+                    <img
+                        class=""
+                        style="height: auto; max-width: 100%;"
+                        src="{{ rxreplace $sessileOrganism.image.path `^http:` `https:` }}"
+                        alt="{{ $sessileOrganism.commonName }} image"
+                    >
+                </td>
+                <td><a href="">{{ $sessileOrganism.commonName }}</a></td>
+                <td>{{ $sessileOrganism.latinName }}</td>
+                <td>{{ $sessileOrganism.category }}</td>
+                <td>{{ $sessileOrganism.speciesOrigin }}</td>
+                <td>{{ $sessileOrganism.firstInformation }}</td>
+                <td>{{ $sessileOrganism.habitat }}</td>
+                <td>{{ $sessileOrganism.diet }}</td>
+                
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</section>
+
+
+<script type="text/javascript">
+    $(function(){
+        $('#sessileOrganisms').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>

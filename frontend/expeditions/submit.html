@@ -29,6 +29,7 @@ includes:
     protocolMobileOrganisms:    '/expeditions/_submit-protocol-mobile-organisms.html'
     protocolSessileOrganisms:   '/expeditions/_submit-protocol-sessile-organisms.html'
     protocolWaterQuality:       '/expeditions/_submit-protocol-water-quality.html'
+    protocolWildOysterSurvey:   '/expeditions/_submit-protocol-wild-oyster-survey.html'
 ---
 <p class="mt-3">
     Expand the steps below to submit data from your monitoring expedition.
@@ -368,44 +369,14 @@ includes:
             out the <a href="https://drive.google.com/drive/folders/0Bzf_STNcTtRmM2VubzJaM1dWZEU" target="_blank">field manual</a>.
         </p>
 
+
         <div id="accordion">
+            {{ template "protocolWildOysterSurvey" . }}
             {{ template "protocolOysterMeasurements" . }}
             {{ template "protocolSiteConditions" . }}
             {{ template "protocolMobileOrganisms" . }}
             {{ template "protocolSessileOrganisms" . }}
             {{ template "protocolWaterQuality" . }}
-
-            <!-- BEGIN Report a Wild Oyster
-            <div class="card border-1">
-                <div class="card-header" id="addWildOysters">
-                    <section class="shaded collapsed" data-toggle="collapse" data-target="#wildOysters">
-                        <h3>
-                            Report a wild oyster sighting
-                        </h3>
-
-                        <div class="step-toggle">
-                            <i class="fa"></i>
-                        </div>
-                    </section>
-                </div>
-                <div id="wildOysters" class="collapse" aria-labelledby="addWildOysters" data-parent="#accordion">
-                    <div class="card-body">
-                        <p>Did you find any wild oysters?
-                        </p>
-                        <div class="form-group mt-4">
-                            <label for="wildOysternotes">Wild Oyster Notes</label>
-                            <textarea
-                                class="form-control"
-                                type="text"
-                                name="notes"
-                                maxlength="16536"
-                                id="wildOysternotes"
-                            ></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            END Report a Wild Oyster -->
         </div>
     </section>
 

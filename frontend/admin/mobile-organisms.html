@@ -1,0 +1,52 @@
+---
+page:
+    view: Mobile Organisms Editor
+
+bindings:
+-   name:     mobileOrganisms
+    resource: /api/mobile-organisms
+    params:
+        limit:  false
+        sort:   name
+---
+{{ $mobileOrganisms := $.bindings.mobileOrganisms }}
+
+<section class="content">
+    <table class="table table-sm table-bordered table-striped w-100">
+        <thead>
+            <tr>
+                <th>Common Name</th>
+                <th>Scientific Name</th>
+                <th>Category</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {{ range $i, $mobileOrganism := $mobileOrganisms }}
+            <tr>
+                <td>
+                    <a href="/admin/mobile-organisms/{{ $mobileOrganism._id }}">{{ or $mobileOrganism.commonName "(empty)" }}</a>
+                </td>
+                <td>
+                    {{ $mobileOrganism.latinName }}
+                </td>
+                <td>{{ $mobileOrganism.category }}</td>
+                <td>
+                    {{ $mobileOrganism.description }}
+                </td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</section>
+
+<script type="text/javascript">
+    $(function(){
+        $('table').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>

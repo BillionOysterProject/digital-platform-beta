@@ -1,0 +1,90 @@
+---
+page:
+    view: 'Mobile Organisms'
+
+bindings:
+-   name:	  'mobileOrganisms'
+    resource: '/api/mobile-organisms'
+
+---
+
+{{ $mobileOrganisms := $.bindings.mobileOrganisms }}
+
+<section class="content">
+    <div class="text-left mb-3">
+        <a
+        href="/api/mobile-organisms/export.tsv"
+        class="btn btn-primary mb-2"
+        >
+            Download Mobile Organisms (.tsv)
+        </a>
+        <a href="/api/mobile-organisms?limit=25&offset=0&sort=name" target="_blank" class="ml-3">
+            <i class="fa fa-external-link-square"></i>
+            View in API
+        </a>
+    </div>
+
+    <table class="table table-sm table-bordered table-striped table-hover" id="organisms">
+        <thead>
+            <tr>
+                {{ if $.flags.admin }}
+                <th>Edit</th>
+                {{ end }}
+                <th>Image</th>
+                <th>Common Name</th>
+                <th>Scientific Name</th>
+                <th>Category</th>
+                <th>Native or Introduced</th>
+                <th>Description</th>
+                <th>Habitat</th>
+                <th>Diet</th> 
+            </tr>
+        </thead>
+        <tbody>
+            {{ range $i, $mobileOrganism := $mobileOrganisms }}
+            <tr>
+                {{ if $.flags.admin }}
+                <td>
+                    <a href="/admin/generic/{{ $mobileOrganism._id }}?collection=mobile-organisms">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                {{ end }}
+                <td>
+                    <img
+                        class=""
+                        style="height: auto; max-width: 100%;"
+                        src="{{ rxreplace $mobileOrganism.image.path `^http:` `https:` }}"
+                        alt="{{ $mobileOrganism.commonName }} image"
+                    >
+                </td>
+
+                {{ if $mobileOrganism.iNaturalistLink }}
+                <td><a href="{{ $mobileOrganism.iNaturalistLink }}" target="_blank">{{ $mobileOrganism.commonName }}</a></td>    
+                {{ else }}
+                <td>{{ $mobileOrganism.commonName }}</td>
+                {{ end }}
+
+                <td>{{ $mobileOrganism.latinName }}</td>
+                <td>{{ $mobileOrganism.category }}</td>
+                <td>{{ $mobileOrganism.nativeIntroduced }}</td>
+                <td>{{ $mobileOrganism.description }}</td>
+                <td>{{ $mobileOrganism.habitat }}</td>
+                <td>{{ $mobileOrganism.diet }}</td>
+                
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</section>
+
+
+<script type="text/javascript">
+    $(function(){
+        $('#organisms').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>
