@@ -23,6 +23,9 @@
             <caption>List of sites including name, body of water, latitude, longitude, count of Oyster Research Stations (ORS), and oyster larvae sources at each site.</caption>
             <thead>
                 <tr>
+                    {{ if $.flags.admin }}
+                    <th>Edit</th>
+                    {{ end }}
                     <th>#</th>
                     <th>Site Name</th>
                     <th>Body of Water</th>
@@ -46,6 +49,13 @@
                 <!--Use this to number the rows-->
                 {{  increment "siteNumber" }}
                 <tr>
+                    {{ if $.flags.admin }}
+                    <td>
+                        <a href="/admin/generic/{{ $site._id }}?collection=sites">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </td>
+                    {{ end }}
                     <!--Use this to number the rows-->
                     <th>{{ $.vars.siteNumber }}</th>
                     <td>

@@ -19,6 +19,9 @@
     <table class="table table-sm table-bordered table-striped table-hover" id="organizations">
         <thead>
             <tr>
+                {{ if $.flags.admin }}
+                <th>Edit</th>
+                {{ end }}
                 <th>Name</th>
                 <th>Org. Type</th>
                 <th>School Type</th>
@@ -38,6 +41,13 @@
             {{ range $i, $org := $orgs }}
             {{ $orgStations := filterByKey $stations "schoolOrg.name" $org.name }}
             <tr>
+                {{ if $.flags.admin }}
+                <td>
+                    <a href="/admin/generic/{{ $org._id }}?collection=school-orgs">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                {{ end }}
                 <td>
                     <a href="/profiles/{{ $org._id }}">
                     {{ $org.name }}

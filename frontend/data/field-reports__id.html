@@ -366,19 +366,19 @@ bindings:
                             <tr>
                                 <th scope="row">Average Oyster Length (the "mean")</th>
                                 <!--<td>{{ mean $allMeasurements }} mm</td>-->
-                                <td>{{ round $expedition.protocols.oysterMeasurement.averageSizeOfAllLiveOysters 2 }}</td>
+                                <td>{{ round $expedition.protocols.oysterMeasurement.averageSizeOfAllLiveOysters 2 }} mm</td>
                             </tr>
 
                             <tr>
                                 <th scope="row">Smallest Oyster (the "minimum" or "min")</th>
                                 <!--<td>{{ minimum $allMeasurements }} mm</td>-->
-                                <td>{{ $expedition.protocols.oysterMeasurement.minimumSizeOfAllLiveOysters }}</td>
+                                <td>{{ $expedition.protocols.oysterMeasurement.minimumSizeOfAllLiveOysters }} mm</td>
                             </tr>
 
                             <tr>
                                 <th scope="row">Largest Oyster (the "maximum" or "max")</th>
                                 <!--<td>{{ maximum $allMeasurements }} mm</td>-->
-                                <td>{{ $expedition.protocols.oysterMeasurement.maximumSizeOfAllLiveOysters }}</td>
+                                <td>{{ $expedition.protocols.oysterMeasurement.maximumSizeOfAllLiveOysters }} mm</td>
                             </tr>
                         </tbody>
                     </table>
@@ -734,7 +734,7 @@ bindings:
                         {{ if $siteCondition.waterConditions.surfaceCurrentSpeedMPS }}
                         <tr>
                             <th scope="row">Surface current speed</th>
-                            <td>{{ $siteCondition.waterConditions.surfaceCurrentSpeedMPS }} MPS</td>
+                            <td>{{ round $siteCondition.waterConditions.surfaceCurrentSpeedMPS 2 }} MPS</td>
                         </tr>
                         {{ end }}
                         {{ if $siteCondition.waterConditions.waterColor }}

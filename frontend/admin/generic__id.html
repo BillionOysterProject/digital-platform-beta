@@ -22,9 +22,11 @@ bindings:
 {{ $c       := qs "collection" }}
 
 <ul class="nav nav-tabs">
+    {{ if (qs "section") }}
     <li class="nav-item">
         <a class="nav-link" href="/admin/{{ $section }}/{{ $.bindings.record._id }}">Form</a>
     </li>
+    {{ end }}
     <li class="nav-item">
         <a class="nav-link active" href="/admin/generic/{{ $.bindings.record._id }}?collection={{ $c }}&section={{ $section }}">Raw Editor</a>
     </li>

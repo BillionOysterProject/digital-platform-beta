@@ -43,6 +43,9 @@ bindings:
     <table class="table table-sm table-bordered table-striped table-hover" id="people">
         <thead>
             <tr>
+                {{ if $.flags.admin }}
+                <th>Edit</th>
+                {{ end }}
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Username</th>
@@ -63,6 +66,13 @@ bindings:
             {{ $teamLeadStations   := filterByKey $stations "teamLead._id" $teamLead._id }}
             {{ $teamLeadSites      := join (uniq (pluck $teamLeadStations "site.name") ) ", "}}
             <tr>
+                {{ if $.flags.admin }}
+                <td>
+                    <a href="/admin/generic/{{ $teamLead._id }}?collection=users">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                {{ end }}
                 <td>
                     {{ $teamLead.firstName }}
                 </td>

@@ -34,8 +34,7 @@
         "required":   true
     }, {
         "name":       "citation",
-        "type":       "str",
-        "required":   true
+        "type":       "str"
     }, {
         "name":       "image",
         "type":       "object"
@@ -49,6 +48,9 @@
         "name":       "mobile",
         "type":       "bool"
     }, {
+        "name":       "iNaturalistLink",
+        "type":       "str"    
+    }, {    
         "name":       "settlement",
         "type":       "bool"
     }, {

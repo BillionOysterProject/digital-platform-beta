@@ -20,6 +20,9 @@
     <table class="table table-sm table-bordered table-striped table-hover" id="stations">
             <thead>
                 <tr>
+                    {{ if $.flags.admin }}
+                    <th>Edit</th>
+                    {{ end }}
                     <th>#</th>
                     <th>ORS Name</th>
                     <th>Status</th>
@@ -35,6 +38,13 @@
             <tbody>
                 {{ range $i, $station := $stations }}
                 <tr>
+                    {{ if $.flags.admin }}
+                    <td>
+                        <a href="/admin/generic/{{ $station._id }}?collection=restoration-stations">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </td>
+                    {{ end }}
                     <th>
                         {{ add $i 1 }}
                     </th>

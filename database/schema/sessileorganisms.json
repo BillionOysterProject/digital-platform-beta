@@ -38,12 +38,14 @@
         "required":   true
     }, {
         "name":       "citation",
-        "type":       "str",
-        "required":   true
+        "type":       "str"
     }, {
         "name":       "migration",
         "type":       "str",
         "required":   true
+    }, {
+        "name":       "iNaturalistLink",
+        "type":       "str"
     }, {
         "name":       "image",
         "type":       "object"
