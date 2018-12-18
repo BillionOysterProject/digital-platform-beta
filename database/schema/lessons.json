@@ -35,6 +35,12 @@
     }, {
         "key": "standards.nysssMst.*",
         "collection": "metanysssmsts"
+    }, {
+        "key": "units.*",
+        "collection": "units",
+        "fields": [
+            "name"
+        ]
     }],
     "fields": [{
         "name":       "created",
