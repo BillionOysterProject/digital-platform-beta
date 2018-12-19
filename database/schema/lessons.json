@@ -6,7 +6,8 @@
         "collection": "users",
         "fields": [
             "displayName",
-            "username"
+            "username",
+            "email"
         ]
     }, {
         "key": "standards.cclsElaScienceTechnicalSubjects.*",
@@ -39,8 +40,14 @@
         "key": "units.*",
         "collection": "units",
         "fields": [
-            "name"
+            "title",
+            "color",
+            "icon",
+            "status"
         ]
+    }, {
+        "key": "lessonOverview.subjectAreas.*",
+        "collection": "metasubjectareas" 
     }],
     "fields": [{
         "name":       "created",

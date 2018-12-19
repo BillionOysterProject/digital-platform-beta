@@ -81,20 +81,7 @@
         "type":     "object"
     }, {
         "name":     "roles",
-        "type":     "raw",
-        "validators": {
-            "one-of": [
-                "user",
-                "admin",
-                "team lead",
-                "org lead",
-                "team member",
-                "partner",
-                "team lead pending",
-                "org lead pending",
-                "team member pending"
-            ]
-        }
+        "type":     "raw"
     }, {
         "name":     "teamLeadType",
         "type":     "raw",

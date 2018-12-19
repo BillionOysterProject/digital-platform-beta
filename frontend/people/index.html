@@ -8,8 +8,8 @@ bindings:
     params:
         limit:  false
         sort:   name
-        fields: firstName,lastName,pending,profileImageURL,username,email,schoolOrg,created,teamLeadType
-        q:      roles/contains:lead
+        fields: firstName,lastName,pending,profileImageURL,username,email,schoolOrg,created,teamLeadType,roles
+        q:      "roles/contains:lead|admin"
 
 -   name:     stations
     resource: '/api/restoration-stations'
@@ -50,7 +50,9 @@ bindings:
                 <th>Last Name</th>
                 <th>Username</th>
                 <th>Team Lead Type</th>
+                <!--TODO deal with team lead pending issue
                 <th>Pending/Approved</th>
+                -->
                 <th>ORS Site(s)</th>
                 <th>Org Name</th>
                 <th>Org Borough/City</th>
@@ -91,12 +93,13 @@ bindings:
                 <td></td>
                 {{ end }}
                 
+                <!--
                 {{ if $teamLead.pending }}
                 <td>Pending</td>
                 {{ else }}
                 <td>Approved</td>
                 {{ end }}
-
+                -->
                 <td>
                     {{ $teamLeadSites }}
                 </td>
