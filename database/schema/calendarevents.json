@@ -1,0 +1,62 @@
+[{
+    "name": "calendarevents",
+    "allow_missing_embedded_records": true,
+    "embed": [{
+        "key":        "user",
+        "collection": "users"
+    }, {
+        "key":        "registrants.*.user",
+        "collection": "users"
+    }, {
+        "key":        "category.type",
+        "collection": "metaeventtypes"
+    }],
+    "fields": [{
+        "name":       "title",
+        "type":       "str",
+        "required":   true
+    }, {
+        "name":       "created",
+        "type":       "date",
+        "required":   true,
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }, {
+        "name":       "dates",
+        "type":       "raw"
+    }, {
+        "name":       "category",
+        "type":       "object"
+    }, {
+        "name":       "deadlineToRegister",
+        "type":       "date"
+    }, {
+        "name":       "location",
+        "type":       "object"
+    }, {
+        "name":       "cost",
+        "type":       "str"
+    }, {
+        "name":       "maximumCapacity",
+        "type":       "int"
+    }, {
+        "name":       "description",
+        "type":       "str"
+    }, {
+        "name":       "skillsTaught",
+        "type":       "str"
+    }, {
+        "name":       "featuredImage",
+        "type":       "object"
+    }, {
+        "name":       "resources",
+        "type":       "object"
+    }, {
+        "name":       "registrants",
+        "type":       "raw"
+    }, {
+        "name":       "user",
+        "type":       "str"
+    }]
+}]

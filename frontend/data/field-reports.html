@@ -44,7 +44,7 @@ bindings:
                         <dl class="row">
                             {{ if isTime $expedition.monitoringStartDate }}
                             <dt class="col-3">Date</dt>
-                            <dd class="col-9">{{ time $expedition.monitoringStartDate "Monday, January 1, 2006" }}</dd>
+                            <dd class="col-9">{{ time $expedition.monitoringStartDate "Monday, January 2, 2006" }}</dd>
                             {{ end }}
 
                             {{ if isMap $expedition.station }}
@@ -77,7 +77,7 @@ bindings:
                 <a href="/data/field-reports/{{ $expedition._id }}">
                     <strong>{{ or $expedition.name "Untitled Expedition" }}</strong>
                     {{ if isTime $expedition.monitoringStartDate }}
-                    &ndash; {{ time $expedition.monitoringStartDate "Monday, January 1, 2006" }}
+                    &ndash; {{ time $expedition.monitoringStartDate "Monday, January 2, 2006" }}
                     {{ end }}
                 </a>
             </li>

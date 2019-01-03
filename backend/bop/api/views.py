@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from .endpoints import CollectionView
 
 
-class CalendarEvents(CollectionView):
+class Events(CollectionView):
     route_base      = 'events'
     collection_name = 'calendarevents'
     results_only    = True

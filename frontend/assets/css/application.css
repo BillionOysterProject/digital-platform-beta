@@ -1992,3 +1992,19 @@ li.loading-dialog {
 .CodeMirror {
     border: 1px solid #eee;;
 }
+
+.join-semicolon > *:after {
+    content: '; ';
+}
+
+.join-semicolon > *:last-child:after {
+    content: '';
+}
+
+.join-comma > *:after {
+    content: ', ';
+}
+
+.join-comma > *:last-child:after {
+    content: '';
+}

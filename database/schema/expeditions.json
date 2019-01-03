@@ -152,14 +152,12 @@
     }, {
         "name":       "adultCount",
         "type":       "int",
-        "default":    0,
         "validators": {
             "positive-or-zero-integer": true
         }
     }, {
         "name":       "childCount",
         "type":       "int",
-        "default":    0,
         "validators": {
             "positive-or-zero-integer": true
         }
