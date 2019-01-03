@@ -22,7 +22,7 @@ bindings:
     resource: '/api/events'
     params:
         limit: false
-        
+        fields: category,dates,registrants,title
 
 ---
 
@@ -32,11 +32,8 @@ bindings:
 {{ $orgs        := $.bindings.orgs }}
 {{ $events      := $.bindings.events }}
 
-{{ $basicTrainings := filterByKey $events eqx "category.type" "5833bfa1957940604da50cd2" }}
-{{ $eventRegistrations := pluck $events "registrants" }}
-{{ $eventRegistrants := get $eventRegistrations "user" }}
-
-<pre>{{ jsonify $basicTrainings ".."}}</pre>
+{{ $basicTrainings := filterByKey $events "category.type.type" "ORS Basic Training" }}
+{{ $basicTrainingAttendees  := uniq (pluck $basicTrainings "registrants.*.user._id") }}
 
 <h1>People</h1>
 
@@ -60,19 +57,18 @@ bindings:
                 {{ if $.flags.admin }}
                 <th>Edit</th>
                 {{ end }}
+                <th>Id</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Username</th>
                 <th>Team Lead Type</th>
+                <th>Attended Basic Training?</th>
                 <th>ORS Site(s)</th>
                 <th>Org Name</th>
                 <th>Org Borough/City</th>
                 <th>Org Neighborhood</th>
-                <th>Email</th>
                 <th>Joined On</th>
-                <th>Event Count</th>
-                <th>Trainings Attended</th>
-                <th>Events</th>
+                <th>Email</th>
                 
             </tr>
         </thead>
@@ -90,6 +86,10 @@ bindings:
                     </a>
                 </td>
                 {{ end }}
+
+                <td>
+                    {{ $teamLead._id }}
+                </td>
                 <td>
                     {{ $teamLead.firstName }}
                 </td>
@@ -108,6 +108,14 @@ bindings:
                 <td></td>
                 {{ end }}
                 
+                <td>
+                    {{ if has $teamLead._id $basicTrainingAttendees }}
+                    Yes
+                    {{ else }}
+                    No
+                    {{ end }}
+                </td>
+
                 <td>
                     {{ $teamLeadSites }}
                 </td>
@@ -130,17 +138,12 @@ bindings:
                 </td>
 
                 <td>
-                    {{ $teamLead.email }}
-                </td>
-
-                <td>
                     {{ time $teamLead.created "slash" }}
                 </td>
 
                 <td>
-                    
+                    {{ $teamLead.email }}
                 </td>
-
                 
             </tr>
             {{ end }}
