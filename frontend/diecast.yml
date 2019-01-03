@@ -7,8 +7,8 @@ patterns:
   - '/expeditions/view/*.svg'
   - '/assets/css/application.css'
 mounts:
-- mount: '/api'
-  to:    'http://127.0.0.1:5000/api'
+- mount: '/api/'
+  to:    'http://127.0.0.1:5000/api/'
   options:
     passthrough_requests: true
     passthrough_errors:   true

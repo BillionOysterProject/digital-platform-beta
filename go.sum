@@ -120,6 +120,8 @@ github.com/ghetzel/diecast v1.9.29 h1:vFyIvZ0Ubdgvhh2Am92XdkAP8/XdCdG+qugYUk544X
 github.com/ghetzel/diecast v1.9.29/go.mod h1:4jekbcqdMQYfmJKxicvAD6NzPBFJwYw9Ijg8h/gNuag=
 github.com/ghetzel/diecast v1.9.33 h1:VtWp5rj664cqEEHurXpDF7XPmfdSqgcYVo99r3J8w68=
 github.com/ghetzel/diecast v1.9.33/go.mod h1:xHBnmqT5PPGwAxyr1ccujLa7vv1WmG/oVZfZIXdku9s=
+github.com/ghetzel/diecast v1.10.0 h1:OjLS+DllyyX0DQYbQ7Rb1cDNw2fSHPG+Yf1GsBGJQLQ=
+github.com/ghetzel/diecast v1.10.0/go.mod h1:xHBnmqT5PPGwAxyr1ccujLa7vv1WmG/oVZfZIXdku9s=
 github.com/ghetzel/friendscript v0.5.0/go.mod h1:GZJ2FZRpgvURp4hUb/AdevNCnHKCWRpKLxtAl817F4g=
 github.com/ghetzel/friendscript v0.5.2 h1:N6qcdKq1Ast7QIraWWc79yOS08IiCZcye9wxMHP1g4E=
 github.com/ghetzel/friendscript v0.5.2/go.mod h1:F2dZJWxEHLg+AFilyUDWNWlet+Pf7h1rlFweJCbA3HY=

@@ -87,6 +87,7 @@ class API(Flask):
                         CollectionView,
                     ]:
                         if name not in names:
+                            logging.info('Register endpoint: {} -> /api/{}'.format(name, obj.route_base))
                             names.add(name)
                             endpoints.add(obj)
 
