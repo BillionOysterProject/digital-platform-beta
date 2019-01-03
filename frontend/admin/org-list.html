@@ -1,6 +1,7 @@
 ---
 page:
     body_class: 'orgs-list fill-content'
+    view: 'Organizations'
 
 bindings:
 -   name:     'orgs'
@@ -55,18 +56,22 @@ bindings:
 {{ $nycOpenData := $.bindings.nycOpenData }}
 
 <section class="content">
-    <div class="text-left pt-2 mb-3">
+    
+    <div class="text-left mb-3">
         <a
-        href="/api/school-orgs/export.tsv"
+        href="/admin/org-list.tsv"
         class="btn btn-primary mb-2"
         >
             Download Organizations (.tsv)
         </a>
+        <!--
         <a href="/api/school-orgs?limit=25&offset=0&sort=name" target="_blank" class="ml-3">
             <i class="fa fa-external-link-square"></i>
             View in API
         </a>
+    -->
     </div>
+    
 
     <table class="table table-sm table-bordered table-striped table-hover" id="organizations">
         <thead>
