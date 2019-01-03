@@ -4,6 +4,7 @@ bindingPrefix: 'http://127.0.0.1:5000/'
 patterns:
   - '*.html'
   - '*.md'
+  - '/admin/*.tsv'
   - '/expeditions/view/*.svg'
   - '/assets/css/application.css'
 mounts:

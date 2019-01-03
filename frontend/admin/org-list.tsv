@@ -1,0 +1,129 @@
+---
+layout: none
+postprocessors:
+- trim-empty-lines
+
+headers:
+    'Content-Type':        'text/plain'
+    'Content-Disposition': inline
+
+bindings:
+-   name:     'orgs'
+    resource: '/api/school-orgs/'
+    params:
+        limit:  false
+        sort:   name
+
+-   name:     stations
+    resource: '/api/restoration-stations'
+    params:
+        limit:    false
+        noexpand: teamLead
+        fields:   status,schoolOrg,site
+        q:        schoolOrg/not:571f6f3181ab586140097247
+
+-   name:     expeditions
+    resource: '/api/expeditions'
+    params:
+        limit:    false
+        fields:   status,team,monitoringStartDate,monitoringEndDate
+        q:        status/published
+
+
+-   name:     sites
+    resource: '/api/sites'
+    params:
+        limit:    false
+
+-   name:  nycOpenData
+    resource: 'https://data.cityofnewyork.us/resource/98et-3mve.json'
+    param_joiner: ','
+    params:
+        $limit: 15000
+        $select:
+        - year
+        - economic_need_index
+        - asian_2
+        - black_2
+        - dbn
+        - english_language_learners_2
+        - hispanic_2
+        - poverty_2
+        - students_with_disabilities_2
+        - white_2
+---
+
+{{ $sites       := $.bindings.sites }}
+{{ $stations    := $.bindings.stations }}
+{{ $orgs        := $.bindings.orgs }}
+{{ $expeditions := $.bindings.expeditions }}
+{{ $nycOpenData := $.bindings.nycOpenData }}
+
+
+{{ push "headers" "Id" }}
+{{ push "headers" "Name" }}
+{{ push "headers" "Org. Type" }}
+{{ push "headers" "School Type" }}
+{{ push "headers" "ORS Site(s)" }}
+{{ push "headers" "Expedition Count" }}
+{{ push "headers" "Last Expedition Date" }}
+{{ push "headers" "Neighborhood" }}
+{{ push "headers" "Address" }}
+{{ push "headers" "Borough/City" }}
+{{ push "headers" "State" }}
+{{ push "headers" "Zipcode" }}
+{{ push "headers" "Org. Created At" }}
+{{ push "headers" "ATS Code" }}
+{{ push "headers" "City Council District" }}
+{{ push "headers" "Economic Need (2017-2018)" }}
+{{ push "headers" "Poverty % (2017-2018)" }}
+{{ push "headers" "Asian %" }}
+{{ push "headers" "Black %" }}
+{{ push "headers" "Hispanic %" }}
+{{ push "headers" "White %" }}
+{{ push "headers" "ELL %" }}
+{{ push "headers" "Students with Disabilities %" }}
+
+{{ range $i, $org := $orgs }}
+{{   $orgStations := filterByKey $stations "schoolOrg.name" $org.name }}
+{{   $orgExpeditions := filterByKey $expeditions "team.schoolOrg.name" $org.name }}
+{{   $orgData := filterByKey (filterByKey $nycOpenData "dbn" $org.syncId) "year" "2017-18" }}
+{{   $latestExpeditionDate := (first (reverse (sort (compact (pluck $orgExpeditions "monitoringStartDate"))))) }}
+
+{{   var "row" }}
+
+{{   push "row" $org._id }}
+{{   push "row" $org.name }}
+{{   push "row" $org.organizationType }}
+{{   push "row" (or $org.schoolType "") }}
+{{   if $orgStations }}
+{{     push "row" (join (pluck (uniqByKey $orgStations "site.name") "site.name") "; ") }}
+{{   else }}
+{{     push "row" "" }}
+{{   end }}
+{{   push "row" (count $orgExpeditions) }}
+{{   if $latestExpeditionDate }}
+{{   push "row" (time $latestExpeditionDate "slash") }}
+{{   else }}
+{{   push "row" "" }}
+{{   end }}
+{{   push "row" (or $org.neighborhood "") }}
+{{   push "row" (or $org.streetAddress "") }}
+{{   push "row" (or $org.city "") }}
+{{   push "row" (or $org.state "") }}
+{{   push "row" (or $org.zip "") }}
+{{   push "row" (time $org.created `ymd`) }}
+{{   push "row" (or $org.syncId "") }}
+{{   push "row" (or $org.district "") }}
+{{   push "row" (join (pluck $orgData "economic_need_index") " ") }}
+{{   push "row" (join (pluck $orgData "poverty_2") " ") }}
+{{   push "row" (join (pluck $orgData "asian_2") " ") }}
+{{   push "row" (join (pluck $orgData "black_2") " ") }}
+{{   push "row" (join (pluck $orgData "hispanic_2") " ") }}
+{{   push "row" (join (pluck $orgData "white_2") " ") }}
+{{   push "row" (join (pluck $orgData "english_language_learners_2") " ") }}
+{{   push "row" (join (pluck $orgData "students_with_disabilities_2") " ") }}
+{{   push "data" $.vars.row }}
+{{ end }}
+
+{{ tsv $.vars.headers $.vars.data }}

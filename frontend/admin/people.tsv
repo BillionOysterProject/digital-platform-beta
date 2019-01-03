@@ -1,0 +1,82 @@
+---
+layout: none
+postprocessors:
+- trim-empty-lines
+
+headers:
+    'Content-Type':        'text/plain'
+    'Content-Disposition': inline
+
+bindings:
+-   name:     'teamLeads'
+    resource: '/api/users'
+    params:
+        limit:  false
+        sort:   name
+        fields: firstName,lastName,username,email,schoolOrg,created,teamLeadType,roles
+        q:      "roles/contains:lead|admin"
+
+-   name:     stations
+    resource: '/api/restoration-stations'
+    params:
+        limit:    false
+        noexpand: teamLead
+        fields:   status,schoolOrg,site,teamLead
+
+-   name: events
+    resource: '/api/events'
+    params:
+        limit: false
+        fields: category,dates,registrants,title
+
+---
+
+{{ $teamLeads   := $.bindings.teamLeads }}
+{{ $sites       := $.bindings.sites }}
+{{ $stations    := $.bindings.stations }}
+{{ $orgs        := $.bindings.orgs }}
+{{ $events      := $.bindings.events }}
+
+{{ $basicTrainings := filterByKey $events "category.type.type" "ORS Basic Training" }}
+{{ $basicTrainingAttendees  := uniq (pluck $basicTrainings "registrants.*.user._id") }}
+
+{{ push "headers" "Id" }}
+{{ push "headers" "First Name" }}
+{{ push "headers" "Last Name" }}
+{{ push "headers" "Username" }}
+{{ push "headers" "Team Lead Type" }}
+{{ push "headers" "Attended Basic Training?" }}
+{{ push "headers" "ORS Site(s)" }}
+{{ push "headers" "Org Name" }}
+{{ push "headers" "Org Borough/City" }}
+{{ push "headers" "Org Neighborhood" }}
+{{ push "headers" "Joined On" }}
+{{ push "headers" "Email" }}
+
+{{ range $i, $teamLead := $teamLeads }}
+{{   $teamLeadStations   := filterByKey $stations "teamLead._id" $teamLead._id }}
+{{   $teamLeadSites      := join (uniq (pluck $teamLeadStations "site.name") ) ", "}}
+
+{{   var "row" }}
+
+{{   push "row" $teamLead._id }}
+{{   push "row" $teamLead.firstName }}
+{{   push "row" $teamLead.lastName }}
+{{   push "row" $teamLead.username }}
+{{   push "row" (or $teamLead.teamLeadType "") }}
+{{   if has $teamLead._id $basicTrainingAttendees }}
+{{     push "row" "Yes" }}
+{{   else }}
+{{     push "row" "No" }}
+{{   end }}
+{{   push "row" $teamLeadSites }}
+{{   push "row" $teamLead.schoolOrg.name }}
+{{   push "row" (or $teamLead.schoolOrg.city "") }}
+{{   push "row" (or $teamLead.schoolOrg.neighborhood "") }}
+{{   push "row" (time $teamLead.created "slash") }}
+{{   push "row" (or $teamLead.email "") }}
+
+{{   push "data" $.vars.row }}
+{{ end }}
+
+{{ tsv $.vars.headers $.vars.data }}
