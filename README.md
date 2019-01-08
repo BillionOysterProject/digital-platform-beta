@@ -1,5 +1,5 @@
 # digital-platform-beta
-The beta version of version 2 of the Billion Oyster Project Digital Platform.
+The version 2 of the Billion Oyster Project Digital Platform (in beta).
 
 The Billion Oyster Project (BOP) is an ecosystem restoration and education project whose mission is to restore oyster reefs to New York Harbor through public education initiatives.  (Learn more at [bop.nyc](https://bop.nyc).)
 
