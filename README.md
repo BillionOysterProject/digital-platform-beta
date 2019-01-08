@@ -13,6 +13,7 @@ Since Billion Oyster Project is committed to restoration through education, the 
 - View data, both in a more narrative form as a "field report," and in aggregate in tables and .csv and .tsv downloads
 - Visualize data in different graphs
 - Open our data via an API
+- Present student research
 
 Because we're an education-focused project, we have a longer guide to getting started than most Github projects, which you can read in our wiki: [Getting Started for Newer Programmers](https://github.com/BillionOysterProject/digital-platform-beta/wiki/Getting-Started-for-Newer-Programmers)
 
