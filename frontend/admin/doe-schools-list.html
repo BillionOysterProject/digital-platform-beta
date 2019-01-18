@@ -118,139 +118,131 @@ so you can match the ats_system_code to the dbn-->
             {{ $locationFields := filterByKey $schoolLocations "ats_system_code" $publicSchool.dbn }}
             
             <tr>
-                {{ if $bopOrgs }}
-                {{ range $i, $bopOrg := uniqByKey $bopOrgs "_id" }}
+                
                 <td>
+                    {{ if $bopOrgs }}
+                    {{ range $i, $bopOrg := uniqByKey $bopOrgs "_id" }}
                     <a href="/profiles/{{ $bopOrg._id }}">
                     {{ $bopOrg._id }}
-                    </a>        
+                    </a> 
+                    {{ end }}
+                    {{ end }}       
                 </td>
-                {{ end }}
-                {{ else }}
-                <td></td>
-                {{ end }}
 
-                {{ if $publicSchool.school_name }}
                 <td>
+                    {{ if $publicSchool.school_name }}
                     {{ $publicSchool.school_name }}
+                    {{ end }}
                 </td>
-                {{ else }}
-                <td></td>
-                {{ end }}
-
-                {{ if $publicSchool.dbn }}
+            
                 <td>
+                    {{ if $publicSchool.dbn }}
                     {{ $publicSchool.dbn }}
+                    {{ end }}
                 </td>
-                {{ else }}
-                <td></td>
-                {{ end }}
-
-                {{ if $orgStations }}
+                
                 <td class="join-semicolon">
+                    {{ if $orgStations }}
                     {{ range $i, $orgStation := uniqByKey $orgStations "site.name" }}
                     <a href="/sites/{{ $orgStation.site._id }}" target="blank">{{ $orgStation.site.name }}</a>
                     {{ end }}
+                    {{ end }}
                 </td>
-                {{ else }}
-                <td></td>
-                {{ end }}
 
-                {{ if $locationFields }}
-                {{  range $i, $locationField := uniqByKey $locationFields "nta_name" }}
-                <td>{{ $locationField.nta_name }}</td>
-                {{ end }}
-                {{ else }}
-                <td></td>
-                {{ end }}
+                
+                <td>
+                    {{ if $locationFields }}
+                    {{  range $i, $locationField := uniqByKey $locationFields "nta_name" }}
+                    {{ $locationField.nta_name }}
+                    {{ end }}
+                    {{ end }}
+                </td>
+                
+                
+                <td>
+                    {{ if $locationFields }}
+                    {{  range $i, $locationField := uniqByKey $locationFields "location_1_address" }}
+                    {{ $locationField.location_1_address }}
+                    {{ end }}
+                    {{ end }}
+                </td>
 
-                {{ if $locationFields }}
-                {{  range $i, $locationField := uniqByKey $locationFields "location_1_address" }}
-                <td>{{ $locationField.location_1_address }}</td>
-                {{ end }}
-                {{ else }}
-                <td></td>
-                {{ end }}
+                <td>
+                    {{ if $locationFields }}
+                    {{  range $i, $locationField := uniqByKey $locationFields "location_1_city" }}
+                    {{ $locationField.location_1_city }}
+                    {{ end }}
+                    {{ end }}
+                </td>
+            
+                <td>
+                    {{ if $locationFields }}
+                    {{  range $i, $locationField := uniqByKey $locationFields "location_1_state" }}
+                    {{ $locationField.location_1_state }}
+                    {{ end }}
+                    {{ end }}
+                </td>
 
-                {{ if $locationFields }}
-                {{  range $i, $locationField := uniqByKey $locationFields "location_1_city" }}
-                <td>{{ $locationField.location_1_city }}</td>
-                {{ end }}
-                {{ else }}
-                <td></td>
-                {{ end }}
+                <td>
+                    {{ if $locationFields }}
+                    {{  range $i, $locationField := uniqByKey $locationFields "location_1_zip" }}
+                    {{ $locationField.location_1_zip }}
+                    {{ end }}
+                    {{ end }}
+                </td>
 
-                {{ if $locationFields }}
-                {{  range $i, $locationField := uniqByKey $locationFields "location_1_state" }}
-                <td>{{ $locationField.location_1_state }}</td>
-                {{ end }}
-                {{ else }}
-                <td></td>
-                {{ end }}
+                <td>
+                    {{ if $locationFields }}
+                    {{  range $i, $locationField := uniqByKey $locationFields "council_district" }}
+                    {{ $locationField.council_district }}
+                    {{ end }}
+                    {{ end }}
+                </td>
+            
+                <td>
+                    {{ if $publicSchool.economic_need_index }}
+                    {{ $publicSchool.economic_need_index }}
+                    {{ end }}
+                </td>
+        
+                <td>{{ if $publicSchool.poverty_2 }}
+                    {{ $publicSchool.poverty_2 }}%
+                    {{ end }}
+                </td>
+            
+                <td>{{ if $publicSchool.asian_2 }}
+                    {{ $publicSchool.asian_2 }}%
+                    {{ end }}
+                </td>
 
-                {{ if $locationFields }}
-                {{  range $i, $locationField := uniqByKey $locationFields "location_1_zip" }}
-                <td>{{ $locationField.location_1_zip }}</td>
-                {{ end }}
-                {{ else }}
-                <td></td>
-                {{ end }}
+                <td>
+                    {{ if $publicSchool.black_2 }}
+                    {{ $publicSchool.black_2 }}%
+                    {{ end }}
+                </td>
 
-                {{ if $locationFields }}
-                {{  range $i, $locationField := uniqByKey $locationFields "council_district" }}
-                <td>{{ $locationField.council_district }}</td>
-                {{ end }}
-                {{ else }}
-                <td></td>
-                {{ end }}
+                <td>{{ if $publicSchool.hispanic_2 }}
+                    {{ $publicSchool.hispanic_2 }}%
+                    {{ end }}
+                </td>
+                
+                <td>
+                    {{ if $publicSchool.white_2 }}
+                    {{ $publicSchool.white_2 }}%
+                    {{ end }}
+                </td>
+            
+                <td>
+                    {{ if $publicSchool.english_language_learners_2 }}
+                    {{ $publicSchool.english_language_learners_2 }}%
+                    {{ end }}
+                </td>
 
-                {{ if $publicSchool.economic_need_index }}
-                <td>{{ $publicSchool.economic_need_index }}</td>
-                {{ else }}
-                <td></td>
-                {{ end }}
-
-                {{ if $publicSchool.poverty_2 }}
-                <td>{{ $publicSchool.poverty_2 }}%</td>
-                {{ else }}
-                <td></td>
-                {{ end }}
-
-                {{ if $publicSchool.asian_2 }}
-                <td>{{ $publicSchool.asian_2 }}%</td>
-                {{ else }}
-                <td></td>
-                {{ end }}
-
-                {{ if $publicSchool.black_2 }}
-                <td>{{ $publicSchool.black_2 }}%</td>
-                {{ else }}
-                <td></td>
-                {{ end }}
-
-                {{ if $publicSchool.hispanic_2 }}
-                <td>{{ $publicSchool.hispanic_2 }}%</td>
-                {{ else }}
-                <td></td>
-                {{ end }}
-
-                {{ if $publicSchool.white_2 }}
-                <td>{{ $publicSchool.white_2 }}%</td>
-                {{ else }}
-                <td></td>
-                {{ end }}
-
-                {{ if $publicSchool.english_language_learners_2 }}
-                <td>{{ $publicSchool.english_language_learners_2 }}%</td>
-                {{ else }}
-                <td></td>
-                {{ end }}
-
-                {{ if $publicSchool.students_with_disabilities_2 }}
-                <td>{{ $publicSchool.students_with_disabilities_2 }}%</td>
-                {{ else }}
-                <td></td>
-                {{ end }}
+                <td>
+                    {{ if $publicSchool.students_with_disabilities_2 }}
+                    {{ $publicSchool.students_with_disabilities_2 }}%
+                    {{ end }}
+                </td>
 
             </tr>
             {{ end }}
