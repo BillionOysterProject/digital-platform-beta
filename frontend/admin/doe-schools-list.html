@@ -64,8 +64,11 @@ bindings:
 {{ $sites       := $.bindings.sites }}
 {{ $stations    := $.bindings.stations }}
 {{ $orgs        := $.bindings.orgs }}
-{{ $publicSchools := $.bindings.nycSchoolDemographics }}
-{{ $schoolLocations := $.bindings.nycSchoolLocations }}
+
+<!--The original dataset includes extra whitespace after the "ats_system_code"- this normalizes the data
+so you can match the ats_system_code to the dbn-->
+{{ $schoolLocations    := transformValues $.bindings.nycSchoolLocations "ats_system_code" "{{ . | trim | upper }}" }}
+{{ $publicSchools := transformValues $.bindings.nycSchoolDemographics "dbn" "{{ . | trim | upper }}" }}
 
 <section class="content">
     
@@ -110,64 +113,93 @@ bindings:
 
         <tbody>
             {{ range $i, $publicSchool := $publicSchools }}
-            {{ $orgStations := filterByKey $stations "schoolOrg.name" $publicSchool.school_name }}
-            {{ $locationData := filterByKey $schoolLocations "ats_system_code" $publicSchool.dbn }}
             {{ $bopOrgs := filterByKey $orgs "syncId" $publicSchool.dbn }}
+            {{ $orgStations := filterByKey $stations "schoolOrg.name" $publicSchool.school_name }}
+            {{ $locationFields := filterByKey $schoolLocations "ats_system_code" $publicSchool.dbn }}
             
             <tr>
                 {{ if $bopOrgs }}
+                {{ range $i, $bopOrg := uniqByKey $bopOrgs "_id" }}
                 <td>
-                    {{ range $i, $bopOrg := uniqByKey $bopOrgs "_id" }}
                     <a href="/profiles/{{ $bopOrg._id }}">
                     {{ $bopOrg._id }}
-                    </a>
-                    {{ end }}
+                    </a>        
                 </td>
+                {{ end }}
                 {{ else }}
                 <td></td>
                 {{ end }}
 
+                {{ if $publicSchool.school_name }}
                 <td>
                     {{ $publicSchool.school_name }}
                 </td>
+                {{ else }}
+                <td></td>
+                {{ end }}
 
+                {{ if $publicSchool.dbn }}
                 <td>
                     {{ $publicSchool.dbn }}
                 </td>
-
-                <td></td>
-
-                {{ if $locationData }}
-                <td>
-                yes
-                </td>
                 {{ else }}
                 <td></td>
                 {{ end }}
 
-                <td>
-                    {{ if $publicSchool.streetAddress }}
-                    <address>
-                        {{ $publicSchool.streetAddress }}
-                    </address>
+                {{ if $orgStations }}
+                <td class="join-semicolon">
+                    {{ range $i, $orgStation := uniqByKey $orgStations "site.name" }}
+                    <a href="/sites/{{ $orgStation.site._id }}" target="blank">{{ $orgStation.site.name }}</a>
                     {{ end }}
                 </td>
-                <td>
-                    {{ $publicSchool.city }}
-                </td>
-                <td>
-                    {{ $publicSchool.state }}
-                </td>
-                {{ if $publicSchool.zip }}
-                <td>
-                    {{ $publicSchool.zip }}
-                </td>
                 {{ else }}
                 <td></td>
                 {{ end }}
 
-                {{ if $publicSchool.district }}
-                <td>{{ $publicSchool.district }}</td>
+                {{ if $locationFields }}
+                {{  range $i, $locationField := uniqByKey $locationFields "nta_name" }}
+                <td>{{ $locationField.nta_name }}</td>
+                {{ end }}
+                {{ else }}
+                <td></td>
+                {{ end }}
+
+                {{ if $locationFields }}
+                {{  range $i, $locationField := uniqByKey $locationFields "location_1_address" }}
+                <td>{{ $locationField.location_1_address }}</td>
+                {{ end }}
+                {{ else }}
+                <td></td>
+                {{ end }}
+
+                {{ if $locationFields }}
+                {{  range $i, $locationField := uniqByKey $locationFields "location_1_city" }}
+                <td>{{ $locationField.location_1_city }}</td>
+                {{ end }}
+                {{ else }}
+                <td></td>
+                {{ end }}
+
+                {{ if $locationFields }}
+                {{  range $i, $locationField := uniqByKey $locationFields "location_1_state" }}
+                <td>{{ $locationField.location_1_state }}</td>
+                {{ end }}
+                {{ else }}
+                <td></td>
+                {{ end }}
+
+                {{ if $locationFields }}
+                {{  range $i, $locationField := uniqByKey $locationFields "location_1_zip" }}
+                <td>{{ $locationField.location_1_zip }}</td>
+                {{ end }}
+                {{ else }}
+                <td></td>
+                {{ end }}
+
+                {{ if $locationFields }}
+                {{  range $i, $locationField := uniqByKey $locationFields "council_district" }}
+                <td>{{ $locationField.council_district }}</td>
+                {{ end }}
                 {{ else }}
                 <td></td>
                 {{ end }}
