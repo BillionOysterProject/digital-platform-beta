@@ -31,6 +31,21 @@ header:
           cclsMathematics:                 'CCLS - Mathematics'
           cclsElaScienceTechnicalSubjects: 'CCLS - ELA Science & Technical Subjects'
 
+      lessons:
+        gradeLevels:
+          - "6-8th"
+          - "9-12th"
+          - "Elementary"
+      
+        setting:
+          - "Classroom"
+          - "Field"
+          - "Classroom & Field"
+      
+      
+      
+      
+      
       structureTypes:
       - id:    'research-station'
         label: 'Oyster Research Station'
@@ -211,12 +226,13 @@ header:
         methods:
         - testStripsPh
         - sensor
-        - sensorRo
+        - colorimetricTestKit
 
       - id:    'turbidity'
         label: 'Turbidity'
         methods:
         - turbidityTube
+        - secchiDisk
 
       - id:    'ammonia'
         label: 'Ammonia'
@@ -253,6 +269,12 @@ header:
             label: ppm
           - id: saturation
             label: Saturation (%)
+
+        colorimetricTestKit:
+          label: Colorimetric Test Kit
+
+        secchiDisk:
+          label: Secchi Disk
 
         sensor:
           label: Sensor
