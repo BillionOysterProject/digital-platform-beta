@@ -27,26 +27,144 @@
                             Send Invite
                         </button>
                     </div>
-
-                    <div class="col-sm-12 col-md-6 form-group">
-                        <label>Team members who can edit this protocol:</label>
-
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                Johnny Userface
-                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
-                            </li>
-                            <li class="list-group-item">
-                                <i>Sally Shrimphead (has not accepted)</i>
-                                <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div> -->
 
-            <p><strong>Mobile Organism Identifications</strong></p>
-            Enter each mobile organism species you identified and a count of how many you found in the table below.
+            <p><strong>Shrimp, Amphipod, and Isopod Counts</strong></p>
+            <div class="form-group col-sm-12">
+                <fieldset>
+                    <legend>
+                        Shrimp Count  
+                    </legend>
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            id="5-10shrimp"
+                            class="custom-control-input"
+                            name="5-10shrimp"
+                            for="5-10shrimp"
+                        >
+                        <label class="custom-control-label w-100" for="newORS">
+                            5-10
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            id="10-100shrimp"
+                            class="custom-control-input"
+                            name="10-100shrimp"
+                            for="10-100shrimp"
+                        >
+                        <label class="custom-control-label w-100" for="newORS">
+                            10-100
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            id="100shrimp"
+                            class="custom-control-input"
+                            name="100shrimp"
+                            for="100shrimp"
+                        >
+                        <label class="custom-control-label w-100" for="newORS">
+                            100+
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <fieldset>
+                    <legend>
+                        Amphipod Count  
+                    </legend>
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            id="5-10amphipod"
+                            class="custom-control-input"
+                            name="5-10amphipod"
+                            for="5-10amphipod"
+                        >
+                        <label class="custom-control-label w-100" for="newORS">
+                            5-10
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            id="10-100amphipod"
+                            class="custom-control-input"
+                            name="10-100amphipod"
+                            for="10-100amphipod"
+                        >
+                        <label class="custom-control-label w-100" for="newORS">
+                            10-100
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            id="100amphipod"
+                            class="custom-control-input"
+                            name="100amphipod"
+                            for="100amphipod"
+                        >
+                        <label class="custom-control-label w-100" for="newORS">
+                            100+
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <fieldset>
+                    <legend>
+                        Isopod Count  
+                    </legend>
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            id="5-10isopod"
+                            class="custom-control-input"
+                            name="5-10isopod"
+                            for="5-10isopod"
+                        >
+                        <label class="custom-control-label w-100" for="newORS">
+                            5-10
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            id="10-100isopod"
+                            class="custom-control-input"
+                            name="10-100isopod"
+                            for="10-100isopod"
+                        >
+                        <label class="custom-control-label w-100" for="newORS">
+                            10-100
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input
+                            type="radio"
+                            id="100isopod"
+                            class="custom-control-input"
+                            name="100isopod"
+                            for="100isopod"
+                        >
+                        <label class="custom-control-label w-100" for="newORS">
+                            100+
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+            <p><strong>Larger Organism Identifications and Counts</strong></p>
+            <p>
+                Enter each mobile organism species you identified and a count of how many you found in the table below.
             </p>
             <ul>
                 <li>Column 1: start typing either the <strong>commmon or scientific name</strong> of the mobile organism, then select it
@@ -60,6 +178,7 @@
                     data-field-name="protocols.mobileTrap.mobileOrganisms"
                 ></div>
             </div>
+
             <div class="form-group mt-4">
                 <label for="mobileOrganismsNotes">Mobile Organisms Notes</label>
                 <textarea
