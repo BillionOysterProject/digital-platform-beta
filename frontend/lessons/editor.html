@@ -1,0 +1,496 @@
+---
+page:
+    body_class: 'container mt-1'
+    view:       'Lesson Editor'
+
+bindings:
+
+-   name:     'units'
+    resource: '/api/units'
+    fallback: []
+    params:
+        limit: false
+
+-   name:     subjectAreas
+    resource: '/api/subject-areas'
+    params:
+        limit: false
+
+-   name:     nycSSUnits
+    resource: '/api/standards-nycss-units'
+    params:
+        limit: false
+
+-   name:     nysssKeyIdeas
+    resource: '/api/standards-nysss-key-ideas'
+    params:
+        limit: false
+
+-   name:     nysssMajorUnderstandings
+    resource: '/api/standards-nysss-major-understandings'
+    params:
+        limit: false
+
+-   name:     nysssMSTs
+    resource: '/api/standards-nysss-msts/'
+    params:
+        limit: false
+
+-   name:     ngssDisciplinaryCoreIdeas
+    resource: '/api/standards-ngss-disciplinary-core-ideas'
+    params:
+        limit: false
+
+-   name:     ngssScienceEngineeringPractices
+    resource: '/api/standards-ngss-science-engineering-practices'
+    params:
+        limit: false
+
+-   name:     ngssCrossCuttingConcepts
+    resource: '/api/standards-ngss-cross-cutting-concepts/'
+    params:
+        limit: false    
+
+-   name:     cclsMathematics
+    resource: '/api/standards-ccls-mathematics/'
+    params:
+        limit: false  
+
+-   name:     cclsELATechnicalSubjects
+    resource: '/api/standards-ccls-ela-science-technical-subjects/'
+    params:
+        limit: false   
+     
+---
+
+{{ $units := $.bindings.units }}
+{{ $subjectAreas := $.bindings.subjectAreas }}
+{{ $nycSSUnits := $.bindings.nycSSUnits}}
+{{ $nysssKeyIdeas := $.bindings.nysssKeyIdeas }}
+{{ $nysssMajorUnderstandings := $.bindings.nysssMajorUnderstandings }}
+{{ $nysssMSTs := $.bindings.nysssMSTs }}
+{{ $ngssDisciplinaryCoreIdeas := $.bindings.ngssDisciplinaryCoreIdeas }}
+{{ $ngssScienceEngineeringPractices := $.bindings.ngssScienceEngineeringPractices }}
+{{ $ngssCrossCuttingConcepts := $.bindings.ngssCrossCuttingConcepts }}
+{{ $cclsMathematics := $.bindings.cclsMathematics }}
+{{ $cclsELATechnicalSubjects := $.bindings.cclsELATechnicalSubjects }}
+
+<section class="content">
+    <form method="POST" action="/api/lessons">
+        <h2>Lesson Metadata</h2>
+        <p>The information in this section gets stored in separate fields in the platform's database.
+            Users can use this information to search for lessons,
+            and we preview this information on the Lesson Tiles and Lesson List pages.
+        </p>
+        <div class="form-group col-sm-8">
+            <label
+                class="required"
+                for="title"
+            >
+                Lesson Title
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="title"
+                id="title"
+            />
+        </div>
+
+        <div class="form-group col-sm-6">
+            <label for="units">Unit(s)</label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple units, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="units" name="units">
+                {{ range $i, $unit := $units }}
+                <option>{{ $unit.title }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <div class="form-group col-sm-2">
+            <label for="lessonOverview.grade">Grade Levels</label>
+            <select class="form-control" id="lessonOverview.grade" name="lessonOverview.grade">
+                {{ range $i, $gradeLevel := $.page.lessons.gradeLevels }}
+                <option value="{{ $gradeLevel }}">{{ $gradeLevel }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <div class="form-group col-sm-2">
+            <label
+                class="required"
+                for="lessonOverview.classPeriods"
+            >
+                Class Periods
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="lessonOverview.classPeriods"
+                id="lessonOverview.classPeriods"
+            />
+        </div>
+
+        <div class="form-group col-sm-4">
+            <label
+                class="required"
+                for="lessonOverview.setting"
+            >
+                Setting
+            </label>
+            <select class="form-control" id="lessonOverview.setting" name="lessonOverview.setting">
+                {{ range $i, $setting := $.page.lessons.setting }}
+                <option value="{{ $setting}}">{{ $setting }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <div class="form-group col-sm-6">
+            <label for="units">Subject Areas</label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple subject areas, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="lessonOverview.subjectAreas" name="lessonOverview.subjectAreas">
+                {{ range $i, $subjectArea := $subjectAreas }}
+                <option>{{ $subjectArea.subject }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <div class="form-group col-sm-8">           
+            <label for="lessonOverview.lessonSummary">Lesson Summary</label>
+            <textarea
+                class="form-control"
+                id="lessonOverview.lessonSummary"
+                name="lessonOverview.lessonSummary"
+                rows="5"
+            >
+            </textarea>          
+        </div>
+
+
+        <div class="form-group col-sm-8">           
+            <label for="lessonOverview.lessonSummary">Objectives</label>
+            <textarea
+                class="form-control"
+                id="lessonOverview.lessonSummary"
+                name="lessonOverview.lessonSummary"
+                rows="5"
+            >
+            </textarea>          
+        </div>
+
+        <div class="form-group col-sm-4">
+            <label
+                class="required"
+                for="grant"
+            >
+                Grant
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="grant"
+                id="grant"
+            />
+        </div>
+
+        <hr/>
+
+        <h2>Lesson Resources</h2>
+        <p>
+            This section is for links to lesson resources stored in Google Drive.
+            These resources will also appear on the "Resources" page.
+        </p>
+        
+        <!--Need to add ability to add additional resources in each category-->
+        <div class="form-group col-sm-6">
+            <h3>Student Handouts</h3>
+            <label
+                class="required"
+                for="materialsResources.handoutLinks"
+            >
+                Name
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="materialsResources.handoutLinks"
+                id="materialsResources.handoutLinks"
+            />
+            <label
+                class="required"
+                for="materialsResources.handoutLinks"
+            >
+                Link
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="materialsResources.handoutLinks"
+                id="materialsResources.handoutLinks"
+            />
+        </div>
+
+        <div class="form-group col-sm-6">
+            <h3>Class Resources</h3>
+            <label
+                class="required"
+                for="materialsResources.handoutLinks"
+            >
+                Name
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="materialsResources.handoutLinks"
+                id="materialsResources.handoutLinks"
+            />
+            <label
+                class="required"
+                for="materialsResources.handoutLinks"
+            >
+                Link
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="materialsResources.handoutLinks"
+                id="materialsResources.handoutLinks"
+            />
+        </div>
+
+        <div class="form-group col-sm-6">
+            <h3>Teacher Resources</h3>
+            <label
+                class="required"
+                for="materialsResources.handoutLinks"
+            >
+                Name
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="materialsResources.handoutLinks"
+                id="materialsResources.handoutLinks"
+            />
+            <label
+                class="required"
+                for="materialsResources.handoutLinks"
+            >
+                Link
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="materialsResources.handoutLinks"
+                id="materialsResources.handoutLinks"
+            />
+        </div>
+        
+        <hr/>
+
+        <h2>Lesson Content</h2>
+        <p>
+            The content of each lesson (including any embeded photos and formatting) gets pulled from a Google doc.
+            Add the URL to your Google doc below, then click "Sync from URL."
+            The platform will pull the lesson content from the Google doc and add it to the platform's database.
+            If you need to edit your lesson, edit the doc in Google, then click "Sync from URL"
+            to pull your changes in.
+        </p>
+
+        <div class="form-group col-sm-12">
+            <label
+                class="required"
+                for="googleDocLink"
+            >
+            Google Doc Link
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="googleDocLink"
+                id="googleDocLink"
+            />
+        </div>
+
+        <div class="form-group col-sm-12">
+            <div class="text-right">
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                >Sync from URL
+                </button>
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                    onclick="this.form.submitSource='saveAndContinue'"
+                >Save &amp; Continue Editing</button>
+            </div>
+        </div>
+        
+        <hr/>
+
+        <h2>Standards</h2>
+
+        <div class="form-check form-group col-sm-4 mt-4 mb-4">
+            <input type="checkbox" class="form-check-input" id="inheritStandards">
+            <label class="form-check-label" for="inheritStandards">Inherit all unit standards</label>
+        </div>
+        
+        <div class="form-group col-sm-12">
+            <label for="nycSSUnits">NYC Science Scope & Sequence - Units</label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple standards, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="nycSSUnits" name="nycSSUnits">
+                {{ range $i, $nycSSUnit := $nycSSUnits }}
+                <option>{{ $nycSSUnit.header }}- {{ $nycSSUnit.description }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <div class="form-group col-sm-12">
+            <label for="nysssKeyIdeas">NYS Science Standards - Key Ideas</label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple standards, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="nysssKeyIdeas" name="nysssKeyIdeas">
+                {{ range $i, $nysssKeyIdea := $nysssKeyIdeas }}
+                <option>{{ $nysssKeyIdea.header }}- {{ $nysssKeyIdea.description }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <div class="form-group col-sm-12">
+            <label for="nysssMajorUnderstandings">
+                    NYS Science Standards - Major Understandings
+            </label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple standards, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="nysssMajorUnderstandings" name="nysssMajorUnderstandings">
+                {{ range $i, $nysssMajorUnderstanding := $nysssMajorUnderstandings }}
+                <option>{{ $nysssMajorUnderstanding.code }}- {{ $nysssMajorUnderstanding.description }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <div class="form-group col-sm-12">
+            <label for="nysssMSTs">
+                    NYS Science Standards - MST
+            </label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple standards, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="nysssMSTs" name="nysssMSTs">
+                {{ range $i, $nysssMST := $nysssMSTs }}
+                <option>{{ $nysssMST.code }}- {{ $nysssMST.description }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <div class="form-group col-sm-12">
+            <label for="ngssDisciplinaryCoreIdeas">NGSS - Disciplinary Core Ideas</label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple standards, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="ngssDisciplinaryCoreIdeas" name="ngssDisciplinaryCoreIdeas">
+                {{ range $i, $ngssDisciplinaryCoreIdea := $ngssDisciplinaryCoreIdeas }}
+                <option>{{ $ngssDisciplinaryCoreIdea.header }}- {{ $ngssDisciplinaryCoreIdea.description }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <div class="form-group col-sm-12">
+            <label for="ngssScienceEngineeringPractices">NGSS - Science and Engineering Practices</label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple standards, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="ngssScienceEngineeringPractices" name="ngssScienceEngineeringPractices">
+                {{ range $i, $ngssScienceEngineeringPractice := $ngssScienceEngineeringPractices }}
+                <option>{{ $ngssScienceEngineeringPractice.header }}- {{ $ngssScienceEngineeringPractice.description }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <div class="form-group col-sm-12">
+            <label for="ngssCrossCuttingConcepts">NGSS - Cross-Cutting Concepts</label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple standards, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="ngssCrossCuttingConcepts" name="ngssCrossCuttingConcepts">
+                {{ range $i, $ngssCrossCuttingConcept := $ngssCrossCuttingConcepts }}
+                <option>{{ $ngssCrossCuttingConcept.header }}- {{ $ngssCrossCuttingConcept.description }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <div class="form-group col-sm-12">
+            <label for="cclsMathematics">CCLS - Mathematics</label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple standards, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="cclsMathematics" name="cclsMathematics">
+                {{ range $i, $cclsMathematic := $cclsMathematics }}
+                <option>{{ $cclsMathematic.code }}- {{ $cclsMathematic.description }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <div class="form-group col-sm-12">
+            <label for="cclsELATechnicalSubjects">CCLS - ELA Science & Technical Subjects</label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple standards, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="cclsELATechnicalSubjects" name="cclsELATechnicalSubjects">
+                {{ range $i, $cclsELATechnicalSubject := $cclsELATechnicalSubjects }}
+                <option>{{ $cclsELATechnicalSubject.code }}- {{ $cclsELATechnicalSubject.description }}</option>
+                {{ end }}
+            </select>
+        </div>
+
+        <section class="content">
+            <div class="form-group mt-4">
+                <div class="text-right">
+                    <button
+                        type="submit"
+                        class="btn btn-primary mr-2"
+                        onclick="this.form.submitSource='saveAndContinue'"
+                    >Save &amp; Continue Editing</button>
+    
+                    <button
+                        type="submit"
+                        class="btn btn-success ml-2"
+                        onclick="this.form.submitSource='saveAndPublish'"
+                    >Save &amp; Publish Lesson</button>
+                </div>
+            </div>
+        </section>
+
+    </form>
+</section>
