@@ -130,16 +130,9 @@ postprocessors:
 
                 <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Materials and Resources</h2>
                 <!-- =============================================================================================== -->
-                {{ if $lesson.materialsResources.supplies }}
-                <h3 style="font-size: 21px;">Supplies</h3>
-                <p>
-                    {{ sanitize $lesson.materialsResources.supplies }}
-                </p>
-                {{ end }}
-
                 {{ if nex (qs "renderer") "pdf" }}
                 {{ if $lesson.materialsResources.handoutLinks }}
-                <h3 style="font-size: 21px;">Handouts</h3>
+                <h3 style="font-size: 21px;">Student Handouts</h3>
                 {{  range $i, $handout := $lesson.materialsResources.handoutLinks }}
                 <p>
                     <a href="{{ rxreplace $handout.link `^http:` `https:` }}" target="blank">
@@ -161,6 +154,13 @@ postprocessors:
                 </p>
                 {{   end }}
                 {{  end }}
+
+                {{ if $lesson.materialsResources.supplies }}
+                <h3 style="font-size: 21px;">Supplies</h3>
+                <p>
+                    {{ sanitize $lesson.materialsResources.supplies }}
+                </p>
+                {{ end }}
 
                 {{ end }}
 
