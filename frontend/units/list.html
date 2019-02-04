@@ -1,0 +1,79 @@
+---
+page:
+    body_class: 'orgs-list fill-content'
+
+bindings:
+
+-   name:     'units'
+    resource: '/api/units'
+    fallback: []
+---
+{{ $units := $.bindings.units }}
+
+
+<h1>Units List</h1>
+<section class="content">
+    <div class="text-left pt-2 mb-3">
+        <a
+        href="/api/units/export.tsv"
+        class="btn btn-primary mb-2"
+        >
+            Download Unit Metadata (.tsv)
+        </a>
+        <a href="/api/units?limit=25&offset=0&sort=name" target="_blank" class="ml-3">
+            <i class="fa fa-external-link-square"></i>
+            View in API
+        </a>
+    </div>
+
+    <table class="table table-sm table-bordered table-striped table-hover" id="units">
+        <thead>
+            <tr>
+                {{ if $.flags.admin }}
+                <th>Edit</th>
+                {{ end }}
+                <th>Unit Title</th>
+                <th>Author</th>
+                <th>Highlights</th>
+                <th>Rationale</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range $i, $unit := $units }}
+            {{ if eqx $unit.status "published" }}
+            <tr>
+                {{ if $.flags.admin }}
+                <td>
+                    <a href="/admin/generic/{{ $unit._id }}?collection=units">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                {{ end }}
+                <td><a href="/units/{{ $unit._id }}">{{ $unit.title }}</a></td>
+                <td>{{ $unit.user.displayName }}</td>
+                <td>
+                    {{ if $unit.highlights }}
+                    {{ sanitize $unit.highlights }}
+                    {{ end }}
+                </td>
+                <td>
+                    {{ if $unit.rationale }}
+                    {{ sanitize $unit.rationale }}
+                    {{ end }}
+                </td>
+            </tr>
+            {{  end }}
+            {{ end }}
+        </tbody>
+    </table>
+</section>
+
+<script type="text/javascript">
+    $(function(){
+        $('#units').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>
