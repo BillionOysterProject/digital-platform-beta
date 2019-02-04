@@ -1,0 +1,134 @@
+---
+page:
+    body_class: 'container mt-1'
+    view:       'Resource Editor'
+
+bindings:
+
+-   name:     'units'
+    resource: '/api/units'
+    fallback: []
+    params:
+        limit: false
+        q:      "status/is:published"
+
+---
+
+{{ $units := $.bindings.units }}
+
+
+<section class="content">
+    <form method="POST" action="/api/resources">
+        <h2>Resource Information</h2>
+        <div class="form-group col-sm-8">
+            <label
+                class="required"
+                for="name"
+            >
+                Name
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+            />
+        </div>
+
+        <div class="form-group col-sm-8">
+            <label
+                class="required"
+                for="link"
+            >
+                Link
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="link"
+                id="link"
+            />
+        </div>
+
+        <div class="form-group col-sm-6">
+            <label for="resource.type">Type</label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple resource types, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="resource.type" name="resource.type"> 
+                <option>Student Handout</option>
+                <option>Class Resource</option>
+                <option>Teacher Resource</option>     
+            </select>
+        </div>
+
+        <div class="form-group col-sm-6">
+            <label for="resource.category">Category (optional)</label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple resource categories, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="resource.category" name="resource.category"> 
+                <option>Map</option>
+                <option>Article</option>
+                <option>Presentation</option>
+                <option>Video</option>
+                <option>BOP Resource</option>      
+            </select>
+        </div>
+
+        <div class="form-group col-sm-8">           
+            <label for="description">Description (optional)</label>
+            <textarea
+                class="form-control"
+                id="description"
+                name="description"
+                rows="5"
+            >
+            </textarea>          
+        </div>
+
+        <hr/>
+
+        <h2>Add Resource to Lesson(s)</h2>
+        {{ range $i, $unit := $units }}
+        {{ if $unit.lessons }}
+        <div class="form-group col-sm-6">
+            <label for="unit.lessons">{{ $unit.title }}</label>
+            <div class="form-row">
+                <small class="col-sm-12 mb-2">
+                    To select multiple lessons, press and hold the Ctrl key (Windows) or Command key (Mac)
+                </small>
+            </div>
+            <select multiple class="form-control" id="unit.lessons" name="unit.lessons">
+                {{ range $i, $lesson := $unit.lessons }}
+                <option>{{ $lesson.title }}</option>
+                {{ end }}
+            </select>
+        </div>
+        {{ end }}
+        {{ end }}
+
+        <section class="content">
+                <div class="form-group mt-4">
+                    <div class="text-right">
+                        <button
+                            type="submit"
+                            class="btn btn-primary mr-2"
+                            onclick="this.form.submitSource='saveAndContinue'"
+                        >Save &amp; Continue Editing</button>
+        
+                        <button
+                            type="submit"
+                            class="btn btn-success ml-2"
+                            onclick="this.form.submitSource='saveAndPublish'"
+                        >Save &amp; Publish Resource</button>
+                    </div>
+                </div>
+            </section>
+
+    </form>
+</section>
