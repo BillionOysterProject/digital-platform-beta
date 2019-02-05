@@ -70,6 +70,9 @@
         "name":       "units",
         "type":       "raw"
     }, {
+        "name":       "featured",
+        "type":       "bool"
+    }, {
         "name":       "featuredImage",
         "type":       "object"
     }, {

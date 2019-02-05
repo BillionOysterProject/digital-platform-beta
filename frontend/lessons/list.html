@@ -46,11 +46,11 @@ bindings:
                 <th>Setting</th>
                 <th>Grade Levels</th>
                 <th>Subject Areas</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
             {{ range $i, $lesson := $lessons }}
-            {{ if eqx $lesson.status "published" }}
             <tr>
                 {{ if $.flags.admin }}
                 <td>
@@ -62,12 +62,16 @@ bindings:
                 <td><a href="/lessons/{{ $lesson._id }}">{{ $lesson.title }}</a></td>
                 <td>{{ $lesson.user.displayName }}</td>
                 <td>{{ join (pluck $lesson.units "title") ", " }}</td>
-                <td>{{ sanitize $lesson.lessonOverview.lessonSummary }}</td>
+                <td>
+                    {{ if $lesson.lessonOverview.lessonSummary }}
+                    {{ sanitize $lesson.lessonOverview.lessonSummary }}
+                    {{ end }}
+                </td>
                 <td>{{ $lesson.lessonOverview.setting }}</td>
                 <td>{{ $lesson.lessonOverview.grade }}</td>
                 <td>{{ join (pluck $lesson.lessonOverview.subjectAreas "subject") ", " }}</td>
+                <td>{{ $lesson.status }}</td>
             </tr>
-            {{  end }}
             {{ end }}
         </tbody>
     </table>

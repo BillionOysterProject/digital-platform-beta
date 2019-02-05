@@ -18,20 +18,22 @@ bindings:
     params:
         limit: false
         noexpand: true
-        q:      'status/published'
 ---
 {{ $lessons := $.bindings.lessons }}
 {{ $units := $.bindings.units }}
 
 <section class="content container-fluid lessons-list">
-    <h2>
-        <i class="fa fa-star"></i>
-        Featured Lessons
-    </h2>
+    <h2>Featured Lessons</h2>
+    {{ range $i, $lesson := $lessons }}
+    {{ if $lesson.featured  }}
+    <p>{{ $lesson.title }}</p>
+    {{ end }}
+    {{ end }}
     <hr/>
     <br/>
 
     {{ range $i, $unit := $units }}
+    {{ if eqx $unit.status "published" }}
 
     <h3
         data-toggle="collapse"
@@ -50,19 +52,9 @@ bindings:
         <div class="card-deck">
         {{ range $j, $lessonID := $unit.lessons }}
         {{ $lesson := (firstByKey $lessons `_id` $lessonID) }}
+        {{ if eqx $lesson.status "published" }}
         
-            <div
-                class="
-                    card
-                    {{ if eqx $lesson.status `draft` }}
-                    text-white bg-info
-                    {{ else if eqx $lesson.status `returned` }}
-                    border-danger
-                    {{ else if eqx $lesson.status `pending` }}
-                    border-primary
-                    {{ end }}
-                "
-            >
+            <div class="card">
                 <div class="card-header">
                     {{ if and ($lesson.status) (nex $lesson.status `published`) }}
                     <span>[{{ upper $lesson.status }}]</span>
@@ -102,7 +94,9 @@ bindings:
                 </div>
             </div>
         {{ end }}
+        {{ end }}
         </div>
     </div>
+    {{ end }}
     {{ end }}
 </section>
