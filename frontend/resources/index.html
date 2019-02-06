@@ -13,6 +13,62 @@ bindings:
 ---
 {{ $lessons := $.bindings.lessons }}
 
+{{ range $lesson := $lessons }}
+{{   if and $lesson.materialsResources (eqx $lesson.status "published") }}
+
+{{     range $link := $lesson.materialsResources.handoutsFileInput }}
+{{       set $link "type" "Student Handout (file)" }}
+{{       set $link "name" $link.originalname }}
+{{       set $link "lessonId" $lesson._id }}
+{{       push "allResources" $link }}
+{{     end }}
+
+{{     range $link := $lesson.materialsResources.teacherResourcesFiles }}
+{{       set $link "type" "Teacher Resource (file)" }}
+{{       set $link "name" $link.originalname }}
+{{       set $link "lessonId" $lesson._id }}
+{{       push "allResources" $link }}
+{{     end }}
+
+{{     range $link := $lesson.materialsResources.lessonMaterialFiles }}
+{{       set $link "type" "Class Resource (file)" }}
+{{       set $link "name" $link.originalname }}
+{{       set $link "lessonId" $lesson._id }}
+{{       push "allResources" $link }}
+{{     end }}
+
+{{     range $link := $lesson.materialsResources.handoutLinks }}
+{{       set $link "name" (or $link.name $link.link) }}
+{{       set $link "type" "Student Handout (link)" }}
+{{       set $link "lessonId" $lesson._id }}
+{{       push "allResources" $link }}
+{{     end }}
+
+{{     range $link := $lesson.materialsResources.teacherResourcesLinks }}
+{{       set $link "name" (or $link.name $link.link) }}
+{{       set $link "type" "Teacher Resource (link)" }}
+{{       set $link "lessonId" $lesson._id }}
+{{       push "allResources" $link }}
+{{     end }}
+
+{{     range $link := $lesson.materialsResources.lessonMaterialLinks }}
+{{       set $link "name" (or $link.name $link.link) }}
+{{       set $link "type" "Class Resource (link)" }}
+{{       set $link "lessonId" $lesson._id }}
+{{       push "allResources" $link }}
+{{     end }}
+
+{{   end }}
+{{ end }}
+
+{{ range $resource := $.vars.allResources }}
+{{   $key := printf "%x" (sha1 $resource.name) }}
+{{   set $.vars.resourceLessonMap $key (append (get $.vars.resourceLessonMap $key) $resource.lessonId) }}
+{{ end }}
+
+{{ $uniqueResources := uniqByKey $.vars.allResources "name" }}
+<pre>{{ jsonify $.vars.resourceLessonMap }}</pre>
+
 <section class="content">
     
     <table class="table table-sm table-bordered table-striped table-hover" id="resources">
@@ -25,96 +81,12 @@ bindings:
                 <th>Type</th>
                 <th>Category</th>
                 <th>Description</th>
-                <th>Lesson</th>
+                <th>Lesson(s)</th>
+                <th>Lesson id(s)</th>
             </tr>
         </thead>
         <tbody>
-            {{ range $i, $lesson := $lessons }}
-            {{ if and $lesson.materialsResources (eqx $lesson.status "published") }}
-
-            {{ if $lesson.materialsResources.handoutLinks }} 
-            {{ $handoutLinks := uniqByKey $lesson.materialsResources.handoutLinks "name" }} 
-            {{ range $j, $handoutLink := $handoutLinks }}
-            <tr>
-                {{ if $.flags.admin }}
-                <td>
-                    <a href="">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                </td>
-                {{ end }}
-                <td><a href="" target="blank">{{ $handoutLink.name }}</a></td>
-                <td>student handout (link)</td>
-                <td></td>
-                <td></td>
-                <td>{{ $lesson.title }}</td>
-            </tr>
-            {{ end }}
-            {{ end }}
-
-            {{ if $lesson.materialsResources.handoutsFileInput }} 
-            {{ $handoutFileInputs := $lesson.materialsResources.handoutsFileInput }} 
-            {{ range $j, $handoutFileInput := $handoutFileInputs }}
-            <tr>
-                {{ if $.flags.admin }}
-                <td>
-                    <a href="">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                </td>
-                {{ end }}
-                <td><a href="" target="blank">{{ $handoutFileInput.originalname }}</a></td>
-                <td>student handout (file upload)</td>
-                <td></td>
-                <td></td>
-                <td>{{ $lesson.title }}</td>
-            </tr>
-            {{ end }}
-            {{ end }}
-
-            {{ if $lesson.materialsResources.lessonMaterialLinks }} 
-            {{ $lessonMaterialLinks := $lesson.materialsResources.lessonMaterialLinks }} 
-            {{ range $j, $lessonMaterialLink := $lessonMaterialLinks }}
-            <tr>
-                {{ if $.flags.admin }}
-                <td>
-                    <a href="">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                </td>
-                {{ end }}
-                <td><a href="" target="blank">{{ $lessonMaterialLink.name }}</a></td>
-                <td>class resource</td>
-                <td></td>
-                <td></td>
-                <td>{{ $lesson.title }}</td>
-            </tr>
-            {{ end }}
-            {{ end }}
-
-            {{ if $lesson.materialsResources.teacherResourcesFiles }} 
-            {{ $teacherResourcesFiles := $lesson.materialsResources.teacherResourcesFiles }} 
-            {{ range $j, $teacherResourcesFile := $teacherResourcesFiles }}
-            <tr>
-                {{ if $.flags.admin }}
-                <td>
-                    <a href="">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                </td>
-                {{ end }}
-                <td><a href="" target="blank">{{ $teacherResourcesFile.originalname }}</a></td>
-                <td>teacher resource (file upload)</td>
-                <td></td>
-                <td></td>
-                <td>{{ $lesson.title }}</td>
-            </tr>
-            {{ end }}
-            {{ end }}
-
-            {{ if $lesson.materialsResources.teacherResourcesLinks }} 
-            {{ $teacherResourcesLinks := $lesson.materialsResources.teacherResourcesLinks }} 
-            {{ range $j, $teacherResourcesLink := $teacherResourcesLinks }}
+            {{ range $uniqueResource := $uniqueResources }}
             <tr>
                 {{ if $.flags.admin }}
                 <td>
@@ -124,23 +96,16 @@ bindings:
                 </td>
                 {{ end }}
                 <td>
-                    <a href="{{ $teacherResourcesLink.link }}" target="blank">
-                        {{ if $teacherResourcesLink.name }}
-                        {{ $teacherResourcesLink.name }}
-                        {{ else }}
-                        <i class="fa fa-link"></i>
-                        {{ end }}
-                    </a>
+                    {{ $uniqueResource.name }}
                 </td>
-                <td>teacher resource (link)</td>
+                <td>
+                    {{ $uniqueResource.type }}
+                </td>
                 <td></td>
                 <td></td>
-                <td>{{ $lesson.title }}</td>
+                <td></td>
+                <td></td>
             </tr>
-            {{ end }}
-            {{ end }}
-
-            {{  end }}
             {{ end }}
         </tbody>
     </table>

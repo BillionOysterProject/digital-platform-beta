@@ -18,85 +18,205 @@ bindings:
     params:
         limit: false
         noexpand: true
+        q:      'status/published'
 ---
 {{ $lessons := $.bindings.lessons }}
 {{ $units := $.bindings.units }}
 
 <section class="content container-fluid lessons-list">
-    <h2>Featured Lessons</h2>
-    {{ range $i, $lesson := $lessons }}
-    {{ if $lesson.featured  }}
-    <p>{{ $lesson.title }}</p>
-    {{ end }}
-    {{ end }}
-    <hr/>
-    <br/>
-
-    {{ range $i, $unit := $units }}
-    {{ if eqx $unit.status "published" }}
-
-    <h3
-        data-toggle="collapse"
-        href="#unit{{ $unit._id }}"
-        role="button"
-        aria-expanded="true"
-    >
-        <i class="fa-fw {{ or $unit.icon `fa-book` }}"></i>
-        {{ $unit.title }}
-    </h3>
-    
-
-    <hr />
-
-    <div class="unit-lessons mb-4" id="unit{{ $i }}">
+    <h2 class="text-center">Featured Lessons</h2>
+    <div class="unit-lessons mb-4">
         <div class="card-deck">
-        {{ range $j, $lessonID := $unit.lessons }}
-        {{ $lesson := (firstByKey $lessons `_id` $lessonID) }}
-        {{ if eqx $lesson.status "published" }}
-        
+        {{ range $i, $lesson := $lessons }}
+        {{ if and $lesson.featured (eqx $lesson.status "published") }}
             <div class="card">
                 <div class="card-header">
-                    {{ if and ($lesson.status) (nex $lesson.status `published`) }}
-                    <span>[{{ upper $lesson.status }}]</span>
-                    {{ end }}
-
                     <a href="/lessons/{{ $lesson._id }}">
-                        <b>{{ rxreplace $lesson.title (printf "^%s" $unit.title) "" }}</b>
+                        <b>{{ $lesson.title }}</b>
                     </a>
                 </div>
-                <div class="card-body pt-1">
+                <div class="card-body">
                     <p class="text-muted">
-                        {{ if $lesson.lessonOverview.setting }}
-                        <small>
-                            <b>{{ $lesson.lessonOverview.setting }}</b> setting
-                        </small>
+                            {{ if $lesson.lessonOverview.setting }}
+                            <small>
+                                <b>{{ $lesson.lessonOverview.setting }}</b> setting
+                            </small>
+                            {{ end }}
+
+                            {{ if $lesson.lessonOverview.grade }}
+                            <small>&nbsp;&nbsp;|&nbsp;&nbsp;</small>
+                            <small>
+                                <b>{{ $lesson.lessonOverview.grade }}</b> grade
+                            </small>
+                            {{ end }}
+                        </p>
+
+                        {{ if $lesson.lessonOverview.lessonSummary }}
+                        <p>
+                            {{ elide (stripHtml $lesson.lessonOverview.lessonSummary) 300 }}
+                            ...
+                        </p>
                         {{ end }}
 
-                        {{ if $lesson.lessonOverview.grade }}
-                        <small>&nbsp;&nbsp;|&nbsp;&nbsp;</small>
-                        <small>
-                            <b>{{ $lesson.lessonOverview.grade }}</b> grade
-                        </small>
+                        {{ if $lesson.featuredImage }}
+                        <div class="preview">
+                            <img src="{{ $lesson.featuredImage.path }}">
+                        </div>
                         {{ end }}
-                    </p>
-
-                    {{ if $lesson.lessonOverview.lessonSummary }}
-                    <p>
-                        {{ elide (stripHtml $lesson.lessonOverview.lessonSummary) 115 }}
-                    </p>
-                    {{ end }}
-
-                    {{ if $lesson.featuredImage }}
-                    <div class="preview">
-                        <img src="{{ $lesson.featuredImage.path }}">
-                    </div>
-                    {{ end }}
                 </div>
-            </div>
+            </div>   
         {{ end }}
         {{ end }}
         </div>
     </div>
-    {{ end }}
+    <hr/>
+    <br/>
+
+    
+    <h2 class="text-center">Investigations</h2>
+    <div class="content">
+        <p>Investigations are lessons that are designed to be taught as a whole sequence...</p>
+    </div>
+    {{ range $i, $unit := $units }}
+        {{ if and (contains $unit.title "Investigation") (eqx $unit.status "published") }}
+        
+        <h3
+            data-toggle="collapse"
+            href="#unit{{ $unit._id }}"
+            role="button"
+            aria-expanded="true"
+        >
+            <i class="fa-fw {{ or $unit.icon `fa-book` }}"></i>
+            {{ $unit.title }}
+        </h3>
+        
+        <hr />
+
+        <div class="unit-lessons mb-4" id="unit{{ $i }}">
+            <div class="card-deck">
+            {{ range $j, $lessonID := $unit.lessons }}
+            {{ $lesson := (firstByKey $lessons `_id` $lessonID) }}
+            {{ if eqx $lesson.status "published" }}
+            
+                <div class="card">
+                    <div class="card-header">
+                        {{ if and ($lesson.status) (nex $lesson.status `published`) }}
+                        <span>[{{ upper $lesson.status }}]</span>
+                        {{ end }}
+
+                        <a href="/lessons/{{ $lesson._id }}">
+                            <b>{{ rxreplace $lesson.title (printf "^%s" $unit.title) "" }}</b>
+                        </a>
+                    </div>
+                    <div class="card-body pt-1">
+                        <p class="text-muted">
+                            {{ if $lesson.lessonOverview.setting }}
+                            <small>
+                                <b>{{ $lesson.lessonOverview.setting }}</b> setting
+                            </small>
+                            {{ end }}
+
+                            {{ if $lesson.lessonOverview.grade }}
+                            <small>&nbsp;&nbsp;|&nbsp;&nbsp;</small>
+                            <small>
+                                <b>{{ $lesson.lessonOverview.grade }}</b> grade
+                            </small>
+                            {{ end }}
+                        </p>
+
+                        {{ if $lesson.lessonOverview.lessonSummary }}
+                        <p>
+                            {{ elide (stripHtml $lesson.lessonOverview.lessonSummary) 250 }}
+                            ...
+                        </p>
+                        {{ end }}
+
+                        {{ if $lesson.featuredImage }}
+                        <div class="preview">
+                            <img src="{{ $lesson.featuredImage.path }}">
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+            {{ end }}           
+            {{ end }}
+            </div>
+        </div>
+        {{ end }}
+    {{ end }} 
+      
+    <hr/>
+    <h2 class="text-center">Protocol Lessons</h2>
+    <div class="content">
+        <p>
+            Protocol lessons are standalone or two-part lessons that aren't designed to be taught in a particular sequence...
+        </p>
+    </div>
+    {{ range $i, $unit := $units }}
+    {{   if and (not (contains $unit.title "Investigation")) (eqx $unit.status "published") }}     
+        
+        <h3
+            data-toggle="collapse"
+            href="#unit{{ $unit._id }}"
+            role="button"
+            aria-expanded="true"
+        >
+            <i class="fa-fw {{ or $unit.icon `fa-book` }}"></i>
+            {{ $unit.title }}
+        </h3>
+        
+        <hr />
+
+        <div class="unit-lessons mb-4" id="unit{{ $i }}">
+            <div class="card-deck">
+            {{ range $j, $lessonID := $unit.lessons }}
+            {{ $lesson := (firstByKey $lessons `_id` $lessonID) }}
+            {{ if eqx $lesson.status "published" }}
+            
+                <div class="card">
+                    <div class="card-header">
+                        {{ if and ($lesson.status) (nex $lesson.status `published`) }}
+                        <span>[{{ upper $lesson.status }}]</span>
+                        {{ end }}
+
+                        <a href="/lessons/{{ $lesson._id }}">
+                            <b>{{ rxreplace $lesson.title (printf "^%s" $unit.title) "" }}</b>
+                        </a>
+                    </div>
+                    <div class="card-body pt-1">
+                        <p class="text-muted">
+                            {{ if $lesson.lessonOverview.setting }}
+                            <small>
+                                <b>{{ $lesson.lessonOverview.setting }}</b> setting
+                            </small>
+                            {{ end }}
+
+                            {{ if $lesson.lessonOverview.grade }}
+                            <small>&nbsp;&nbsp;|&nbsp;&nbsp;</small>
+                            <small>
+                                <b>{{ $lesson.lessonOverview.grade }}</b> grade
+                            </small>
+                            {{ end }}
+                        </p>
+
+                        {{ if $lesson.lessonOverview.lessonSummary }}
+                        <p>
+                            {{ elide (stripHtml $lesson.lessonOverview.lessonSummary) 250 }}
+                            ...
+                        </p>
+                        {{ end }}
+
+                        {{ if $lesson.featuredImage }}
+                        <div class="preview">
+                            <img src="{{ $lesson.featuredImage.path }}">
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+            {{ end }}           
+            {{ end }}
+            </div>
+        </div>
+        {{ end }}
     {{ end }}
 </section>
