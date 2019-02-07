@@ -47,7 +47,11 @@ bindings:
                 <td>student handout (link)</td>
                 <td></td>
                 <td></td>
-                <td>{{ $lesson.title }}</td>
+                <td>
+                    <a href="/lessons/{{ $lesson._id }}" target="blank">
+                    {{ $lesson.title }}
+                    </a>
+                </td>
             </tr>
             {{ end }}
             {{ end }}
@@ -67,7 +71,11 @@ bindings:
                 <td>student handout (file upload)</td>
                 <td></td>
                 <td></td>
-                <td>{{ $lesson.title }}</td>
+                <td>
+                    <a href="/lessons/{{ $lesson._id }}" target="blank">
+                    {{ $lesson.title }}
+                    </a>
+                </td>
             </tr>
             {{ end }}
             {{ end }}
@@ -87,7 +95,11 @@ bindings:
                 <td>class resource</td>
                 <td></td>
                 <td></td>
-                <td>{{ $lesson.title }}</td>
+                <td>
+                    <a href="/lessons/{{ $lesson._id }}" target="blank">
+                    {{ $lesson.title }}
+                    </a>
+                </td>
             </tr>
             {{ end }}
             {{ end }}
@@ -111,7 +123,11 @@ bindings:
                 <td>teacher resource (file upload)</td>
                 <td></td>
                 <td></td>
-                <td>{{ $lesson.title }}</td>
+                <td>
+                    <a href="/lessons/{{ $lesson._id }}" target="blank">
+                    {{ $lesson.title }}
+                    </a>
+                </td>
             </tr>
             {{ end }}
             {{ end }}
@@ -139,7 +155,11 @@ bindings:
                 <td>teacher resource (link)</td>
                 <td></td>
                 <td></td>
-                <td>{{ $lesson.title }}</td>
+                <td>
+                    <a href="/lessons/{{ $lesson._id }}" target="blank">
+                    {{ $lesson.title }}
+                    </a>
+                </td>
             </tr>
             {{ end }}
             {{ end }}
