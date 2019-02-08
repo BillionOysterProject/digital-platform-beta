@@ -238,10 +238,7 @@ class CollectionView(Endpoint):
         if 'limit' not in params:
             params['limit'] = False
 
-        if request.args.get('noexpand', not has_nested_fields):
-            params['noexpand'] = True
-        else:
-            params['noexpand'] = False
+        params['noexpand'] = False
 
         results = self.collection.query(query, **params)
         results = self._prepare_query_results(results, **query_results_params)
