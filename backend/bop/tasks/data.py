@@ -117,7 +117,8 @@ def generate_batch_expeditions_tsv():
     expeditions          = api.db.collection('expeditions').query(
         'status/published',
         limit=False,
-        sort=['monitoringStartDate']
+        sort=['monitoringStartDate'],
+        noexpand=True
     )
 
     teams                = dict([
