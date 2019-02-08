@@ -57,7 +57,6 @@ EXPEDITION_DATA_EXPORT_FIELDS = [
     'protocols.oysterMeasurement.conditionOfOysterCage.notesOnDamageToCage',
     'protocols.oysterMeasurement.maximumSizeOfAllLiveOysters',
     'protocols.oysterMeasurement.minimumSizeOfAllLiveOysters',
-    'protocols.oysterMeasurement.measuringOysterGrowth.substrateShells.*.measurements.*.sizeOfLiveOysterMM',
     'protocols.mobileTrap.organism',
     'protocols.settlementTiles.*.grid*.organism',
     'protocols.waterQuality.depth',
