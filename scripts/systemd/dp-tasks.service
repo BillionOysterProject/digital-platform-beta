@@ -1,0 +1,10 @@
+[Unit]
+Description=BOP Digital Platform Tassks
+
+[Service]
+Type=oneshot
+ExecStart=/home/ubuntu/platform/backend/env/bin/python run-tasks.py
+Environment="HOME=/home/ubuntu"
+Environment="AWS_PROFILE=bop"
+User=ubuntu
+WorkingDirectory=/home/ubuntu/platform/backend

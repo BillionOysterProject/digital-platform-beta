@@ -1,0 +1,15 @@
+[Unit]
+Description=BOP Digital Platform: Python Worker
+
+[Service]
+Type=simple
+ExecStart=/home/ubuntu/platform/backend/env/bin/python worker.py
+Environment="HOME=/home/ubuntu"
+Environment="AWS_PROFILE=bop"
+Environment="WSGI=1"
+Environment="HTTP_HOST=0.0.0.0"
+Environment="SENTRY_DSN=https://dd5f47b035ea4557b9a8776a5676895d:597244d68e144d03bbad9b6b9da4f8ae@sentry.io/1200010"
+Environment="BOP_S3_PUBLIC_BUCKET=digital-platform-prod-files"
+User=ubuntu
+WorkingDirectory=/home/ubuntu/platform/backend
+Restart=always
