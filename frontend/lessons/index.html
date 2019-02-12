@@ -30,12 +30,18 @@ bindings:
             <div class="card-deck">
             {{ range $i, $lesson := $lessons }}
             {{ if and $lesson.featured (eqx $lesson.status "published") }}
+                    
                 <div class="card">
                     <div class="card-header">
                         <a href="/lessons/{{ $lesson._id }}">
                             <b>{{ $lesson.title }}</b>
                         </a>
                     </div>
+                    {{ if $lesson.featuredImage }}
+                        <a href="/lessons/{{ $lesson._id }}">
+                            <img class="card-img-top preview" src="{{ $lesson.featuredImage.path }}">
+                        </a>
+                    {{ end }}
                     <div class="card-body">
                         <p class="text-muted">
                                 {{ if $lesson.lessonOverview.setting }}
@@ -51,25 +57,37 @@ bindings:
                                 </small>
                                 {{ end }}
                             </p>
-
-                            {{ if $lesson.featuredImage }}
-                            <div class="preview">
-                                <img src="{{ $lesson.featuredImage.path }}">
-                            </div>
-                            {{ end }}
-
+                            
                             {{ if $lesson.lessonOverview.lessonSummary }}
                             <p style="color:#2c3c56">
+                                <small>
                                 {{ if $lesson.featuredImage.path }}
                                 {{ elide (stripHtml $lesson.lessonOverview.lessonSummary) 250 }}
                                 ...
                                 {{ else }}
                                 {{ stripHtml $lesson.lessonOverview.lessonSummary }}
                                 {{ end }}
+                                </small>
                             </p>
                             {{ end }}
                     </div>
-                </div>   
+                    <div class="card-footer">
+                        {{ if $lesson.lessonOverview.subjectAreas }}
+                        <ul class="list-inline">
+                            {{ range $subjectArea := $lesson.lessonOverview.subjectAreas }}
+                            <li class="list-inline-item">
+                                <span 
+                                    style="background-color:{{ $subjectArea.color}}; color:#ffffff; padding:5px"
+                                    class="rounded"
+                                >
+                                    {{ $subjectArea.subject }}
+                                </span>
+                            </li>
+                            {{ end }}
+                        </ul>
+                        {{ end }}
+                    </div>
+                </div>  
             {{ end }}
             {{ end }}
             </div>
