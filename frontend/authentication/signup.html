@@ -2,6 +2,31 @@
 page:
     body_class: 'container mt-1'
     view:       'Sign Up'
+
+bindings:
+-   name:     'orgs'
+    resource: '/api/school-orgs/'
+    params:
+        limit:  false
+        sort:   ['name']
+
+-   name:  nycSchoolLocations
+    resource: 'https://data.cityofnewyork.us/resource/r2nx-nhxe.json' 
+    param_joiner: ','
+    params:
+        $limit: 15000
+        $select: 
+        - ats_system_code
+        - council_district
+        - grades_text
+        - location_1_address
+        - location_1_city
+        - location_1_state
+        - location_1_zip
+        - location_category_description
+        - nta_name
+        - location_type_description  
+        - location_name
 ---
 <section class="content">
     <form
@@ -11,80 +36,93 @@ page:
     >
         <div class="row">
             <div class="offset-md-1 col-md-8">
-                <div style="margin: 19px">
-                    <p>Already have an account? <a href="/authentication/signin">Sign in</a></p>
-                </div>
-                <div class="alert alert-info" role="alert">
+                <p>Already have an account? <a href="/authentication/signin">Sign in</a></p>
+                <div class="alert alert-info" role="alert" style="color:#2c3c56">
                     <p>
-                        At Billion Oyster Project, we believe that teamwork is fundamental to restoring New York Harbor!
-                        If you're an adult who will be entering data via the platform, you'll need to sign up for an account.
-                        Students no longer need to sign up for a platform account.
-
-                        Each team belongs to an <strong>organization</strong> like a school, non-profit, or business.
+                        Sign up for an account <strong>if you're an adult who will be entering data via the platform</strong>.
+                        <br/>
+                        Once you've attended an Oyster Research Training, we'll approve your account so you can enter data.
                     </p>
                     <p>
-                        If you're a volunteer community scientist- our name for "citizen scientist"- who isn't representing an organization, not to worry!  Just select "Unaffiliated/None" as your organization.
+                        Students no longer need to sign up for a platform account!
                     </p>
                 </div>
-                <br/>
-                
-                <fieldset>
-                    <!-- FIRST NAME -->
-                    <!-- =============================================================================================== -->
-                    <div class="row">
-                        <div class="form-group col-sm-8" show-errors>
-                            <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" name="firstName" class="form-control" 
-                            placeholder="First Name" required>
-                            <div role="alert">
-                                <p class="help-block error-text">First name is required.</p>
-                            </div>
+
+                <!-- FIRST NAME -->
+                <!-- =============================================================================================== -->
+                <div class="row">
+                    <div class="form-group col-sm-8" show-errors>
+                        <label for="firstName">First Name</label>
+                        <input 
+                            type="text" 
+                            id="firstName" 
+                            name="firstName" 
+                            class="form-control" 
+                            placeholder="First Name" 
+                            required
+                        >
+                        <div role="alert">
+                            <p class="help-block error-text">First name is required.</p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- LAST NAME -->
-                    <!-- =============================================================================================== -->
-                    <div class="row">
-                        <div class="form-group col-sm-8" show-errors>
-                            <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" name="lastName" class="form-control" 
-                            placeholder="Last Name" required>
-                            <div  role="alert">
-                                <p class="help-block error-text">Last name is required.</p>
-                            </div>
+                <!-- LAST NAME -->
+                <!-- =============================================================================================== -->
+                <div class="row">
+                    <div class="form-group col-sm-8" show-errors>
+                        <label for="lastName">Last Name</label>
+                        <input 
+                            type="text" 
+                            id="lastName" 
+                            name="lastName" 
+                            class="form-control" 
+                            placeholder="Last Name" 
+                            required>
+                        <div role="alert">
+                            <p class="help-block error-text">Last name is required.</p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- EMAIL -->
-                    <!-- =============================================================================================== -->
-                    <div class="row">
-                        <div class="form-group col-sm-8" show-errors>
-                            <label for="email">Email</label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                name="email" 
-                                class="form-control" 
-                                placeholder="email@example.com" 
-                                lowercase 
-                                required>
-                            <div role="alert">
-                                <p class="help-block error-text">Email address is required.</p>
-                                <p class="help-block error-text">Email address is invalid.</p>
-                            </div>
+                <!-- EMAIL -->
+                <!-- =============================================================================================== -->
+                <div class="row">
+                    <div class="form-group col-sm-8" show-errors>
+                        <label for="email">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-control" 
+                            placeholder="email@example.com" 
+                            lowercase 
+                            required>
+                        <div role="alert">
+                            <p class="help-block error-text">Email address is required.</p>
+                            <p class="help-block error-text">Email address is invalid.</p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- USER TYPE (if role == team-lead) -->
-                    <!-- =============================================================================================== -->
-                    <div class="row">
-                        <div class="form-group col-sm-4" show-errors>
-                            <label for="role" class="control-label required">User Type</label>
+                <!-- USER TYPE (if role == team-lead) -->
+                <!-- =============================================================================================== -->
+                <fieldset class="form-group">
+                    <div class="row">     
+                        <legend class="col-form-label col-sm-2 pt-0">User Type</legend>
+                        <div class="col-sm-12">
+                            <p class="form-text">
+                                Select the type that most closely describes what you do.  
+                                "Community scientist" is the term we use for a volunteer citizen scientist.
+                            </p>
+                        </div>    
+                        <div class="col-sm-12" show-errors>
                             <div class="radio">
-                                <label>
+                                <label for="teacher">
                                     <input
                                         type="radio"
-                                        name="teamLeadType"
+                                        id="teacher"
+                                        name="teacher"
                                         value="teacher"
                                         required
                                     >
@@ -92,10 +130,11 @@ page:
                                 </label>
                             </div>
                             <div class="radio">
-                                <label>
+                                <label for="partner">
                                     <input
                                         type="radio"
-                                        name="teamLeadType"
+                                        id="partner"
+                                        name="partner"
                                         value="partner"
                                         required
                                     >
@@ -103,10 +142,11 @@ page:
                                 </label>
                             </div>
                             <div class="radio">
-                                <label>
+                                <label for="communityScientist">
                                     <input
                                         type="radio"
-                                        name="teamLeadType"
+                                        id="communityScientist"
+                                        name="communityScientist"
                                         value="citizen scientist"
                                         required
                                     >
@@ -114,10 +154,11 @@ page:
                                 </label>
                             </div>
                             <div class="radio">
-                                <label>
+                                <label for="professionalScientist">
                                     <input
                                         type="radio"
-                                        name="teamLeadType"
+                                        id="professionalScientist"
+                                        name="professionalScientist"
                                         value="professional scientist"
                                         required
                                     >
@@ -125,10 +166,11 @@ page:
                                 </label>
                             </div>
                             <div class="radio">
-                                <label>
+                                <label for="other">
                                     <input
                                         type="radio"
-                                        name="teamLeadType"
+                                        id="other"
+                                        name="other"
                                         value="other"
                                         required
                                     >
@@ -136,24 +178,27 @@ page:
                                 </label>
                             </div>
                         </div>
-                        <div class="form-group col-sm-8">
-                            <span class="help-block">
-                                Select the type that most closely describes what you do.  
-                                "Community scientist" is the term we use for a volunteer citizen scientist.
-                            </span>
-                        </div>
                     </div>
+                </fieldset>
 
-                    <!-- SCHOOL TYPE (if user type == teacher) -->
-                    <!-- =============================================================================================== -->
-                    <div class="row">
-                        <div class="form-group col-sm-4" show-errors>
-                            <label for="role" class="control-label required">School Type</label>
+                <!-- SCHOOL TYPE (if user type == teacher) -->
+                <!-- =============================================================================================== -->
+                <fieldset class="form-group">
+                    <div class="row">     
+                        <legend class="col-form-label col-sm-2 pt-0">School Type</legend>   
+                        <div class="col-sm-12">
+                            <p class="form-text">
+                                Select whether your school is a NYC public, NYC charter, private, or public/charter school from outside NYC.  
+                                (We use this field to automatically populate information about NYC public schools.)
+                            </p>
+                        </div> 
+                        <div class="col-sm-12" show-errors>
                             <div class="radio">
-                                <label>
+                                <label for="nyc-public">
                                     <input
                                         type="radio"
-                                        name="schoolType"
+                                        id="nyc-public"
+                                        name="nyc-public"
                                         value="nyc-public"
                                         required
                                     >
@@ -161,10 +206,11 @@ page:
                                 </label>
                             </div>
                             <div class="radio">
-                                <label>
+                                <label for="nyc-charter">
                                     <input
                                         type="radio"
-                                        name="schoolType"
+                                        id="nyc-charter"
+                                        name="nyc-charter"
                                         value="nyc-charter"
                                         required
                                     >
@@ -172,10 +218,11 @@ page:
                                 </label>
                             </div>
                             <div class="radio">
-                                <label>
+                                <label for="private">
                                     <input
                                         type="radio"
-                                        name="schoolType"
+                                        id="private"
+                                        name="private"
                                         value="private"
                                         required
                                     >
@@ -183,145 +230,132 @@ page:
                                 </label>
                             </div>
                             <div class="radio">
-                                <label>
+                                <label for="other-public">
                                     <input
                                         type="radio"
-                                        name="schoolType"
+                                        id="other-public"
+                                        name="other-public"
                                         value="other-public"
                                         required
                                     >
                                     Other municipality public/charter
                                 </label>
                             </div>
-                            <div class="form-group col-sm-8">
-                                <span class="help-block">
-                                </span>
-                            </div>
                         </div>
-                        <div class="form-group col-sm-8">
-                            <span class="help-block">
-                                Select whether your school is a NYC public, NYC charter, private, or public/charter school from outside NYC.  (We use this field to automatically populate information about NYC public schools.)
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- ORGANIZATION -->
-                    <!-- =============================================================================================== -->
-
-                    <!-- NYC Public Schools: only shows for users who are NYC public school teachers -->
-                    <div class="row">
-                        <div class="form-group col-sm-12" show-errors>
-                            <label for="schoolOrg" class="control-label required">Organization (NYC Public School)</label>
-
-                            <span class="help-block">
-                                Click the field below to start typing your school's name or ATS code, then select your school from the dropdown list.
-                            </span>
-
-                            <ui-select id="organization">
-                            </ui-select>
-
-                            <span class="help-block">
-                                Note: If you work at a NYC public school, your school should already appear as an organization in this list.  
-                                If you don't see your NYC public school on the list, contact <a href="mailto:bop.digital.platform@nyharbor.org">bop.digital.platform@nyharbor.org</a>.
-                            </span>
-                        </div>
-                    </div>
-
-
-                    <!-- Everyone Else -->
-                    <div class="row">
-                        <div class="form-group col-sm-12" show-errors>
-                            <label for="schoolOrg" class="control-label required">Organization</label>
-
-                            <span class="help-block">
-                                <p>
-                                    Click the field below to start typing your organization's name, then
-                                    select your organization from the dropdown list.  If you're a
-                                    community scientist who isn't representing an organization, select
-                                    "Unaffiliated/None."
-                                </p>
-                                <p>
-                                    If your organization is not listed below, you can
-                                    <a href="">add an organization</a>- but please check if your organization is already in our system first!
-                                </p>
-                            </span>
-
-                            <ui-select id="organization">
-                            </ui-select>
-
-                            <!-- All others help text -->
-                            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                            <span class="help-block">
-                                Note: only select "Billion Oyster Project" if you are a staff member at Billion Oyster Project.
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- USERNAME -->
-                    <!-- =============================================================================================== -->
-                    <div class="row">
-                        <div class="form-group col-sm-12" show-errors>
-                            <label for="username">Username</label>
-                            <input 
-                                type="text" 
-                                id="username" 
-                                name="username" 
-                                class="form-control"
-                                placeholder="Username" 
-                                lowercase
-                                required
-                            >
-                            <div role="alert">
-                                <p class="help-block error-text">Username is required.</p>
-                            </div>
-                        </div>
-                        <div class="form-group col-sm-6" show-errors>
-                            <label for="password">Password</label>
-                            <input 
-                                type="password" 
-                                id="password" 
-                                name="password" 
-                                class="form-control"
-                                placeholder="Password" 
-                                password-validator 
-                                required
-                            >
-                            <div role="alert">
-                                <p class="help-block error-text">Password is required.</p>
-                                <div>
-                                    <p class="help-block"></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-sm-6" show-errors>
-                            <div class="form-group">
-                                <label>Password Requirements</label>
-                                <uib-progressbar value="requirementsProgress" type="">
-                                <span style="color:white; white-space:nowrap;"></span>
-                                </uib-progressbar>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ACCEPT T&C -->
-                    <!-- =============================================================================================== -->
-                    <div class="row">
-                        <div class="col-sm-12 text-right">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" required> I agree to the Terms of Use
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                <!-- SUBMIT -->
-                <!-- =============================================================================================== -->
-                <div class="row">
-                    <div class="col-sm-12 text-right form-group">
-                        <button id="signup" type="submit" class="btn btn-primary pull-right">Sign up</button>
                     </div>
                 </fieldset>
+
+                <!-- ORGANIZATION -->
+                <!-- =============================================================================================== -->
+
+                <!-- NYC Public Schools: only shows for users who are NYC public school teachers -->
+                <div class="row">
+                    <div class="form-group col-sm-12" show-errors>
+                        <label for="schoolOrg">Organization (NYC Public School)</label>    
+                        <p class="form-text">
+                            Click the field below to start typing your school's name or ATS code, then select your school from the dropdown list.
+                        </p>     
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                class="form-control typeahead w-100"
+                                name="schoolOrg"
+                                data-typeahead-url="/api/school-orgs/"
+                                data-typeahead-field="name"
+                            >
+                        </div>
+                        <small class="form-text">
+                            Note: If you work at a NYC public school, your school should already appear as an organization in this list.  
+                            If you don't see your NYC public school on the list, contact <a href="mailto:bop.digital.platform@nyharbor.org">bop.digital.platform@nyharbor.org</a>.
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Everyone Else -->
+                <div class="row">
+                    <div class="form-group col-sm-12" show-errors>
+                        <label for="schoolOrg">Organization</label>                       
+                        <p class="form-text">
+                            Click the field below to start typing your organization's name, then
+                            select your organization from the dropdown list.  If you're a
+                            community scientist who isn't representing an organization, select
+                            "Unaffiliated/None."
+                        </p>
+                        <p class="form-text">
+                            If your organization is not listed below, you can
+                            <a href="">add an organization</a>- but please check if your organization is already in our system first!
+                        </p>
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                class="form-control typeahead w-100"
+                                name="schoolOrg"
+                                data-typeahead-url="/api/school-orgs/"
+                                data-typeahead-field="name"
+                            >
+                        </div>
+                        <small class="form-text">
+                            Note: only select "Billion Oyster Project" if you are a staff member at Billion Oyster Project.
+                        </small>
+                    </div>
+                </div>
+
+                <!-- USERNAME -->
+                <!-- =============================================================================================== -->
+                <div class="row">
+                    <div class="form-group col-sm-12" show-errors>
+                        <label for="username">Username</label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            class="form-control"
+                            placeholder="Username" 
+                            lowercase
+                            required
+                        >
+                        <div role="alert">
+                            <p class="help-block error-text">Username is required.</p>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6" show-errors>
+                        <label for="password">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-control"
+                            placeholder="Password" 
+                            password-validator 
+                            required
+                        >
+                        <div role="alert">
+                            <p class="help-block error-text">Password is required.</p>
+                            <div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACCEPT T&C -->
+                <!-- =============================================================================================== -->
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" required> I agree to the Terms of Use
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- SUBMIT -->
+            <!-- =============================================================================================== -->
+            <div class="row">
+                <div class="col-sm-12 text-right form-group">
+                    <button id="signup" type="submit" class="btn btn-primary pull-right">Sign up</button>
+                </div>
             </div>
         </div>
     </form>
