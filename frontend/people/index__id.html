@@ -124,7 +124,7 @@ bindings:
         </tr>
         {{ if $user.teamLeadType }}
         <tr>
-            <th scope="row">Tead Lead Type</th>
+            <th scope="row">User Type</th>
             <td>{{ $user.teamLeadType }}</td>
         </tr>
         {{ end }}
@@ -132,23 +132,7 @@ bindings:
             <th scope="row">Email</th>
             <td>{{ $user.email }}</td>
         </tr>
-        <th scope="row">Approved/Pending</th>
-        {{ if $user.pending }}
-        <td>Pending</td>
-        {{ else }}
-        <td>Approved</td>
-        {{ end }}
-        
-        <tr>
-            <th scope="row">User Roles</th>
-            {{ if has "admin" $user.roles }}
-            <td>Admin</td>
-            {{ else if has "team lead" $user.roles }}
-            <td>Team Lead</td>
-            {{ else if has "team lead pending" $user.roles }}
-            <td>Team Lead Pending</td>
-            {{ end }}
-        </tr>    
+
         <tr>
             <th scope="row">Joined on</th>
             <td>{{ time $user.created "Jan 2, 2006" }}</td>

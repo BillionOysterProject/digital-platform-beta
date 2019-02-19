@@ -105,7 +105,7 @@ bindings:
                     </div>
                 </div>
 
-                <!-- USER TYPE (if role == team-lead) -->
+                <!-- USER TYPE (formerly "team lead type")-->
                 <!-- =============================================================================================== -->
                 <fieldset class="form-group">
                     <div class="row">     
@@ -117,60 +117,75 @@ bindings:
                             </p>
                         </div>    
                         <div class="col-sm-12" show-errors>
-                            <div class="radio">
-                                <label for="teacher">
+                            <div class="form-check">
+                                <label
+                                    class="form-check-label"
+                                    for="teacher">
                                     <input
+                                        class="form-check-input"
                                         type="radio"
                                         id="teacher"
-                                        name="teacher"
+                                        name="teamLeadType"
                                         value="teacher"
                                         required
                                     >
                                     Teacher
                                 </label>
                             </div>
-                            <div class="radio">
-                                <label for="partner">
+                            <div class="form-check">
+                                <label
+                                    class="form-check-label"
+                                    for="partner">
                                     <input
+                                        class="form-check-input"
                                         type="radio"
                                         id="partner"
-                                        name="partner"
+                                        name="teamLeadType"
                                         value="partner"
                                         required
                                     >
                                     Non-profit Partner / Informal Educator
                                 </label>
                             </div>
-                            <div class="radio">
-                                <label for="communityScientist">
+                            <div class="form-check">
+                                <label
+                                    class="form-check-label"
+                                    for="communityScientist">
                                     <input
+                                        class="form-check-input"
                                         type="radio"
                                         id="communityScientist"
-                                        name="communityScientist"
+                                        name="teamLeadType"
                                         value="citizen scientist"
                                         required
                                     >
                                     Community Scientist
                                 </label>
                             </div>
-                            <div class="radio">
-                                <label for="professionalScientist">
+                            <div class="form-check">
+                                <label
+                                    class="form-check-label"
+                                    for="professionalScientist">
                                     <input
+                                        class="form-check-input"
                                         type="radio"
                                         id="professionalScientist"
-                                        name="professionalScientist"
+                                        name="teamLeadType"
                                         value="professional scientist"
                                         required
                                     >
                                     Professional Scientist
                                 </label>
                             </div>
-                            <div class="radio">
-                                <label for="other">
+                            <div class="form-check">
+                                <label
+                                    class="form-check-label"
+                                    for="other">
                                     <input
+                                        class="form-check-input"
                                         type="radio"
                                         id="other"
-                                        name="other"
+                                        name="teamLeadType"
                                         value="other"
                                         required
                                     >
@@ -193,48 +208,60 @@ bindings:
                             </p>
                         </div> 
                         <div class="col-sm-12" show-errors>
-                            <div class="radio">
-                                <label for="nyc-public">
+                            <div class="form-check">
+                                <label 
+                                    class="form-check-label"
+                                    for="nyc-public">
                                     <input
+                                        class="form-check-input"
                                         type="radio"
                                         id="nyc-public"
-                                        name="nyc-public"
+                                        name="schoolType"
                                         value="nyc-public"
                                         required
                                     >
                                     NYC Public
                                 </label>
                             </div>
-                            <div class="radio">
-                                <label for="nyc-charter">
+                            <div class="form-check">
+                                <label 
+                                    class="form-check-label"
+                                    for="nyc-charter">
                                     <input
+                                        class="form-check-input"
                                         type="radio"
                                         id="nyc-charter"
-                                        name="nyc-charter"
+                                        name="schoolType"
                                         value="nyc-charter"
                                         required
                                     >
                                     NYC Charter
                                 </label>
                             </div>
-                            <div class="radio">
-                                <label for="private">
+                            <div class="form-check">
+                                <label 
+                                    class="form-check-label"
+                                    for="private">
                                     <input
+                                        class="form-check-input"
                                         type="radio"
                                         id="private"
-                                        name="private"
+                                        name="schoolType"
                                         value="private"
                                         required
                                     >
                                     Private
                                 </label>
                             </div>
-                            <div class="radio">
-                                <label for="other-public">
+                            <div class="form-check">
+                                <label 
+                                    class="form-check-label"
+                                    for="other-public">
                                     <input
+                                        class="form-check-input"
                                         type="radio"
                                         id="other-public"
-                                        name="other-public"
+                                        name="schoolType"
                                         value="other-public"
                                         required
                                     >
