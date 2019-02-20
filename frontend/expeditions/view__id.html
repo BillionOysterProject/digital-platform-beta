@@ -42,7 +42,7 @@ bindings:
 
         {{ if .bindings.team.teamLeads }}
         <div class="col-sm-3">
-            <h6>Team Lead{{ if gt (count .bindings.team.teamLeads) 1 }}s{{ end }}</h6>
+            <h6>User{{ if gt (count .bindings.team.teamLeads) 1 }}s{{ end }}</h6>
             {{ range .bindings.team.teamLeads }}
             <p>
                 <a ng-click="vm.openViewUserModal(teamLead)">{{ .displayName }}</a>

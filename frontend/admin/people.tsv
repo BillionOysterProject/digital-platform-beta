@@ -44,7 +44,7 @@ bindings:
 {{ push "headers" "First Name" }}
 {{ push "headers" "Last Name" }}
 {{ push "headers" "Username" }}
-{{ push "headers" "Team Lead Type" }}
+{{ push "headers" "User Type" }}
 {{ push "headers" "Attended Basic Training?" }}
 {{ push "headers" "ORS Site(s)" }}
 {{ push "headers" "Org Name" }}
