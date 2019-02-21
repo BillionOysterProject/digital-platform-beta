@@ -65,9 +65,9 @@
             </ul>
         </li>
 
-        <li class="nav-item dropdown" data-menu-triggers="organizations">
+        <li class="nav-item dropdown" data-menu-triggers="curriculum lessons units resources">
                 <a class="nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
-                    <i class="fa fa-fw fa-building"></i>
+                    <i class="fa fa-fw fa-book"></i>
                     <span class="text">
                         Curriculum
                     </span>
@@ -92,41 +92,43 @@
                 </ul>
             </li>
 
-        <li class="nav-item dropdown" data-menu-triggers="organizations">
+        <li class="nav-item dropdown" data-menu-triggers="community">
             <a class="nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
-                <i class="fa fa-fw fa-building"></i>
+                <i class="fa fa-fw fa-user"></i>
                 <span class="text">
-                    Orgs
+                    Community
                 </span>
             </a>
 
             <ul class="dropdown-menu">
                 <li>
-                    <a href="/profiles/organization?v=map">
-                        Map
+                    <a href="/community/orgs/organization?v=map">
+                        Org Map
                     </a>
                 </li>
 
                 <li>
-                    <a href="/profiles/organization?v=list">
-                        Profiles
+                    <a href="/community/orgs/organization?v=list">
+                        Org Profiles
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/community/people">
+                        People
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/community/teams">
+                        Teams
                     </a>
                 </li>
             </ul>
         </li>
 
-        <li data-menu-triggers="people">
-            <a href="/people" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-fw fa-user"></i>
-                <span class="text">
-                    People
-                </span>
-            </a>
-        </li>
-
-        <!--
         {{ if $.flags.admin }}
-        <li class="nav-item dropdown" data-menu-triggers="admin">
+        <li class="nav-item dropdown" data-menu-triggers="admin permits">
             <a class="nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
                 <i class="fa fa-fw fa-cog"></i>
                 <span class="text">
@@ -138,17 +140,29 @@
                 <li>
                     <a href="/admin/sites">Sites</a>
                 </li>
-                
+
                 <li>
-                    <a href="/admin/stations">Stations</a>
+                    <a href="/admin/org-list">Orgs</a>
                 </li>
 
                 <li>
-                    <a href="/admin/organizations">Organizations</a>
+                    <a href="/admin/people">People</a>
+                </li> 
+                
+                <li>
+                    <a href="/admin/doe-schools-list">DOE Schools</a>
+                </li>   
+                
+                <li>
+                    <a href="/permits">Permits</a>
+                </li> 
+                <!--
+                <li>
+                    <a href="/admin/stations">Stations</a>
                 </li>
             </ul>
+            -->
         </li>
         {{ end }}
-        -->
     </ul>
 </nav>

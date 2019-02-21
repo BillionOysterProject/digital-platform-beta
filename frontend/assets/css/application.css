@@ -235,7 +235,7 @@ form legend {
         left:            0;
         top:             0;
         bottom:          0;
-        width:           220px;
+        width:           240px;
         display:         flex;
         flex-direction:  column;
         justify-content: flex-start;
@@ -245,8 +245,8 @@ form legend {
     }
 
     #main {
-        width:           calc(100% - 220px);
-        margin-left:     220px;
+        width:           calc(100% - 240px);
+        margin-left:     240px;
         min-height:      100vh;
     }
 
@@ -272,7 +272,7 @@ form legend {
 
     .site-navbar .navbar-brand {
         padding:     0;
-        margin:      10px 0 40px 0;
+        margin:      10px 0 50px 0;
         height:      60px;
         width:       100%;
         text-align:  center;
@@ -286,7 +286,7 @@ form legend {
 
     .site-navbar .navbar-nav .nav-link {
         user-select: none;
-        padding:     10px 30px 10px 30px;
+        padding:     10px 20px 10px 20px;
     }
 
     .site-navbar .navbar-nav .nav-link:hover {

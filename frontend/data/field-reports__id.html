@@ -205,7 +205,10 @@ bindings:
                 alt="Placeholder image">
             {{ end }}
             <div class="media-body">
-                    <strong>User:</strong> {{ $expedition.teamLead.displayName }} 
+                    <strong>User:</strong>
+                    <a href="/community/people/{{ $expedition.teamLead._id }}" target=blank>
+                        {{ $expedition.teamLead.displayName }}
+                    </a>  
                     {{ if $expedition.teamLead.teamLeadType }}
                     <br/>
                     <strong>User Type:</strong> {{ $expedition.teamLead.teamLeadType }}

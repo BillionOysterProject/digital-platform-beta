@@ -28,16 +28,21 @@ bindings:
         q:        'roles/team lead'
         limit:    false
 ---
+
 <ul class="nav nav-tabs mb-4">
+    
     <li class="nav-item">
-        <a class="nav-link active" href="/admin/stations/{{ $.bindings.station._id }}">Form</a>
+        <a class="nav-link" href="/admin/stations/{{ $.bindings.station._id }}">Form</a>
     </li>
+    
     <li class="nav-item">
-        <a class="nav-link" href="/admin/generic/{{ $.bindings.station._id }}?collection=restoration-stations&section=stations">Raw Editor</a>
+        <a class="nav-link active" href="/admin/generic/{{ $.bindings.station._id }}?collection=restoration-stations&section=stations">Raw Editor</a>
     </li>
 </ul>
 
+
 <div class="container">
+
     <form
         class="form m-4"
         action="/api/restoration-stations/"
@@ -197,4 +202,5 @@ bindings:
             </div>
         </div>
     </form>
+
 </div>

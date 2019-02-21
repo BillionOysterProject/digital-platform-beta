@@ -36,6 +36,7 @@ header:
           - "6-8th"
           - "9-12th"
           - "Elementary"
+          - "Pre-K"
       
         setting:
           - "Classroom"
