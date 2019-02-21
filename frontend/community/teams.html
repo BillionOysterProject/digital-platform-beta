@@ -1,0 +1,87 @@
+---
+page:
+    body_class: 'orgs-list fill-content'
+    view: 'Teams'
+
+bindings:
+-   name:     'teamLeads'
+    resource: '/api/users'
+    params:
+        limit:  false
+        sort:   name
+        fields: schoolOrg
+        q:      "roles/contains:lead|admin"
+
+-   name:     teams
+    resource: '/api/teams'
+    params:
+        limit:    false
+---
+
+{{ $teamLeads   := $.bindings.teamLeads }}
+{{ $orgs        := $.bindings.orgs }}
+{{ $teams       := $.bindings.teams }}
+
+
+<section class="content">
+    <!--
+        <div class="text-left pt-2 mb-3">
+            <a
+            href="/api/teams/export.tsv"
+            class="btn btn-primary mb-2"
+            >
+                Download Teams (.tsv)
+            </a>
+            <a href="/api/teams?limit=25&offset=0&sort=name" target="_blank" class="ml-3">
+                <i class="fa fa-external-link-square"></i>
+                View in API
+            </a>
+        </div>
+    -->
+    
+        <table class="table table-sm table-bordered table-striped table-hover" id="teams">
+            <thead>
+                <tr>
+                    {{ if $.flags.admin }}
+                    <th>Edit</th>
+                    {{ end }}
+                    <th>Name</th>
+                    <th>Org Name</th>
+                    <th>Team Leads</th>                  
+                </tr>
+            </thead>
+    
+            <tbody>
+                {{ range $i, $team := $teams }}
+                <tr>
+                    {{ if $.flags.admin }}
+                    <td>
+                        <a href="/admin/generic/{{ $team._id }}?collection=teams">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </td>
+                    {{ end }}
+                    <td>
+                        {{ $team.name }}
+                    </td>
+                    <td>
+                        {{ $team.schoolOrg.name }}
+                    </td>
+                    <td>
+                        {{ join (sort (pluck $team.teamLeads "displayName")) ", " }}
+                    </td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+    </section>
+    
+    <script type="text/javascript">
+        $(function(){
+            $('#teams').DataTable({
+                searching:      true,
+                paging:         false,
+                info:           false,
+            });
+        });
+    </script>

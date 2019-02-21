@@ -1,0 +1,139 @@
+---
+page:
+    body_class: 'orgs-list fill-content'
+
+bindings:
+-   name:     'teamLeads'
+    resource: '/api/users'
+    params:
+        limit:  false
+        sort:   name
+        fields: firstName,lastName,username,email,schoolOrg,created,teamLeadType,roles
+        q:      "roles/contains:lead|admin"
+
+-   name:     stations
+    resource: '/api/restoration-stations'
+    params:
+        limit:    false
+        noexpand: teamLead
+        fields:   status,schoolOrg,site,teamLead
+---
+
+{{ $teamLeads   := $.bindings.teamLeads }}
+{{ $sites       := $.bindings.sites }}
+{{ $stations    := $.bindings.stations }}
+{{ $orgs        := $.bindings.orgs }}
+
+<h1>People</h1>
+
+<section class="content">
+    <!--
+    <div class="text-left pt-2 mb-3">
+        <a
+        href="/api/users/export.tsv"
+        class="btn btn-primary mb-2"
+        >
+            Download User List (.tsv)
+        </a>
+        <a href="/api/users?limit=25&offset=0&sort=name" target="_blank" class="ml-3">
+            <i class="fa fa-external-link-square"></i>
+            View in API
+        </a>
+    </div>
+    -->
+
+    <table class="table table-sm table-bordered table-striped table-hover" id="people">
+        <thead>
+            <tr>
+                {{ if $.flags.admin }}
+                <th>Edit</th>
+                {{ end }}
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>User Type</th>
+                <th>ORS Site(s)</th>
+                <th>Org Name</th>
+                <th>Org Borough/City</th>
+                <th>Org Neighborhood</th>
+                <th>Email</th>
+                <th>Joined On</th>
+                
+            </tr>
+        </thead>
+
+        <tbody>
+            {{ range $i, $teamLead := $teamLeads }}
+            {{ $teamLeadStations   := filterByKey $stations "teamLead._id" $teamLead._id }}
+            {{ $teamLeadSites      := join (uniq (pluck $teamLeadStations "site.name") ) ", "}}
+            <tr>
+                {{ if $.flags.admin }}
+                <td>
+                    <a href="/admin/generic/{{ $teamLead._id }}?collection=users">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                {{ end }}
+                <td>
+                    {{ $teamLead.firstName }}
+                </td>
+                <td>
+                    {{ $teamLead.lastName }}
+                </td>
+                <td>
+                    <a href="/community/people/{{ $teamLead._id }}">
+                    {{ $teamLead.username }}
+                    </a>
+                </td>
+
+                {{ if $teamLead.teamLeadType }}
+                <td>{{ $teamLead.teamLeadType }}</td>
+                {{ else }}
+                <td></td>
+                {{ end }}
+                
+                <td>
+                    {{ $teamLeadSites }}
+                </td>
+
+                <td>
+                    {{ $teamLead.schoolOrg.name }}
+                </td>
+
+                
+                <td>
+                    {{ if $teamLead.schoolOrg.city }}
+                    {{ $teamLead.schoolOrg.city }}
+                    {{ end }}
+                </td>
+
+                <td>
+                    {{ if $teamLead.schoolOrg.neighborhood }}
+                    {{ $teamLead.schoolOrg.neighborhood }}
+                    {{ end }}
+                </td>
+
+                <td>
+                    {{ $teamLead.email }}
+                </td>
+
+                <td>
+                    {{ time $teamLead.created "slash" }}
+                </td>
+
+                
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</section>
+
+<script type="text/javascript">
+    $(function(){
+        $('#people').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>

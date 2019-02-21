@@ -1,0 +1,269 @@
+---
+page:
+    body_class: 'site-details'
+    notitle: true
+
+bindings:
+-   name:	  'org'
+    resource: '/api/school-orgs/{{ param 1 }}'
+
+-  name:     stations
+   resource: '/api/restoration-stations'
+   params:
+    limit:    false
+    noexpand: teamLead
+    fields:   status,schoolOrg,site
+    q:        'schoolOrg/is:{{ param 1 }}/status/Active'
+---
+
+{{ $site     := $.bindings.site }}
+{{ $stations := $.bindings.stations }}
+{{ $teams    := $.bindings.relatedTeams }}
+{{ $org := $.bindings.org }}
+{{ $orgSites := uniqByKey $stations "site.name" }}
+
+<section class="content">
+    <h1 class="text-left pb-0">{{ $org.name }}</h1>
+    <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
+        {{ if $org.streetAddress }}
+            {{ $org.streetAddress }},
+        {{ end }}
+        {{ if $org.city }}
+            {{ $org.city }},
+        {{ end }}
+        {{if and $org.state $org.zip }}
+            {{ $org.state }},
+        {{ else if $org.state }}
+            {{ $org.state }}
+        {{ end }}
+        {{ if $org.zip }}
+            {{ $org.zip }}
+        {{ end }}
+    </p>
+</section>
+
+{{ if $org.latitude }}
+<div class="row no-gutters site-jumbotron">
+    <div class="col">
+        <div id="siteMap"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        mapboxgl.accessToken = '{{ $.page.mapbox.key }}';
+
+        var map = new mapboxgl.Map({
+            container: 'siteMap',
+            style: 'mapbox://styles/{{ qs "style" $.page.mapbox.style }}',
+            failIfMajorPerformanceCaveat: true,
+            center: [{{ $org.longitude }}, {{ $org.latitude }}],
+            zoom:   11,
+        });
+
+        // load everyone but us; e.g.: our "neighbors"
+        // $.ajax({
+        //     url: '/api/sites/export.geojson?' + $.param({
+        //         fields: 'name,bodyOfWater,latitude,longitude,nycParkName',
+        //         q:      '_id/not:{{ $site._id }}',
+        //     }),
+        //     success: function(collection) {
+        //         var layer = {
+        //             "id": "neighbors",
+        //             "type": "circle",
+        //             "source": {
+        //                 "type": "geojson",
+        //                 "data": collection,
+        //             },
+        //             "paint": {
+        //                 "circle-radius": 4,
+        //                 "circle-color": "#EA5F56",
+        //                 "circle-stroke-width": 1,
+        //                 "circle-stroke-color": "#FFFFFF",
+        //             },
+        //         };
+
+        //         map.addLayer(layer);
+        //     },
+        // });
+
+        map.on('load', function(){
+            // create a HTML element for each feature
+            var el = document.createElement('i');
+            el.className = 'fa fa-star marker-org';
+
+            // make a marker for each feature and add to the map
+            new mapboxgl.Marker(el)
+            .setLngLat([
+                {{ $org.longitude }},
+                {{ $org.latitude }},
+            ])
+            .addTo(map);
+
+            map.addLayer({
+                "id": "sites",
+                "type": "circle",
+                "source": {
+                    "type": "geojson",
+                    "data": {
+                        "type": "FeatureCollection",
+                        "features": [
+                            {{ range $i, $orgSite := $orgSites }}
+                            {
+                                "type": "Feature",
+                                "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [
+                                        {{ $orgSite.site.longitude }},
+                                        {{ $orgSite.site.latitude }}
+                                    ],
+                                },
+                            },
+                            {{ end }}
+                        ],
+                    },
+                },
+                "layout": {
+                },
+                "paint": {
+                    "circle-radius": 7,
+                    "circle-color": "#415980",
+                    "circle-stroke-width": 2,
+                    "circle-stroke-color": "#FFFFFF",
+                },
+            });
+        });
+    });
+</script>
+{{ end }}
+
+<section class="content">
+    <table class="table table-sm table-bordered table-hover">
+        <tr>
+            <th scope="row">Organization Name</th>
+            <td>{{ $org.name }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Organization Type</th>
+            <td>{{ $org.organizationType }}</td>
+        </tr>
+
+        {{ if $org.schoolType}}
+        <tr>
+            <th scope="row">School Type</th>
+            <td>{{ $org.schoolType }}</td>
+        </tr>
+        {{ end }}
+
+
+        {{ if $stations }}
+        <tr>
+            <th scope="row">
+                ORS Site(s)
+            </th>
+            <td>
+                {{ range $i, $orgSite := $orgSites }}
+                <a class="d-block" href="/sites/{{ $orgSite.site._id}}">
+                    {{ $orgSite.site.name }}
+                </a>
+                {{ end }}
+            </td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.neighborhood }}
+        <tr>
+            <th scope="row">Neighborhood</th>
+            <td>{{ $org.neighborhood }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.streetAddress }}
+        <tr>
+            <th scope="row">Address</th>
+            <td>{{ $org.streetAddress }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.city }}
+        <tr>
+            <th scope="row">Borough/City</th>
+            <td>{{ $org.city }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.state }}
+        <tr>
+            <th scope="row">State</th>
+            <td>{{ $org.state }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.zip }}
+        <tr>
+            <th scope="row">Zipcode</th>
+            <td>{{ $org.zip }}</td>
+        </tr>
+        {{ end }}
+        {{ if $org.syncId }}
+        <tr>
+            <th scope="row">ATS Code (NYC DOE)</th>
+            <td>{{ $org.syncId }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.locationType }}
+        <tr>
+            <th scope="row">Location Type</th>
+            <td>{{ $org.locationType }}</td>
+        </tr>
+        {{ end }}
+        {{ if $org.gradeLevels }}
+        <tr>
+            <th scope="row">Grade Levels</th>
+            <td>{{ $org.gradeLevels }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.gradesTaught }}
+        <tr>
+            <th scope="row">Grades Taught</th>
+            <td>{{ titleize (join $org.gradesTaught ", ") }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.principal }}
+        <tr>
+            <th scope="row">Principal Name</th>
+            <td>{{ $org.principal }}</td>
+        </tr>
+        {{ end }}
+        {{ if $org.principalPhone }}
+        <tr>
+            <th scope="row">Principal Number</th>
+            <td>{{ $org.principalPhone }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.district }}
+        <tr>
+            <th scope="row">City Council District</th>
+            <td>{{ $org.district }}</td>
+        </tr>
+        {{ end }}
+
+        {{ if $org.communityBoard }}
+        <tr>
+            <th scope="row">Community Board</th>
+            <td>{{ $org.communityBoard }}</td>
+        </tr>
+        {{ end }}
+        {{ if $org.description }}
+        <tr>
+            <th scope="row">Description</th>
+            <td>{{ $org.description }}</td>
+        </tr>
+        {{ end }}
+    </table>
+</section>
+
