@@ -1,0 +1,36 @@
+---
+page:
+    body_class: 'site-details'
+    notitle: true
+
+bindings:
+-   name:	  'team'
+    resource: '/api/teams/{{ param 1 }}'
+---
+
+{{ $team := $.bindings.team }}
+
+<section class="content">
+    <h1>{{ $team.name }}</h1>
+    <h2>{{ $team.schoolOrg.name }}</h2>
+    
+    {{ if $team.description}}
+    <p>
+        {{ $team.description }}
+    </p>
+    {{ end }}
+
+    {{ if $team.teamLeads }}
+    <table class="table table-sm table-bordered table-hover">
+        <th>Member</th>
+        <th>Organization</th>
+
+        {{ range $teamLead := $team.teamLeads }}
+        <tr>
+            <td>{{ $teamLead.displayName }}</td>
+            <td>{{ $teamLead.schoolOrg.name }}</td>
+        </tr>
+        {{ end }}
+    </table>
+    {{ end }}
+</section>

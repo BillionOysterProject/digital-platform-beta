@@ -16,6 +16,7 @@ bindings:
     resource: '/api/teams'
     params:
         limit:    false
+        sort:     name
 ---
 
 {{ $teamLeads   := $.bindings.teamLeads }}
@@ -62,10 +63,14 @@ bindings:
                     </td>
                     {{ end }}
                     <td>
+                        <a href="/community/teams/{{ $team._id }}">
                         {{ $team.name }}
+                        </a>
                     </td>
                     <td>
+                        
                         {{ $team.schoolOrg.name }}
+                        
                     </td>
                     <td>
                         {{ join (sort (pluck $team.teamLeads "displayName")) ", " }}

@@ -1,7 +1,7 @@
 ---
 page:
-    view: Sites Editor
     body_class: 'mt-0'
+    view: 'Sites'
 
 bindings:
 -   name:     sites
@@ -10,49 +10,197 @@ bindings:
         noexpand: true
         limit: false
         sort: name
----
-<table class="table table-sm table-striped w-100">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Coordinates</th>
-            <th>Location</th>
-            <th>Body of Water</th>
-            <th></th>
-        </tr>
-    </thead>
 
-    <tbody>
-        {{ range $i, $site := $.bindings.sites }}
-        <tr>
-            <td>
-                <a href="/admin/sites/{{ $site._id }}">{{ or $site.name "(empty)" }}</a>
-            </td>
-            <td>
-                {{ if and $site.latitude $site.longitude }}
-                {{ $site.latitude }},{{ $site.longitude }}
-                {{ else }}
-                (empty)
+-   name:     stations
+    resource: '/api/restoration-stations'
+    params:
+        limit:    false
+        fields:   name,status,schoolOrg,site,teamLead,created
+        q:        schoolOrg/not:571f6f3181ab586140097247
+        sort:     name
+---
+
+{{ $sites       := $.bindings.sites }}
+{{ $stations    := $.bindings.stations }}
+
+<section class="content">
+    <div class="text-left pt-2 mb-3">
+        <a
+        href="/api/sites/export.tsv"
+        class="btn btn-primary mb-2"
+        >
+            Download Sites (.tsv)
+        </a>
+        <a href="/api/sites?limit=25&offset=0&sort=name" target="_blank" class="ml-3">
+            <i class="fa fa-external-link-square"></i>
+            View in API
+        </a>
+    </div>
+
+    <div class="col-sm-12">
+        <table class="table table-sm table-bordered table-striped table-hover" id="sites">
+            <caption>List of sites including name, body of water, latitude, longitude, and count of Oyster Research Stations (ORS) at each site.</caption>
+            <thead>
+                <tr>
+                    {{ if $.flags.admin }}
+                    <th>Edit</th>
+                    {{ end }}
+                    <th>#</th>
+                    <th>Site Name</th>
+                    <th>Body of Water</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th># of Active ORS at this site</th>
+                    <th>Borough/City</th>
+                    <th>NYC Park Name</th>
+                    <th>NYC Park Id</th>
+                    <th>Permit Site Name</th>
+                    <th>Permit Year</th>
+                    <th>Property Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Range through each site in the sites table-->
+                {{ range $i, $site := $sites }}
+                <!--First: filter the $stations array (stations) to find stations where the site = current site id (site id from the range,
+                    creating a new array of stations)
+                    Second: filter that array to find stations where the station's status = active to create a new array
+                    Third: count how many stations are in that array
+                    Fourth: create a new variable, $count that represents this value -->
+                {{ $count := count (filterByKey (filterByKey $stations "site.name" $site.name) "status" "Active" ) }}
+                <!--Use this to number the rows-->
+                {{  increment "siteNumber" }}
+                <tr>
+                    {{ if $.flags.admin }}
+                    <td>
+                        <a href="/admin/generic/{{ $site._id }}?collection=sites">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </td>
+                    {{ end }}
+                    <!--Use this to number the rows-->
+                    <th>{{ $.vars.siteNumber }}</th>
+                    <td>
+                        <a href="/sites/{{ $site._id }}">
+                        {{ if $site.name }}    
+                        {{ $site.name }}
+                        {{ end }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ if $site.bodyOfWater }}
+                        {{ $site.bodyOfWater }}
+                        {{ end }}
+                    </td>
+                    
+                    <td>
+                        {{ if $site.latitude }}
+                        {{ $site.latitude }}
+                        {{ end }}
+                    </td>
+                    
+                    <td>
+                        {{ if $site.longitude }}
+                        {{ $site.longitude }}
+                        {{ end }}
+                    </td>
+
+                    <td>
+                        {{ $count }}
+                    </td>
+                    <td>
+                        {{ if $site.boroughCounty }}
+                        {{ $site.boroughCounty }}
+                        {{ end }}
+                    </td>
+                    
+                    <td>
+                        {{ if $site.nycParkName }}
+                        {{ $site.nycParkName }}
+                        {{ end }}
+                    </td>
+
+                    <td>
+                        {{ if $site.nycParkId }}
+                        {{ $site.nycParkId }}
+                        {{ end }}
+                    </td>
+
+                    <td>
+                        {{ if $site.permitName }}
+                        {{ $site.permitName }}
+                        {{ end }}
+                    </td>
+
+                    <td>
+                        {{ if $site.permitYear }}
+                        {{ $site.permitYear }}
+                        {{ end }}
+                    </td>
+
+                    
+                    <td>
+                        {{ if $site.propertyOwner }}
+                        {{ $site.propertyOwner }}
+                        {{ end }}
+                    </td>
+
+                </tr>
                 {{ end }}
-            </td>
-            <td>{{ $site.boroughCounty }}, {{ $site.state }}</td>
-            <td>{{ or $site.bodyOfWater "(empty)" }}</td>
-            <td>
-                <a href="/admin/sites/{{ $site._id }}">
-                    <i class="fa fa-pencil"></i>
-                </a>
-            </td>
-        </tr>
-        {{ end }}
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</section>
 
 <script type="text/javascript">
     $(function(){
-        $('table').DataTable({
+        $('#sites').DataTable({
             searching:      true,
             paging:         false,
             info:           false,
         });
     });
 </script>
+
+
+
+
+<!--
+<section class="content">
+    <table class="table table-sm table-striped w-100">
+        <thead>
+            <tr>
+                <th>Edit</th>
+                <th>Name</th>
+                <th>Coordinates</th>
+                <th>Location</th>
+                <th>Body of Water</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {{ range $i, $site := $.bindings.sites }}
+            <tr>
+                <td>
+                    <a href="/admin/sites/{{ $site._id }}">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="/admin/sites/{{ $site._id }}">{{ or $site.name "(empty)" }}</a>
+                </td>
+                <td>
+                    {{ if and $site.latitude $site.longitude }}
+                    {{ $site.latitude }},{{ $site.longitude }}
+                    {{ else }}
+                    (empty)
+                    {{ end }}
+                </td>
+                <td>{{ $site.boroughCounty }}, {{ $site.state }}</td>
+                <td>{{ or $site.bodyOfWater "(empty)" }}</td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</section>
+-->

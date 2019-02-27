@@ -8,7 +8,7 @@ bindings:
     params:
         limit:  false
         sort:   name
-        fields: firstName,lastName,username,email,schoolOrg,created,teamLeadType,roles
+        fields: firstName,lastName,username,schoolOrg,created,teamLeadType,roles
         q:      "roles/contains:lead|admin"
 
 -   name:     stations
@@ -56,7 +56,9 @@ bindings:
                 <th>Org Name</th>
                 <th>Org Borough/City</th>
                 <th>Org Neighborhood</th>
+                <!--
                 <th>Email</th>
+                -->
                 <th>Joined On</th>
                 
             </tr>
@@ -112,10 +114,12 @@ bindings:
                     {{ $teamLead.schoolOrg.neighborhood }}
                     {{ end }}
                 </td>
-
+                
+                <!--
                 <td>
                     {{ $teamLead.email }}
                 </td>
+                -->
 
                 <td>
                     {{ time $teamLead.created "slash" }}
