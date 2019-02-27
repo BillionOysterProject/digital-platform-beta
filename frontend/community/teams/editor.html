@@ -1,0 +1,103 @@
+---
+page:
+    body_class: 'container mt-1'
+    view:       'Team Editor'
+
+bindings:
+
+-   name:     'teams'
+    resource: '/api/teams'
+    fallback: []
+    params:
+        limit: false
+
+---
+
+<section class="content">
+    <form method="POST" action="/api/teams">
+        <div class="form-group col-sm-6">
+            <label
+                class="required"
+                for="name"
+            >
+                Team Name
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+            />
+        </div>
+
+        <div class="form-group col-sm-8">           
+            <label for="description">Team Description</label>
+            <textarea
+                class="form-control"
+                id="description"
+                name="description"
+                rows="2"
+            >
+            </textarea>          
+        </div>
+
+        <div class="form-group col-sm-8">
+            <label for="schoolOrg">
+                Your Organization
+            </label>
+            <div class="input-group">
+                <input
+                    type="text"
+                    id="schoolOrg"
+                    class="form-control typeahead w-100"
+                    name="schoolOrg"
+                    data-typeahead-url="/api/school-orgs/?fields=name&amp;q=str:name/contains:{}"
+                    data-typeahead-field="name"
+                >
+                <small>Start typing your organization's name in the field above to pull up your org.</small>
+            </div>
+        </div>
+
+        <div class="form-group col-sm-8 mb-4 mt-4">
+            <div class="form-check">
+                <input 
+                    type="checkbox" 
+                    class="form-check-input" 
+                    id="addOrgMembers" 
+                >
+                <label class="form-check-label" for="addOrgMembers">Add all members of your organization to your team</label>
+            </div>
+        </div>
+
+        <div class="form-group col-sm-8">
+            <label for="users">
+                Add Other Users
+            </label>          
+            <div class="input-group">
+                <input
+                    type="text"
+                    class="form-control typeahead w-100"
+                    name="users"
+                    data-typeahead-url="/api/users/teamleads/?fields=displayName&amp;q=str:displayName/contains:{}"
+                    data-typeahead-field="displayName"
+                >
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 form-group">
+                <label>Team Members:</label>
+
+            <ul class="list-group">
+                <li class="list-group-item mb-2">
+                    Johnny Userface
+                    <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                </li>
+                <li class="list-group-item">
+                    Sally Shrimphead
+                    <a class="pull-right"><i class="fa fa-fw fa-times"></i></a>
+                </li>
+            </ul>
+        </div>
+
+    </form>
+</section>
