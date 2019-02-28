@@ -31,17 +31,20 @@ bindings:
             {{ range $i, $lesson := $lessons }}
             {{ if and $lesson.featured (eqx $lesson.status "published") }}
                     
-                <div class="card">
+                <div class="card border-0 shadow">
+                    
+                    {{ if $lesson.featuredImage }}
+                    <div class="card-img-top">
+                        <a href="/lessons/{{ $lesson._id }}">
+                            <img class="preview img-cover rounded-top" height="220" src="{{ $lesson.featuredImage.path }}">
+                        </a>
+                    </div>
+                    {{ end }}
                     <div class="card-header">
                         <a href="/lessons/{{ $lesson._id }}">
                             <b>{{ $lesson.title }}</b>
                         </a>
                     </div>
-                    {{ if $lesson.featuredImage }}
-                        <a href="/lessons/{{ $lesson._id }}">
-                            <img class="card-img-top preview" src="{{ $lesson.featuredImage.path }}">
-                        </a>
-                    {{ end }}
                     <div class="card-body">
                         <p class="text-muted">
                                 {{ if $lesson.lessonOverview.setting }}
