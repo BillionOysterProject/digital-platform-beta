@@ -76,6 +76,8 @@ github.com/ghetzel/diecast v1.10.13 h1:4yVOW8gqdh3O9m5TTVSaRUhwhEm9Bh7tZ6aotOp/Y
 github.com/ghetzel/diecast v1.10.13/go.mod h1:i+3GtTf7Uvi4ii6vI5L+Yz2OwAkMJxkxWZ6cP+HSFa0=
 github.com/ghetzel/diecast v1.10.14 h1:ichO0eHM4+zWf8iMlAy6jXNGqciONKYUF7ng1JCVoqc=
 github.com/ghetzel/diecast v1.10.14/go.mod h1:i+3GtTf7Uvi4ii6vI5L+Yz2OwAkMJxkxWZ6cP+HSFa0=
+github.com/ghetzel/diecast v1.10.16 h1:6yKIcTXKm6AY3mmeWO7objEKKojNujSZtPzPFBmIzpI=
+github.com/ghetzel/diecast v1.10.16/go.mod h1:Q1oMUg7E1a6NRcDny+274DcSuQ/6FK7GQk4j5DQS6HY=
 github.com/ghetzel/friendscript v0.5.0/go.mod h1:GZJ2FZRpgvURp4hUb/AdevNCnHKCWRpKLxtAl817F4g=
 github.com/ghetzel/friendscript v0.5.5 h1:xQvgdHW7FckKhHZL4xU3LaPpBU0nHheBl96My1KhR+I=
 github.com/ghetzel/friendscript v0.5.5/go.mod h1:zYqGAS3vGMxM912/T9GP1S62VP+AXssMDv9dPzO0Ph0=
@@ -87,11 +89,15 @@ github.com/ghetzel/go-stockutil v1.7.1 h1:cN3QUKtHxwOdDi9vjJ/ciq4sJVcIV1+KUBbpg0
 github.com/ghetzel/go-stockutil v1.7.1/go.mod h1:HJK8kysGnJqC4GN3FMA03o5FTQFilGNkNwi1mjE+8Gs=
 github.com/ghetzel/go-stockutil v1.7.3 h1:eWd98G3ybKvDNYo061PirScPk0T7SUJgfM1Y7I8m5IU=
 github.com/ghetzel/go-stockutil v1.7.3/go.mod h1:HJK8kysGnJqC4GN3FMA03o5FTQFilGNkNwi1mjE+8Gs=
+github.com/ghetzel/go-stockutil v1.7.13 h1:94eYX7tx/1DCOJ5/6YKI3tcsVWjUYP+02BujsN7zgSs=
+github.com/ghetzel/go-stockutil v1.7.13/go.mod h1:HJK8kysGnJqC4GN3FMA03o5FTQFilGNkNwi1mjE+8Gs=
 github.com/ghetzel/go-webfriend v0.9.23/go.mod h1:4tjKFGdCtac9eXJ8Hz48DSCoiwjhzynwFFiyhsLfMnI=
 github.com/ghetzel/go-webfriend v0.9.40 h1:yTK+owpwiOycRSaZWzxWoQE3cDO/BX83mpvFPs9/bJ4=
 github.com/ghetzel/go-webfriend v0.9.40/go.mod h1:RDBxcAknpDWMJFOKS9AFiNldv+R6siUKFB4DDv+BGRI=
 github.com/ghetzel/pivot/v3 v3.0.40 h1:dboa/SG6oInkp8o8l7EPdhRTkYa4tHf9sUpVfwZ+zrM=
 github.com/ghetzel/pivot/v3 v3.0.40/go.mod h1:wD9+a7Egu2uzaWx6hh/IFxVIYKWTuEMnQeija5NwAok=
+github.com/ghetzel/pivot/v3 v3.0.41 h1:z927DXCA/xiJHKAC/t1WJnaGdo04GzENk2B7muQf5Io=
+github.com/ghetzel/pivot/v3 v3.0.41/go.mod h1:wD9+a7Egu2uzaWx6hh/IFxVIYKWTuEMnQeija5NwAok=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d h1:YVJe7KwVYazt90hCc/q2dYJVS3062AY6QdT6iHd+Kh8=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d/go.mod h1:7CCemW/spiphukVWb/v2WWYeZkydh30TwSRBh48irZQ=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=
