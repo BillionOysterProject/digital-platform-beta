@@ -1,0 +1,88 @@
+---
+page:
+    body_class: 'orgs-list fill-content'
+
+bindings:
+
+-   name:     lessons
+    resource: '/api/lessons'
+    params:
+        limit:    false
+        sort:     unit
+
+-   name:     'units'
+    resource: '/api/units'
+    fallback: []
+    params:
+        noexpand: true
+---
+{{ $lessons := $.bindings.lessons }}
+
+<h1>Lessons List</h1>
+<section class="content">
+    <div class="text-left pt-2 mb-3">
+        <a
+        href="/api/lessons/export.tsv"
+        class="btn btn-primary mb-2"
+        >
+            Download Lesson Metadata (.tsv)
+        </a>
+        <a href="/api/lessons?limit=25&offset=0&sort=name" target="_blank" class="ml-3">
+            <i class="fa fa-external-link-square"></i>
+            View in API
+        </a>
+    </div>
+
+    <table class="table table-sm table-bordered table-striped table-hover" id="lessons">
+        <thead>
+            <tr>
+                {{ if $.flags.admin }}
+                <th>Edit</th>
+                {{ end }}
+                <th>Lesson Name</th>
+                <th>Author</th>
+                <th>Unit Name</th>
+                <th>Lesson Summary</th>
+                <th>Setting</th>
+                <th>Grade Levels</th>
+                <th>Subject Areas</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range $i, $lesson := $lessons }}
+            <tr>
+                {{ if $.flags.admin }}
+                <td>
+                    <a href="/admin/generic/{{ $lesson._id }}?collection=lessons">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                {{ end }}
+                <td><a href="/lessons/{{ $lesson._id }}">{{ $lesson.title }}</a></td>
+                <td>{{ $lesson.user.displayName }}</td>
+                <td>{{ join (pluck $lesson.units "title") ", " }}</td>
+                <td>
+                    {{ if $lesson.lessonOverview.lessonSummary }}
+                    {{ sanitize $lesson.lessonOverview.lessonSummary }}
+                    {{ end }}
+                </td>
+                <td>{{ $lesson.lessonOverview.setting }}</td>
+                <td>{{ $lesson.lessonOverview.grade }}</td>
+                <td>{{ join (pluck $lesson.lessonOverview.subjectAreas "subject") ", " }}</td>
+                <td>{{ $lesson.status }}</td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</section>
+
+<script type="text/javascript">
+    $(function(){
+        $('#lessons').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>
