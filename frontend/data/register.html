@@ -7,8 +7,10 @@ page:
 <form class="form">
     <div class="alert alert-info mt-4" role="alert">
         <p>
+            <strong>
             Complete this form when you get EITHER a new Oyster Research Station (ORS), oyster tank, or other oyster research structure with new oysters OR
             a new batch of tagged oysters for an existing ORS or structure.
+            </strong>
         </p>
     </div>
     
@@ -168,8 +170,13 @@ page:
             </div>
         </div>
 
+
         <div class="form-group col-sm-8">
             <label for="setDate">Set Date</label>
+            <p>
+                Record the <strong>set date</strong> that appears on the tag that comes with your batch of oysters.
+                If your bag doesn't have a tag on it, contact the BOP Field Technician.
+            </p>
             <input
                 class="form-control col-4"
                 type="date"
@@ -178,8 +185,12 @@ page:
             >
         </div>
 
-        <div class="form-group col-sm-12">
-            <label>Source</label>
+        <div class="form-group col-sm-8">
+            <label>Broodstock Source</label>
+            <p>
+                Record the <strong>broodstock source</strong> that appears on the tag that comes with your batch of oysters.
+                If your bag doesn't have a tag on it, contact the BOP Field Technician.
+            </p>
 
             {{ range $i, $oysterSource := $.page.oysterSources }}
             <div class="custom-control custom-radio">
