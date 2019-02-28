@@ -9,6 +9,7 @@ bindings:
     params:
         limit:    false
         sort:     unit
+        q:      "status/published"
 
 -   name:     'units'
     resource: '/api/units'
@@ -46,7 +47,6 @@ bindings:
                 <th>Setting</th>
                 <th>Grade Levels</th>
                 <th>Subject Areas</th>
-                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -70,7 +70,6 @@ bindings:
                 <td>{{ $lesson.lessonOverview.setting }}</td>
                 <td>{{ $lesson.lessonOverview.grade }}</td>
                 <td>{{ join (pluck $lesson.lessonOverview.subjectAreas "subject") ", " }}</td>
-                <td>{{ $lesson.status }}</td>
             </tr>
             {{ end }}
         </tbody>

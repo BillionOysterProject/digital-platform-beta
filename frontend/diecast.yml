@@ -243,14 +243,14 @@ header:
         - colorimetricKit
 
       - id:    'nitrates'
-        label: 'Nitrates'
+        label: 'Nitrates (NO3-)'
         methods:
         - testStrips
         - photometer
         - colorimetricKit
 
       - id:    'nitrites'
-        label: 'Nitrites'
+        label: 'Nitrites (NO2-)'
         methods:
         - testStrips
         - photometer
