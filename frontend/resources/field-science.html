@@ -1,0 +1,122 @@
+---
+page:
+    view: 'Field Science Resources'
+
+bindings:
+-   name: manuals
+    resource: 'https://drive.google.com/embeddedfolderview?id=0Bzf_STNcTtRmM2VubzJaM1dWZEU#grid'
+    parser: text
+    
+-   name: datasheets
+    resource: 'https://drive.google.com/embeddedfolderview?id=0Bzf_STNcTtRmaW9XN1hlM09vRXc#grid'
+    parser: text
+
+-   name: speciesId
+    resource: 'https://drive.google.com/embeddedfolderview?id=0BwOkf1kzdWyncFR4SFRHMkJMZkU#grid'
+    parser: text
+
+-   name: additional
+    resource: 'https://drive.google.com/embeddedfolderview?id=0Bzf_STNcTtRmbG1pMVpUM1lGUmM#grid'
+    parser: text
+---
+
+<section class="content">
+    <h2 class="text-center mb-4">Manuals</h2>
+    <p>
+        We're currently updating the BOP Field Manual and Oyster Research Station protocols.
+        The information below may change soon, but for now, you can keep following the Oyster Measurement Protocol
+        and Field Manual below.
+    </p>
+    {{ $grid := $.bindings.manuals }}
+    {{ $grid := htmlAddClass $grid ".flip-contents" "unit-lessons" }}
+    {{ $grid := htmlAddClass $grid ".flip-entries" "card-deck" }}
+    {{ $grid := htmlRemove $grid ".flip-list-header" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry" "card" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-visual" "text-center" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-thumb" "card-img-top" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-thumb img" "w-100 img-cover preview rounded-top object-top" }}
+    {{ $grid := htmlSetAttr $grid ".flip-entry-thumb img" "height" "220" }}
+    {{ $grid := htmlAttrFindReplace $grid ".flip-entry-thumb img" "src" "s190" "s600" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-title" "card-body font-weight-bold" }}
+    {{ $grid := htmlRemove $grid ".flip-entry-last-modified" }}
+    {{ $grid := htmlRemove $grid ".flip-entry-list-icon" }}
+    {{ $grid := htmlRemove $grid "meta" }}
+    {{ $grid := htmlRemove $grid "link" }}
+    {{ $grid := htmlRemove $grid "script" }}
+    {{ $grid := htmlSetAttr $grid "*[id]" "id" "" }}
+    {{ $grid }}
+
+    <h2 class="text-center mb-4">Datasheets</h2>
+    {{ $grid := $.bindings.datasheets }}
+    {{ $grid := htmlAddClass $grid ".flip-contents" "unit-lessons" }}
+    {{ $grid := htmlAddClass $grid ".flip-entries" "card-deck" }}
+    {{ $grid := htmlRemove $grid ".flip-list-header" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry" "card" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-visual" "text-center" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-thumb" "card-img-top" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-thumb img" "w-100 img-cover preview rounded-top object-top" }}
+    {{ $grid := htmlSetAttr $grid ".flip-entry-thumb img" "height" "220" }}
+    {{ $grid := htmlAttrFindReplace $grid ".flip-entry-thumb img" "src" "s190" "s600" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-title" "card-body font-weight-bold" }}
+    {{ $grid := htmlRemove $grid ".flip-entry-last-modified" }}
+    {{ $grid := htmlRemove $grid ".flip-entry-list-icon" }}
+    {{ $grid := htmlRemove $grid "meta" }}
+    {{ $grid := htmlRemove $grid "link" }}
+    {{ $grid := htmlRemove $grid "script" }}
+    {{ $grid := htmlSetAttr $grid "*[id]" "id" "" }}
+    {{ $grid }}
+
+    <h2 class="text-center mb-4 mt-4">Species ID Resources</h2>
+    <p>
+        The BOP Digital Platform's database contains information about the mobile and sessile organisms most commonly found in Oyster Research Stations.
+        Each listing includes a link to the species' profile on <a href="https://www.inaturalist.org" target="blank">iNaturalist</a>, which includes multiple photos of the organism and a worldwide map of sightings by community scientists,
+        along with more detailed information about the species.
+        <ul>
+            <li><a href="resources/mobile-organisms">Mobile Organisms</a></li>
+            <li><a href="resources/sessile-organisms">Sessile Organisms</a></li>
+        </ul>
+    </p>
+
+    <p>
+        The list below includes other species ID resources that you might find useful:
+    </p>
+    {{ $grid := $.bindings.speciesId }}
+    {{ $grid := htmlAddClass $grid ".flip-contents" "unit-lessons" }}
+    {{ $grid := htmlAddClass $grid ".flip-entries" "card-deck" }}
+    {{ $grid := htmlRemove $grid ".flip-list-header" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry" "card" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-visual" "text-center" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-thumb" "card-img-top" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-thumb img" "w-100 img-cover preview rounded-top object-top" }}
+    {{ $grid := htmlSetAttr $grid ".flip-entry-thumb img" "height" "220" }}
+    {{ $grid := htmlAttrFindReplace $grid ".flip-entry-thumb img" "src" "s190" "s600" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-title" "card-body font-weight-bold" }}
+    {{ $grid := htmlRemove $grid ".flip-entry-last-modified" }}
+    {{ $grid := htmlRemove $grid ".flip-entry-list-icon" }}
+    {{ $grid := htmlRemove $grid "meta" }}
+    {{ $grid := htmlRemove $grid "link" }}
+    {{ $grid := htmlRemove $grid "script" }}
+    {{ $grid := htmlSetAttr $grid "*[id]" "id" "" }}
+    {{ $grid }}
+
+    <h2 class="text-center mb-4 mt-4">Additional Resources</h2>
+    {{ $grid := $.bindings.additional }}
+    {{ $grid := htmlAddClass $grid ".flip-contents" "unit-lessons" }}
+    {{ $grid := htmlAddClass $grid ".flip-entries" "card-deck" }}
+    {{ $grid := htmlRemove $grid ".flip-list-header" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry" "card" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-visual" "text-center" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-thumb" "card-img-top" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-thumb img" "w-100 img-cover preview rounded-top object-top" }}
+    {{ $grid := htmlSetAttr $grid ".flip-entry-thumb img" "height" "220" }}
+    {{ $grid := htmlAttrFindReplace $grid ".flip-entry-thumb img" "src" "s190" "s600" }}
+    {{ $grid := htmlAddClass $grid ".flip-entry-title" "card-body font-weight-bold" }}
+    {{ $grid := htmlRemove $grid ".flip-entry-last-modified" }}
+    {{ $grid := htmlRemove $grid ".flip-entry-list-icon" }}
+    {{ $grid := htmlRemove $grid "meta" }}
+    {{ $grid := htmlRemove $grid "link" }}
+    {{ $grid := htmlRemove $grid "script" }}
+    {{ $grid := htmlSetAttr $grid "*[id]" "id" "" }}
+    {{ $grid }}
+</section>
+
