@@ -1,0 +1,26 @@
+[{
+    "name": "batches",
+    "allow_missing_embedded_records": true,
+    "fields": [{
+        "name": "dateDeployed",
+        "type": "date"
+    },{
+        "name": "setDate",
+        "type": "date"
+    },{
+        "name": "broodstockSource",
+        "type": "str"
+    },{
+        "name": "cohort",
+        "type": "string"
+    },{
+        "name": "numberSubstrateShells",
+        "type": "int"
+    }, {
+        "name": "created",
+        "type": "date",
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }]
+}]

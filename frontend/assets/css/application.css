@@ -361,7 +361,10 @@ form legend {
     }
 
     .content-body {
-        margin-top:      50px;
+        margin-top:      10px;
+    }
+    .fill-content.content-body {
+        margin-top: 50px;
     }
 }
 
@@ -1742,7 +1745,7 @@ li.loading-dialog {
 
 
 .unit-lessons .card-deck {
-    margin-bottom: 4em;
+    margin-bottom: 2em;
 }
 
 .unit-lessons .card-deck .card {
