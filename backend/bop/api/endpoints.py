@@ -345,9 +345,12 @@ class CollectionView(Endpoint):
         body = request.form or request.json
         rid = body.get('_id', body.get('id'))
 
-        value = self.collection.get(rid, noexpand=True)
-        value.update(body)
-        value = self.collection.update(value)
+        if rid:
+            value = self.collection.get(rid, noexpand=True)
+            value.update(body)
+            value = self.collection.update(value)
+        else:
+            value = self.collection.create(value)
 
         return jsonify(value.records)
 
