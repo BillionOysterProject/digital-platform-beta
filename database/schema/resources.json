@@ -1,0 +1,36 @@
+[{
+    "name": "resources",
+    "allow_missing_embedded_records": true,
+    "fields": [{
+        "name": "name",
+        "type": "str"
+    },{
+        "name": "link",
+        "type": "str"
+    },{
+        "name": "description",
+        "type": "str"
+    },{
+        "name": "type",
+        "type": "str",
+        "validators": {
+            "one-of": [
+                "class-resource",
+                "student-handout",
+                "teacher-resource"
+            ]
+        }
+    },{
+        "name": "categories",
+        "type": "raw"
+    },{
+        "name": "category",
+        "type": "str"
+    }, {
+        "name": "created",
+        "type": "date",
+        "formatters": {
+            "current-time-if-unset": true
+        }
+    }]
+}]
