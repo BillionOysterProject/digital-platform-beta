@@ -211,7 +211,7 @@ header:
       - id:    'dissolved-oxygen'
         label: 'Dissolved Oxygen'
         methods:
-        - colorimetricAmpoules
+        - colorimetricKit
         - sensor
         - winkler
 
@@ -227,7 +227,7 @@ header:
         methods:
         - testStripsPh
         - sensor
-        - colorimetricTestKit
+        - colorimetricKit
 
       - id:    'turbidity'
         label: 'Turbidity'
@@ -240,12 +240,28 @@ header:
         methods:
         - testStrips
         - photometer
+        - colorimetricKit
 
       - id:    'nitrates'
-        label: 'Nitrates'
+        label: 'Nitrates (NO3-)'
         methods:
         - testStrips
         - photometer
+        - colorimetricKit
+
+      - id:    'nitrites'
+        label: 'Nitrites (NO2-)'
+        methods:
+        - testStrips
+        - photometer
+        - colorimetricKit
+
+      - id:    'phosphates'
+        label: 'Phosphates'
+        methods:
+        - testStrips
+        - photometer
+        - colorimetricKit
 
       testingMethods:
         testStrips:
@@ -271,7 +287,7 @@ header:
           - id: saturation
             label: Saturation (%)
 
-        colorimetricTestKit:
+        colorimetricKit:
           label: Colorimetric Test Kit
 
         secchiDisk:

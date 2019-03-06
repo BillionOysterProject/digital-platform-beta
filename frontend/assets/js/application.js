@@ -367,7 +367,7 @@ $(function () {
                                 offset: [0, -15]
                             })
                             .setLngLat(feature.geometry.coordinates)
-                            .setHTML('<a href="/profiles/' + feature.properties._id + '">' + feature.properties.description + '</a>')
+                            .setHTML('<a href="/community/orgs/' + feature.properties._id + '">' + feature.properties.description + '</a>')
                             .setLngLat(feature.geometry.coordinates)
                             .addTo(map);
                     } catch (e) {;

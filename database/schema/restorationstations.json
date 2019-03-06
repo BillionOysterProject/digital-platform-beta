@@ -46,6 +46,9 @@
         "name":     "site",
         "type":     "str",
         "required": true
+    },{
+        "name": "superstructure",
+        "type": "string"
     }, {
         "name":     "team",
         "type":     "str"

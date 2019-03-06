@@ -1,0 +1,122 @@
+---
+page:
+    body_class: 'orgs-list fill-content'
+    view: 'Resources'
+
+bindings:
+
+-   name:     lessons
+    resource: '/api/lessons'
+    params:
+        limit:    false
+        sort:     unit
+---
+{{ $lessons := $.bindings.lessons }}
+
+{{ range $lesson := $lessons }}
+{{   if and $lesson.materialsResources (eqx $lesson.status "published") }}
+
+{{     range $link := $lesson.materialsResources.handoutsFileInput }}
+{{       set $link "type" "Student Handout (file)" }}
+{{       set $link "name" $link.originalname }}
+{{       set $link "lessonId" $lesson._id }}
+{{       push "allResources" $link }}
+{{     end }}
+
+{{     range $link := $lesson.materialsResources.teacherResourcesFiles }}
+{{       set $link "type" "Teacher Resource (file)" }}
+{{       set $link "name" $link.originalname }}
+{{       set $link "lessonId" $lesson._id }}
+{{       push "allResources" $link }}
+{{     end }}
+
+{{     range $link := $lesson.materialsResources.lessonMaterialFiles }}
+{{       set $link "type" "Class Resource (file)" }}
+{{       set $link "name" $link.originalname }}
+{{       set $link "lessonId" $lesson._id }}
+{{       push "allResources" $link }}
+{{     end }}
+
+{{     range $link := $lesson.materialsResources.handoutLinks }}
+{{       set $link "name" (or $link.name $link.link) }}
+{{       set $link "type" "Student Handout (link)" }}
+{{       set $link "lessonId" $lesson._id }}
+{{       push "allResources" $link }}
+{{     end }}
+
+{{     range $link := $lesson.materialsResources.teacherResourcesLinks }}
+{{       set $link "name" (or $link.name $link.link) }}
+{{       set $link "type" "Teacher Resource (link)" }}
+{{       set $link "lessonId" $lesson._id }}
+{{       push "allResources" $link }}
+{{     end }}
+
+{{     range $link := $lesson.materialsResources.lessonMaterialLinks }}
+{{       set $link "name" (or $link.name $link.link) }}
+{{       set $link "type" "Class Resource (link)" }}
+{{       set $link "lessonId" $lesson._id }}
+{{       push "allResources" $link }}
+{{     end }}
+
+{{   end }}
+{{ end }}
+
+{{ range $resource := $.vars.allResources }}
+{{   $key := printf "%x" (sha1 $resource.name) }}
+{{   set $.vars.resourceLessonMap $key (append (get $.vars.resourceLessonMap $key) $resource.lessonId) }}
+{{ end }}
+
+{{ $uniqueResources := uniqByKey $.vars.allResources "name" }}
+<pre>{{ jsonify $.vars.resourceLessonMap }}</pre>
+
+<section class="content">
+    
+    <table class="table table-sm table-bordered table-striped table-hover" id="resources">
+        <thead>
+            <tr>
+                {{ if $.flags.admin }}
+                <th>Edit</th>
+                {{ end }}
+                <th>Name</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Lesson(s)</th>
+                <th>Lesson id(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range $uniqueResource := $uniqueResources }}
+            <tr>
+                {{ if $.flags.admin }}
+                <td>
+                    <a href="">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                {{ end }}
+                <td>
+                    {{ $uniqueResource.name }}
+                </td>
+                <td>
+                    {{ $uniqueResource.type }}
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</section>
+    
+    <script type="text/javascript">
+        $(function(){
+            $('#resources').DataTable({
+                searching:      true,
+                paging:         false,
+                info:           false,
+            });
+        });
+    </script>

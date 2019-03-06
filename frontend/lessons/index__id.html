@@ -112,94 +112,112 @@ postprocessors:
         </div>
         <hr/>
 
+        
         <div class="row">
+
+            {{ if $lesson.lessonOverview.lessonSummary }}
             <div class="col-sm-12">
                 <h2 style="font-weight: 700; font-size: 24px; ">Summary</h2>
                 <!-- =============================================================================================== -->
                 <p>
                     {{ sanitize $lesson.lessonOverview.lessonSummary }}
                 </p>
+            </div>
+            {{ end }}
 
-                {{ if $lesson.lessonObjectives }}
-                <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Objectives</h2>
+            {{ if $lesson.lessonObjectives }}
+            <div class="col-sm-12">
+                <h2 style="font-weight: 700; font-size: 24px;">Objectives</h2>
                 <!-- =============================================================================================== -->
                 <p>
                     {{ sanitize $lesson.lessonObjectives }}
                 </p>
-                {{ end }}
+            </div>
+            {{ end }}
 
-                <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Materials and Resources</h2>
-                <!-- =============================================================================================== -->
-                {{ if nex (qs "renderer") "pdf" }}
-                {{ if $lesson.materialsResources.handoutLinks }}
-                <h3 style="font-size: 21px;">Student Handouts</h3>
-                {{  range $i, $handout := $lesson.materialsResources.handoutLinks }}
-                <p>
-                    <a href="{{ rxreplace $handout.link `^http:` `https:` }}" target="blank">
-                        <i class="fa fa-link"></i>
-                        {{ $handout.name }}
-                    </a>
-                </p>
-                {{  end }}
-                {{ end }}
-                
-                {{ if $lesson.materialsResources.teacherResourcesLinks }}
-                
-                <div class="content">
-                    <h3 style="font-size: 21px;">Teacher Resources</h3>
-                    {{  range $i, $link := $lesson.materialsResources.teacherResourcesLinks }}
-                    <a href="{{ rxreplace $link.link `^http:` `https:` }}" target="blank">
-                        <i class="fa fa-link"></i>
-                        {{ if $link.name }}
-                        {{ $link.name }}
-                        {{ else if $link.link }}
-                        {{ $link.link }}
-                        {{ end }}
-                    </a>
-                    {{   end }}
+            {{ if or $lesson.materialsResources.handoutLinks $lesson.materialsResources.teacherResourcesLinks $lesson.materialsResources.supplies }}           
+                <div class="col-sm-12">
+                    <h2 style="font-weight: 700; font-size: 24px;">Materials and Resources</h2>
+                    <!-- =============================================================================================== -->
+                    {{ if nex (qs "renderer") "pdf" }}
+                    {{ if $lesson.materialsResources.handoutLinks }}
+                    <h3 style="font-size: 21px;">Student Handouts</h3>
+                    {{  range $i, $handout := $lesson.materialsResources.handoutLinks }}
+                    <p>
+                        <a href="{{ rxreplace $handout.link `^http:` `https:` }}" target="blank">
+                            <i class="fa fa-link"></i>
+                            {{ $handout.name }}
+                        </a>
+                    </p>
                     {{  end }}
+                    {{ end }}
+                    
+                    {{ if $lesson.materialsResources.teacherResourcesLinks }}
+                    
+                    <div class="content">
+                        <h3 style="font-size: 21px;">Teacher Resources</h3>
+                        {{  range $i, $link := $lesson.materialsResources.teacherResourcesLinks }}
+                        <a href="{{ rxreplace $link.link `^http:` `https:` }}" target="blank">
+                            <i class="fa fa-link"></i>
+                            {{ if $link.name }}
+                            {{ $link.name }}
+                            {{ else if $link.link }}
+                            {{ $link.link }}
+                            {{ end }}
+                        </a>
+                        {{   end }}
+                        {{  end }}
+                    </div>
+
+
+                    {{ if $lesson.materialsResources.supplies }}
+                    <div class="content">
+                    <h3 style="font-size: 21px;">Supplies</h3>
+                        {{ sanitize $lesson.materialsResources.supplies }}
+                    </div>
+                    {{ end }}
+                    {{ end }}
                 </div>
+            {{ end }}
 
+            {{ if or $lesson.preparation $lesson.background $lesson.materialsResources.teacherTips }}              
+                <div class="col-sm-12">
+                    <h2 style="font-weight: 700; font-size: 24px;">Before you get started</h2>
+                    <!-- =============================================================================================== -->
+                    </div>
+                    {{ end }}
 
-                {{ if $lesson.materialsResources.supplies }}
-                <div class="content">
-                <h3 style="font-size: 21px;">Supplies</h3>
-                    {{ sanitize $lesson.materialsResources.supplies }}
+                    {{ if $lesson.materialsResources.teacherTips }}
+                    <div class="content">
+                        <h3 style="font-size: 21px;">Tips for Teachers</h3>
+                        <p>
+                            {{ sanitize $lesson.materialsResources.teacherTips }}
+                        </p>
+                    </div>
+                    {{ end }}
+
+                    {{ if $lesson.preparation }}
+                    <div class="content">
+                        <h3 style="font-size: 21px;">Preparation</h3>
+                        <p>
+                            {{ sanitize $lesson.preparation }}
+                        </p>
+                    </div>
+                    {{ end }}
+
+                    {{ if $lesson.background }}
+                    <div class="content">
+                        <h3 style="font-size: 21px;">Background</h3>
+                        <p>
+                            {{ sanitize $lesson.background }}
+                        </p>
+                    </div>
                 </div>
-                {{ end }}
-                {{ end }}
+            {{ end }}
 
-                <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Before you get started</h2>
-                <!-- =============================================================================================== -->
-
-                {{ if $lesson.materialsResources.teacherTips }}
-                <div class="content">
-                    <h3 style="font-size: 21px;">Tips for Teachers</h3>
-                    <p>
-                        {{ sanitize $lesson.materialsResources.teacherTips }}
-                    </p>
-                </div>
-                {{ end }}
-
-                {{ if $lesson.preparation }}
-                <div class="content">
-                    <h3 style="font-size: 21px;">Preparation</h3>
-                    <p>
-                        {{ sanitize $lesson.preparation }}
-                    </p>
-                </div>
-                {{ end }}
-
-                {{ if $lesson.background }}
-                <div class="content">
-                    <h3 style="font-size: 21px;">Background</h3>
-                    <p>
-                        {{ sanitize $lesson.background }}
-                    </p>
-                </div>
-                {{ end }}
-
-                <h2 style="font-weight: 700; font-size: 24px; margin-top: 1em;">Instruction Plan</h2>
+            {{ if or $lesson.instructionPlan.engage $lesson.instructionPlan.explore $lesson.instructionPlan.explain $lesson.instructionPlan.elaborate $lesson.instructionPlan.evaluate $lesson.instructionPlan.extend   }}
+            <div class="col-sm-12">
+                <h2 style="font-weight: 700; font-size: 24px;">Instruction Plan</h2>
                 <!-- =============================================================================================== -->
 
                 {{ if $lesson.instructionPlan.engage }}
@@ -291,6 +309,8 @@ postprocessors:
                     {{ end }}
                 {{ end }}
             </div>
+            {{ end }}
+
         </div>
     </div>
 </section>
