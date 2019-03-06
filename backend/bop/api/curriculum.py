@@ -35,6 +35,10 @@ class LessonTrackers(CollectionView):
     route_base      = 'lesson-trackers'
     collection_name = 'lessontrackers'
 
+class Resources(CollectionView):
+    route_base      = 'resources'
+    collection_name = 'resources'
+
 
 class Glossaries(CollectionView):
     route_base      = 'glossaries'

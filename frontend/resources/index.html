@@ -5,17 +5,13 @@ page:
 
 bindings:
 
--   name:     lessons
-    resource: '/api/lessons'
+-   name:     resources
+    resource: '/api/resources'
     params:
         limit:    false
-        sort:     unit
-
--   name: important
-    resource: 'https://drive.google.com/embeddedfolderview?id=184qxX3uG6BgyXHgEHYtww0Zn5D1_g3Od#grid'
-    parser: text
+        sort:     name
 ---
-{{ $lessons := $.bindings.lessons }}
+{{ $resources := $.bindings.resources }}
 
 <section class="content">
     <div class="unit-lessons">
@@ -55,7 +51,7 @@ bindings:
             <div class="card">
                 <div class="card-header">
                     <a href="resources/oyster-tank">
-                    <h2>Multimedia Resources</h2>
+                    <h2>Maps and Multimedia Resources</h2>
                     </a>
                 </div>
                 <div class="card-img-top">
@@ -64,7 +60,7 @@ bindings:
                     </a>
                 </div>
                 <div class="card-body">
-                    Includes: presentations, ArcGIS Storymaps, videos
+                    Includes: maps, presentations, videos
                 </div>
             </div>
         </div>
@@ -80,152 +76,44 @@ bindings:
                 {{ end }}
                 <th>Name</th>
                 <th>Type</th>
-                <th>Category</th>
+                <th>Categories</th>
                 <th>Description</th>
                 <th>Lesson</th>
             </tr>
         </thead>
         <tbody>
-            {{ range $i, $lesson := $lessons }}
-            {{ if and $lesson.materialsResources (eqx $lesson.status "published") }}
-
-            {{ if $lesson.materialsResources.handoutLinks }} 
-            {{ $handoutLinks := uniqByKey $lesson.materialsResources.handoutLinks "name" }} 
-            {{ range $j, $handoutLink := $handoutLinks }}
+            {{ range $i, $resource := $resources }}
             <tr>
                 {{ if $.flags.admin }}
                 <td>
-                    <a href="">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                </td>
-                {{ end }}
-                <td><a href="{{ $handoutLink.link }}" target="blank">{{ $handoutLink.name }}</a></td>
-                <td>student handout (link)</td>
-                <td></td>
-                <td></td>
-                <td>
-                    <a href="/lessons/{{ $lesson._id }}" target="blank">
-                    {{ $lesson.title }}
-                    </a>
-                </td>
-            </tr>
-            {{ end }}
-            {{ end }}
-
-            {{ if $lesson.materialsResources.handoutsFileInput }} 
-            {{ $handoutFileInputs := $lesson.materialsResources.handoutsFileInput }} 
-            {{ range $j, $handoutFileInput := $handoutFileInputs }}
-            <tr>
-                {{ if $.flags.admin }}
-                <td>
-                    <a href="">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                </td>
-                {{ end }}
-                <td><a href="{{ $handoutFileInput.path }}" target="blank">{{ $handoutFileInput.originalname }}</a></td>
-                <td>student handout (file upload)</td>
-                <td></td>
-                <td></td>
-                <td>
-                    <a href="/lessons/{{ $lesson._id }}" target="blank">
-                    {{ $lesson.title }}
-                    </a>
-                </td>
-            </tr>
-            {{ end }}
-            {{ end }}
-
-            {{ if $lesson.materialsResources.lessonMaterialLinks }} 
-            {{ $lessonMaterialLinks := $lesson.materialsResources.lessonMaterialLinks }} 
-            {{ range $j, $lessonMaterialLink := $lessonMaterialLinks }}
-            <tr>
-                {{ if $.flags.admin }}
-                <td>
-                    <a href="">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                </td>
-                {{ end }}
-                <td><a href="{{ $lessonMaterialLink.link }}" target="blank">{{ $lessonMaterialLink.name }}</a></td>
-                <td>class resource</td>
-                <td></td>
-                <td></td>
-                <td>
-                    <a href="/lessons/{{ $lesson._id }}" target="blank">
-                    {{ $lesson.title }}
-                    </a>
-                </td>
-            </tr>
-            {{ end }}
-            {{ end }}
-
-            {{ if $lesson.materialsResources.teacherResourcesFiles }} 
-            {{ $teacherResourcesFiles := $lesson.materialsResources.teacherResourcesFiles }} 
-            {{ range $j, $teacherResourcesFile := $teacherResourcesFiles }}
-            <tr>
-                {{ if $.flags.admin }}
-                <td>
-                    <a href="">
+                    <a href="/admin/generic/{{ $resource._id }}?collection=resource">
                         <i class="fa fa-pencil"></i>
                     </a>
                 </td>
                 {{ end }}
                 <td>
-                    <a href="{{ $teacherResourcesFile.path }}" target="blank">
-                        {{ $teacherResourcesFile.originalname }}
+                    <a href="{{ $resource.link }}">
+                        {{ $resource.name }}
                     </a>
                 </td>
-                <td>teacher resource (file upload)</td>
-                <td></td>
-                <td></td>
                 <td>
-                    <a href="/lessons/{{ $lesson._id }}" target="blank">
-                    {{ $lesson.title }}
-                    </a>
+                    {{ if $resource.type }}
+                    {{ $resource.type }}
+                    {{ end }}
                 </td>
-            </tr>
-            {{ end }}
+                <td>
+                    {{ if $resource.category }}
+                    {{ $resource.category }}
+                    {{ end }}
+                </td>
+                <td>
+                    {{ if $resource.description }}
+                    {{ $resource.description }}
+                    {{ end }}
+                </td>
+                <td></td>
             {{ end }}
 
-            {{ if $lesson.materialsResources.teacherResourcesLinks }} 
-            {{ $teacherResourcesLinks := $lesson.materialsResources.teacherResourcesLinks }} 
-            {{ range $j, $teacherResourcesLink := $teacherResourcesLinks }}
-            <tr>
-                {{ if $.flags.admin }}
-                <td>
-                    <a href="">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                </td>
-                {{ end }}
-                <td>
-                    <a href="{{ $teacherResourcesLink.link }}" target="blank">
-                        {{ if $teacherResourcesLink.name }}
-                        {{ $teacherResourcesLink.name }}
-                        {{ else }}
-                        {{ $teacherResourcesLink.link }}
-                        {{ end }}
-                    </a>
-                </td>
-                <td>teacher resource (link)</td>
-                <td></td>
-                <td></td>
-                <td>
-                    <a href="/lessons/{{ $lesson._id }}" target="blank">
-                    {{ $lesson.title }}
-                    </a>
-                </td>
-            </tr>
-            {{ end }}
-            {{ end }}
-
-            {{  end }}
-            {{ end }}
-        </tbody>
-    </table>
-</section>
     
     <script type="text/javascript">
         $(function(){

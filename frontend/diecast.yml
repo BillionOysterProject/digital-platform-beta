@@ -43,8 +43,36 @@ header:
           - "Field"
           - "Classroom & Field"
       
-      
-      
+      resources:
+        types:
+          - id: 'class-resource'
+            label: 'Class Resource'
+          - id: 'teacher-resource'
+            label: 'Teacher Resource'
+          - id: 'student-handout'
+            label: 'Student Handout'
+
+        categories:
+          - id: 'map'
+            label: 'Map'
+          - id: 'article'
+            label: 'Article'
+          - id: 'graphic-organizer'
+            label: 'Graphic Organizer'          
+          - id: 'presentation'
+            label: 'Presentation'
+          - id: 'video'
+            label: 'Video'
+          - id: 'field-science'
+            label: 'Field Science'   
+          - id: 'oyster-tank'
+            label: 'Oyster Tank'
+          - id: 'image-collection'
+            label: 'Image Collection'
+          - id: 'scientific-paper'
+            label: 'Scientific Paper'   
+          - id: 'book'
+            label: 'Book' 
       
       
       structureTypes:
