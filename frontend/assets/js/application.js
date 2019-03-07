@@ -165,6 +165,8 @@ $(function () {
                 var subsrc = event.target.submitSource;
 
                 $.each(form.serializeArray(), function (i, field) {
+                    var el = $(formEl.elements[field.name]);
+
                     if (field.value == '' || field.value == '0') {
                         delete field['value'];
                     }
@@ -176,7 +178,18 @@ $(function () {
 
                         record['_id'] = field.value;
                     } else if (!isEmpty(field.value)) {
-                        record[field.name] = field.value;
+                        // treat <select multiple> and checkboxes as arrays
+                        if (!record[field.name] && (
+                            el.attr('type', 'checkbox') || el.attr('multiple')
+                        )) {
+                            record[field.name] = [];
+                        }
+
+                        if ($.isArray(record[field.name])) {
+                            record[field.name].push(field.value);
+                        } else {
+                            record[field.name] = field.value;
+                        }
                     }
                 });
 
