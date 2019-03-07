@@ -180,11 +180,11 @@ $(function () {
                     } else if (!isEmpty(field.value)) {
                         // treat <select multiple> and checkboxes as arrays
                         if (!record[field.name] && (
-                            el.attr('type', 'checkbox') || el.attr('multiple')
+                            el.attr('type') == 'checkbox' || el.attr('multiple')
                         )) {
                             record[field.name] = [];
                         }
-
+                        
                         if ($.isArray(record[field.name])) {
                             record[field.name].push(field.value);
                         } else {
