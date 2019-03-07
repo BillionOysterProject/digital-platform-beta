@@ -98,7 +98,7 @@ bindings:
                 </td>
                 <td>
                     {{ if $resource.type }}
-                    {{ $resource.type }}
+                    {{ get (firstByKey $.page.resources.types "id" $resource.type) "label" }}
                     {{ end }}
                 </td>
                 <td>
