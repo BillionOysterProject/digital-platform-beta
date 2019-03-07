@@ -350,7 +350,7 @@ class CollectionView(Endpoint):
             value.update(body)
             value = self.collection.update(value)
         else:
-            value = self.collection.create(value)
+            value = self.collection.create(body)
 
         return jsonify(value.records)
 

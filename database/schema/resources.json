@@ -23,9 +23,6 @@
     },{
         "name": "categories",
         "type": "raw"
-    },{
-        "name": "category",
-        "type": "str"
     }, {
         "name": "created",
         "type": "date",

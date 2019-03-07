@@ -50,7 +50,7 @@ bindings:
 
             <div class="card">
                 <div class="card-header">
-                    <a href="resources/oyster-tank">
+                    <a href="resources/multimedia">
                     <h2>Maps and Multimedia Resources</h2>
                     </a>
                 </div>
@@ -86,13 +86,13 @@ bindings:
             <tr>
                 {{ if $.flags.admin }}
                 <td>
-                    <a href="/admin/generic/{{ $resource._id }}?collection=resource">
+                    <a href="/resources/editor?id={{ $resource._id }}">
                         <i class="fa fa-pencil"></i>
                     </a>
                 </td>
                 {{ end }}
                 <td>
-                    <a href="{{ $resource.link }}">
+                    <a href="{{ $resource.link }}" target="blank">
                         {{ $resource.name }}
                     </a>
                 </td>
@@ -102,8 +102,8 @@ bindings:
                     {{ end }}
                 </td>
                 <td>
-                    {{ if $resource.category }}
-                    {{ $resource.category }}
+                    {{ if $resource.categories }}
+                    {{ join $resource.categories ", " }}
                     {{ end }}
                 </td>
                 <td>

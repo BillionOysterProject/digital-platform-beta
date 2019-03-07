@@ -73,7 +73,8 @@ header:
             label: 'Scientific Paper'   
           - id: 'book'
             label: 'Book' 
-      
+          - id: 'manual'
+            label: 'Manual'       
       
       structureTypes:
       - id:    'research-station'
