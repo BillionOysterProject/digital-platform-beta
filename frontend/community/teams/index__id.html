@@ -10,10 +10,13 @@ bindings:
 
 {{ $team := $.bindings.team }}
 
-<section class="content">
-    <h1>{{ $team.name }}</h1>
-    <h2>{{ $team.schoolOrg.name }}</h2>
+<h1 class="text-left pb-0">{{ $team.name }}</h1>
+<section class="content shaded">
     
+    <h2>{{ $team.schoolOrg.name }}</h2>
+</section>
+
+<section class="content">
     {{ if $team.description}}
     <p>
         {{ $team.description }}

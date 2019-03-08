@@ -361,8 +361,13 @@ form legend {
     }
 
     .content-body {
-        margin-top:      10px;
+        margin-top:      50px;
     }
+
+    .content + .content-body {
+        margin-top: 10px;
+    }
+
     .fill-content.content-body {
         margin-top: 50px;
     }

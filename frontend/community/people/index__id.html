@@ -18,9 +18,8 @@ bindings:
 {{ $org      := $.bindings.user.schoolOrg }}
 {{ $stations := $.bindings.stations }}
 
-
-<section class="content">
-    <h1 class="text-left pb-0">{{ $user.displayName }}</h1>
+<h1 class="text-left pb-0">{{ $user.displayName }}</h1>
+<section class="content shaded">
     <p class="mb-1"><i class="fa fa-fw fa-building"></i> {{ $org.name }}{{ if or $org.streetAddress $org.city $org.state }},{{ end }}
         {{ if $org.streetAddress }}
             {{ $org.streetAddress }},
