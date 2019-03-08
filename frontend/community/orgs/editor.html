@@ -1,0 +1,301 @@
+---
+page:
+    body_class: 'container mt-1'
+    view:       'Organization Editor'
+
+bindings:
+-   name:     'org'
+    resource: '/api/school-orgs/{{ qs "id" }}'
+    only_if: '{{ qs "id" }}'
+    params:
+        limit:  false
+        sort:   ['name']
+
+---
+<section class="content">
+    <form
+        class="signup"
+        action="/api/school-orgs"
+        data-redirect-to="/community/orgs"
+        method="POST"
+    >
+        {{ if $.bindings.org }}
+        <input 
+            type="hidden" 
+            name="_id" 
+            value="{{ $.bindings.org._id }}"
+        />
+        {{ end }}
+
+        <div class="alert alert-info" role="alert" style="color:#2c3c56">
+            If your organization isn't already listed on the platform, use this form to add it! 
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-12" show-errors>
+                <label for="name">Organization Name</label>
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    class="form-control" 
+                    required
+                    {{ if $.bindings.org }}
+                    value="{{ $.bindings.org.name }}"
+                    {{ end }}
+                >
+                <div role="alert">
+                    <p class="help-block error-text">Organization Name is required.</p>
+                </div>
+            </div>
+        </div>
+
+        <fieldset class="form-group">
+            <div class="row">     
+                <legend class="col-form-label col-sm-2 pt-0">Organization Type</legend>
+                <div class="col-sm-12">
+                    <p class="form-text">
+                        Select the organization type that most closely describes the org you're representing.
+                    </p>
+                </div>    
+                <div class="col-sm-12" show-errors>
+                    <div class="form-check">
+                        <label
+                            class="form-check-label"
+                            for="school">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                id="school"
+                                name="organizationType"
+                                value="school"
+                                required
+                            >
+                            School
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label
+                            class="form-check-label"
+                            for="community organization">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                id="community organization"
+                                name="organizationType"
+                                value="community organization"
+                                required
+                            >
+                            Commmunity Organization / Non-Profit 
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label
+                            class="form-check-label"
+                            for="government">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                id="government"
+                                name="organizationType"
+                                value="government"
+                                required
+                            >
+                            Government Agency
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label
+                            class="form-check-label"
+                            for="college">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                id="college"
+                                name="organizationType"
+                                value="college"
+                                required
+                            >
+                            College
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label
+                            class="form-check-label"
+                            for="business">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                id="business"
+                                name="organizationType"
+                                value="business"
+                                required
+                            >
+                            Business
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label
+                            class="form-check-label"
+                            for="other">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                id="other"
+                                name="organizationType"
+                                value="other"
+                                required
+                            >
+                            Other
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <div class="row">     
+                <legend class="col-form-label col-sm-2 pt-0">School Type</legend>   
+                <div class="col-sm-12">
+                    <p class="form-text">
+                        Select whether your school is a NYC charter, private, or public/charter school from outside NYC.  
+                    </p>
+                    <p>
+                        All NYC Public Schools are automatically in our system via <a href="https://opendata.cityofnewyork.us/" target="blank">NYC Open Data</a>.
+                        If you you didn't see yours when you signed up, or if you're a DOE teacher who switched schools, contact bop.digital.platform@nyharbor.org.
+                    </p>
+                </div> 
+                <div class="col-sm-12" show-errors>
+                    <div class="form-check">
+                        <label 
+                            class="form-check-label"
+                            for="nyc-charter">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                id="nyc-charter"
+                                name="schoolType"
+                                value="nyc-charter"
+                                required
+                            >
+                            NYC Charter
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label 
+                            class="form-check-label"
+                            for="private">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                id="private"
+                                name="schoolType"
+                                value="private"
+                                required
+                            >
+                            Private
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label 
+                            class="form-check-label"
+                            for="other-public">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                id="other-public"
+                                name="schoolType"
+                                value="other-public"
+                                required
+                            >
+                            Other municipality public/charter
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="row">
+            <div class="form-group col-sm-12" show-errors>
+                <label for="streetAddress">Address</label>
+                <input 
+                    type="text" 
+                    id="streetAddress" 
+                    name="streetAddress" 
+                    class="form-control"  
+                    {{ if $.bindings.org }}
+                    value="{{ $.bindings.org.streetAddress }}"
+                    {{ end }}
+                    required>
+                <div role="alert">
+                    <p class="help-block error-text">Address is required.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label for="city">City</label>
+                <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    class="form-control"
+                    {{ if $.bindings.org }}
+                    value="{{ $.bindings.org.city }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label for="state">State</label>
+                <input
+                    type="text"
+                    id="state"
+                    name="state"
+                    class="form-control"
+                    {{ if $.bindings.org }}
+                    value="{{ $.bindings.org.state }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label for="zip">Zip Code</label>
+                <input
+                    type="text"
+                    id="zip"
+                    name="zip"
+                    class="form-control"
+                    {{ if $.bindings.org }}
+                    value="{{ $.bindings.org.zip }}"
+                    {{ end }}
+                >
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label for="description">Description</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    class="form-control"
+                >{{ if $.bindings.org }}{{ $.bindings.org.description }}{{ end }}</textarea>
+            </div>
+        </div>
+
+        <!-- SUBMIT -->
+        <!-- =============================================================================================== -->
+        <div class="row">
+            <div class="col-sm-12 text-right form-group">
+                <button id="submit" type="submit" class="btn btn-primary pull-right">Submit</button>
+            </div>
+        </div>
+        
+    </form>
+</section>
