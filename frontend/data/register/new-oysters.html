@@ -20,7 +20,7 @@ page:
                 class="required"
                 for="name"
             >
-                ORS or Other Oyster Structure Name
+                Your ORS or Other Oyster Structure
             </label>
             <input
                 type="text"
@@ -30,86 +30,6 @@ page:
                 data-typeahead-url="/api/restoration-stations/?fields=name"
                 data-typeahead-field="name"
             />
-        </div>
-
-        <div class="col-sm-12">
-            <div class="form-group">
-                <label>
-                    Select a structure type
-                </label>
-                {{ range $i, $structureType := $.page.structureTypes }}
-                <div class="custom-control custom-radio">
-                    <input
-                        type="radio"
-                        id="structure{{ $i }}"
-                        class="custom-control-input"
-                        name="structure"
-                    >
-                    <label class="custom-control-label w-100" for="structure{{ $i }}">
-                        {{ $structureType.label }}
-                    </label>
-                </div>
-                {{ end }}
-            </div>
-        </div>
-
-        <!--TODO: if user selects "oyster tank," create a new site using the org address-->
-        <div class="col-sm-12 col-md-8">
-            <div class="form-group">
-                <label for="site">Site Name</label>
-                <div class="input-group">
-                    <input
-                        type="text"
-                        class="form-control typeahead w-100"
-                        name="site"
-                        data-typeahead-url="/api/sites/?fields=name,bodyOfWater&amp;q=str:name/contains:{}/str:bodyOfWater/contains:{}&amp;sort=name&amp;conjunction=or"
-                        data-typeahead-field="name,bodyOfWater"
-                    >
-                    <small class="form-text">
-                        Start typing your site's name in the field above to pull up your site.
-                    </small>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-12">
-            <div class="form-group">
-                <label>
-                    Status
-                </label>
-                {{ range $i, $structureStatus := $.page.structureStatuses }}
-                <div class="custom-control custom-radio">
-                    <input
-                        type="radio"
-                        id="structureStatus{{ $i }}"
-                        name="status"
-                        class="custom-control-input"
-                    >
-                    <label class="custom-control-label w-100" for="structureStatus{{ $i }}">
-                        {{ $structureStatus.label }}
-                    </label>
-                </div>
-                {{ end }}
-            </div>
-        </div>
-
-        <div class="form-group col-sm-6">
-            <label
-                class="required"
-                for="tagNumber"
-            >
-                Tag Number
-            </label>
-            <input
-            type="text"
-                class="form-control col-sm-6"
-                name="tagNumber"
-                id="tagNumber"
-            />
-            <small class="form-text">
-                For Oyster Research Stations, BOP should have given you a tag with a number to attach to your ORS.
-                Contact bop.digital.platform@nyharbor.org if you did not receive a tag for your ORS.
-            </small>
         </div>
 
         <!--If it's an ORS or other structure in the harbor-->
@@ -178,17 +98,6 @@ page:
                 rows="5"
             >
             </textarea>          
-        </div>
-
-        <div class="form-group col-sm-12">
-            <label for="photos">(Optional) Baseline Photos</label>
-            <p class="form-text">
-                Upload a photo of your structure, the substrate shells, the site
-                and/or any other photos from your baseline that you'd like to share.
-            </p>
-            <div class="drop-area">
-                Drag files here or click to upload photos.
-            </div>
         </div>
     </section>
 
