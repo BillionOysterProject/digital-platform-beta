@@ -357,11 +357,11 @@ bindings:
                         {{ $allCounts       := (pluck (get $oysterMeasurement "measuringOysterGrowth.substrateShells") "totalNumberOfLiveOystersOnShell") }}
                         {{ $allMeasurements := (pluck (flatten (pluck (get $oysterMeasurement "measuringOysterGrowth.substrateShells") "measurements")) "sizeOfLiveOysterMM") }}
 
-                        <caption>Summary data including the total number of live oysters and the average, largest, and smallest oyster lengths.</caption>
+                        <caption>Summary data including the # of oysters measured and the average, largest, and smallest oyster lengths.</caption>
                         <tbody>
                             
                             <tr>
-                                <th scope="row">Total # of Live Oysters</th>
+                                <th scope="row">Number of Live Oysters Measured</th>
                                 <!--<td>{{ sum $allCounts }}</td>-->
                                 <td>{{ $expedition.protocols.oysterMeasurement.totalNumberOfAllLiveOysters }}</td>
                             </tr>
@@ -387,6 +387,7 @@ bindings:
                     </table>
                 </div>
 
+                <!--Removing oyster measurements by substrate shell data
                 <div class="card border-1 mb-2">
                     <div class="card-header" id="oysterMortalityData">
                         <section class="shaded collapsed" data-toggle="collapse" data-target="#oysterMortality">
@@ -412,7 +413,7 @@ bindings:
                             </figure>
             
             
-                            <!--Well this doesn't work
+                            Well this doesn't work
                                 Need a function here to hide this paragraph and chart if there is only one expedition
                                             <p>
                                                 We can also combine two bar charts to make comparisons between two datasets.
@@ -425,7 +426,7 @@ bindings:
                                     <figcaption class="figure-caption">The number of live oysters per substrate shell during the baseline expedition (in orange) and during this expedition (in blue).</figcaption>
                                 </figure>
                             </div>
-                            -->
+                            
             
                             <div class="mt-3">
                                 <p>A table is another way to visualize data using rows and columns.
@@ -441,9 +442,9 @@ bindings:
                                             <th scope="col">Tag #</th>
                                             <th scope="col">Source</th>
                                             <th scope="col"># of live oysters this expedition</th>
-                                            <!--Commenting things out now that we know all of the baselines are a mess
+                                            
                                             <th scope="col"># of live oysters last expedition</th>
-                                            <th scope="col">Percent Mortality </th>-->
+                                            <th scope="col">Percent Mortality </th>
                                         </tr>
                                     </thead>
             
@@ -467,6 +468,7 @@ bindings:
                         </div>
                     </div>
                 </div>
+                -->
 
                 <div class="card border-1 mb-2">
                     <div class="card-header" id="oysterGrowthData">
