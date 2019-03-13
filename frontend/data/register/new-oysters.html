@@ -1,0 +1,115 @@
+---
+page:
+    body_class: 'container mt-1'
+    view:       'Register New Oysters'
+---
+<!--(Need help? Check out the wiki!)-->
+<form class="form">
+    <div class="alert alert-info mt-4" role="alert">
+        <p>
+            <strong>
+            Complete this form when you get a new batch of tagged oysters for an existing ORS or structure (like a tank or reef).
+            </strong>
+        </p>
+    </div>
+    
+    <section class="content">
+        
+        <div class="form-group col-sm-6">
+            <label
+                class="required"
+                for="name"
+            >
+                Your ORS or Other Oyster Structure
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+                data-typeahead-url="/api/restoration-stations/?fields=name"
+                data-typeahead-field="name"
+            />
+        </div>
+
+        <!--If it's an ORS or other structure in the harbor-->
+        <div class="form-group col-sm-12">
+            <label for="deploymentDate">
+                When did you put this batch of oysters in the harbor?
+            </label>
+
+            <div class="form-row">
+                <input
+                    class="form-control col-sm-4"
+                    id="deploymentDate"
+                    type="date"
+                    name="deploymentDate"
+                    required
+                >
+            </div>
+            <div class="form-row">
+                <small class="form-text col-sm-6">
+                    If a BOP staff member put the oysters in for you, please ask them for the date!
+                </small>
+            </div>
+        </div>
+
+
+        <div class="form-group col-sm-8">
+            <label for="setDate">Set Date</label>
+            <p>
+                Record the <strong>set date</strong> that appears on the tag that comes with your batch of oysters.
+                If your bag doesn't have a tag on it, contact the BOP Field Technician.
+            </p>
+            <input
+                class="form-control col-4"
+                type="date"
+                name="monitoringSetDate"
+            >
+        </div>
+
+        <div class="form-group col-sm-8">
+            <label>Broodstock Source</label>
+            <p>
+                Record the <strong>broodstock source</strong> that appears on the tag that comes with your batch of oysters.
+                If your bag doesn't have a tag on it, contact the BOP Field Technician.
+            </p>
+
+            {{ range $i, $oysterSource := $.page.oysterSources }}
+            <div class="custom-control custom-radio">
+                <input
+                    type="radio"
+                    name="baselineOysterSource"
+                    id="oysterSource{{ $i }}"
+                    class="custom-control-input"
+                >
+                <label class="custom-control-label w-100" for="oysterSource{{ $i }}">
+                    {{ $oysterSource.label }}
+                </label>
+            </div>
+            {{ end }}
+        </div>
+
+        <div class="form-group col-sm-8">           
+            <label for="notes">Notes</label>
+            <textarea
+                class="form-control"
+                id="notes"
+                rows="5"
+            >
+            </textarea>          
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="form-group">
+            <div class="text-right">
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                >Submit
+                </button>
+            </div>
+        </div>
+    </section>
+</form>

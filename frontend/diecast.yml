@@ -79,16 +79,12 @@ header:
       structureTypes:
       - id:    'research-station'
         label: 'Oyster Research Station'
-      - id:    'community-reef'
-        label: 'Community Reef'
       - id:    'oyster-tank'
         label: 'Oyster Tank'
-      - id:    'reef'
-        label: 'Reef'
-      - id:    'nursery'
-        label: 'Oyster Nursery'
-      - id:    'none'
-        label: 'No structure'
+      - id:    'community-reef'
+        label: 'Community Reef File'
+      - id:    'gabion'
+        label: 'Oyster Gabion'
 
       structureStatuses:
       - id:    'active'

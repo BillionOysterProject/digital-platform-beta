@@ -51,7 +51,7 @@ bindings:
                 <!-- FIRST NAME -->
                 <!-- =============================================================================================== -->
                 <div class="row">
-                    <div class="form-group col-sm-8" show-errors>
+                    <div class="form-group col-sm-12" show-errors>
                         <label for="firstName">First Name</label>
                         <input 
                             type="text" 
@@ -70,7 +70,7 @@ bindings:
                 <!-- LAST NAME -->
                 <!-- =============================================================================================== -->
                 <div class="row">
-                    <div class="form-group col-sm-8" show-errors>
+                    <div class="form-group col-sm-12" show-errors>
                         <label for="lastName">Last Name</label>
                         <input 
                             type="text" 
@@ -88,7 +88,7 @@ bindings:
                 <!-- EMAIL -->
                 <!-- =============================================================================================== -->
                 <div class="row">
-                    <div class="form-group col-sm-8" show-errors>
+                    <div class="form-group col-sm-12" show-errors>
                         <label for="email">Email</label>
                         <input 
                             type="email" 
@@ -108,7 +108,7 @@ bindings:
                 <!-- ALTERNATE EMAIL -->
                 <!-- =============================================================================================== -->
                 <div class="row">
-                        <div class="form-group col-sm-8">
+                        <div class="form-group col-sm-12">
                             <label for="email">Alternate Email</label>
                             <input 
                                 type="email" 
@@ -128,8 +128,8 @@ bindings:
                 <!-- PHONE NUMBER -->
                 <!-- =============================================================================================== -->
                 <div class="row">
-                    <div class="form-group col-sm-8">
-                        <label for="phone">Phone Number</label>
+                    <div class="form-group col-sm-12">
+                        <label for="phone">Phone Number (Optional)</label>
                         <input
                             type="tel"
                             id="phone"
@@ -138,13 +138,17 @@ bindings:
                             pattern="\s*(?:\+[0-9]{1,3})?[\s\W]*[0-9]{3}[\s\W]*[0-9]{3}[\s\W]*[0-9]{4}\s*"
                         >
                         <small>Format: 123-456-7890</small>
+                        <br/>
+                        <small>We ask for your phone number so we can contact you in case there is an issue with your Oyster Research Station.
+                            We will never share your phone number and it will not be publicly visible on the BOP Digital Platform.
+                        </small>
                     </div>
                 </div>
 
                 <!-- PRONOUNS -->
                 <!-- =============================================================================================== -->
                 <div class="row">
-                        <div class="form-group col-sm-8">
+                        <div class="form-group col-sm-12">
                             <label for="pronouns">Pronouns (she/her/hers, he/him/his, they/them/theirs, etc.)</label>
                             <input
                                 type="text"
@@ -335,6 +339,7 @@ bindings:
                         <label for="schoolOrg">Organization (NYC Public School)</label>    
                         <p class="form-text">
                             Click the field below to start typing your school's name or ATS code, then select your school from the dropdown list.
+                            We automatically pull DOE school information from <a href="https://opendata.cityofnewyork.us/" target="blank">NYC Open Data</a>.
                         </p>     
                         <div class="input-group">
                             <input

@@ -22,8 +22,9 @@ bindings:
 {{ $org := $.bindings.org }}
 {{ $orgSites := uniqByKey $stations "site.name" }}
 
-<section class="content">
-    <h1 class="text-left pb-0">{{ $org.name }}</h1>
+<h1 class="text-left pb-0">{{ $org.name }}</h1>
+<section class="content shaded">
+    
     <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
         {{ if $org.streetAddress }}
             {{ $org.streetAddress }},

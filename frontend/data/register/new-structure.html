@@ -1,0 +1,197 @@
+---
+page:
+    body_class: 'container mt-1'
+    view:       'Register Your Oyster Research Structure'
+---
+<!--(Need help? Check out the wiki!)-->
+<form class="form">
+    <div class="alert alert-info mt-4" role="alert">
+        <p>
+            <strong>
+            Complete this form when you get a new Oyster Research Station (ORS), oyster tank, or other oyster research structure with new oysters.
+            </strong>
+        </p>
+    </div>
+    
+    <section class="content">
+        
+        <div class="form-group col-sm-6">
+            <label
+                class="required"
+                for="name"
+            >
+                ORS or Other Oyster Structure Name
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+            />
+            <small class="form-text">
+                Give your structure a unique name that you'll remember easily.
+            </small>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label>
+                    Select a structure type
+                </label>
+                {{ range $i, $structureType := $.page.structureTypes }}
+                <div class="custom-control custom-radio">
+                    <input
+                        type="radio"
+                        id="structure{{ $i }}"
+                        class="custom-control-input"
+                        name="structure"
+                    >
+                    <label class="custom-control-label w-100" for="structure{{ $i }}">
+                        {{ $structureType.label }}
+                    </label>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+        <!--TODO: if user selects "oyster tank," create a new site using the org address-->
+        <div class="col-sm-12 col-md-8">
+            <div class="form-group">
+                <label for="site">Site Name</label>
+                <div class="input-group">
+                    <input
+                        type="text"
+                        class="form-control typeahead w-100"
+                        name="site"
+                        data-typeahead-url="/api/sites/?fields=name,bodyOfWater&amp;q=str:name/contains:{}/str:bodyOfWater/contains:{}&amp;sort=name&amp;conjunction=or"
+                        data-typeahead-field="name,bodyOfWater"
+                    >
+                    <small class="form-text">
+                        Start typing your site's name in the field above to pull up your site.
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label>
+                    Status
+                </label>
+                {{ range $i, $structureStatus := $.page.structureStatuses }}
+                <div class="custom-control custom-radio">
+                    <input
+                        type="radio"
+                        id="structureStatus{{ $i }}"
+                        name="status"
+                        class="custom-control-input"
+                    >
+                    <label class="custom-control-label w-100" for="structureStatus{{ $i }}">
+                        {{ $structureStatus.label }}
+                    </label>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="form-group col-sm-6">
+            <label
+                class="required"
+                for="tagNumber"
+            >
+                Tag Number
+            </label>
+            <input
+            type="text"
+                class="form-control col-sm-6"
+                name="tagNumber"
+                id="tagNumber"
+            />
+            <small class="form-text">
+                For Oyster Research Stations, BOP should have given you a tag with a number to attach to your ORS.
+                Contact bop.digital.platform@nyharbor.org if you did not receive a tag for your ORS.
+            </small>
+        </div>
+
+        <!--
+        <div class="form-group col-sm-12">
+            <label for="deploymentDate">
+                When did you put this batch of oysters in the harbor?
+            </label>
+
+            <div class="form-row">
+                <input
+                    class="form-control col-sm-4"
+                    id="deploymentDate"
+                    type="date"
+                    name="deploymentDate"
+                    required
+                >
+            </div>
+            <div class="form-row">
+                <small class="form-text col-sm-6">
+                    If a BOP staff member put the oysters in for you, please ask them for the date!
+                </small>
+            </div>
+        </div>
+
+
+        <div class="form-group col-sm-8">
+            <label for="setDate">Set Date</label>
+            <p>
+                Record the <strong>set date</strong> that appears on the tag that comes with your batch of oysters.
+                If your bag doesn't have a tag on it, contact the BOP Field Technician.
+            </p>
+            <input
+                class="form-control col-4"
+                type="date"
+                name="monitoringSetDate"
+            >
+        </div>
+
+        <div class="form-group col-sm-8">
+            <label>Broodstock Source</label>
+            <p>
+                Record the <strong>broodstock source</strong> that appears on the tag that comes with your batch of oysters.
+                If your bag doesn't have a tag on it, contact the BOP Field Technician.
+            </p>
+
+            {{ range $i, $oysterSource := $.page.oysterSources }}
+            <div class="custom-control custom-radio">
+                <input
+                    type="radio"
+                    name="baselineOysterSource"
+                    id="oysterSource{{ $i }}"
+                    class="custom-control-input"
+                >
+                <label class="custom-control-label w-100" for="oysterSource{{ $i }}">
+                    {{ $oysterSource.label }}
+                </label>
+            </div>
+            {{ end }}
+        </div>
+    -->
+
+        <div class="form-group col-sm-8">           
+            <label for="notes">Notes</label>
+            <textarea
+                class="form-control"
+                id="notes"
+                rows="5"
+            >
+            </textarea>          
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="form-group">
+            <div class="text-right">
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                >Next
+                </button>
+            </div>
+        </div>
+    </section>
+</form>
