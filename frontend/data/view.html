@@ -1,0 +1,395 @@
+---
+page:
+    body_class: 'container mt-1'
+    view: View Data
+---
+
+<form name="expeditionData" data-form-type="custom" class="mt-4">
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <h2>View All Data</h2>
+            </div>
+            <div class="card-body">
+                <p>
+                    To view or download ALL <strong>expedition data</strong>, click on the buttons below:
+                </p>
+                <button
+                type="submit"
+                class="btn btn-lg btn-primary"
+                >
+                    View All Expedition Data in Browser
+                </button>
+        
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Export All Expedition Data as...
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <a class="dropdown-item" href="#">CSV (comma-separated, Excel friendly)</a>
+                        <a class="dropdown-item" href="#">TSV (tab-separated, Excel friendly)</a>
+                        <a class="dropdown-item" href="#">Google Sheets</a>
+                        <a class="dropdown-item" href="#">PDF (printable)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="content">
+        <p>
+            To view or download ALL <strong>oyster measurement data</strong>, click on the buttons below:
+        </p>
+
+        <button
+        type="submit"
+        class="btn btn-lg btn-primary"
+        >
+            View All Oyster Measurement Data in Browser
+        </button>
+
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Export All Oyster Measurement Data as...
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">CSV (comma-separated, Excel friendly)</a>
+                <a class="dropdown-item" href="#">TSV (tab-separated, Excel friendly)</a>
+                <a class="dropdown-item" href="#">Google Sheets</a>
+                <a class="dropdown-item" href="#">PDF (printable)</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        To select specific data, click the "Filter Data" option below:
+    </section>
+
+    <section class="content shaded process-step collapsed" data-toggle="collapse" data-target="#filterData">
+        <section class="container-fluid">
+            <div id="step1-header" class="blue">
+                <span>
+                    <h2>Filter Data</h2>
+                </span>
+            </div>
+        </section>
+
+        <div class="step-toggle">
+            <i class="fa"></i>
+        </div>
+    </section>
+
+    <section class="content collapse" id="filterData">
+    <!-- ########################################################################################### -->
+    <!-- Step 1: Protocol Selection -->
+    <!--         Select which fields should be retrieved. -->
+    <!-- ########################################################################################### -->
+        <section class="content">
+            <h3>
+                <span class="fa-stack fa-1.5x">
+                    <i class="fa fa-circle-o fa-stack-2x"></i>
+                    <strong class="fa-stack-1x">1</strong>
+                </span>
+                Select Protocols (Required)
+            </h3>
+            <p>
+                Check the box next to each protocol you want to view.
+            </p>
+
+            <div class="row" id="select-comparison-parameters">
+                <div class="col-sm-12">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="">
+                            <b>Oyster Measurements</b>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="">
+                            <b>Site Conditions</b>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="">
+                            <b>Mobile Organisms</b>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="">
+                            <b>Sessile Organisms</b>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="">
+                            <b>Water Quality</b>
+                        </label>
+                    </div>
+                </div>
+            </div>           
+        </section> 
+
+
+        <!-- ########################################################################################### -->
+        <!-- Step 2: Expedition Filter -->
+        <!--         Restrict which expeditions to retrieve data from by any/all of the below criteria. -->
+        <!-- ########################################################################################### -->
+
+        <section class="content">
+            <h3>
+                <span class="fa-stack fa-1.5x">
+                    <i class="fa fa-circle-o fa-stack-2x"></i>
+                    <strong class="fa-stack-1x">2</strong>
+                </span>
+                Filter Expeditions (Optional)
+            </h3>
+            <p>
+                Narrow down your protocol data to only display expeditions from specific sites, organizations, users, etc.
+            </p>
+
+            <div class="form-group row">
+                <label for="site" class="col-sm-2 col-form-label">Site Name</label>
+                <div class="input-group col-sm-4">
+                    <input
+                        type="text"
+                        class="form-control typeahead w-100"
+                        name="site"
+                        data-typeahead-url="/api/sites/?fields=name,bodyOfWater&amp;q=str:name/contains:{}/str:bodyOfWater/contains:{}&amp;sort=name&amp;conjunction=or"
+                        data-typeahead-field="name,bodyOfWater"
+                    >
+                    <small class="form-text text-muted">
+                        Start typing your site's name in the field above to pull up your site.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="search" class="col-sm-2 col-form-label">Keyword Search</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="search" autofocus>
+                    <small class="form-text text-muted">
+                        Enter a search term to filter expeditions by keywords.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="date" class="col-sm-2 col-form-label">Start of Date Range</label>
+                <div class="col-sm-4">
+                    <input
+                        type="date"
+                        class="form-control"
+                        name="dateStart"
+                        value="{{ time (ago `1y`) `ymd` }}"
+                    >
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="date" class="col-sm-2 col-form-label">End of Date Range</label>
+                <div class="col-sm-4">
+                    <input
+                        type="date"
+                        class="form-control"
+                        name="dateEnd"
+                        value="{{ now `ymd` }}"
+                    >
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="ors" class="col-sm-2 col-form-label">
+                    ORS Name
+                </label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            id="ors"
+                            class="form-control typeahead w-100"
+                            name="ors"
+                            data-typeahead-url="/api/restoration-stations/?fields=name&amp;q=str:name/contains:{}"
+                            data-typeahead-field="name"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mt-4">
+                <label>Structure Type</label>
+
+                {{ range $i, $structureType := $.page.structureTypes }}
+                <div class="custom-control custom-radio">
+                    <input
+                        type="radio"
+                        id="structure{{ $i }}"
+                        class="custom-control-input"
+                    >
+                    <label class="custom-control-label w-100" for="structure{{ $i }}">
+                        {{ $structureType.label }}
+                    </label>
+                </div>
+                {{ end }}
+            </div>
+
+            <div class="form-group row">
+                <label for="date" class="col-sm-2 col-form-label">
+                    Organization Name
+                </label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            class="form-control typeahead w-100"
+                            name="organization"
+                            data-typeahead-url="/api/school-orgs/?fields=name&amp;q=str:name/contains:{}"
+                            data-typeahead-field="name"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="date" class="col-sm-2 col-form-label">
+                    Team Name
+                </label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            class="form-control typeahead w-100"
+                            name="team"
+                            data-typeahead-url="/api/teams/?fields=name&amp;q=str:name/contains:{}"
+                            data-typeahead-field="name"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="date" class="col-sm-2 col-form-label">
+                    User
+                </label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            class="form-control typeahead w-100"
+                            name="teamLead"
+                            data-typeahead-url="/api/users/teamleads/?fields=displayName&amp;q=str:displayName/contains:{}"
+                            data-typeahead-field="displayName"
+                        >
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+
+
+        <!-- ########################################################################################### -->
+        <!-- Step 3: View Report -->
+        <!--         Show the report and provide options for exporting to common formats. -->
+        <!-- ########################################################################################### -->
+
+        <section class="content">
+            <h3>
+                <span class="fa-stack fa-1.5x">
+                    <i class="fa fa-circle-o fa-stack-2x"></i>
+                    <strong class="fa-stack-1x">3</strong>
+                </span>
+                View or Download Selected Data
+            </h3>
+            <p>
+                Choose which format you'd like to view your selected data in.
+            </p>        
+
+            <button
+            type="submit"
+            class="btn btn-lg btn-primary"
+            >
+                View Data
+            </button>
+
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Export as...
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <a class="dropdown-item" href="#">CSV (comma-separated, Excel friendly)</a>
+                    <a class="dropdown-item" href="#">TSV (tab-separated, Excel friendly)</a>
+                    <a class="dropdown-item" href="#">Google Sheets</a>
+                    <a class="dropdown-item" href="#">PDF (printable)</a>
+                </div>
+            </div>
+        </section>
+    </section>
+</form>
+
+<script type="text/javascript">
+    $(function(){
+        var form = $('form[name="expeditionData"]');
+
+        form.submit(function(e){
+            var el = e.target;
+            e.preventDefault();
+
+            try {
+                var query = [];
+
+                var qs = {
+                    q:      'all',
+                    groups: 'all',
+                };
+
+                $.each(form.serializeArray(), function(i, field) {
+                    if (field.name.match(/^groups\[/) && field.value === 'on') {
+                        if (!$.isArray(qs.groups)) {
+                            qs.groups = [];
+                        }
+
+                        qs.groups.push(field.name.replace('groups[', '').replace(']', ''));
+                    } else if (field.value.length) {
+                        switch (field.name) {
+                        case 'search':
+                            qs.search = field.value;
+                            break;
+                        case 'dateStart':
+                            query.push('date:monitoringStartDate')
+                            query.push('gte:' + moment(field.value).format('YYYY-MM-DD'));
+                            break;
+                        case 'dateEnd':
+                            query.push('date:monitoringStartDate');
+                            query.push('lte:' + moment(field.value).format('YYYY-MM-DD'));
+                            break;
+                        case 'ors':
+                            break;
+                        case 'team':
+                            break;
+                        case 'teamLead':
+                            break;
+                        }
+                    }
+                });
+
+                if (query.length) {
+                    qs['q'] = query.join('/');
+                }
+
+                if ($.isArray(qs.groups)) {
+                    qs.groups = qs.groups.join(',');
+                }
+
+                window.location.href = '/data/preview?' + $.param(qs);
+            } catch (e) {
+                console.error(e);
+            }
+
+            return false;
+        });
+    });
+</script>
