@@ -358,15 +358,12 @@ header:
             label: Degrees (C)
 
       protocols:
-      - name: 'Protocol 1: Site Conditions'
+      - name: 'Site Conditions'
         color: '#E6B00D'
         id:   'siteCondition'
         groups:
         - id:   weather
           name: Weather
-
-        - id:   tides
-          name: Tidal Conditions
 
         - id:   land-water
           name: Land and Water Conditions
