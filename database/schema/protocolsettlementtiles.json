@@ -43,7 +43,7 @@
     }],
     "fields": [{
         "name":       "collectionTime",
-        "type":       "date"
+        "type":       "time"
     }, {
         "name":     "scribeMember",
         "type":     "str"
@@ -69,7 +69,7 @@
         }
     }, {
         "name":     "submitted",
-        "type":     "date"
+        "type":     "time"
     }, {
         "name":     "settlementTiles",
         "type":     "raw"

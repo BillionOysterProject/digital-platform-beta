@@ -3,7 +3,7 @@
     "allow_missing_embedded_records": true,
     "fields": [{
         "name":       "created",
-        "type":       "date",
+        "type":       "time",
         "formatters": {
             "current-time-if-unset": true
         }

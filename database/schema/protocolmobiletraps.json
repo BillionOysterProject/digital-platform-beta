@@ -20,7 +20,7 @@
     }],
     "fields": [{
         "name":       "collectionTime",
-        "type":       "date"
+        "type":       "time"
     }, {
         "name":       "latitude",
         "type":       "float"
@@ -38,7 +38,7 @@
         "type":       "str"
     }, {
         "name":       "submitted",
-        "type":       "date"
+        "type":       "time"
     }, {
         "name":       "status",
         "type":       "str",

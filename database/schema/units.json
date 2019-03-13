@@ -27,7 +27,7 @@
     }],
     "fields": [{
         "name":       "created",
-        "type":       "date",
+        "type":       "time",
         "required":   true,
         "formatters": {
             "current-time-if-unset": true

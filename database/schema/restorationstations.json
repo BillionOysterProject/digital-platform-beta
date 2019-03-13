@@ -48,7 +48,7 @@
         "required": true
     },{
         "name": "superstructure",
-        "type": "string"
+        "type": "str"
     }, {
         "name":     "team",
         "type":     "str"
@@ -141,7 +141,7 @@
         "type": "object"
     }, {
         "name": "created",
-        "type": "date",
+        "type": "time",
         "formatters": {
             "current-time-if-unset": true
         }

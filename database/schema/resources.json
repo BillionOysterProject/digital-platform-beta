@@ -25,7 +25,7 @@
         "type": "raw"
     }, {
         "name": "created",
-        "type": "date",
+        "type": "time",
         "formatters": {
             "current-time-if-unset": true
         }
