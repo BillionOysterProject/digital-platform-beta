@@ -5,59 +5,81 @@ page:
 ---
 
 <form name="expeditionData" data-form-type="custom" class="mt-4">
-    <section class="content">
+    <section class="content card-deck">
         <div class="card">
             <div class="card-header">
-                <h2>View All Data</h2>
+                <b>View Expedition Data</b>
             </div>
             <div class="card-body">
-                <p>
-                    To view or download ALL <strong>expedition data</strong>, click on the buttons below:
+                <p class="card-text">
+                    Click below to view or export all <strong>expedition data</strong> in the current browser window.
                 </p>
-                <button
-                type="submit"
-                class="btn btn-lg btn-primary"
-                >
-                    View All Expedition Data in Browser
-                </button>
-        
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Export All Expedition Data as...
+
+                <div class="card-text d-flex flex-row justify-content-around align-items-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-table"></i>
+                        View Expeditions
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a class="dropdown-item" href="#">CSV (comma-separated, Excel friendly)</a>
-                        <a class="dropdown-item" href="#">TSV (tab-separated, Excel friendly)</a>
-                        <a class="dropdown-item" href="#">Google Sheets</a>
-                        <a class="dropdown-item" href="#">PDF (printable)</a>
+
+                    <div class="btn-group" role="group">
+                        <button
+                            type="button"
+                            id="exportExpeditions"
+                            class="btn btn-primary dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                            <i class="fa fa-download"></i>
+                            Export Expeditions
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="exportExpeditions">
+                            <a class="dropdown-item" href="#">CSV (comma-separated, Excel friendly)</a>
+                            <a class="dropdown-item" href="#">TSV (tab-separated, Excel friendly)</a>
+                            <a class="dropdown-item" href="#">Google Sheets</a>
+                            <a class="dropdown-item" href="#">PDF (printable)</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-    </section>
+        <div class="card">
+            <div class="card-header">
+                <b>View Oyster Measurements</b>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Click below to view or export all <strong>oyster measurement
+                    data</strong> in the current browser window.
+                </p>
 
-    <section class="content">
-        <p>
-            To view or download ALL <strong>oyster measurement data</strong>, click on the buttons below:
-        </p>
+                <div class="d-flex flex-row justify-content-around align-items-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-table"></i>
+                        View Measurements
+                    </button>
 
-        <button
-        type="submit"
-        class="btn btn-lg btn-primary"
-        >
-            View All Oyster Measurement Data in Browser
-        </button>
-
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Export All Oyster Measurement Data as...
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="#">CSV (comma-separated, Excel friendly)</a>
-                <a class="dropdown-item" href="#">TSV (tab-separated, Excel friendly)</a>
-                <a class="dropdown-item" href="#">Google Sheets</a>
-                <a class="dropdown-item" href="#">PDF (printable)</a>
+                    <div class="btn-group" role="group">
+                        <button
+                            type="button"
+                            id="exportOysterMeasurements"
+                            class="btn btn-primary dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                            <i class="fa fa-download"></i>
+                            Export Measurements
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="exportOysterMeasurements">
+                            <a class="dropdown-item" href="#">CSV (comma-separated, Excel friendly)</a>
+                            <a class="dropdown-item" href="#">TSV (tab-separated, Excel friendly)</a>
+                            <a class="dropdown-item" href="#">Google Sheets</a>
+                            <a class="dropdown-item" href="#">PDF (printable)</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -130,8 +152,8 @@ page:
                         </label>
                     </div>
                 </div>
-            </div>           
-        </section> 
+            </div>
+        </section>
 
 
         <!-- ########################################################################################### -->
@@ -306,7 +328,7 @@ page:
             </h3>
             <p>
                 Choose which format you'd like to view your selected data in.
-            </p>        
+            </p>
 
             <button
             type="submit"
