@@ -47,11 +47,11 @@
         ]
     }, {
         "key": "lessonOverview.subjectAreas.*",
-        "collection": "metasubjectareas" 
+        "collection": "metasubjectareas"
     }],
     "fields": [{
         "name":       "created",
-        "type":       "date",
+        "type":       "time",
         "required":   true,
         "formatters": {
             "current-time-if-unset": true

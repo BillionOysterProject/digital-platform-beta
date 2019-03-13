@@ -10,7 +10,7 @@
     }],
     "fields": [{
         "name":       "collectionTime",
-        "type":       "date"
+        "type":       "time"
     }, {
         "name":       "scribeMember",
         "type":       "str"
@@ -22,7 +22,7 @@
         "type":       "str"
     }, {
         "name":       "submitted",
-        "type":       "date"
+        "type":       "time"
     }, {
         "name":       "status",
         "type":       "str",

@@ -80,6 +80,8 @@ github.com/ghetzel/diecast v1.10.16 h1:6yKIcTXKm6AY3mmeWO7objEKKojNujSZtPzPFBmIz
 github.com/ghetzel/diecast v1.10.16/go.mod h1:Q1oMUg7E1a6NRcDny+274DcSuQ/6FK7GQk4j5DQS6HY=
 github.com/ghetzel/diecast v1.10.17 h1:vmoKb+8VBori8p1CVjami5TbzcbCaDFTs1/8mG9H5GU=
 github.com/ghetzel/diecast v1.10.17/go.mod h1:Q1oMUg7E1a6NRcDny+274DcSuQ/6FK7GQk4j5DQS6HY=
+github.com/ghetzel/diecast v1.10.18 h1:xhqqEECoVIYglB8Oi84uhe31QMAf51BdvBlqxsXE0Fs=
+github.com/ghetzel/diecast v1.10.18/go.mod h1:Q1oMUg7E1a6NRcDny+274DcSuQ/6FK7GQk4j5DQS6HY=
 github.com/ghetzel/friendscript v0.5.0/go.mod h1:GZJ2FZRpgvURp4hUb/AdevNCnHKCWRpKLxtAl817F4g=
 github.com/ghetzel/friendscript v0.5.5 h1:xQvgdHW7FckKhHZL4xU3LaPpBU0nHheBl96My1KhR+I=
 github.com/ghetzel/friendscript v0.5.5/go.mod h1:zYqGAS3vGMxM912/T9GP1S62VP+AXssMDv9dPzO0Ph0=
@@ -106,6 +108,8 @@ github.com/ghetzel/pivot/v3 v3.0.44 h1:8BXVRxWoGUeOx6j8bHBLp81ghRvodAj2pEP3yLGIc
 github.com/ghetzel/pivot/v3 v3.0.44/go.mod h1:wD9+a7Egu2uzaWx6hh/IFxVIYKWTuEMnQeija5NwAok=
 github.com/ghetzel/pivot/v3 v3.0.45 h1:hyba02Ih9TzUbcJO9fpPZKCuEgBH9yXUCIoBnNhUuV8=
 github.com/ghetzel/pivot/v3 v3.0.45/go.mod h1:NSn44DLsjQedBJNh2+urkjPHDHPs1xuTCX0nPtTpxE4=
+github.com/ghetzel/pivot/v3 v3.0.47 h1:gxQtDrGUATAO4QHIMWQSzHXl7FRmYQ/N2PupiFLImog=
+github.com/ghetzel/pivot/v3 v3.0.47/go.mod h1:NSn44DLsjQedBJNh2+urkjPHDHPs1xuTCX0nPtTpxE4=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d h1:YVJe7KwVYazt90hCc/q2dYJVS3062AY6QdT6iHd+Kh8=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d/go.mod h1:7CCemW/spiphukVWb/v2WWYeZkydh30TwSRBh48irZQ=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=

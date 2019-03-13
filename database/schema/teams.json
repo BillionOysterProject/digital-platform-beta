@@ -33,14 +33,14 @@
         "type":      "raw"
     }, {
         "name":      "updated",
-        "type":      "date",
+        "type":      "time",
         "required":  true,
         "formatters": {
             "current-time": true
         }
     }, {
         "name":       "created",
-        "type":       "date",
+        "type":       "time",
         "required":   true,
         "formatters": {
             "current-time-if-unset": true

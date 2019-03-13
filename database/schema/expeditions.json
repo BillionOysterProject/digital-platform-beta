@@ -92,23 +92,23 @@
         "required":   true
     }, {
         "name":       "created",
-        "type":       "date",
+        "type":       "time",
         "required":   true,
         "formatters": {
             "current-time-if-unset": true
         }
     }, {
         "name":       "monitoringStartDate",
-        "type":       "date"
+        "type":       "time"
     }, {
         "name":       "monitoringEndDate",
-        "type":       "date"
+        "type":       "time"
     }, {
         "name":       "published",
-        "type":       "date"
+        "type":       "time"
     }, {
         "name":       "updated",
-        "type":       "date",
+        "type":       "time",
         "required":   true,
         "formatters": {
             "current-time": true

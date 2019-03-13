@@ -3,22 +3,22 @@
     "allow_missing_embedded_records": true,
     "fields": [{
         "name": "dateDeployed",
-        "type": "date"
+        "type": "time"
     },{
         "name": "setDate",
-        "type": "date"
+        "type": "time"
     },{
         "name": "broodstockSource",
         "type": "str"
     },{
         "name": "cohort",
-        "type": "string"
+        "type": "str"
     },{
         "name": "numberSubstrateShells",
         "type": "int"
     }, {
         "name": "created",
-        "type": "date",
+        "type": "time",
         "formatters": {
             "current-time-if-unset": true
         }

@@ -53,7 +53,7 @@
     }, {
         "name":     "created",
         "not_user_editable": true,
-        "type":     "date",
+        "type":     "time",
         "formatters": {
             "current-time-if-unset": true
         }
