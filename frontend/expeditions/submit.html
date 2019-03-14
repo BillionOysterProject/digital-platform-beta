@@ -479,14 +479,14 @@ includes:
                     if (!tables.oysterMeasurements) {
                         // setup the oyster measurements table
                         tables.oysterMeasurements = bop.createTable('#oysterMeasurementsTable', [
-                            'Oyster Clump',
-                            'Oyster Length (mm)',
+                            // 'Oyster Clump',
+                            'Oyster Length (mm)'
                         ], [{
-                            data:      'substrateShellNumber',
-                            type:      'numeric',
-                            validator: 'valid-settlement-tile',
-                            width:     30,
-                        }, {
+                        //    data:      'substrateShellNumber',
+                        //    type:      'numeric',
+                        //    validator: 'valid-settlement-tile',
+                        //    width:     30,
+                        //}, {
                             data:      'oysterLength',
                             type:      'numeric',
                             validator: 'valid-oyster',
@@ -497,6 +497,7 @@ includes:
                             },
                         }], {
                             width: width,
+                            startRows:    25
                         }, function(table) {
                         {{ if $.bindings.expedition }}
                             var input = JSON.parse('{{ jsonify (get $.bindings.expedition "protocols.oysterMeasurement.measuringOysterGrowth.substrateShells") }}');

@@ -81,10 +81,6 @@ header:
         label: 'Oyster Research Station'
       - id:    'oyster-tank'
         label: 'Oyster Tank'
-      - id:    'community-reef'
-        label: 'Community Reef File'
-      - id:    'gabion'
-        label: 'Oyster Gabion'
 
       structureStatuses:
       - id:    'active'
@@ -369,6 +365,7 @@ header:
           name: Land and Water Conditions
 
         data:
+
         # Weather
         # ----------------------------------------------------------------------
         - id:    'meteorologicalConditions.airTemperatureC'
