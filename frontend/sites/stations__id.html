@@ -168,7 +168,7 @@ bindings:
 
         <tr>
             <th scope="row">Registered On</th>
-            <td>{{ time $station.created "slash" }}</td>
+            <td>{{ if $station.created }}{{ time $station.created "slash" }}{{ end }}</td>
         </tr>
 
         {{ if $station.notes }}

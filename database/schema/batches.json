@@ -1,6 +1,21 @@
 [{
     "name": "batches",
     "allow_missing_embedded_records": true,
+    "embed": [{
+        "key": "teamLead",
+        "collection": "users",
+        "fields": [
+            "displayName"
+        ]
+    },{
+        "key": "oysterStructure",
+        "collection": "restorationstations",
+        "fields": [
+            "name",
+            "site",
+            "structureType"
+        ]
+    }],
     "fields": [{
         "name": "dateDeployed",
         "type": "time"
@@ -14,11 +29,21 @@
         "name": "cohort",
         "type": "str"
     },{
+        "name": "notes",
+        "type": "str"
+    },{
+        "name": "oysterStructure",
+        "type": "str"
+    },{
         "name": "numberSubstrateShells",
         "type": "int"
+    },{
+        "name": "teamLead",
+        "type": "str"
     }, {
         "name": "created",
         "type": "time",
+        "required": true,
         "formatters": {
             "current-time-if-unset": true
         }

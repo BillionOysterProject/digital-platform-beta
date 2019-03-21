@@ -83,7 +83,7 @@ header:
         label: 'Oyster Tank'
 
       structureStatuses:
-      - id:    'active'
+      - id:    'Active'
         label: 'Active'
       - id:    'inactive'
         label: 'Inactive'

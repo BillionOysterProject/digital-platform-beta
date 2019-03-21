@@ -81,7 +81,9 @@
                     {{ end }}
 
                     <td>
+                        {{ if $station.created }}
                         {{ time $station.created "slash" }}
+                        {{ end }}
                     </td>
                 </tr>
                 {{ end }}

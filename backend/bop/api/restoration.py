@@ -27,6 +27,11 @@ class ExpeditionActivities(CollectionView):
     results_only    = True
 
 
+class Batches(CollectionView):
+    route_base      = 'batches'
+    collection_name = 'batches'
+
+
 class Organisms(CollectionView):
     @classmethod
     def first_by_name(cls, commonOrLatin):
