@@ -9,7 +9,7 @@
         href="/api/restoration-stations/export.tsv"
         class="btn btn-primary mb-2"
         >
-            Download Stations (.tsv)
+            Download Oyster Structures (.tsv)
         </a>
         <a href="/api/restoration-stations?limit=25&offset=0&sort=name" target="_blank" class="ml-3">
             <i class="fa fa-external-link-square"></i>
@@ -24,7 +24,8 @@
                     <th>Edit</th>
                     {{ end }}
                     <th>#</th>
-                    <th>ORS Name</th>
+                    <th>Structure Name</th>
+                    <th>Structure Type</th>
                     <th>Status</th>
                     <th>Site Name</th>
                     <th>Body of Water</th>
@@ -54,6 +55,12 @@
                             {{ $station.name }}
                             </a>
                         </td>
+                    
+                    <td>
+                        {{ if $station.structureType }}
+                        {{ get (firstByKey $.page.structureTypes `id` $station.structureType) `label` }}
+                        {{ end }}
+                    </td>
 
                     <td>
                         {{ $station.status }}

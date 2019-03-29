@@ -18,11 +18,46 @@ bindings:
     params:
         limit: false
         q:      'status/published'
+
+flags:
+    viewLessonTiles:  '{{ eqx (qs "v" "tiles") "tiles" }}'
+    viewLessonList: '{{ eqx (qs "v" "list") "list" }}'
+
+includes:
+    lessonTiles:  '/lessons/lesson_tiles.html'
+    lessonList: '/lessons/lesson_list.html'
 ---
 {{ $lessons := $.bindings.lessons }}
 {{ $units := $.bindings.units }}
 
+<ul class="nav nav-tabs mt-2 pl-1 pr-1">
+    <li class="nav-item">
+        <a class="nav-link{{ if $.flags.viewLessonTiles }} active{{ end }}" href="/lessons?v=tiles">
+            <i class="fa fa-square-o"></i>
+            Tiles
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link{{ if $.flags.viewLessonList }} active{{ end }}" href="/lessons?v=list">
+            <i class="fa fa-list"></i>
+            List
+        </a>
+    </li>
+</ul>
+
+<section class="content sites-list-view">
+    {{ if $.flags.viewLessonTiles }}
+    {{   template "lessonTiles" . }}
+    {{ else if $.flags.viewLessonList }}
+    {{   template "lessonList" . }}
+    {{ else }}
+    <h2>Invalid view "{{ qs "v" }}"</h2>
+    {{ end }}
+</section>
+
 <section class="content container-fluid lessons-list">
+
     <div class="alert alert-info mt-4" role="alert">
         <h2 class="text-center" style="color:#2c3c56">Featured Lessons</h2>
     
