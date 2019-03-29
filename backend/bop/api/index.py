@@ -8,8 +8,11 @@ class Index(Endpoint):
     route_base = '/'
 
     def index(self):
+        self.client.collection('expeditions').count()
+
         return jsonify({
-            'status': 'ok',
+            'status':   'ok',
+            'database': 'ok',
         })
 
     def routes(self):
