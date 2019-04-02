@@ -3,17 +3,36 @@ page:
     view: Events
 
 bindings:
-- name:     'upcomingEvents'
-  resource: ':/api/events'
+- name:     'events'
+  resource: '/api/events'
   params:
-    limit:   '{{ or (qs `limit`) 15 }}'
-    #q:       'dates.startDateTime/gte:{{ now `ymd` }}'
-    sort:    'dates.startDateTime'
+    limit: false
 ---
-<section class="content">
-    <section class="container">
-        <h1 class="mb-4">Upcoming Events</h1>
 
+{{ $events := $.bindings.events }}
+
+<section class="content">
+    <div class="unit-lessons mb-4">
+        <div class="card-deck">
+            {{ range $i, $event := $events }}
+            <div class="card">
+                <div class="card-header">
+                    <a href="">
+                        <b>date</b>
+                    </a>
+                </div>
+                <div class="card-body">
+                    {{ $event.title }}
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+    
+
+
+        <!--
+        <section class="container">
         <ul class="list-group">
         {{ range .bindings.upcomingEvents }}
         <li class="list-group-item">
@@ -46,7 +65,10 @@ bindings:
         </li>
         {{ end }}
         </ul>
-    </section>
+        </section>
+        -->
+
+    
 </section>
 
 
