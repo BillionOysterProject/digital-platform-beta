@@ -11,3 +11,4 @@
 /scripts/gis/cache
 /scripts/gis/db
 .pytest_cache
+/frontend/api

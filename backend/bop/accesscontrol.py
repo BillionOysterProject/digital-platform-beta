@@ -42,6 +42,7 @@ ANONYMOUS_ROUTES = (
     # --------------------------------------------------------------------------
     ('GET', re.compile('^/api/metrics/?')),
     ('GET', re.compile('^/api/events/?')),
+    ('GET', re.compile('^/api/$')),
 )
 
 ROUTES_BY_GROUP = {
