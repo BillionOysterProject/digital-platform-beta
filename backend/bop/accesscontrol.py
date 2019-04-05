@@ -28,6 +28,7 @@ ANONYMOUS_ROUTES = (
     ('GET', re.compile('^/api/glossaries/?')),
     ('GET', re.compile('^/api/subject-areas/?')),
     ('GET', re.compile('^/api/standards-.*/?')),
+    ('GET', re.compile('^/api/resources/?')),
 
     # permit public access to restoration data
     # --------------------------------------------------------------------------
@@ -58,7 +59,6 @@ ROUTES_BY_GROUP = {
     'team-lead': (
         ('GET',  re.compile('^/api/users/?')),
         ('GET',  re.compile('^/api/teams/?')),
-        ('GET',  re.compile('^/api/resources/?')),
     ),
 }
 
