@@ -1,0 +1,55 @@
+
+{{ $lessons := $.bindings.lessons }}
+{{ $units := $.bindings.units }}
+
+    <table class="table table-sm table-bordered table-striped table-hover" id="lessons">
+        <thead>
+            <tr>
+                {{ if $.flags.admin }}
+                <th>Edit</th>
+                {{ end }}
+                <th>Lesson Name</th>
+                <th>Author</th>
+                <th>Unit Name</th>
+                <th>Lesson Summary</th>
+                <th>Setting</th>
+                <th>Grade Levels</th>
+                <th>Subject Areas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range $i, $lesson := $lessons }}
+            <tr>
+                {{ if $.flags.admin }}
+                <td>
+                    <a href="/admin/generic/{{ $lesson._id }}?collection=lessons">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                {{ end }}
+                <td><a href="/lessons/{{ $lesson._id }}">{{ $lesson.title }}</a></td>
+                <td>{{ $lesson.user.displayName }}</td>
+                <td>{{ join (pluck $lesson.units "title") ", " }}</td>
+                <td>
+                    {{ if $lesson.lessonOverview.lessonSummary }}
+                    {{ sanitize $lesson.lessonOverview.lessonSummary }}
+                    {{ end }}
+                </td>
+                <td>{{ $lesson.lessonOverview.setting }}</td>
+                <td>{{ $lesson.lessonOverview.grade }}</td>
+                <td>{{ join (pluck $lesson.lessonOverview.subjectAreas "subject") ", " }}</td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</section>
+
+<script type="text/javascript">
+    $(function(){
+        $('#lessons').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>

@@ -1,0 +1,135 @@
+---
+page:
+    body_class: 'container mt-1'
+    view:       'Event Editor'
+
+bindings:
+
+-   name: 'event'
+    resource: '/api/events/{{ qs "id" }}'
+    only_if: '{{ qs "id" }}'
+---
+
+
+<section class="content">
+    <form 
+        method="POST" 
+        action="/api/events/"         
+        data-redirect-to="/events"
+    >
+        {{ if $.bindings.event }}
+        <input 
+            type="hidden" 
+            name="_id" 
+            value="{{ $.bindings.event._id }}"
+        />
+        {{ end }}
+        
+        <div class="form-group col-sm-8">
+            <label
+                class="required"
+                for="title"
+            >
+                Event Title
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+                {{ if $.bindings.event }}
+                value="{{ $.bindings.event.title }}"
+                {{ end }}
+            />
+        </div>
+
+        <div class="form-group col-sm-8">
+            <label for="monitoringStartDate">
+                Date
+            </label>
+
+            <div class="form-row">
+            <input
+                class="form-control col-md-3"
+                id="monitoringStartDate"
+                type="date"
+                name="monitoringStartDateDate"
+                required
+                {{ if $.bindings.event }}
+                value="{{ time $.bindings.event `ymd` }}"
+                {{ else }}
+                value="{{ now `ymd` }}"
+                {{ end }}
+            >
+            </div>
+        </div>
+
+        <div class="form-group col-sm-8">
+            <label for="monitoringStartDate">
+                Time
+            </label>
+
+            <div class="form-row">
+            <input
+                class="form-control col-md-2"
+                id="monitoringStartDate"
+                type="time"
+                name="monitoringStartDateTime"
+                required
+                {{ if $.bindings.event }}
+                value="{{ time $.bindings.event `15:04` }}"
+                {{ else }}
+                value="{{ now `15:04` }}"
+                {{ end }}
+            >
+            </div>
+        </div>
+
+        <div class="form-group col-sm-8">
+            <label
+                class="required"
+                for="link"
+            >
+                Link
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="link"
+                id="link"
+                {{ if $.bindings.resource }}
+                value="{{ $.bindings.resource.link }}"
+                {{ end }}
+            />
+        </div>
+
+        <div class="form-group col-sm-8">           
+            <label for="description">Description (optional)</label>
+            <textarea
+                class="form-control"
+                id="description"
+                name="description"
+                rows="5"
+            >{{ if $.bindings.event }}{{ $.bindings.event.description }}{{ end }}</textarea>          
+        </div>
+
+        <section class="content">
+                <div class="form-group mt-2">
+                    <div class="text-left">
+                        <button
+                            type="submit"
+                            class="btn btn-primary mr-2"
+                            onclick="this.form.submitSource='saveAndContinue'"
+                        >Save &amp; Continue Editing</button>
+        
+                        <button
+                            type="submit"
+                            class="btn btn-success ml-2"
+                            onclick="this.form.submitSource='saveAndPublish'"
+                        >Save &amp; Publish Resource</button>
+                    </div>
+                </div>
+            </section>
+
+        <hr/>
+

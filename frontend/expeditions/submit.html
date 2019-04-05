@@ -392,7 +392,7 @@ includes:
             </span>
 
             <span>
-                <h2>Upload and tag any photos you took.</h2>
+                <h2>Share photos you took.</h2>
             </span>
         </section>
 
@@ -403,8 +403,14 @@ includes:
 
     <section class="content collapse" id="enterdata3">
         <div class="form-group">
+            <p>
+                If you'd like to send us photos of your group on an expedition, we'd love to share them with the BOP community!
+                In order to protect student privacy, 
+                if you're sharing photos of students, we prefer that you keep their faces out of the pictures.
+                Send photos to <strong>educate@nyharbor.org</strong> with the subject line "Expedition Photos!"
+            </p>
             <!-- <p>On a mobile device?  Try out the new
-                <a href="https://cloudberrycreative.invisionapp.com/share/YRDEHC775#/screens/256519836" target="_blank">mobile photo upload tool</a>!</p> -->
+                <a href="https://cloudberrycreative.invisionapp.com/share/YRDEHC775#/screens/256519836" target="_blank">mobile photo upload tool</a>!</p> 
             <p class="form-text mb-3">
                 On a laptop or desktop?  You can upload all of your photos at once below.  You'll be able to tag them
                 after you upload them.
@@ -413,6 +419,7 @@ includes:
             <div class="drop-area">
                 Drag files here or click to upload photos from this expedition.
             </div>
+            -->
         </div>
     </section>
 
@@ -479,14 +486,8 @@ includes:
                     if (!tables.oysterMeasurements) {
                         // setup the oyster measurements table
                         tables.oysterMeasurements = bop.createTable('#oysterMeasurementsTable', [
-                            // 'Oyster Clump',
                             'Oyster Length (mm)'
                         ], [{
-                        //    data:      'substrateShellNumber',
-                        //    type:      'numeric',
-                        //    validator: 'valid-settlement-tile',
-                        //    width:     30,
-                        //}, {
                             data:      'oysterLength',
                             type:      'numeric',
                             validator: 'valid-oyster',

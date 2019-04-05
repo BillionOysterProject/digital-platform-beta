@@ -1,0 +1,171 @@
+---
+page:
+    body_class: 'container mt-1'
+    view:       'Edit Your Oyster Research Structure'
+
+bindings:
+    -   name: 'restorationStation'
+        resource: '/api/restoration-stations/{{ qs "id" }}'
+        only_if: '{{ qs "id" }}'
+---
+
+<form 
+    class="form"
+    method="POST"
+    action="/api/restoration-stations/"
+    data-redirect-to="/data/register/new-oysters"
+>
+
+    {{ if $.bindings.restorationStation }}
+    <input 
+        type="hidden" 
+        name="_id" 
+        value="{{ $.bindings.restorationStation._id }}"
+    />
+    {{ end }}
+
+    <input 
+        type="hidden" 
+        name="teamLead" 
+        value="{{ $.bindings.user.id }}"
+    />
+    
+    <section class="content">
+        
+        <div class="form-group col-sm-6">
+            <label
+                class="required"
+                for="name"
+            >
+                ORS or Other Oyster Structure Name
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+                {{ if $.bindings.restorationStation }}
+                value="{{ $.bindings.restorationStation.name }}"
+                {{ end }}
+            />
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label>
+                    Select a structure type
+                </label>
+                {{ range $i, $structureType := $.page.structureTypes }}
+                <div class="custom-control custom-radio">
+                    <input
+                        type="radio"
+                        id="structureType{{ $i }}"
+                        class="custom-control-input"
+                        name="structureType"
+                        value="{{ $structureType.id }}"
+                        {{ if $.bindings.restorationStation }}
+                        {{ if eqx $.bindings.restorationStation.structureType $structureType.id }}
+                        checked="checked"
+                        {{ end }}
+                        {{ end }}
+                    >
+                    <label class="custom-control-label w-100" for="structureType{{ $i }}">
+                        {{ $structureType.label }}
+                    </label>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-8">
+            <div class="form-group">
+                <label for="site">Site Name</label>
+                <div class="input-group">
+                    <input
+                        type="text"
+                        class="form-control typeahead w-100"
+                        name="site"
+                        data-typeahead-url="/api/sites/?fields=name,bodyOfWater&amp;q=str:name/contains:{}/str:bodyOfWater/contains:{}&amp;sort=name&amp;conjunction=or"
+                        data-typeahead-field="name,bodyOfWater"
+                        {{ if $.bindings.restorationStation }}
+                        value="{{ $.bindings.restorationStation.site.name }}"
+                        data-override-value="{{ $.bindings.restorationStation.site._id }}"
+                        {{ end }}
+                    >
+                    <small class="form-text">
+                        Start typing your site's name in the field above to pull up your site.
+                    </small>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label>
+                    Status
+                </label>
+                {{ range $i, $structureStatus := $.page.structureStatuses }}
+                <div class="custom-control custom-radio">
+                    <input
+                        type="radio"
+                        id="structureStatus{{ $i }}"
+                        name="status"
+                        class="custom-control-input"
+                        value="{{ $structureStatus.id }}"
+                        {{ if $.bindings.restorationStation }}
+                        {{ if eqx $.bindings.restorationStation.status $structureStatus.id }}
+                        checked="checked"
+                        {{ end }}
+                        {{ end }}
+                    >
+                    <label class="custom-control-label w-100" for="structureStatus{{ $i }}">
+                        {{ $structureStatus.label }}
+                    </label>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+
+        <div class="form-group col-sm-6">
+            <label
+                class="required"
+                for="tagNumber"
+            >
+                Structure Number
+            </label>
+            <input
+            type="text"
+                class="form-control col-sm-6"
+                name="tagNumber"
+                id="tagNumber"
+                {{ if $.bindings.restorationStation }}
+                value="{{ $.bindings.restorationStation.tagNumber }}"
+                {{ end }}
+            />
+            <small class="form-text">
+                For Oyster Research Stations, BOP should have given you a tag with a number to attach to your ORS.
+                For oyster tanks, BOP should have given you a tank number.
+                Contact bop.digital.platform@nyharbor.org if you did not receive a tag number or tank number.    
+            </small>
+        </div>
+
+        <div class="form-group col-sm-8">           
+            <label for="notes">Notes</label>
+            <textarea name="notes" class="form-control" id="notes" rows="5">{{ if $.bindings.restorationStation }}{{ $.bindings.restorationStation.notes }}{{ end }}</textarea>         
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="form-group">
+            <div class="text-right">
+                <button
+                    type="submit"
+                    class="btn btn-primary mr-2"
+                >Submit
+                </button>
+            </div>
+        </div>
+    </section>
+</form>

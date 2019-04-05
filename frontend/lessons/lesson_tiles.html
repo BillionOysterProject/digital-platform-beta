@@ -1,0 +1,263 @@
+{{ $lessons := $.bindings.lessons }}
+{{ $units := $.bindings.units }}
+
+<section class="content container-fluid lessons-list">
+
+    <div class="alert alert-info mt-4" role="alert">
+        <h2 class="text-center" style="color:#2c3c56">Featured Lessons</h2>
+    
+        <div class="unit-lessons mb-4">
+            <div class="card-deck">
+            {{ range $i, $lesson := $lessons }}
+            {{ if and $lesson.featured (eqx $lesson.status "published") }}
+                    
+                <div class="card border-0 shadow">
+                    
+                    {{ if $lesson.featuredImage }}
+                    <div class="card-img-top">
+                        <a href="/lessons/{{ $lesson._id }}">
+                            <img class="preview img-cover rounded-top" height="220" src="{{ $lesson.featuredImage.path }}">
+                        </a>
+                    </div>
+                    {{ end }}
+                    <div class="card-header">
+                        <a href="/lessons/{{ $lesson._id }}">
+                            <b>{{ $lesson.title }}</b>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">
+                                {{ if $lesson.lessonOverview.setting }}
+                                <small>
+                                    <b>{{ $lesson.lessonOverview.setting }}</b> setting
+                                </small>
+                                {{ end }}
+
+                                {{ if $lesson.lessonOverview.grade }}
+                                <small>&nbsp;&nbsp;|&nbsp;&nbsp;</small>
+                                <small>
+                                    <b>{{ $lesson.lessonOverview.grade }}</b> grade
+                                </small>
+                                {{ end }}
+                            </p>
+                            
+                            {{ if $lesson.lessonOverview.lessonSummary }}
+                            <p style="color:#2c3c56">
+                                <small>
+                                {{ stripHtml $lesson.lessonOverview.lessonSummary }}
+                                </small>
+                            </p>
+                            {{ end }}
+                    </div>
+                    <div class="card-footer">
+                        {{ if $lesson.lessonOverview.subjectAreas }}
+                        <ul class="list-inline">
+                            {{ range $subjectArea := $lesson.lessonOverview.subjectAreas }}
+                            <li class="list-inline-item">
+                                <span 
+                                    style="background-color:{{ $subjectArea.color}}; color:#ffffff; padding:5px"
+                                    class="rounded"
+                                >
+                                    {{ $subjectArea.subject }}
+                                </span>
+                            </li>
+                            {{ end }}
+                        </ul>
+                        {{ end }}
+                    </div>
+                </div>  
+            {{ end }}
+            {{ end }}
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    
+    <h2 class="text-center">Investigations</h2>
+    <div class="content">
+        <p>Investigations are lessons that are designed to be taught as a whole sequence...</p>
+    </div>
+    {{ range $i, $unit := $units }}
+        {{ if and (contains $unit.title "Investigation") (eqx $unit.status "published") }}
+        
+        <h3
+            data-toggle="collapse"
+            href="#unit{{ $unit._id }}"
+            role="button"
+            aria-expanded="true"
+        >
+            <i class="fa-fw {{ or $unit.icon `fa-book` }}"></i>
+            {{ $unit.title }}
+        </h3>
+        
+        <hr />
+
+        <div class="unit-lessons mb-4" id="unit{{ $i }}">
+            <div class="card-deck">
+            {{ range $j, $lessonID := $unit.lessons }}
+            {{ $lesson := (firstByKey $lessons `_id` $lessonID) }}
+            {{ if eqx $lesson.status "published" }}
+            
+                <div class="card">
+                    {{ if $lesson.featuredImage }}
+                    <div class="card-img-top">
+                        <a href="/lessons/{{ $lesson._id }}">
+                            <img class="preview img-cover rounded-top" height="220" src="{{ $lesson.featuredImage.path }}">
+                        </a>
+                    </div>
+                    {{ end }}
+                    <div class="card-header">
+                        {{ if and ($lesson.status) (nex $lesson.status `published`) }}
+                        <span>[{{ upper $lesson.status }}]</span>
+                        {{ end }}
+
+                        <a href="/lessons/{{ $lesson._id }}">
+                            <b>{{ rxreplace $lesson.title (printf "^%s" $unit.title) "" }}</b>
+                        </a>
+                    </div>
+                    <div class="card-body pt-1">
+                        <p class="text-muted">
+                            {{ if $lesson.lessonOverview.setting }}
+                            <small>
+                                <b>{{ $lesson.lessonOverview.setting }}</b> setting
+                            </small>
+                            {{ end }}
+
+                            {{ if $lesson.lessonOverview.grade }}
+                            <small>&nbsp;&nbsp;|&nbsp;&nbsp;</small>
+                            <small>
+                                <b>{{ $lesson.lessonOverview.grade }}</b> grade
+                            </small>
+                            {{ end }}
+                        </p>
+
+                        {{ if $lesson.lessonOverview.lessonSummary }}
+                        <p>
+                            <small>
+                            {{ stripHtml $lesson.lessonOverview.lessonSummary }}
+                            </small>
+                        </p>
+                        {{ end }}
+                    </div>
+                    <div class="card-footer">
+                        {{ if $lesson.lessonOverview.subjectAreas }}
+                        <div class="row">
+                            <ul class="list-inline">
+                                {{ range $subjectArea := $lesson.lessonOverview.subjectAreas }}
+                                <li class="list-inline-item">
+                                    <span 
+                                        style="background-color:{{ $subjectArea.color}}; color:#ffffff; padding:5px"
+                                        class="rounded"
+                                    >
+                                        {{ $subjectArea.subject }}
+                                    </span>
+                                </li>
+                                {{ end }}
+                            </ul>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+            {{ end }}           
+            {{ end }}
+            </div>
+        </div>
+        {{ end }}
+    {{ end }} 
+        
+    <hr/>
+    <h2 class="text-center">Standalone Units</h2>
+    <div class="content">
+        <p>
+            Standalone units contain one-part or two-part lessons that aren't designed to be taught in a particular sequence...
+        </p>
+    </div>
+    {{ range $i, $unit := $units }}
+    {{   if and (not (contains $unit.title "Investigation")) (eqx $unit.status "published") }}     
+        
+        <h3
+            data-toggle="collapse"
+            href="#unit{{ $unit._id }}"
+            role="button"
+            aria-expanded="true"
+        >
+            <i class="fa-fw {{ or $unit.icon `fa-book` }}"></i>
+            {{ $unit.title }}
+        </h3>
+        
+        <hr />
+
+        <div class="unit-lessons mb-4" id="unit{{ $i }}">
+            <div class="card-deck">
+            {{ range $j, $lessonID := $unit.lessons }}
+            {{ $lesson := (firstByKey $lessons `_id` $lessonID) }}
+            {{ if eqx $lesson.status "published" }}
+            
+            <div class="card">
+                {{ if $lesson.featuredImage }}
+                <div class="card-img-top">
+                    <a href="/lessons/{{ $lesson._id }}">
+                        <img class="preview img-cover rounded-top" height="220" src="{{ rxreplace $lesson.featuredImage.path `^http:` `https:` }}">
+                    </a>
+                </div>
+                {{ end }}
+                <div class="card-header">
+                    {{ if and ($lesson.status) (nex $lesson.status `published`) }}
+                    <span>[{{ upper $lesson.status }}]</span>
+                    {{ end }}
+
+                    <a href="/lessons/{{ $lesson._id }}">
+                        <b>{{ rxreplace $lesson.title (printf "^%s" $unit.title) "" }}</b>
+                    </a>
+                </div>
+                <div class="card-body pt-1">
+                    <p class="text-muted">
+                        {{ if $lesson.lessonOverview.setting }}
+                        <small>
+                            <b>{{ $lesson.lessonOverview.setting }}</b> setting
+                        </small>
+                        {{ end }}
+
+                        {{ if $lesson.lessonOverview.grade }}
+                        <small>&nbsp;&nbsp;|&nbsp;&nbsp;</small>
+                        <small>
+                            <b>{{ $lesson.lessonOverview.grade }}</b> grade
+                        </small>
+                        {{ end }}
+                    </p>
+
+                    {{ if $lesson.lessonOverview.lessonSummary }}
+                    <p>
+                        <small>
+                        {{ stripHtml $lesson.lessonOverview.lessonSummary }}
+                        </small>
+                    </p>
+                    {{ end }}
+                </div>
+                <div class="card-footer">
+                    {{ if $lesson.lessonOverview.subjectAreas }}
+                    <div class="row">
+                        <ul class="list-inline">
+                            {{ range $subjectArea := $lesson.lessonOverview.subjectAreas }}
+                            <li class="list-inline-item">
+                                <span 
+                                    style="background-color:{{ $subjectArea.color}}; color:#ffffff; padding:5px"
+                                    class="rounded"
+                                >
+                                    {{ $subjectArea.subject }}
+                                </span>
+                            </li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+            {{ end }}           
+            {{ end }}
+            </div>
+        </div>
+        {{ end }}
+    {{ end }}
+</section>

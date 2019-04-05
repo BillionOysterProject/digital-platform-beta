@@ -569,7 +569,6 @@ bindings:
                                     <caption>Oyster Lengths</caption>
                                     <thead>
                                         <tr>
-                                            <th scope="col">Tag #</th>
                                             <th scope="col">Oyster Length (mm)</th>
                                         </tr>
                                     </thead>
@@ -578,7 +577,6 @@ bindings:
                                         {{   range $j, $measurement := $substrateShell.measurements  }}
                                         {{      if $measurement.sizeOfLiveOysterMM }}
                                         <tr>
-                                            <td>{{ $substrateShell.substrateShellNumber }}</td>
                                             <td>{{ $measurement.sizeOfLiveOysterMM }}</td>
                                         </tr>
                                         {{      end }}
