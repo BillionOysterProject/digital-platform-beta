@@ -37,6 +37,7 @@ ANONYMOUS_ROUTES = (
     ('GET', re.compile('^/api/protocol-.*/?')),
     ('GET', re.compile('^/api/.*-organisms/?')),
     ('GET', re.compile('^/api/.*research.*/?')),
+    ('GET', re.compile('^/api/batches/?')),
 
     # permit public access to various resources
     # --------------------------------------------------------------------------
@@ -57,6 +58,7 @@ ROUTES_BY_GROUP = {
     'team-lead': (
         ('GET',  re.compile('^/api/users/?')),
         ('GET',  re.compile('^/api/teams/?')),
+        ('GET',  re.compile('^/api/resources/?')),
     ),
 }
 
