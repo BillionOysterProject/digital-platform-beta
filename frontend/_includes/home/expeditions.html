@@ -1,39 +1,21 @@
 <section class="content content-jumbotron" style="background-image: url(assets/img/backgrounds/field-bg.jpg);">
     <section class="container container-ribbon text-center">
         <div class="ribbon-text">
-            <span class="text-script">launch your</span>
-            <h1 class="text-caps">expedition</h1>
+            <span class="text-script">help us collect</span>
+            <h1 class="text-caps">oyster monitoring data</h1>
         </div>
         <div class="panel panel-default transparent">
-        <br><br>
             <div class="row">
                 <div class="col-sm-8 offset-sm-2">
-                    <p class="lead">Join the community of students, teachers, and citizen scientists monitoring oyster restoration stations and collecting data from across New York Harbor. The digital platform is designed for students to lead the process of ORS monitoring and research in collaboration with their peers. Team leads are responsible for checking and publishing students data so that everyone gets accurate and reliable data on the system. Here's a snapshot of what's available right now:</p>
+                    <br/>
+                    <p class="lead">
+                        Join the educators, students, and community scientists monitoring Oyster Research Stations (ORS) and Community Reefs and collecting data from across New York Harbor. 
+                    </p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <h2><i class="fa fa-2x fa-flag lightblue"></i></h2>
-                    <h6>Launched expeditions</h6>
-                    <hr>
-                    <h1 class="text-caps">{{ .bindings.basicMetrics.expeditionCount }}</h1>
-                    <br>
-                </div>
-                <div class="col-sm-4">
-                    <h2><i class="fa fa-2x fa-map-marker lightblue"></i></h2>
-                    <h6>Active Oyster Restoration Stations</h6>
-                    <hr>
-                    <h1 class="text-caps">{{ .bindings.basicMetrics.activeStationCount }}</h1>
-                    <br>
-                </div>
-                <div class="col-sm-4">
-                    <h2><i class="fa fa-2x fa-flag lightblue"></i></h2>
-                    <h6>Published expeditions</h6>
-                    <hr>
-                    <h1 class="text-caps">{{ .bindings.basicMetrics.publishedExpeditionCount }}</h1>
-                    <br>
-                </div>
-            </div>
+            <a class="btn btn-danger" href="/data">View Data</a>
+            <br/>
+            <br/>
         </div>
     </section>
 </section>

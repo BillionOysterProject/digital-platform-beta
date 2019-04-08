@@ -12,70 +12,29 @@ bindings:
 
 {{ $events := $.bindings.events }}
 
-<section class="content">
-   <!--
-    <div class="unit-lessons mb-4">
-        <div class="card-deck">
-            {{ range $i, $event := $events }}
-            <div class="card">
-                <div class="card-header">
-                    <a href="">
-                        <b>date</b>
-                    </a>
-                </div>
-                <div class="card-body">
-                    {{ $event.title }}
-                </div>
-            </div>
-            {{ end }}
-        </div>
-    </div>
-    -->
-    
-
-
-        
+<section class="content">       
     <section class="container">
         <div class="unit-lessons mb-4">
-                <div class="card-deck">
-        {{ range $i, $event := $.bindings.events }}
-
-            <div class="card">
-                <div class="card-header">
-                    <h2>{{ .title }}</h2>
-                </div>
-                    
-                <div class="card-body">
-                    {{ range .dates }}
-                    {{ time (asTime .startDateTime) `January 2 2006` }},
-                    {{ time (asTime .startDateTime) `3pm` }} &ndash; {{ time (asTime .endDateTime) `3pm` }}
-                    {{ end }}
-                </div>
-                    
-                <div class="card-footer">
-                    {{ if $event.location }}
-                    <div>
-                        <i class="fa fa-map-marker"></i>
-                        <a
-                            target="_blank"
-                            href="https://www.google.com/maps/place/{{ .location.addressString }}"
-                        >
-                            {{ $event.location.addressString }}
-                        </a>
+            <div class="card-deck">   
+                {{ range $i, $event := $.bindings.events }}
+                <div class="card">
+                    <div class="card-header">
+                        <h2>{{ .title }}</h2>
                     </div>
-                    {{ end }}
+                        
+                    <div class="card-body">
+                        {{ range .dates }}
+                        {{ time (asTime .startDateTime) `January 2 2006` }},
+                        {{ time (asTime .startDateTime) `3pm` }} &ndash; {{ time (asTime .endDateTime) `3pm` }}
+                        {{ end }}
+                    </div>
                 </div>
-            </div>
-
-            
-
-        {{ end }}
+                {{ end }}
             </div>
         </div>
-    </section>
-        
-
-    
+    </section>   
 </section>
+
+
 
 
