@@ -126,48 +126,6 @@ includes:
         <input type="hidden" name="station._id" value="{{ $.bindings.expedition.station._id }}">
         {{ end }}
 
-        <!--
-            This next section is about selecting structures (like an ORS, Community Reef, or Oyster Tank).
-            The goal is for users to be able to select from several different kinds of structures
-            OR to choose "no structure" and report data about water quality or biodiversity that is tied
-            to a site instead of a structure. If a user is entering data for a structure, the "Structure Name"
-            list pops up.  If a user is not entering data for a structure, the "Sites" list should pop up instead.
-            Selecting "no structure" will create an expedition with a dummy ORS with a structure type of "null."
-            This is a limitation of the legacy platform. When we have fully moved to the new platform we can get
-            rid of the dummy ORS.
-        -->
-
-        <!-- <div class="form-group mt-4">
-            <fieldset>
-                <legend>
-                    Select your structure type
-                </legend>
-                <p>
-                    (Note: if you're entering data that isn't associated with an oyster research structure, like
-                        the results of a <a href="https://www.nationalgeographic.org/projects/bioblitz/" target="_blank">BioBlitz</a> or fish count, select "No structure.")
-                </p>
-                {{ range $i, $structureType := $.page.structureTypes }}
-                <div class="custom-control custom-radio">
-                    <input
-                        type="radio"
-                        id="structure{{ $i }}"
-                        class="custom-control-input"
-                        name="station.structureType"
-                        value="{{ $structureType.id }}"
-                        {{ if $.bindings.expedition }}
-                        {{ if eqx $.bindings.expedition.station.structureType $structureType.id }}
-                        checked
-                        {{ end }}
-                        {{ end }}
-                    >
-                    <label class="custom-control-label w-100" for="structure{{ $i }}">
-                        {{ $structureType.label }}
-                    </label>
-                </div>
-                {{ end }}
-            </fieldset>
-        </div> -->
-
         <div class="form-group">
             <label for="structureName">Oyster Structure Name (ORS or Oyster Tank)</label>
             <div class="input-group">
@@ -209,6 +167,7 @@ includes:
             </div>
         </div> -->
 
+        <!--
         <div class="form-group">
             <label for="team">Team</label>
             <div class="input-group">
@@ -229,6 +188,7 @@ includes:
                 </small>
             </div>
         </div>
+        -->
 
         {{ if $.bindings.expedition }}
         <input type="hidden" name="team._id" value="{{ $.bindings.expedition.team._id }}">
