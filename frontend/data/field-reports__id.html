@@ -68,7 +68,9 @@ bindings:
 
         {{ if isMap $expedition.station.site }}
         <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
-            {{ $expedition.station.site.name }}, {{ $expedition.station.site.bodyOfWater }}
+            <a href="/sites/{{$expedition.station.site._id}}" target="blank">
+                {{ $expedition.station.site.name }}, {{ $expedition.station.site.bodyOfWater }}
+            </a>
         </p>
         <p class="mb-1"><i class="fa fa-fw fa-globe"></i>
             {{ $expedition.station.site.boroughCounty }}, {{ $expedition.station.site.state }}
