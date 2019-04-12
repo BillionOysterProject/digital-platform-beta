@@ -55,7 +55,7 @@ def calcTotalPerOrganismCount(context, field):
 
     return count
 
-EXPEDITION_EXPORT_KEY = 'reports/expeditions-full.tsv'
+EXPEDITION_EXPORT_KEY = 'reports/expeditions.tsv'
 EXPEDITION_DATA_EXPORT_FIELDS = [{
     'field': '_id',
     'label': 'Expedition ID',
