@@ -9,6 +9,16 @@
             "site"
         ]
     }, {
+        "key":        "batch",
+        "collection": "batches",
+        "fields": [
+            "dateDeployed",
+            "setDate",
+            "broodstockSource",
+            "notes",
+            "numberSubstrateShells"
+        ]
+    }, {
         "key":        "team",
         "collection": "teams",
         "fields": [
@@ -118,6 +128,9 @@
         "type":       "str",
         "required":   true
     }, {
+        "name":       "batch",
+        "type":       "str"
+    }, {
         "name":       "status",
         "type":       "str",
         "required":   true,
@@ -137,9 +150,6 @@
     }, {
         "name":       "teamLead",
         "type":       "str"
-    }, {
-        "name":       "teamLists",
-        "type":       "object"
     }, {
         "name":       "notes",
         "type":       "str"

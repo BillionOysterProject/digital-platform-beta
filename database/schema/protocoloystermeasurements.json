@@ -47,6 +47,9 @@
         "name":       "measuringOysterGrowth",
         "type":       "object"
     }, {
+        "name":       "measurements",
+        "type":       "raw"
+    }, {
         "name":       "minimumSizeOfAllLiveOysters",
         "type":       "float"
     }, {
