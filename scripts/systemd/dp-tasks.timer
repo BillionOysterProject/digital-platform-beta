@@ -1,6 +1,0 @@
-[Unit]
-Description=Periodically launch tasks
-
-[Timer]
-OnBootSec=30s
-OnUnitActiveSec=15min

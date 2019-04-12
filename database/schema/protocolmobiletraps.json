@@ -57,5 +57,8 @@
         "name":       "mobileOrganisms",
         "type":       "raw",
         "default":    []
+    }, {
+        "name": "bulkOrganisms",
+        "type": "object"
     }]
 }]

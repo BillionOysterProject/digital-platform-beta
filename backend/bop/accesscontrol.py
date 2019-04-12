@@ -28,6 +28,7 @@ ANONYMOUS_ROUTES = (
     ('GET', re.compile('^/api/glossaries/?')),
     ('GET', re.compile('^/api/subject-areas/?')),
     ('GET', re.compile('^/api/standards-.*/?')),
+    ('GET', re.compile('^/api/resources/?')),
 
     # permit public access to restoration data
     # --------------------------------------------------------------------------
@@ -37,11 +38,13 @@ ANONYMOUS_ROUTES = (
     ('GET', re.compile('^/api/protocol-.*/?')),
     ('GET', re.compile('^/api/.*-organisms/?')),
     ('GET', re.compile('^/api/.*research.*/?')),
+    ('GET', re.compile('^/api/batches/?')),
 
     # permit public access to various resources
     # --------------------------------------------------------------------------
     ('GET', re.compile('^/api/metrics/?')),
     ('GET', re.compile('^/api/events/?')),
+    ('GET', re.compile('^/api/$')),
 )
 
 ROUTES_BY_GROUP = {

@@ -19,14 +19,27 @@ bindings:
 {{ $org := $.bindings.org }}
 
 <section class="content">
-<h1 class="text-left pb-0">Oyster Research Station: {{ $station.name }}</h1>
-<p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
-    {{ $station.site.name }}, {{ $station.site.bodyOfWater }}
-</p>
-<p class="mb-1">
-    <i class="fa fa-fw fa-globe"></i>
-    {{ $station.site.boroughCounty }}, {{ $station.site.state }}
-</p>
+    <div class="row">
+        <div class="col-sm-9">
+            <h1 class="text-left pb-0">
+                {{ get (firstByKey $.page.structureTypes `id` $station.structureType) `label` }}: "{{ $station.name }}"
+            </h1>
+            <p class="mb-1"><i class="fa fa-fw fa-map-marker"></i>
+                {{ $station.site.name }}, {{ $station.site.bodyOfWater }}
+            </p>
+            <p class="mb-1">
+                <i class="fa fa-fw fa-globe"></i>
+                {{ $station.site.boroughCounty }}, {{ $station.site.state }}
+            </p>
+        </div>
+        <div class="col-sm-3">
+            <a
+            href="/sites/structure-editor?id={{ $station._id }}"
+            class="text-right btn btn-primary"
+            >
+                Edit Oyster Research Structure
+            </a>
+        </div>
 </section>
 
 {{ if $station.site.latitude }}
@@ -94,8 +107,13 @@ bindings:
 <section class="content">
     <table class="table table-sm table-bordered table-hover">
         <tr>
-            <th scope="row">ORS Name</th>
+            <th scope="row">Oyster Structure Name</th>
             <td>{{ $station.name }}</td>
+        </tr>
+
+        <tr>
+            <th scope="row">Structure Type</th>
+            <td>{{ get (firstByKey $.page.structureTypes `id` $station.structureType) `label` }}</td>
         </tr>
 
         {{ if $station.tagNumber }}
@@ -117,7 +135,7 @@ bindings:
             <th scope="row">Organization</th>
 
                 <td>
-                    <a href="/profiles/{{ $station.schoolOrg._id }}">
+                    <a href="/community/orgs/{{ $station.schoolOrg._id }}">
                     {{ $station.schoolOrg.name }}
                     </a>
                 </td>

@@ -1,0 +1,66 @@
+---
+page:
+    view: Events
+
+bindings:
+- name:     'events'
+  resource: '/api/events'
+  params:
+    limit: false
+    sort: -created
+---
+
+{{ $events := $.bindings.events }}
+
+<section class="content">      
+    <table class="table table-sm table-bordered table-striped table-hover" id="events">
+        <thead>
+            <tr>
+                {{ if $.flags.admin }}
+                <th>Edit</th>
+                {{ end }}
+                <th>Name</th>
+                <th>Date</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range $i, $event := $events }}
+            <tr>
+                {{ if $.flags.admin }}
+                <td>
+                    <a href="/events/editor?id={{ $event._id }}">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </td>
+                {{ end }}
+                <td>
+                    <a href="{{ $event.link }}" target="blank">
+                        {{ $event.title }}
+                    </a>
+                </td>
+                <td>
+                    {{ if $event.dates }}
+                    {{ join $event.dates ", " }}
+                    {{ end }}
+                </td>
+                <td>
+                    {{ if $event.description }}
+                    {{ stripHtml $event.description }}
+                    {{ end }}
+                </td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</section>
+    
+<script type="text/javascript">
+    $(function(){
+        $('#events').DataTable({
+            searching:      true,
+            paging:         false,
+            info:           false,
+        });
+    });
+</script>

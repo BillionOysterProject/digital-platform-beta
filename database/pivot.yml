@@ -2,8 +2,7 @@ autoexpand: true
 backend: 'mongodb+scram://localhost:27017/bop?autoregister=true&authdb=admin'
 environments:
     development:
-        backend:    'postgresql://bop:bop@localhost:5432/bop?autoregister=true'
-        autocreate: true
+        backend: 'mongodb+scram://ds129146.mlab.com:29146/bop-dev?autoregister=true'
 
     production:
         backend: 'mongodb+scram://ds133417-a0.mlab.com:33417/bop-prod?autoregister=true'

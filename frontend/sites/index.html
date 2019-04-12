@@ -28,7 +28,7 @@ includes:
     stations:  '/sites/stations.html'
 ---
 {{ if $.flags.viewStations }}
-<h1>Oyster Research Stations</h1>
+<h1>Oyster Research Structures</h1>
 {{ else }}
 <h1>Research Sites</h1>
 {{end }}
@@ -52,7 +52,7 @@ includes:
     <li class="nav-item">
             <a class="nav-link{{ if $.flags.viewStations }} active{{ end }}" href="/sites?v=stations">
                 <i class="fa fa-list"></i>
-                ORS List
+                Structure List
             </a>
         </li>
 </ul>
