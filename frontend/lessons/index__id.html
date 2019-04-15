@@ -135,40 +135,76 @@ postprocessors:
             </div>
             {{ end }}
 
-            {{ if or $lesson.materialsResources.handoutLinks $lesson.materialsResources.teacherResourcesLinks $lesson.materialsResources.supplies }}           
+            {{ if or $lesson.materialsResources.handoutLinks $lesson.materialsResources.handoutsFileInput $lesson.materialsResources.teacherResourcesLinks $lesson.materialsResources.lessonMaterialLinks $lesson.materialsResources.supplies }}           
                 <div class="col-sm-12">
                     <h2 style="font-weight: 700; font-size: 24px;">Materials and Resources</h2>
                     <!-- =============================================================================================== -->
                     {{ if nex (qs "renderer") "pdf" }}
-                    {{ if $lesson.materialsResources.handoutLinks }}
-                    <h3 style="font-size: 21px;">Student Handouts</h3>
-                    {{  range $i, $handout := $lesson.materialsResources.handoutLinks }}
-                    <p>
-                        <a href="{{ rxreplace $handout.link `^http:` `https:` }}" target="blank">
-                            <i class="fa fa-link"></i>
-                            {{ $handout.name }}
-                        </a>
-                    </p>
-                    {{  end }}
-                    {{ end }}
-                    
-                    {{ if $lesson.materialsResources.teacherResourcesLinks }}
-                    
-                    <div class="content">
-                        <h3 style="font-size: 21px;">Teacher Resources</h3>
-                        {{  range $i, $link := $lesson.materialsResources.teacherResourcesLinks }}
-                        <a href="{{ rxreplace $link.link `^http:` `https:` }}" target="blank">
-                            <i class="fa fa-link"></i>
-                            {{ if $link.name }}
-                            {{ $link.name }}
-                            {{ else if $link.link }}
-                            {{ $link.link }}
+                        
+                        {{ if or $lesson.materialsResources.handoutLinks $lesson.materialsResources.handoutsFileInput }}
+                        <div class="content">
+                            <h3 style="font-size: 21px;">Student Handouts</h3>
+                            {{  range $i, $handout := $lesson.materialsResources.handoutLinks }}
+                            <div class="row col-sm-12">
+                                <a href="{{ rxreplace $handout.link `^http:` `https:` }}" target="blank">
+                                    <i class="fa fa-link"></i>
+                                    {{ $handout.name }}
+                                </a>
+                            </div>
                             {{ end }}
-                        </a>
-                        {{   end }}
+                            {{  range $i, $handout := $lesson.materialsResources.handoutsFileInput }}
+                            <div class="row col-sm-12">
+                                <a href="{{ rxreplace $handout.path `^http:` `https:` }}" target="blank">
+                                    <i class="fa fa-download"></i>
+                                    {{ $handout.originalname }}
+                                </a>
+                            </div>
+                            {{ end }}
+                        </div>
                         {{  end }}
-                    </div>
 
+                        {{ if $lesson.materialsResources.lessonMaterialLinks }}
+                        <div class="content">
+                            <h3 style="font-size: 21px;">Class Resources</h3>
+                            {{  range $i, $resource := $lesson.materialsResources.lessonMaterialLinks }}
+                            <div class="row col-sm-12">
+                                <a href="{{ rxreplace $resource.link `^http:` `https:` }}" target="blank">
+                                    <i class="fa fa-link"></i>
+                                    {{ $resource.name }}
+                                </a>
+                            </div>
+                            {{ end }}
+                        </div>
+                        {{  end }}
+                    
+                    
+                        {{ if or $lesson.materialsResources.teacherResourcesLinks $lesson.materialsResources.teacherResourcesFiles }}
+                        <div class="content">
+                            <h3 style="font-size: 21px;">Teacher Resources</h3>
+                            {{ range $i, $link := $lesson.materialsResources.teacherResourcesLinks }}
+                            <div class="row col-sm-12">
+                                <a href="{{ rxreplace $link.link `^http:` `https:` }}" target="blank">
+                                    <i class="fa fa-link"></i>
+                                    {{ if $link.name }}
+                                    {{ $link.name }}
+                                    {{ else if $link.link }}
+                                    {{ $link.link }}
+                                    {{ end }}
+                                </a>
+                            </div>
+                            {{ end }}
+                            {{  range $i, $resource := $lesson.materialsResources.teacherResourcesFiles }}
+                            <div class="row col-sm-12">
+                                <a href="{{ rxreplace $resource.path `^http:` `https:` }}" target="blank">
+                                    <i class="fa fa-download"></i>
+                                    {{ $resource.originalname }}
+                                </a>
+                            </div>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                    
+                    {{ end }}
 
                     {{ if $lesson.materialsResources.supplies }}
                     <div class="content">
@@ -176,7 +212,7 @@ postprocessors:
                         {{ sanitize $lesson.materialsResources.supplies }}
                     </div>
                     {{ end }}
-                    {{ end }}
+
                 </div>
             {{ end }}
 

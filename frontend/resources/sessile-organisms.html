@@ -5,6 +5,8 @@ page:
 bindings:
 -   name:	  'sessileOrganisms'
     resource: '/api/sessile-organisms'
+    params:
+        limit: false
 
 ---
 
@@ -59,7 +61,7 @@ bindings:
                         alt="{{ $sessileOrganism.commonName }} image"
                     >
                 </td>
-                <td><a href="">{{ $sessileOrganism.commonName }}</a></td>
+                <td><a href="{{ $sessileOrganism.iNaturalistLink }}">{{ $sessileOrganism.commonName }}</a></td>
                 <td><em>{{ $sessileOrganism.latinName }}</em></td>
                 <td>{{ $sessileOrganism.category }}</td>
                 <td>{{ $sessileOrganism.speciesOrigin }}</td>
