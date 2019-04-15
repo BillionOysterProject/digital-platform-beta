@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "${workspaceRoot}/backend/env/bin/python3"
+    "python.pythonPath": "${workspaceRoot}/backend/env/bin/python3",
+    "python.formatting.provider": "autopep8"
 }

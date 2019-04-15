@@ -5,10 +5,9 @@ import sys
 import collections
 from six import string_types
 
-PARAM_OR_RETURNS_REGEX = re.compile(":(?:param|returns)")
-RETURNS_REGEX = re.compile(":returns: (?P<doc>.*)", re.S)
-PARAM_REGEX = re.compile(":param (?P<name>[\*\w]+): (?P<doc>.*?)"
-                         "(?:(?=:param)|(?=:return)|(?=:raises)|\Z)", re.S)
+PARAM_OR_RETURNS_REGEX = re.compile(r':(?:param|returns)')
+RETURNS_REGEX = re.compile(r':returns: (?P<doc>.*)', re.S)
+PARAM_REGEX = re.compile(r':param (?P<name>[\*\w]+): (?P<doc>.*?)(?:(?=:param)|(?=:return)|(?=:raises)|\Z)', re.S)
 
 def as_bool(value):
     return ('{}'.format(value).lower() in ['true', '1', 'yes'])
@@ -236,3 +235,12 @@ def autotype(value):
                 pass
 
     return value
+
+
+class dotdict(dict):
+    """
+    Provides dot.notation access to dictionary attributes
+    """
+    __getattr__ = dict.get
+    __setattr__ = dict.__setitem__
+    __delattr__ = dict.__delitem__

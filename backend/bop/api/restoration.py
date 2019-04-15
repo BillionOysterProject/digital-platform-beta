@@ -237,22 +237,15 @@ class Expeditions(CollectionView):
             expedition = {}
 
         # figure out which station this expedition belongs to
-        if flatBody.get('station._id'):
+        if flatBody.get('station'):
+            station = flatBody.get('station')
+        elif flatBody.get('station._id'):
             station = flatBody.get('station._id')
         elif flatBody.get('station.name'):
             try:
                 station = RestorationStations.first_by_name(flatBody.get('station.name')).id
             except:
                 return 'Must specify an Oyster Research Station for this expedition', 400
-
-        # figure out which team this expedition belongs to
-        if flatBody.get('team._id'):
-            team = flatBody.get('team._id')
-        elif flatBody.get('team.name'):
-            try:
-                team = Teams.first_by_name(flatBody.get('team.name')).id
-            except:
-                return 'Must specify a team for this expedition', 400
 
         dateTime = '{}T{}'.format(body.get('monitoringStartDateDate'), body.get('monitoringStartDateTime'))
 
@@ -265,11 +258,22 @@ class Expeditions(CollectionView):
             'monitoringEndDate'  : dateTime,
             'adultCount'         : body.get('adultCount'),
             'childCount'         : body.get('childCount'),
-            'team'               : team,
             'protocols'          : {},
         }))
 
-        if 'teamLead' not in body:
+        # if a batch is not already specified (or if we're forcing a "rebatch"), attach
+        # the most recent batch for this station to the expedition.
+        if autotype(request.args.get('rebatch')) or (not expedition.get('batch') and station):
+            most_recent_batch = Batches.get_collection().query(
+                'oysterStructure/is:{}/dateDeployed/lte:{}'.format(station, dateTime),
+                sort=['-dateDeployed'],
+                limit=1
+            )
+
+            if len(most_recent_batch) == 1:
+                expedition['batch'] = most_recent_batch[0].id
+
+        if 'teamLead' not in body or not body['teamLead']:
             user = self.current_user
 
             if user.has_any_role('admin', 'team-lead'):
@@ -380,94 +384,11 @@ class ProtocolOysterMeasurements(CollectionView):
 
         observations = body.pop('observations', [])
 
-        # reject null observations
-        if 'measuringOysterGrowth' in record and isinstance(record['measuringOysterGrowth'], dict):
-            record['measuringOysterGrowth']['substrateShells'] = []
-
-        if len(observations):
-            for pair in observations:
-                if len(pair) == 2:
-                    shellNumber = pair[0]
-                    mm = pair[1]
-
-                    if shellNumber and mm:
-                        dict_merge(record, cls.append_oyster_measurement(record, shellNumber, mm))
-
-            record.update(body)
+        record['measurements'] = [{
+            'oysterSizeMm': row[0]
+        } for row in observations if len(row) and row[0]]
 
         return cls.save(record)
-
-    @classmethod
-    def append_oyster_measurement(cls, record, shellNumber, mm):
-        if 'measuringOysterGrowth' not in record:
-            record['measuringOysterGrowth'] = {}
-
-        if 'substrateShells' not in record['measuringOysterGrowth']:
-            record['measuringOysterGrowth']['substrateShells'] = []
-
-        targetShell = None
-        targetShellIndex = None
-
-        for i, shell in enumerate(record['measuringOysterGrowth']['substrateShells']):
-            if int(shellNumber) == int(shell['substrateShellNumber']):
-                targetShellIndex = i
-                targetShell = shell
-                break
-
-        if not targetShell:
-            targetShell = {
-                'minimumSizeOfLiveOysters': 0,
-                'averageSizeOfLiveOysters': 0,
-                'maximumSizeOfLiveOysters': 0,
-                'measurements': [],
-                'innerSidePhoto': {},
-                'outerSidePhoto': {},
-                'setDate': Time().isoformat(),
-                'source': None,
-                'substrateShellNumber': shellNumber,
-                'totalNumberOfLiveOystersOnShell': 0,
-            }
-
-        targetShell['measurements'].append({
-            'sizeOfLiveOysterMM': mm,
-        })
-
-        dict_merge(targetShell, cls.recalculate_shell_stats(targetShell))
-
-        if targetShellIndex is None:
-            record['measuringOysterGrowth']['substrateShells'].append(targetShell)
-        else:
-            record['measuringOysterGrowth']['substrateShells'][targetShellIndex] = targetShell
-
-        return record
-
-    @classmethod
-    def recalculate_shell_stats(cls, shell):
-        szMin = shell.get('minimumSizeOfLiveOysters')
-        szAvg = shell.get('averageSizeOfLiveOysters')
-        szMax = shell.get('maximumSizeOfLiveOysters')
-        szAll = []
-
-        for measurement in shell.get('measurements', []):
-            value = measurement.get('sizeOfLiveOysterMM')
-
-            if value:
-                szAll.append(value)
-
-                if not szMin or value < szMin:
-                    szMin = value
-
-                if not szMax or value > szMax:
-                    szMax = value
-
-        szAvg = float(sum(szAll)) / len(szAll)
-
-        shell['minimumSizeOfLiveOysters']        = szMin
-        shell['averageSizeOfLiveOysters']        = szAvg
-        shell['maximumSizeOfLiveOysters']        = szMax
-        shell['totalNumberOfLiveOystersOnShell'] = len(szAll)
-
-        return shell
 
 
 class ProtocolMobileTraps(CollectionView):
@@ -484,6 +405,8 @@ class ProtocolMobileTraps(CollectionView):
             record = {}
 
         record['notes'] = body.get('notes')
+        record['bulkOrganisms'] = body.get('bulkOrganisms', {})
+
         organisms = body.pop('mobileOrganisms', [])
 
         if len(organisms):

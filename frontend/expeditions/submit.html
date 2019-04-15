@@ -132,7 +132,7 @@ includes:
                 <input
                     type="text"
                     class="form-control typeahead w-100 col-md-8"
-                    name="station.name"
+                    name="station"
                     data-typeahead-url="/api/restoration-stations/?fields=name&amp;q=str:name/contains:{}&amp;sort=name"
                     data-typeahead-field="name"
                     id="structureName"
@@ -140,6 +140,7 @@ includes:
                     required
                     {{ if isMap (get $.bindings `expedition.station`) }}
                     value="{{ $.bindings.expedition.station.name }}"
+                    data-override-value="{{ $.bindings.expedition.station._id }}"
                     {{ end }}
                 >
 
@@ -189,10 +190,6 @@ includes:
             </div>
         </div>
         -->
-
-        {{ if $.bindings.expedition }}
-        <input type="hidden" name="team._id" value="{{ $.bindings.expedition.team._id }}">
-        {{ end }}
 
         <div class="form-group">
             <label for="numberAdults">Number of adults</label>
@@ -365,12 +362,12 @@ includes:
         <div class="form-group">
             <p>
                 If you'd like to send us photos of your group on an expedition, we'd love to share them with the BOP community!
-                In order to protect student privacy, 
+                In order to protect student privacy,
                 if you're sharing photos of students, we prefer that you keep their faces out of the pictures.
                 Send photos to <strong>educate@nyharbor.org</strong> with the subject line "Expedition Photos!"
             </p>
             <!-- <p>On a mobile device?  Try out the new
-                <a href="https://cloudberrycreative.invisionapp.com/share/YRDEHC775#/screens/256519836" target="_blank">mobile photo upload tool</a>!</p> 
+                <a href="https://cloudberrycreative.invisionapp.com/share/YRDEHC775#/screens/256519836" target="_blank">mobile photo upload tool</a>!</p>
             <p class="form-text mb-3">
                 On a laptop or desktop?  You can upload all of your photos at once below.  You'll be able to tag them
                 after you upload them.
@@ -461,7 +458,7 @@ includes:
                             startRows:    25
                         }, function(table) {
                         {{ if $.bindings.expedition }}
-                            var input = JSON.parse('{{ jsonify (get $.bindings.expedition "protocols.oysterMeasurement.measuringOysterGrowth.substrateShells") }}');
+                            var input = JSON.parse('{{ jsonify (get $.bindings.expedition "protocols.oysterMeasurement.measurements") }}');
                             var data = [];
 
                             if (input && input.length) {
