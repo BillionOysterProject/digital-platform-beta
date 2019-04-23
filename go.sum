@@ -22,8 +22,12 @@ github.com/blevesearch/bleve v0.7.0/go.mod h1:Y2lmIkzV6mcNfAnAdOd+ZxHkHchhBfU/xr
 github.com/blevesearch/blevex v0.0.0-20180227211930-4b158bb555a3/go.mod h1:WH+MU2F4T0VmSdaPX+Wu5GYoZBrYWdOZWSjzvYcDmqQ=
 github.com/blevesearch/go-porterstemmer v0.0.0-20141230013033-23a2c8e5cf1f h1:J9ZVHbB2X6JNxbKw/f3Y4E9Xq+Ro+zPiivzgmi3RTvg=
 github.com/blevesearch/go-porterstemmer v0.0.0-20141230013033-23a2c8e5cf1f/go.mod h1:haWQqFT3RdOGz7PJuM3or/pWNJS1pKkoZJWCkWu0DVA=
+github.com/blevesearch/go-porterstemmer v1.0.2 h1:qe7n69gBd1OLY5sHKnxQHIbzn0LNJA4hpAf+5XDxV2I=
+github.com/blevesearch/go-porterstemmer v1.0.2/go.mod h1:haWQqFT3RdOGz7PJuM3or/pWNJS1pKkoZJWCkWu0DVA=
 github.com/blevesearch/segment v0.0.0-20160105220820-db70c57796cc h1:7OfDAkuAGx71ruzOIFqCkHqGIsVZU0C7PMw5u1bIrwU=
 github.com/blevesearch/segment v0.0.0-20160105220820-db70c57796cc/go.mod h1:IInt5XRvpiGE09KOk9mmCMLjHhydIhNPKPPFLFBB7L8=
+github.com/blevesearch/segment v0.0.0-20160915185041-762005e7a34f h1:kqbi9lqXLLs+zfWlgo1PIiRQ86n33K1JKotjj4rSYOg=
+github.com/blevesearch/segment v0.0.0-20160915185041-762005e7a34f/go.mod h1:IInt5XRvpiGE09KOk9mmCMLjHhydIhNPKPPFLFBB7L8=
 github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869/go.mod h1:Ekp36dRnpXw/yCqJaO+ZrUyxD+3VXMFFr56k5XYrpB4=
 github.com/boltdb/bolt v0.0.0-20171120010307-9da317453632 h1:MFw4sLe0rZgBFYnyNpgARfYHxmpC/ztz4tVQBo2jArU=
 github.com/boltdb/bolt v0.0.0-20171120010307-9da317453632/go.mod h1:clJnj/oiGkjum5o1McbSZDSLxVThjynRyGBgiAx27Ps=
@@ -82,6 +86,8 @@ github.com/ghetzel/diecast v1.10.17 h1:vmoKb+8VBori8p1CVjami5TbzcbCaDFTs1/8mG9H5
 github.com/ghetzel/diecast v1.10.17/go.mod h1:Q1oMUg7E1a6NRcDny+274DcSuQ/6FK7GQk4j5DQS6HY=
 github.com/ghetzel/diecast v1.10.18 h1:xhqqEECoVIYglB8Oi84uhe31QMAf51BdvBlqxsXE0Fs=
 github.com/ghetzel/diecast v1.10.18/go.mod h1:Q1oMUg7E1a6NRcDny+274DcSuQ/6FK7GQk4j5DQS6HY=
+github.com/ghetzel/diecast v1.10.25 h1:RnA24Pea60w51hAXM7J8CYWEzQDStGoMQwOU14MfETY=
+github.com/ghetzel/diecast v1.10.25/go.mod h1:Q1oMUg7E1a6NRcDny+274DcSuQ/6FK7GQk4j5DQS6HY=
 github.com/ghetzel/friendscript v0.5.0/go.mod h1:GZJ2FZRpgvURp4hUb/AdevNCnHKCWRpKLxtAl817F4g=
 github.com/ghetzel/friendscript v0.5.5 h1:xQvgdHW7FckKhHZL4xU3LaPpBU0nHheBl96My1KhR+I=
 github.com/ghetzel/friendscript v0.5.5/go.mod h1:zYqGAS3vGMxM912/T9GP1S62VP+AXssMDv9dPzO0Ph0=
@@ -110,6 +116,8 @@ github.com/ghetzel/pivot/v3 v3.0.45 h1:hyba02Ih9TzUbcJO9fpPZKCuEgBH9yXUCIoBnNhUu
 github.com/ghetzel/pivot/v3 v3.0.45/go.mod h1:NSn44DLsjQedBJNh2+urkjPHDHPs1xuTCX0nPtTpxE4=
 github.com/ghetzel/pivot/v3 v3.0.47 h1:gxQtDrGUATAO4QHIMWQSzHXl7FRmYQ/N2PupiFLImog=
 github.com/ghetzel/pivot/v3 v3.0.47/go.mod h1:NSn44DLsjQedBJNh2+urkjPHDHPs1xuTCX0nPtTpxE4=
+github.com/ghetzel/pivot/v3 v3.0.48 h1:XMcH/WWozT/5u/Qzcl+ysV3EFO1J0LzeXMSwc8b8aSI=
+github.com/ghetzel/pivot/v3 v3.0.48/go.mod h1:zgx3poBWPZeKW68I8b+8af+YTXAS9G0xqw7Cwv5J3Tc=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d h1:YVJe7KwVYazt90hCc/q2dYJVS3062AY6QdT6iHd+Kh8=
 github.com/ghetzel/uuid v0.0.0-20171129191014-dec09d789f3d/go.mod h1:7CCemW/spiphukVWb/v2WWYeZkydh30TwSRBh48irZQ=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=

@@ -2,6 +2,29 @@
 bindings:
 -   name:     export
     resource: https://digital-platform-prod-files.s3.amazonaws.com/reports/expeditions.tsv
+    parser:   tsv
 ---
-
-{{ $fields := }}
+<table class="table table-sm table-striped table-hover">
+    <thead>
+        <tr>
+            {{ range $i, $header := $.bindings.export.headers }}
+            <th>
+                {{ if eqx $i 0 }}
+                {{ $header }}
+                {{ else }}
+                <a target="_blank" href="/data/field-reports/{{ get (get $.bindings.export.records 0) $i }}">{{ $header }}</a>
+                {{ end }}
+            </th>
+            {{ end }}
+        </tr>
+    </thead>
+    <tbody>
+        {{ range $row := $.bindings.export.records }}
+        <tr>
+            {{ range $val := $row }}
+            <td>{{ $val }}</td>
+            {{ end }}
+        </tr>
+        {{ end }}
+    </tbody>
+</table>

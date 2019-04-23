@@ -35,10 +35,10 @@ def calcTotalGridPoints(context, field):
     except KeyError:
         pass
 
-    return count
+    return count + 1
 
 def calcTotalPerOrganismCount(context, field):
-    name = context['ctx']['organism']['commonName']
+    name = context['ctx']['organism']['_id']
     count = 0
 
     try:
@@ -46,7 +46,7 @@ def calcTotalPerOrganismCount(context, field):
             for k, v in tile.items():
                 if k.startswith('grid'):
                     try:
-                        if v['organism']['commonName'] == name:
+                        if v['organism']['_id'] == name:
                             count += 1
                     except (KeyError, TypeError):
                         continue
@@ -57,11 +57,17 @@ def calcTotalPerOrganismCount(context, field):
 
 EXPEDITION_EXPORT_KEY = 'reports/expeditions.tsv'
 EXPEDITION_DATA_EXPORT_FIELDS = [{
-    'field': '_id',
+    'field': 'id',
     'label': 'Expedition ID',
 }, {
     'field': 'monitoringStartDate',
     'label': 'Date-Time',
+}, {
+    'field': 'station.site.name',
+    'label': 'Site Name',
+}, {
+    'field': 'station.site.boroughCounty',
+    'label': 'Site Borough/City',
 }, {
     'field': 'station.site.bodyOfWater',
     'label': 'Body of Water'
@@ -73,10 +79,10 @@ EXPEDITION_DATA_EXPORT_FIELDS = [{
     'label': 'Structure Type',
 }, {
     'field': 'team.schoolOrg.name',
-    'label': 'School'
+    'label': 'Organization'
 }, {
-    'field': 'team.name',
-    'label': 'Team'
+    'field': 'team.schoolOrg.city',
+    'label': 'Organization Borough/City'
 }, {
     'field': 'adultCount',
     'label': 'Number of adults',
@@ -92,6 +98,9 @@ EXPEDITION_DATA_EXPORT_FIELDS = [{
 }, {
     'field': 'protocols.oysterMeasurement.measuringOysterGrowth.substrateShells.*.measurements.*.sizeOfLiveOysterMM',
     'label': 'Oyster Measurement {j:02d} (mm)',
+}, {
+    'field': 'protocols.oysterMeasurement.notes',
+    'label': 'Oyster Measurement Notes',
 }, {
     'field': 'protocols.siteCondition.meteorologicalConditions.weatherConditions',
     'label': 'Weather',
@@ -140,11 +149,15 @@ EXPEDITION_DATA_EXPORT_FIELDS = [{
 }, {
     'label': 'Total # of Grid Points',
     'value': calcTotalGridPoints,
-}, {
-    'field': 'protocols.settlementTiles.settlementTiles.*.grid*.organism.commonName',
-    'label': '# of Grid Pts: {ctx[organism][commonName]}',
-    'value': calcTotalPerOrganismCount,
-}, {
+},
+
+# {
+#     'field': 'protocols.settlementTiles.settlementTiles.*.grid*.organism.commonName',
+#     'label': '# of Grid Pts: {ctx[organism][commonName]}',
+#     'value': calcTotalPerOrganismCount,
+# },
+
+{
     'field': 'protocols.settlementTiles.settlementTiles.*.grid*.organism.commonName',
     'label': 'Tile {i:02d}, Grid Pt. {j:02d}',
 }, {
@@ -424,9 +437,11 @@ def generate_batch_expeditions_tsv(query='status/published', limit=False, maxcou
     )
 
     # get the final output order that the columns should be in by sorting by the desired field
-    orderedExpNames = OrderedDict(
+    data = OrderedDict(
         sorted(data.items(), key=lambda d: d[1].get('0001|Date-Time'))
-    ).keys()
+    )
+
+    orderedExpNames = data.keys()
 
     # write header
     writer.writerow(['Datum'] + list(orderedExpNames))
