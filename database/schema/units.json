@@ -13,7 +13,10 @@
         "collection": "lessons",
         "fields": [
             "status",
-            "title"
+            "title",
+            "featuredImage",
+            "lessonOverview"
+
         ]
     }, {
         "key": "parentUnits.*",

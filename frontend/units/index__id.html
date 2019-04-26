@@ -6,13 +6,15 @@ page:
 # Retrieve the unit.
 bindings:
 - name:     'unit'
-  resource: ':/api/units/{{ param 1 }}'
+  resource: '/api/units/{{ param 1 }}'
+
 
 # Retrieve all of the lessons under the given unit, which come to us as an array
 # on the unit itself. This resource is repeated, once per lesson ID, and yields
 # an array of individual lessons as a result.
+
 - name:     'lessons'
-  resource: ':/api/lessons/{{ . }}'
+  resource: '/api/lessons/{{ . }}'
   repeat:   '.bindings.unit.lessons'
   on_error: continue
 
@@ -23,10 +25,11 @@ bindings:
   repeat:   'uniq (flatten (pluck .bindings.lessons `lessonOverview.subjectAreas`))'
   on_error: continue
 
-includes:
-    lessons:   /_includes/units/lessons.html
-
 ---
+
+{{ $unit := $.bindings.unit }}
+{{ $lessons := $.bindings.lessons }}
+
 <div class="jumbotron" style="background: {{ .bindings.unit.color }}">
     <section class="content">
         <section class="container">
@@ -48,28 +51,30 @@ includes:
 
 <section class="content">
     <section class="container">
-        <div class="text-right w-100">
+        <div class="text-right w-100 mt-4">
         {{ if .flags.admin }}
-            {{ if and (eq .bindings.unit.status `draft`) }}
+            {{ if and (eq $.bindings.unit.status `draft`) }}
             <h6>Draft</h6>
             {{ end }}
 
-            {{ if and (eq .bindings.unit.status `published`) }}
+            {{ if and (eq $.bindings.unit.status `published`) }}
             <h6>Published</h6>
             {{ end }}
 
+            <!--
             <a class="btn btn-primary" href="/units/edit//{{ .bindings.unit._id }}">Edit</a>
+            -->
         {{ end }}
 
-            <a class="btn btn-default" href="/units/feedback/{{ .bindings.unit._id }}" ng-hide="vm.unit.isCurrentUserOwner">Send feedback</a>
+            
         </div>
 
-        {{ if .bindings.unit.highlights }}
+        {{ if $.bindings.unit.highlights }}
         <h3>Highlights</h3>
         <div>{{ sanitize .bindings.unit.highlights }}</div>
         {{ end }}
 
-        {{ if .bindings.unit.rationale }}
+        {{ if $.bindings.unit.rationale }}
         <h3>Rationale</h3>
         <div>{{ sanitize .bindings.unit.rationale }}</div>
         {{ end }}
@@ -78,4 +83,113 @@ includes:
     </section>
 </section>
 
-{{ template "lessons" . }}
+<section class="content shaded">
+    <section class="container">
+        <div class="row">
+            <h3 class="col-xs-6 blue">Lessons</h3>
+            <!--
+            {{ if .flags.admin }}
+            <div class="col-xs-6 ml-auto mb-2">
+                {{ if .bindings.unit.lessons }}
+                <a class="btn btn-default"">Edit sequence</a>
+                {{ end }}
+                <a class="btn btn-default">Add lesson</a>
+            </div>
+            {{ end }}
+            -->
+        </div>
+
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th></th>
+                    <th>Subjects</th>
+                    <th>Grade</th>
+                    <th>Class Periods</th>
+                    <th>Setting</th>
+                    {{ if $.flags.admin }}
+                    <th></th>
+                    <th></th>
+                    {{ end }}
+                </tr>
+            </thead>
+            <tbody>
+                {{ range $i, $lesson := $lessons }}
+                <tr
+                    onclick="location.href='/lessons/view//{{ ._id }}'"
+                    class="{{ if ne .status `published` }}text-muted{{ end }}"
+                >
+                    <td>
+                        <h4 class="{{ if eq .status `published` }}blue{{ else }}gray{{ end }}">
+                            <b></b>
+                        </h4>
+                    </td>
+
+                    <td>
+                        <h4>
+                            {{ $lesson.title }}
+                        </h4>
+                        <p class="small" class="{{ if eq .status `published` }}text-muted{{ else }}gray{{ end }}">
+                            <span>{{ $lesson.lessonOverview.lessonSummary }}</span>
+                        </p>
+                    </td>
+
+                    <td>
+                        {{ if $lesson.featuredImage }}
+                        <img src="{{ $lesson.featuredImage.path }}" class="img-thumbnail" />
+                        {{ end }}
+                    </td>
+
+                    <td>
+                        <ul class="list-inline">
+                            {{ $.bindings.subjects }}
+                        </ul>
+                    </td>
+
+                    <td>
+                        {{ $lesson.lessonOverview.grade }}
+                    </td>
+
+                    <td>
+                        {{ $lesson.lessonOverview.classPeriods }}
+                    </td>
+
+                    <td>
+                        {{ $lesson.lessonOverview.setting }}
+                    </td>
+
+                    {{ if $.flags.admin }}
+                    <td class="text-right">
+                        <span
+                            {{ if eq .status `published` }}
+                            class="badge badge-success"
+                            {{ else if eq .status `pending` }}
+                            class="badge badge-info"
+                            {{ else if eq .status `returned` }}
+                            class="badge badge-danger"
+                            {{ else }}
+                            class="badge badge-default"
+                            {{ end }}
+                        >
+                            {{ .status | titleize }}
+                        </span>
+                    </td>
+                    <td class="text-right" {{ if eq .status `pending` }}style="min-width: 80px;"{{ end }}>
+                        {{ if eq .status `pending` }}
+                        <a class="btn btn-sm btn-danger pull-right">
+                        <i class="fa fa-remove"></i></a>
+
+                        <a class="btn btn-sm btn-success pull-right">
+                        <i class="fa fa-ok"></i></a>
+                        {{ end }}
+                    </td>
+                    {{ end }}
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+
+    </section>
+</section>
