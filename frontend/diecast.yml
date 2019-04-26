@@ -21,6 +21,8 @@ header:
         - '^/data/register'
         - '^/expeditions/submit'
         - '^/community/people'
+        - '^/admin'
+        - '^/permits'
 
       mapbox:
         style: 'ghetzel/cjeq9hzsn553o2rqklsbdhzwc'

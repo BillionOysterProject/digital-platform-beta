@@ -13,11 +13,11 @@ includes:
 bindings:
 -   name:     'user'
     resource: '/api/users/me'
-    only_if:  '{{ match $.page.security.private_pages $.request.url.path }}'
     not_if:   '{{ eqx $.request.url.path "/authentication/signin" }}'
+    optional: true
     fallback: {}
     if_status:
-        401:    '/authentication/signin'
+        401:    '{{ if match $.page.security.private_pages $.request.url.path }}/authentication/signin?p={{ $.request.url.path }}{{ else }}continue{{ end }}'
 
 flags:
     admin:             '{{ has "admin" $.bindings.user.roles }}'

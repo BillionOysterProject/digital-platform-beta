@@ -2,7 +2,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 import os
 from .endpoints import Endpoint, CollectionView, GeoCollectionView
-from flask import jsonify, request, g
+from flask import jsonify, request, g, redirect
 from werkzeug.exceptions import BadRequest, Unauthorized
 from flask_classy import route
 from flask_login import login_user, logout_user
@@ -37,6 +37,7 @@ class Authentication(Endpoint):
 
         if user.check_password(payload['password']):
             login_user(user, remember=True)
+
             return jsonify(user)
         else:
             raise Unauthorized('Invalid username or password.')

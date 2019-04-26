@@ -170,7 +170,7 @@ $(function () {
                     if (field.value == '' || field.value == '0') {
                         delete field['value'];
                     }
-                    
+
                     if (el.attr('data-override-value')) {
                         field.value = el.attr('data-override-value');
                     }
@@ -188,7 +188,7 @@ $(function () {
                         )) {
                             record[field.name] = [];
                         }
-                        
+
                         if ($.isArray(record[field.name])) {
                             record[field.name].push(field.value);
                         } else {
@@ -277,7 +277,7 @@ $(function () {
                         }
 
                         this.notify(message, 'danger', {
-                            title: 'Expedition save Error',
+                            title: 'Request Error',
                         }, {
                             delay: 10000,
                         });

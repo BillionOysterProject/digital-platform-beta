@@ -7,6 +7,9 @@
             class="signin"
             action="/api/auth/signin"
             method="POST"
+            {{ if qs `p` }}
+            data-redirect-to="{{ qs `p` }}"
+            {{ end }}
         >
             <fieldset>
                 <div class="form-group">
