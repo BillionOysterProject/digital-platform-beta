@@ -5,42 +5,24 @@ page:
 
 # Retrieve the unit.
 bindings:
-- name:     'unit'
-  resource: '/api/units/{{ param 1 }}'
-
-
-# Retrieve all of the lessons under the given unit, which come to us as an array
-# on the unit itself. This resource is repeated, once per lesson ID, and yields
-# an array of individual lessons as a result.
-
-- name:     'lessons'
-  resource: '/api/lessons/{{ . }}'
-  repeat:   '.bindings.unit.lessons'
-  on_error: continue
-
-# Retrieve the list of all subjects that are actually used in the lessons we
-# got above.
-- name:     'subjects'
-  resource: ':/api/subject-areas/{{ . }}'
-  repeat:   'uniq (flatten (pluck .bindings.lessons `lessonOverview.subjectAreas`))'
-  on_error: continue
-
+-   name:     'unit'
+    resource: '/api/units/{{ param 1 }}'
 ---
 
 {{ $unit := $.bindings.unit }}
-{{ $lessons := $.bindings.lessons }}
+{{ $lessons := $.bindings.unit.lessons }}
 
-<div class="jumbotron" style="background: {{ .bindings.unit.color }}">
+<div class="jumbotron" style="background: {{ $.bindings.unit.color }}">
     <section class="content">
         <section class="container">
             <div class="row">
-                <div class="col-md-4 col-sm-6 box text-center" style="color: {{ .bindings.unit.color }}">
+                <div class="col-md-4 col-sm-6 box text-center" style="color: {{ $.bindings.unit.color }}">
                     <h1><i class="fa fa-sun-o"></i></h1>
-                    <h2>{{ .bindings.unit.title }}</h2>
+                    <h2>{{ $.bindings.unit.title }}</h2>
                     <h6>
-                        {{ len .bindings.unit.lessons }} Lessons
-                        {{ if .bindings.unit.subUnits }}
-                        <span> | {{ len .bindings.unit.subUnits }} Sub Units</span>
+                        {{ len $.bindings.unit.lessons }} Lessons
+                        {{ if $.bindings.unit.subUnits }}
+                        <span> | {{ len $.bindings.unit.subUnits }} Sub Units</span>
                         {{ end }}
                     </h6>
                 </div>
@@ -52,7 +34,7 @@ bindings:
 <section class="content">
     <section class="container">
         <div class="text-right w-100 mt-4">
-        {{ if .flags.admin }}
+        {{ if $.flags.admin }}
             {{ if and (eq $.bindings.unit.status `draft`) }}
             <h6>Draft</h6>
             {{ end }}
@@ -71,12 +53,12 @@ bindings:
 
         {{ if $.bindings.unit.highlights }}
         <h3>Highlights</h3>
-        <div>{{ sanitize .bindings.unit.highlights }}</div>
+        <div>{{ sanitize $.bindings.unit.highlights }}</div>
         {{ end }}
 
         {{ if $.bindings.unit.rationale }}
         <h3>Rationale</h3>
-        <div>{{ sanitize .bindings.unit.rationale }}</div>
+        <div>{{ sanitize $.bindings.unit.rationale }}</div>
         {{ end }}
 
         <br/>
@@ -123,7 +105,7 @@ bindings:
                 >
                     <td>
                         <h4 class="{{ if eq .status `published` }}blue{{ else }}gray{{ end }}">
-                            <b></b>
+                            <b>{{ add $i 1 }}</b>
                         </h4>
                     </td>
 
@@ -132,7 +114,7 @@ bindings:
                             {{ $lesson.title }}
                         </h4>
                         <p class="small" class="{{ if eq .status `published` }}text-muted{{ else }}gray{{ end }}">
-                            <span>{{ $lesson.lessonOverview.lessonSummary }}</span>
+                            <span>{{ sanitize $lesson.lessonOverview.lessonSummary }}</span>
                         </p>
                     </td>
 
@@ -144,7 +126,12 @@ bindings:
 
                     <td>
                         <ul class="list-inline">
-                            {{ $.bindings.subjects }}
+                            {{ range $subject := $lesson.lessonOverview.subjectAreas }}
+                            <span
+                                class="badge"
+                                style="background-color: {{ $subject.color }}; color: white;"
+                            >{{ $subject.subject }}</span>
+                            {{ end }}
                         </ul>
                     </td>
 

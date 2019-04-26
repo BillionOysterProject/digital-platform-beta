@@ -16,7 +16,6 @@
             "title",
             "featuredImage",
             "lessonOverview"
-
         ]
     }, {
         "key": "parentUnits.*",
