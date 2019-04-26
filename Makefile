@@ -1,7 +1,7 @@
 .PHONY: database backend frontend
 .EXPORT_ALL_VARIABLES:
 
-IMPERSONATE ?= bop-admin
+# IMPERSONATE ?= bop-admin
 DEBUG       ?= true
 PATH        := "$(PATH):$(HOME)/go/bin:$(HOME)/bin:$(HOME)/.local/bin:$(HOME)/Library/Python/2.7/bin:"
 

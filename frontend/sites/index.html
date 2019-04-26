@@ -3,19 +3,19 @@ page:
     body_class: 'sites-list fill-content'
 
 bindings:
-- name:     'sites'
-  resource: '/api/sites'
-  params:
-    limit: false
-    sort:  name
+-   name:     'sites'
+    resource: '/api/sites'
+    params:
+        limit: false
+        sort:  name
 
--  name:     stations
-   resource: '/api/restoration-stations'
-   params:
-     limit:    false
-     fields:   name,status,schoolOrg,site,teamLead,created
-     q:        schoolOrg/not:571f6f3181ab586140097247
-     sort:     name
+-   name:     stations
+    resource: '/api/restoration-stations'
+    params:
+        limit:    false
+        fields:   name,status,schoolOrg,site,teamLead,created
+        q:        schoolOrg/not:571f6f3181ab586140097247/name/not:null
+        sort:     name
 
 flags:
     viewSitesMap:  '{{ eqx (qs "v" "map") "map" }}'

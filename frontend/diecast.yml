@@ -16,6 +16,12 @@ mounts:
 
 header:
   page:
+      security:
+        private_pages:
+        - '^/data/register'
+        - '^/expeditions/submit'
+        - '^/community/people'
+
       mapbox:
         style: 'ghetzel/cjeq9hzsn553o2rqklsbdhzwc'
         key:   'pk.eyJ1IjoiZ2hldHplbCIsImEiOiJjajhvdTVvOHYwOGtjMnd1bXUxN2p2eThkIn0.t74BmXxs3SBMGLM1YqIGEg'
@@ -37,12 +43,12 @@ header:
           - "9-12th"
           - "Elementary"
           - "Pre-K"
-      
+
         setting:
           - "Classroom"
           - "Field"
           - "Classroom & Field"
-      
+
       resources:
         types:
           - id: 'class-resource'
@@ -58,24 +64,24 @@ header:
           - id: 'article'
             label: 'Article'
           - id: 'graphic-organizer'
-            label: 'Graphic Organizer'          
+            label: 'Graphic Organizer'
           - id: 'presentation'
             label: 'Presentation'
           - id: 'video'
             label: 'Video'
           - id: 'field-science'
-            label: 'Field Science'   
+            label: 'Field Science'
           - id: 'oyster-tank'
             label: 'Oyster Tank'
           - id: 'image-collection'
             label: 'Image Collection'
           - id: 'scientific-paper'
-            label: 'Scientific Paper'   
+            label: 'Scientific Paper'
           - id: 'book'
-            label: 'Book' 
+            label: 'Book'
           - id: 'manual'
-            label: 'Manual'       
-      
+            label: 'Manual'
+
       structureTypes:
       - id:    'research-station'
         label: 'Oyster Research Station'
