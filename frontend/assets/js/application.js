@@ -416,6 +416,10 @@ $(function () {
             },
 
             updateActiveMenuItem: function () {
+                if ( $(window).width() < 993 ) {
+                    return;
+                }
+
                 var pathComponents = window.location.pathname.split('/');
 
                 $("[data-menu-triggers] .dropdown-menu").removeClass('show');
