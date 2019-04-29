@@ -20,7 +20,9 @@ bindings:
                     <h1><i class="fa fa-sun-o"></i></h1>
                     <h2>{{ $.bindings.unit.title }}</h2>
                     <h6>
+                        {{ if $.flags.admin }}
                         {{ len $.bindings.unit.lessons }} Lessons
+                        {{ end }}
                         {{ if $.bindings.unit.subUnits }}
                         <span> | {{ len $.bindings.unit.subUnits }} Sub Units</span>
                         {{ end }}
@@ -70,7 +72,7 @@ bindings:
         <div class="row">
             <h3 class="col-xs-6 blue">Lessons</h3>
             <!--
-            {{ if .flags.admin }}
+            {{ if $.flags.admin }}
             <div class="col-xs-6 ml-auto mb-2">
                 {{ if .bindings.unit.lessons }}
                 <a class="btn btn-default"">Edit sequence</a>
@@ -82,9 +84,12 @@ bindings:
         </div>
 
         <table class="table table-hover table-responsive">
+            
             <thead>
                 <tr>
+                    {{ if $.flags.admin }}
                     <th>#</th>
+                    {{ end }}
                     <th>Title</th>
                     <th></th>
                     <th>Subjects</th>
@@ -92,30 +97,38 @@ bindings:
                     <th>Class Periods</th>
                     <th>Setting</th>
                     {{ if $.flags.admin }}
-                    <th></th>
-                    <th></th>
+                    <th>Status</th>
+                    <!--<th></th>-->
                     {{ end }}
                 </tr>
             </thead>
+
             <tbody>
-                {{ range $i, $lesson := $lessons }}
+                {{ if $.flags.admin }}
+                {{  range $i, $lesson := $lessons }}
+                
                 <tr
                     onclick="location.href='/lessons/view//{{ ._id }}'"
                     class="{{ if ne .status `published` }}text-muted{{ end }}"
                 >
+                    {{ if $.flags.admin }} 
                     <td>
                         <h4 class="{{ if eq .status `published` }}blue{{ else }}gray{{ end }}">
                             <b>{{ add $i 1 }}</b>
                         </h4>
                     </td>
-
+                    {{ end }}
                     <td>
+                        {{ if $lesson.title }}
                         <h4>
                             {{ $lesson.title }}
                         </h4>
+                        {{ end }}
+                        {{ if $lesson.lessonOverview.lessonSummary }}
                         <p class="small" class="{{ if eq .status `published` }}text-muted{{ else }}gray{{ end }}">
                             <span>{{ sanitize $lesson.lessonOverview.lessonSummary }}</span>
                         </p>
+                        {{ end }}
                     </td>
 
                     <td>
@@ -126,25 +139,34 @@ bindings:
 
                     <td>
                         <ul class="list-inline">
+                            {{ if $lesson.lessonOverview.subjectAreas }}
                             {{ range $subject := $lesson.lessonOverview.subjectAreas }}
                             <span
                                 class="badge"
                                 style="background-color: {{ $subject.color }}; color: white;"
                             >{{ $subject.subject }}</span>
                             {{ end }}
+                            {{ end }}
+                            
                         </ul>
                     </td>
 
                     <td>
+                        {{ if $lesson.lessonOverview.grade }}
                         {{ $lesson.lessonOverview.grade }}
+                        {{ end }}
                     </td>
 
                     <td>
+                        {{ if $lesson.lessonOverview.classPeriods }}
                         {{ $lesson.lessonOverview.classPeriods }}
+                        {{ end }}
                     </td>
 
                     <td>
+                        {{ if $lesson.lessonOverview.setting }}
                         {{ $lesson.lessonOverview.setting }}
+                        {{ end }}
                     </td>
 
                     {{ if $.flags.admin }}
@@ -163,6 +185,7 @@ bindings:
                             {{ .status | titleize }}
                         </span>
                     </td>
+                    <!--
                     <td class="text-right" {{ if eq .status `pending` }}style="min-width: 80px;"{{ end }}>
                         {{ if eq .status `pending` }}
                         <a class="btn btn-sm btn-danger pull-right">
@@ -172,9 +195,81 @@ bindings:
                         <i class="fa fa-ok"></i></a>
                         {{ end }}
                     </td>
+                    -->
                     {{ end }}
                 </tr>
+                {{  end }}
+
+                {{ else }}
+
+                {{  range $i, $lesson := $lessons }}
+                {{ if eqx $lesson.status "published" }}
+                <tr
+                    onclick="location.href='/lessons/view//{{ ._id }}'"
+                    class="{{ if ne .status `published` }}text-muted{{ end }}"
+                >
+                    {{ if $.flags.admin }} 
+                    <td>
+                        <h4 class="{{ if eq .status `published` }}blue{{ else }}gray{{ end }}">
+                            <b>{{ add $i 1 }}</b>
+                        </h4>
+                    </td>
+                    {{ end }}
+                    <td>
+                        {{ if $lesson.title }}
+                        <h4>
+                            {{ $lesson.title }}
+                        </h4>
+                        {{ end }}
+                        {{ if $lesson.lessonOverview.lessonSummary }}
+                        <p class="small" class="{{ if eq .status `published` }}text-muted{{ else }}gray{{ end }}">
+                            <span>{{ sanitize $lesson.lessonOverview.lessonSummary }}</span>
+                        </p>
+                        {{ end }}
+                    </td>
+
+                    <td>
+                        {{ if $lesson.featuredImage }}
+                        <img src="{{ $lesson.featuredImage.path }}" class="img-thumbnail" />
+                        {{ end }}
+                    </td>
+
+                    <td>
+                        <ul class="list-inline">
+                            {{ if $lesson.lessonOverview.subjectAreas }}
+                            {{ range $subject := $lesson.lessonOverview.subjectAreas }}
+                            <span
+                                class="badge"
+                                style="background-color: {{ $subject.color }}; color: white;"
+                            >{{ $subject.subject }}</span>
+                            {{ end }}
+                            {{ end }}
+                            
+                        </ul>
+                    </td>
+
+                    <td>
+                        {{ if $lesson.lessonOverview.grade }}
+                        {{ $lesson.lessonOverview.grade }}
+                        {{ end }}
+                    </td>
+
+                    <td>
+                        {{ if $lesson.lessonOverview.classPeriods }}
+                        {{ $lesson.lessonOverview.classPeriods }}
+                        {{ end }}
+                    </td>
+
+                    <td>
+                        {{ if $lesson.lessonOverview.setting }}
+                        {{ $lesson.lessonOverview.setting }}
+                        {{ end }}
+                    </td>
+                </tr>
+                {{  end }}
                 {{ end }}
+                
+                {{ end}}
             </tbody>
         </table>
 
