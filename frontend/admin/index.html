@@ -2,6 +2,48 @@
 page:
     view: Platform Administration
 ---
+
+<section class="content">
+    <div class="content col-sm-10">
+        <h2>
+            Platform Documentation
+        </h2>
+        <p>
+            Platform documentation lives in two places- the Google doc, <a href="https://docs.google.com/document/d/1xL6pihN17Xj7SlZCfztI81nXRTMMFNB-U8FNnimHVDc/edit?usp=sharing">"Digital Platform Beta Documentation"</a>
+            and the <a href="https://github.com/BillionOysterProject/digital-platform-beta/wiki">wiki for the "digital-platform-beta" project in Github</a>.
+            The Google doc contains ALL of the documentation, 
+            but any documentation that can be public-facing is in the Github wiki and gets updated there instead of in the Google doc version.
+            The internal-only pieces of the documentation are updated in the Google doc. 
+        </p>
+        <h2>Editing entries in the database via the BOP Digital Platform</h2>
+        <p>
+            On each Admin page, you can use the <i class="fa fa-pencil"></i> icon next to an item to edit that entry in the database.
+            With the exception of the Sites page, which has a form editor, entries in the database are written in JavaScript Object Notation,
+            so only edit those entries if you understand the syntax.
+        </p>
+        <p>
+            Here are links and descriptions of the main Admin pages:
+        </p>
+        <ul>
+            <strong><li><a href="/admin/doe-schools-list">DOE Schools List</a></strong>- Every NYC Public School (whether they participate or not) and its economic and demographic data (pulled from NYC Open Data) and any BOP-related information we have for that school. Loads VERY slowly.</li> 
+            <strong><li><a href="/admin/events">Events</a></strong>- All events, past and present.</li>
+            <strong><li><a href="/admin/lessons">Lessons</a></strong>- All lessons, whether their status is published, draft, returned, or pending.</li>
+            <strong><li><a href="/admin/org-list">Organizations</a></strong>- All organizations who have signed up for the platform + their ORS sites + expeditions (if any), + economic and demographic data for NYC public schools.</li>
+            <strong><li><a href="/admin/people">People</a></strong>- All participants and their org sites (if any) + whether they have attended basic training, + info about their organization </li>
+            <strong><li><a href="/admin/sites">Sites</a></strong>- All sites + NYC Parks info + permit info</li>
+        </ul>
+
+        <h2>Permits</h2>
+        <p>
+            The <a href="/permits">"Permits"</a> page is designed to generate the full NYC Department of Environmental Conservation License to Collect and Possess (LCP) permit report for Oyster Research Stations.
+            The current code generates the report for the 2017-2018 season.
+            You will need to edit the code by changing the dates in the binding at the top of the permits.html file for the 2018-2019 season,
+            but that should be the only change you need to make.
+        </p>
+    </div>
+</section>
+
+<!--
 <div class="container mt-4">
     <div class="card-deck">
         <div class="card w-25">
@@ -45,3 +87,4 @@ page:
         </div>
     </div>
 </div>
+-->
