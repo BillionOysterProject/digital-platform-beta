@@ -44,42 +44,49 @@ bindings:
         </div>
 
         <div class="form-group col-sm-8">
-            <label for="monitoringStartDate">
-                Date
+            <label for="startDateTime">
+                Date(s) and Time(s)
             </label>
+
+            <div class="form-row">
+                    <input
+                        class="form-control col-md-3"
+                        id="startDateTime"
+                        type="date"
+                        name="startDateTime"
+                        required
+                        {{ if $.bindings.event }}
+                        value="{{ time $.bindings.event.startDateTime `ymd` }}"
+                        {{ else }}
+                        value="{{ now `ymd` }}"
+                        {{ end }}
+                    >
+        
+                    <input
+                        class="form-control col-md-2"
+                        id="monitoringStartDate"
+                        type="time"
+                        name="monitoringStartDateTime"
+                        required
+                        {{ if $.bindings.event }}
+                        value="{{ time $.bindings.event. `15:04` }}"
+                        {{ else }}
+                        value="{{ now `15:04` }}"
+                        {{ end }}
+                    >
+                </div>
 
             <div class="form-row">
             <input
                 class="form-control col-md-3"
-                id="monitoringStartDate"
+                id="startDateTime"
                 type="date"
-                name="monitoringStartDateDate"
+                name="startDateTime"
                 required
                 {{ if $.bindings.event }}
                 value="{{ time $.bindings.event `ymd` }}"
                 {{ else }}
                 value="{{ now `ymd` }}"
-                {{ end }}
-            >
-            </div>
-        </div>
-
-        <div class="form-group col-sm-8">
-            <label for="monitoringStartDate">
-                Time
-            </label>
-
-            <div class="form-row">
-            <input
-                class="form-control col-md-2"
-                id="monitoringStartDate"
-                type="time"
-                name="monitoringStartDateTime"
-                required
-                {{ if $.bindings.event }}
-                value="{{ time $.bindings.event `15:04` }}"
-                {{ else }}
-                value="{{ now `15:04` }}"
                 {{ end }}
             >
             </div>
@@ -97,8 +104,8 @@ bindings:
                 class="form-control"
                 name="link"
                 id="link"
-                {{ if $.bindings.resource }}
-                value="{{ $.bindings.resource.link }}"
+                {{ if $.bindings.event }}
+                value="{{ $.bindings.event.link }}"
                 {{ end }}
             />
         </div>
