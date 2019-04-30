@@ -92,6 +92,8 @@ github.com/ghetzel/diecast v1.10.25 h1:RnA24Pea60w51hAXM7J8CYWEzQDStGoMQwOU14MfE
 github.com/ghetzel/diecast v1.10.25/go.mod h1:Q1oMUg7E1a6NRcDny+274DcSuQ/6FK7GQk4j5DQS6HY=
 github.com/ghetzel/diecast v1.10.26 h1:/4obVqKBbXpLKhH1RsUrQOHhnX5r0FdRklO8YObmu5o=
 github.com/ghetzel/diecast v1.10.26/go.mod h1:Q1oMUg7E1a6NRcDny+274DcSuQ/6FK7GQk4j5DQS6HY=
+github.com/ghetzel/diecast v1.11.0 h1:ZGiz4QT8qfHnPNkRzqYKPW0tTyHgTOpt+lziVa4tHUo=
+github.com/ghetzel/diecast v1.11.0/go.mod h1:ahB2EeY/6LcsIE4/0Qez+OJQJ+Z0DYQlx+H1cGXDfgc=
 github.com/ghetzel/friendscript v0.5.0/go.mod h1:GZJ2FZRpgvURp4hUb/AdevNCnHKCWRpKLxtAl817F4g=
 github.com/ghetzel/friendscript v0.5.5 h1:xQvgdHW7FckKhHZL4xU3LaPpBU0nHheBl96My1KhR+I=
 github.com/ghetzel/friendscript v0.5.5/go.mod h1:zYqGAS3vGMxM912/T9GP1S62VP+AXssMDv9dPzO0Ph0=
@@ -288,6 +290,8 @@ github.com/syndtr/goleveldb v0.0.0-20181105012736-f9080354173f/go.mod h1:Z4AUp2K
 github.com/tecbot/gorocksdb v0.0.0-20181010114359-8752a9433481/go.mod h1:ahpPrc7HpcfEWDQRZEmnXMzHY03mLDYMCxeDzy46i+8=
 github.com/tg123/go-htpasswd v0.0.0-20150618065153-49fe3fd1681b h1:QrbGYrwDZ5kisyRLN0nQWULyCtjAQ+FlHG2kmCcZf5Y=
 github.com/tg123/go-htpasswd v0.0.0-20150618065153-49fe3fd1681b/go.mod h1:rFFqmvZbM9kVmDDVpeVr8VJ+8nRWwuXR/uvvjJ/3aJo=
+github.com/tg123/go-htpasswd v0.0.0-20190305225429-d38e564730bf h1:lemWpSGw+Yz0k0lbnwoJXO5ovdxaS6uR7u3JTbPczRE=
+github.com/tg123/go-htpasswd v0.0.0-20190305225429-d38e564730bf/go.mod h1:rFFqmvZbM9kVmDDVpeVr8VJ+8nRWwuXR/uvvjJ/3aJo=
 github.com/tinylib/msgp v1.0.2 h1:DfdQrzQa7Yh2es9SuLkixqxuXS2SxsdYn0KbdrOGWD8=
 github.com/tinylib/msgp v1.0.2/go.mod h1:+d+yLhGm8mzTaHzB+wgMYrodPfmZrzkirds8fDWklFE=
 github.com/urfave/negroni v1.0.0 h1:kIimOitoypq34K7TG7DUaJ9kq/N4Ofuwi1sjz0KipXc=

@@ -57,11 +57,22 @@ class API(Flask):
         self.session_manager = Session()
 
         self.secret_key = os.urandom(32)
-        self.config['SESSION_TYPE'] = 'redis'
-        self.config['SESSION_REDIS'] = redis.Redis(
-            host=os.getenv('SESSION_REDIS_HOST', 'localhost'),
-            port=int(os.getenv('SESSION_REDIS_PORT', 6379))
-        )
+
+        try:
+            self.config['SESSION_TYPE'] = 'redis'
+            conn = redis.Redis(
+                host=os.getenv('SESSION_REDIS_HOST', 'localhost'),
+                port=int(os.getenv('SESSION_REDIS_PORT', 6379))
+            )
+
+            conn.ping()
+            self.config['SESSION_REDIS'] = conn
+        except redis.exceptions.ConnectionError as e:
+            logging.warning('Failed to connect to Redis: {}'.format(e))
+            logging.warning('Falling back to local-only session store.')
+            logging.warning('Session data will not be shared between multiple servers.')
+            logging.warning('This will make staying logged-in to the site annoying in multi-server deployments.')
+            self.config['SESSION_TYPE'] = 'filesystem'
 
         self.session_manager.init_app(self)
 
