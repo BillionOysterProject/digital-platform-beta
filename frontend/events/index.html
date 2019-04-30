@@ -3,30 +3,70 @@ page:
     view: Events
 
 bindings:
-- name:     'events'
-  resource: '/api/events'
-  params:
-    limit: false
-    sort: -created
+-   name:     'futureEvents'
+    resource: '/api/events'
+    params:
+        limit: false
+        sort: dates.startDateTime
+        q:    "dates.startDateTime/gte:{{ now }}"
+
+-   name:     'pastEvents'
+    resource: '/api/events'
+    params:
+        limit: false
+        sort: -dates.startDateTime
+        q:    "dates.startDateTime/lt:{{ now }}"
 ---
 
-{{ $events := $.bindings.events }}
+{{ $futureEvents := $.bindings.futureEvents }}
+{{ $pastEvents := $.bindings.pastEvents }}
 
 <section class="content">       
     <section class="container">
+        <h2 class="text-center">Upcoming Events</h2>
         <div class="unit-lessons">
-            <div class="card-deck">   
-                {{ range $i, $event := $.bindings.events }}
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">{{ .title }}</h2>
+            <div class="row">
+                {{ range $i, $event := $futureEvents }}
+                <div class="col-sm-4 p-2">
+                    <div class="card h-100" onclick="window.location='{{ $event.link }}'">
+                        <div class="card-header">
+                            <a href="{{ $event.link }}">
+                                <h3 class="card-title">{{ $event.title }}</h3>
+                            </a>
+                        </div>
+                            
+                        <div class="card-body">
+                            {{ range $date := $event.dates }}
+                            {{ time $date.startDateTime `January 2 2006` }},
+                            {{ time $date.startDateTime `3pm` }} &ndash; {{ time $date.endDateTime `3pm` }}
+                            <br>
+                            {{ end }}
+                        </div>
                     </div>
-                        
-                    <div class="card-body">
-                        {{ range .dates }}
-                        {{ time (asTime .startDateTime) `January 2 2006` }},
-                        {{ time (asTime .startDateTime) `3pm` }} &ndash; {{ time (asTime .endDateTime) `3pm` }}
-                        {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+        <h2 class="text-center">Past Events</h2>
+        <div class="unit-lessons">
+            <div class="row">
+                {{ range $i, $event := $pastEvents }}
+                <div class="col-sm-4 p-2">
+                    <div class="card h-100" onclick="window.location='{{ $event.link }}'">
+                        <div class="card-header">
+                            <a href="{{ $event.link }}">
+                                <h3 class="card-title">{{ $event.title }}</h3>
+                            </a>
+                        </div>
+                            
+                        <div class="card-body">
+                            {{ range $date := $event.dates }}
+                            {{ time $date.startDateTime `January 2 2006` }},
+                            {{ time $date.startDateTime `3pm` }} &ndash; {{ time $date.endDateTime `3pm` }}
+                            <br/>
+                            {{ end }}
+                        </div>
                     </div>
                 </div>
                 {{ end }}

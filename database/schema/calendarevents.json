@@ -38,6 +38,9 @@
         "name":       "cost",
         "type":       "str"
     }, {
+        "name":       "link",
+        "type":       "str"
+    }, {
         "name":       "maximumCapacity",
         "type":       "int"
     }, {
