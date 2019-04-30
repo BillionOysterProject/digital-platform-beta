@@ -36,11 +36,17 @@ bindings:
                         </div>
                             
                         <div class="card-body">
+                            <strong>
                             {{ range $date := $event.dates }}
                             {{ time $date.startDateTime `January 2 2006` }},
                             {{ time $date.startDateTime `3pm` }} &ndash; {{ time $date.endDateTime `3pm` }}
+                            </strong>
                             <br>
                             {{ end }}
+                            <br/>
+                            <p>
+                                {{ sanitize $event.description }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -61,11 +67,17 @@ bindings:
                         </div>
                             
                         <div class="card-body">
+                            <strong>
                             {{ range $date := $event.dates }}
                             {{ time $date.startDateTime `January 2 2006` }},
                             {{ time $date.startDateTime `3pm` }} &ndash; {{ time $date.endDateTime `3pm` }}
+                            </strong>
                             <br/>
                             {{ end }}
+                            <br/>
+                            <p>
+                                {{ sanitize $event.description }}
+                            </p>
                         </div>
                     </div>
                 </div>
