@@ -14,12 +14,12 @@ bindings:
 
 <section class="content">       
     <section class="container">
-        <div class="unit-lessons mb-4">
+        <div class="unit-lessons">
             <div class="card-deck">   
                 {{ range $i, $event := $.bindings.events }}
                 <div class="card">
                     <div class="card-header">
-                        <h2>{{ .title }}</h2>
+                        <h2 class="card-title">{{ .title }}</h2>
                     </div>
                         
                     <div class="card-body">

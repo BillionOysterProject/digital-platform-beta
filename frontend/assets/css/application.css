@@ -1922,7 +1922,8 @@ li.loading-dialog {
     height:          100%;
 }
 
-.fill-content #map {
+.fill-content #map,
+.fill-content iframe {
     flex:        1;
 }
 
