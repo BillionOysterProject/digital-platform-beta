@@ -2,6 +2,7 @@
 page:
     body_class: 'container mt-1'
     view:       'Event Editor'
+    max_dates:  5
 
 bindings:
 
@@ -12,19 +13,19 @@ bindings:
 
 
 <section class="content">
-    <form 
-        method="POST" 
-        action="/api/events/"         
+    <form
+        method="POST"
+        action="/api/events/"
         data-redirect-to="/events"
     >
         {{ if $.bindings.event }}
-        <input 
-            type="hidden" 
-            name="_id" 
+        <input
+            type="hidden"
+            name="_id"
             value="{{ $.bindings.event._id }}"
         />
         {{ end }}
-        
+
         <div class="form-group col-sm-8">
             <label
                 class="required"
@@ -32,6 +33,7 @@ bindings:
             >
                 Event Title
             </label>
+
             <input
                 type="text"
                 class="form-control"
@@ -44,59 +46,95 @@ bindings:
         </div>
 
         <div class="form-group col-sm-8">
-            <label for="startDateTime">
+            <label>
                 Date(s) and Time(s)
             </label>
 
-            <div class="form-row">
-                    <input
-                        class="form-control col-md-3"
-                        id="startDateTime"
-                        type="date"
-                        name="startDateTime"
-                        required
-                        {{ if $.bindings.event }}
-                        value="{{ time $.bindings.event.startDateTime `ymd` }}"
-                        {{ else }}
-                        value="{{ now `ymd` }}"
-                        {{ end }}
-                    >
-        
-                    <input
-                        class="form-control col-md-2"
-                        id="monitoringStartDate"
-                        type="time"
-                        name="monitoringStartDateTime"
-                        required
-                        {{ if $.bindings.event }}
-                        value="{{ time $.bindings.event. `15:04` }}"
-                        {{ else }}
-                        value="{{ now `15:04` }}"
-                        {{ end }}
-                    >
-                </div>
 
-            <div class="form-row">
-            <input
-                class="form-control col-md-3"
-                id="startDateTime"
-                type="date"
-                name="startDateTime"
-                required
+            <div id="eventDates">
                 {{ if $.bindings.event }}
-                value="{{ time $.bindings.event `ymd` }}"
-                {{ else }}
-                value="{{ now `ymd` }}"
+                {{ if isArray $.bindings.event.dates }}
+                {{ range $i, $date := $.bindings.event.dates }}
+                <div class="form-row" id="dates-{{ $i }}">
+                    <input
+                        class="form-control col-md-4"
+                        id="dates-{{ $i }}-startDateTime"
+                        type="x-datetime-local"
+                        name="dates.{{ $i }}.startDateTime"
+                        {{ if eqx $i 0 }}
+                        required
+                        {{ end }}
+                        value="{{ time $date.startDateTime `ymd` }}"
+                    >
+
+                    <input
+                        class="form-control col-md-2 ml-2"
+                        id="dates-{{ $i }}-endDateTime"
+                        type="time"
+                        name="dates.{{ $i }}.endDateTime"
+                        {{ if eqx $i 0 }}
+                        required
+                        {{ end }}
+                        value="{{ time $date.endDateTime `ymd` }}"
+                    >
+
+                    <button class="btn btn-danger ml-2" onclick="$('#dates-{{ $i }}').remove()" type="button">
+                        <i class="fa fa-remove"></i>
+                    </button>
+                </div>
                 {{ end }}
-            >
+                {{ end }}
+                {{ end }}
+            </div>
+
+            <div class="form-row mt-2">
+                <button class="btn btn-success" type="button" onclick="$(function(){
+                    var isFirst = ($('#eventDates').length === 0);
+                    var index = ($('#eventDates').children().length).toString();
+
+                    var dtp = $('<div></div>')
+                        .attr('class', 'form-row mt-2')
+                        .attr('id', 'dates-' + index)
+
+                    var dStart = $('<input></input>')
+                        .attr('class', 'form-control col-md-4')
+                        .attr('type', 'x-datetime-local')
+                        .attr('id', 'dates-' + index + '-startDateTime')
+                        .attr('name', 'dates.' + index + '.startDateTime')
+
+                    var dEnd = $('<input></input>')
+                        .attr('class', 'form-control col-md-2 ml-2')
+                        .attr('type', 'time')
+                        .attr('id', 'dates-' + index + '-endDateTime')
+                        .attr('name', 'dates.' + index + '.endDateTime')
+
+                    var dRemove = $('<button></button>')
+                        .attr('class', 'btn btn-danger ml-2')
+                        .attr('type', 'button')
+                        .attr('onclick', '$(\'#dates-' + index + '\').remove()')
+                        .append(
+                            $('<i></i>').attr('class', 'fa fa-remove')
+                        )
+
+                    if (isFirst) {
+                        dStart.attr('required', 'required');
+                        dEnd.attr('required', 'required');
+                    }
+
+                    dtp.append(dStart);
+                    dtp.append(dEnd);
+                    dtp.append(dRemove);
+                    $('#eventDates').append(dtp);
+                    bop.setupDateTimePickers();
+                })">
+                    <i class="fa fa-plus"></i>
+                    Add Date
+                </button>
             </div>
         </div>
 
         <div class="form-group col-sm-8">
-            <label
-                class="required"
-                for="link"
-            >
+            <label class="required" for="link">
                 Link
             </label>
             <input
@@ -110,24 +148,26 @@ bindings:
             />
         </div>
 
-        <div class="form-group col-sm-8">           
+        <div class="form-group col-sm-8">
             <label for="description">Description (optional)</label>
             <textarea
                 class="form-control"
                 id="description"
                 name="description"
                 rows="5"
-            >{{ if $.bindings.event }}{{ $.bindings.event.description }}{{ end }}</textarea>          
+            >{{ if $.bindings.event }}{{ $.bindings.event.description }}{{ end }}</textarea>
         </div>
 
         <section class="content">
-                <div class="form-group mt-2">      
-                        <button
-                            type="submit"
-                            class="btn btn-success ml-2"
-                            onclick="this.form.submitSource='saveAndPublish'"
-                        >Publish Event</button>
-                    </div>
+            <div class="form-group mt-2">
+                    <button
+                        type="submit"
+                        class="btn btn-success ml-2"
+                        onclick="this.form.submitSource='saveAndPublish'"
+                    >Publish Event</button>
                 </div>
-            </section>
+            </div>
+        </section>
+    </form>
+</section>
 

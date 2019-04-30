@@ -45,6 +45,7 @@ $(function () {
         var App = Stapes.subclass({
             constructor: function () {
                 this.setupHandsontable();
+                this.setupDateTimePickers();
                 this.setupAjaxIntercept();
                 this.setupFormIntercept();
                 this.setupTypeaheadHandlers();
@@ -445,6 +446,20 @@ $(function () {
                 Handsontable.validators.registerValidator('valid-species-count', validatePositive(function(v) {
                     return (v >= 0);
                 }));
+            },
+
+            setupDateTimePickers: function() {
+                $('input[type="x-datetime-local"]').daterangepicker({
+                    singleDatePicker:    true,
+                    timePicker:          true,
+                    autoApply:           true,
+                    autoUpdateInput:     true,
+                    timePickerIncrement: 15,
+                    minDate:             new Date(),
+                    locale: {
+                        format: 'D-MMM YYYY [at] h:mm A'
+                    }
+                });
             },
 
             createTable: function(selector, headers, columns, config, loadFn) {

@@ -39,13 +39,14 @@
 <script type="text/javascript" src="assets/js/popper.min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="assets/js/datatables.min.js"></script>
 <script type="text/javascript" src="assets/js/typeahead.jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/papaparse.min.js"></script>
 <script type="text/javascript" src="assets/js/handsontable.full.min.js"></script>
 <script type="text/javascript" src="assets/js/mapbox-gl.js"></script>
 <script type="text/javascript" src="assets/js/plotly-latest.min.js"></script>
+<script type="text/javascript" src="assets/js/datatables.min.js"></script>
 <script type="text/javascript" src="assets/js/moment.min.js"></script>
+<script type="text/javascript" src="assets/js/daterangepicker.js"></script>
 <script type="text/javascript" src="assets/js/uri.js"></script>
 <script type="text/javascript" src="assets/js/application.js?cache=H{{ now `15` }}"></script>
 {{- range $i, $js := sliceify $.page.scripts }}
@@ -80,6 +81,7 @@ ga('send', 'pageview');
 <link rel="stylesheet" href="assets/lib/leaflet/dist/leaflet.css">
 <link rel="stylesheet" href="assets/lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
 <link rel="stylesheet" href="assets/css/mapbox-gl.css">
+<link rel="stylesheet" href="assets/css/daterangepicker.css">
 <link rel="stylesheet" href="assets/css/typeahead.css">
 <link rel="stylesheet" href="assets/css/handsontable.full.min.css">
 <link rel="stylesheet" href="assets/css/application.css?cache=H{{ now `15` }}">
