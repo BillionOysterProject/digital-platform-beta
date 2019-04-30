@@ -94,6 +94,8 @@ github.com/ghetzel/diecast v1.10.26 h1:/4obVqKBbXpLKhH1RsUrQOHhnX5r0FdRklO8YObmu
 github.com/ghetzel/diecast v1.10.26/go.mod h1:Q1oMUg7E1a6NRcDny+274DcSuQ/6FK7GQk4j5DQS6HY=
 github.com/ghetzel/diecast v1.11.0 h1:ZGiz4QT8qfHnPNkRzqYKPW0tTyHgTOpt+lziVa4tHUo=
 github.com/ghetzel/diecast v1.11.0/go.mod h1:ahB2EeY/6LcsIE4/0Qez+OJQJ+Z0DYQlx+H1cGXDfgc=
+github.com/ghetzel/diecast v1.11.1 h1:CJfBodZzpZ06q0KukZU+tKI2RXv0v0r4xaKQZD1fs0E=
+github.com/ghetzel/diecast v1.11.1/go.mod h1:ahB2EeY/6LcsIE4/0Qez+OJQJ+Z0DYQlx+H1cGXDfgc=
 github.com/ghetzel/friendscript v0.5.0/go.mod h1:GZJ2FZRpgvURp4hUb/AdevNCnHKCWRpKLxtAl817F4g=
 github.com/ghetzel/friendscript v0.5.5 h1:xQvgdHW7FckKhHZL4xU3LaPpBU0nHheBl96My1KhR+I=
 github.com/ghetzel/friendscript v0.5.5/go.mod h1:zYqGAS3vGMxM912/T9GP1S62VP+AXssMDv9dPzO0Ph0=
