@@ -1,0 +1,31 @@
+---
+page:
+    view: 'Visual Resources'
+
+bindings:
+-   name: multimedia
+    resource: 'https://drive.google.com/embeddedfolderview?id=1F9g8tW2Wj9t-RG3EVGRDUk1GultGdCw2#grid'
+    parser: text
+
+---
+
+<section class="content">
+        {{ $grid := $.bindings.multimedia }}
+        {{ $grid := htmlAddClass $grid ".flip-contents" "unit-lessons" }}
+        {{ $grid := htmlAddClass $grid ".flip-entries" "card-deck" }}
+        {{ $grid := htmlRemove $grid ".flip-list-header" }}
+        {{ $grid := htmlAddClass $grid ".flip-entry" "card" }}
+        {{ $grid := htmlAddClass $grid ".flip-entry-visual" "text-center" }}
+        {{ $grid := htmlAddClass $grid ".flip-entry-thumb" "card-img-top" }}
+        {{ $grid := htmlAddClass $grid ".flip-entry-thumb img" "w-100 img-cover preview rounded-top object-top" }}
+        {{ $grid := htmlSetAttr $grid ".flip-entry-thumb img" "height" "220" }}
+        {{ $grid := htmlAttrFindReplace $grid ".flip-entry-thumb img" "src" "s190" "s600" }}
+        {{ $grid := htmlAddClass $grid ".flip-entry-title" "card-body font-weight-bold" }}
+        {{ $grid := htmlRemove $grid ".flip-entry-last-modified" }}
+        {{ $grid := htmlRemove $grid ".flip-entry-list-icon" }}
+        {{ $grid := htmlRemove $grid "meta" }}
+        {{ $grid := htmlRemove $grid "link" }}
+        {{ $grid := htmlRemove $grid "script" }}
+        {{ $grid := htmlSetAttr $grid "*[id]" "id" "" }}
+        {{ $grid }}
+</section>
