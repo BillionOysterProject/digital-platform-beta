@@ -186,130 +186,162 @@ EXPEDITION_DATA_EXPORT_FIELDS = [{
 }, {
     'field': 'protocols.waterQuality.samples.*.waterTemperature.method',
     'label': 'Sample {i:02d}: Water Temperature Method',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.waterTemperature.results.0',
     'label': 'Sample {i:02d}: Water Temperature (Result 1)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.waterTemperature.results.1',
     'label': 'Sample {i:02d}: Water Temperature (Result 2)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.waterTemperature.results.2',
     'label': 'Sample {i:02d}: Water Temperature (Result 3)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.dissolvedOxygen.method',
     'label': 'Sample {i:02d}: Dissolved Oxygen Method',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.dissolvedOxygen.results.0',
     'label': 'Sample {i:02d}: Dissolved Oxygen (Result 1)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.dissolvedOxygen.results.1',
     'label': 'Sample {i:02d}: Dissolved Oxygen (Result 2)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.dissolvedOxygen.results.2',
     'label': 'Sample {i:02d}: Dissolved Oxygen (Result 3)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.salinity.method',
     'label': 'Sample {i:02d}: Salinity Method',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.salinity.results.0',
     'label': 'Sample {i:02d}: Salinity (Result 1)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.salinity.results.1',
     'label': 'Sample {i:02d}: Salinity (Result 2)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.salinity.results.2',
     'label': 'Sample {i:02d}: Salinity (Result 3)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.pH.method',
     'label': 'Sample {i:02d}: pH Method',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.pH.results.0',
     'label': 'Sample {i:02d}: pH (Result 1)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.pH.results.1',
     'label': 'Sample {i:02d}: pH (Result 2)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.pH.results.2',
     'label': 'Sample {i:02d}: pH (Result 3)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.turbidity.method',
     'label': 'Sample {i:02d}: Turbidity Method',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.turbidity.results.0',
     'label': 'Sample {i:02d}: Turbidity (Result 1)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.turbidity.results.1',
     'label': 'Sample {i:02d}: Turbidity (Result 2)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.turbidity.results.2',
     'label': 'Sample {i:02d}: Turbidity (Result 3)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.ammonia.method',
     'label': 'Sample {i:02d}: Ammonia Method',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.ammonia.results.0',
     'label': 'Sample {i:02d}: Ammonia (Result 1)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.ammonia.results.1',
     'label': 'Sample {i:02d}: Ammonia (Result 2)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.ammonia.results.2',
     'label': 'Sample {i:02d}: Ammonia (Result 3)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.nitrates.method',
     'label': 'Sample {i:02d}: Nitrates Method',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.nitrates.results.0',
     'label': 'Sample {i:02d}: Nitrates (Result 1)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.nitrates.results.1',
     'label': 'Sample {i:02d}: Nitrates (Result 2)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.nitrates.results.2',
     'label': 'Sample {i:02d}: Nitrates (Result 3)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.phosphate.method',
     'label': 'Sample {i:02d}: Phosphate Method',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.phosphate.results.0',
     'label': 'Sample {i:02d}: Phosphate (Result 1)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.phosphate.results.1',
     'label': 'Sample {i:02d}: Phosphate (Result 2)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.phosphate.results.2',
     'label': 'Sample {i:02d}: Phosphate (Result 3)',
+    'group': 'samples',
     'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.notes',
@@ -440,11 +472,10 @@ def populate_expedition_record(record, source, flt, counter=0, placeholders={}, 
         elif flt['value'] is not None:
             current = flt['value']
 
-    # print('{}{}'.format('  ' * (counter + 1), lbl))
     record['{:04d}|{}'.format(pos, lbl)] = current
 
 
-def generate_batch_expeditions_tsv(report_name='expeditions', query='status/published', limit=False, maxcount=-1):
+def generate_batch_expeditions_tsv(report_name='expeditions', query='status/published', limit=False, maxcount=-1, sort_by='monitoringStartDate'):
     api = API('bop-worker')
     api.setup()
     s3 = boto3.client('s3')
@@ -474,6 +505,8 @@ def generate_batch_expeditions_tsv(report_name='expeditions', query='status/publ
         for expedition in expeditions:
             record = OrderedDict()
             count += 1
+            pos = 0
+            lastgroup = None
 
             for i, flt in enumerate(EXPEDITION_DATA_EXPORT_FIELDS):
                 # the "only" list being present means that only report_names in that
@@ -486,7 +519,14 @@ def generate_batch_expeditions_tsv(report_name='expeditions', query='status/publ
                     if report_name not in flt['only']:
                         continue
 
-                populate_expedition_record(record, dict(expedition), flt, pos=i)
+                # only advance the position counter across distinct group boundaries
+                if 'group' not in flt or flt.get('group') is not lastgroup:
+                    pos += 1
+
+                populate_expedition_record(record, dict(expedition), flt, pos=pos)
+
+                lastgroup = flt.get('group')
+
 
             data[expedition['name']] = record
 
@@ -500,8 +540,17 @@ def generate_batch_expeditions_tsv(report_name='expeditions', query='status/publ
     )
 
     # get the final output order that the columns should be in by sorting by the desired field
+    sortkey = ''
+
+    for i, flt in enumerate(EXPEDITION_DATA_EXPORT_FIELDS):
+        if flt.get('field') == sort_by:
+            sortkey = '{:04d}|{}'.format(i+1, flt.get('label'))
+
+    if not len(sortkey):
+        raise Exception("Cannot find sort key field {}", sort_by)
+
     data = OrderedDict(
-        sorted(data.items(), key=lambda d: d[1].get('0001|Date-Time'))
+        sorted(data.items(), key=lambda d: d[1].get(sortkey))
     )
 
     orderedExpNames = data.keys()
