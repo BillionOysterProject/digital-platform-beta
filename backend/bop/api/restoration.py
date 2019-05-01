@@ -186,7 +186,7 @@ class Expeditions(CollectionView):
                         e['protocols']['waterQuality']
                     )
 
-            except KeyError:
+            except:
                 continue
 
         for table, idset in protoTables.items():
@@ -202,9 +202,12 @@ class Expeditions(CollectionView):
                             continue
 
                         for v in values:
+                            if not v or not len(v):
+                                continue
+
                             images.append({
                                 'from': table,
-                                'url':  v,
+                                'url':  v.replace('http:', 'https:'),
                             })
 
         return jsonify(images)
