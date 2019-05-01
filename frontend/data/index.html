@@ -16,12 +16,12 @@ page:
                 </p>
 
                 <div class="card-text d-flex flex-row justify-left">
-                    <button type="submit" class="btn btn-primary mr-2">
+                    <a href="/data/preview" class="btn btn-primary mr-2">
                         <i class="fa fa-table"></i>
                         View Expeditions
-                    </button>
+                    </a>
 
-                    <div class="btn-group" role="group"> 
+                    <div class="btn-group" role="group">
                         <button
                             type="button"
                             id="exportExpeditions"
@@ -56,10 +56,10 @@ page:
                 </p>
 
                 <div class="d-flex flex-row justify-content-around align-items-end">
-                    <button type="submit" class="btn btn-primary">
+                    <a href="/data/preview?type=oyster-measurements" class="btn btn-primary">
                         <i class="fa fa-table"></i>
                         View Measurements
-                    </button>
+                    </a>
 
                     <div class="btn-group" role="group">
                         <button
@@ -74,9 +74,7 @@ page:
                             Export Measurements
                         </button>
                         <div class="dropdown-menu" aria-labelledby="exportOysterMeasurements">
-                            <a class="dropdown-item" href="#">CSV (comma-separated, Excel friendly)</a>
-                            <a class="dropdown-item" href="#">TSV (tab-separated, Excel friendly)</a>
-                            <a class="dropdown-item" href="#">Google Sheets</a>
+                            <a class="dropdown-item" href="https://digital-platform-prod-files.s3.amazonaws.com/reports/expeditions.tsv" target="blank">TSV (tab-separated, Excel friendly)</a>
                             <a class="dropdown-item" href="#">PDF (printable)</a>
                         </div>
                     </div>
@@ -84,7 +82,7 @@ page:
             </div>
         </div>
     </section>
-    
+
     <!-- This whole section is being commented out until the functionality actually works on the backend-->
     <!--
     <section class="content">
@@ -95,22 +93,22 @@ page:
                     <p>
                         View selected data based on criteria you specify, like the site, structure, or date range.
                     </p>
-        
+
                     <div class="step-toggle">
                         <i class="fa"></i>
                     </div>
                 </section>
             </div>
-    -->        
-            
+    -->
+
             <!--
             <div class="card-body collapse" id="filterData" data-parent="#accordion">
-            -->   
+            -->
                 <!-- ########################################################################################### -->
                 <!-- Step 1: Protocol Selection -->
                 <!--         Select which fields should be retrieved. -->
                 <!-- ########################################################################################### -->
-                
+
                 <!--
                 <h3>
                     <span class="fa-stack">
@@ -161,12 +159,12 @@ page:
                     </div>
                 </section>
             -->
-                
+
                 <!-- ########################################################################################### -->
                 <!-- Step 2: Expedition Filter -->
                 <!--         Restrict which expeditions to retrieve data from by any/all of the below criteria. -->
                 <!-- ########################################################################################### -->
-        
+
                 <!--
                     <h3>
                         <span class="fa-stack">
@@ -179,7 +177,7 @@ page:
                         <p>
                             Narrow down your protocol data to only display expeditions from specific sites, organizations, users, etc.
                         </p>
-            
+
                         <div class="form-group row">
                             <label for="site" class="col-sm-2 col-form-label">Site Name</label>
                             <div class="input-group col-sm-8">
@@ -195,7 +193,7 @@ page:
                                 </small>
                             </div>
                         </div>
-            
+
                         <div class="form-group row">
                             <label for="search" class="col-sm-2 col-form-label">Keyword Search</label>
                             <div class="col-sm-8">
@@ -205,7 +203,7 @@ page:
                                 </small>
                             </div>
                         </div>
-            
+
                         <div class="form-group row">
                             <label for="date" class="col-sm-2 col-form-label">Start of Date Range</label>
                             <div class="col-sm-4">
@@ -228,7 +226,7 @@ page:
                                 >
                             </div>
                         </div>
-            
+
                         <div class="form-group row">
                             <label for="ors" class="col-sm-2 col-form-label">
                                 ORS Name
@@ -246,10 +244,10 @@ page:
                                 </div>
                             </div>
                         </div>
-            
+
                         <div class="form-group mt-4">
                             <label>Structure Type</label>
-            
+
                             {{ range $i, $structureType := $.page.structureTypes }}
                             <div class="custom-control custom-radio">
                                 <input
@@ -263,7 +261,7 @@ page:
                             </div>
                             {{ end }}
                         </div>
-            
+
                         <div class="form-group row">
                             <label for="date" class="col-sm-2 col-form-label">
                                 Organization Name
@@ -280,7 +278,7 @@ page:
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <label for="date" class="col-sm-2 col-form-label">
                                 Team Name
@@ -297,8 +295,8 @@ page:
                                 </div>
                             </div>
                         </div>
-                        
-            
+
+
                         <div class="form-group row">
                             <label for="date" class="col-sm-2 col-form-label">
                                 User
@@ -316,15 +314,15 @@ page:
                             </div>
                         </div>
                     </section>
-                    -->    
-                
+                    -->
+
                     <!-- ########################################################################################### -->
                     <!-- Step 3: View Report -->
                     <!--         Show the report and provide options for exporting to common formats. -->
                     <!-- ########################################################################################### -->
-                     
-                    
-            
+
+
+
                     <!--
                     <h3>
                         <span class="fa-stack fa-1.5x">
@@ -337,14 +335,14 @@ page:
                         <p>
                             Choose which format you'd like to view your selected data in.
                         </p>
-            
+
                         <button
                         type="submit"
                         class="btn btn-lg btn-primary"
                         >
                             View Selected Data
                         </button>
-            
+
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Export as...
@@ -357,7 +355,7 @@ page:
                             </div>
                         </div>
                     </section>
-                    
+
                     -->
                 </form>
             </div>

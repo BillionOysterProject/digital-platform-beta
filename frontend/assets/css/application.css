@@ -1964,6 +1964,33 @@ li.loading-dialog {
     color: white !important;
 }
 
+.one-line {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.bop-table-grid th {
+    color: white;
+    background-color: #4D74AE;
+    border-color: #4D74AE !important;
+}
+
+.bop-table-grid th a {
+    color: white;
+}
+
+.bop-table-grid tr:hover td,
+.bop-table-grid tr.selected td,
+.bop-table-grid tr > td.selected  {
+    background-color: rgba(77, 116, 174, 0.33);
+}
+
+.bop-table-grid td {
+    border-color: #4D74AE;
+    border-right: 1px solid #4D74AE;
+    padding: 0.125em 0.5em;
+}
+
 @media (max-width: 992px) {
     .btn-group {
         display: block;

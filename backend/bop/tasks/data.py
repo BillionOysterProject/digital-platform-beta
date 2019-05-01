@@ -55,7 +55,6 @@ def calcTotalPerOrganismCount(context, field):
 
     return count
 
-EXPEDITION_EXPORT_KEY = 'reports/expeditions.tsv'
 EXPEDITION_DATA_EXPORT_FIELDS = [{
     'field': 'id',
     'label': 'Expedition ID',
@@ -95,60 +94,79 @@ EXPEDITION_DATA_EXPORT_FIELDS = [{
 }, {
     'field': 'protocols.oysterMeasurement.conditionOfOysterCage.bioaccumulationOnCage',
     'label': 'Bioaccumulation on cage',
+    'only': [ 'expeditions', 'oyster-measurements' ],
 }, {
     'field': 'protocols.oysterMeasurement.measuringOysterGrowth.substrateShells.*.measurements.*.sizeOfLiveOysterMM',
     'label': 'Oyster Measurement {j:02d} (mm)',
+    'only': [ 'expeditions', 'oyster-measurements' ],
 }, {
     'field': 'protocols.oysterMeasurement.notes',
     'label': 'Oyster Measurement Notes',
+    'only': [ 'expeditions', 'oyster-measurements' ],
 }, {
     'field': 'protocols.siteCondition.meteorologicalConditions.weatherConditions',
     'label': 'Weather',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.siteCondition.meteorologicalConditions.airTemperatureC',
     'label': 'Air Temperature (°C)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.siteCondition.meteorologicalConditions.windSpeedMPH',
     'label': 'Wind speed (mph)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.siteCondition.meteorologicalConditions.windDirection',
     'label': 'Wind direction',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.siteCondition.recentRainfall.rainedIn7Days',
     'label': 'Rained in the past 7 days',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.siteCondition.recentRainfall.rainedIn72Hours',
     'label': 'Rained in the past 72 hours',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.siteCondition.recentRainfall.rainedIn24Hours',
     'label': 'Rained in the past 24 hours',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.siteCondition.waterConditions.waterColor',
     'label': 'Water color',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.siteCondition.waterConditions.oilSheen',
     'label': 'Oil sheen present',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.siteCondition.waterConditions.garbage.garbagePresent',
     'label': 'Garbage in water',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.siteCondition.waterConditions.markedCombinedSewerOverflowPipes.markedCSOPresent',
     'label': 'Combined Sewer Overflow present',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.siteCondition.waterConditions.markedCombinedSewerOverflowPipes.howMuchFlowThrough',
     'label': 'Combined Sewer Overflow flow',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.siteCondition.notes',
     'label': 'Site Conditions Notes',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.mobileTrap.mobileOrganisms.*.count',
     'label': 'Organism: {ctx[organism][commonName]}',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.mobileTrap.notes',
     'label': 'Mobile Organism Notes',
+    'only': [ 'expeditions' ],
 }, {
     'label': 'Total # of Grid Points',
     'value': calcTotalGridPoints,
+    'only': [ 'expeditions' ],
 },
 
 # {
@@ -160,108 +178,143 @@ EXPEDITION_DATA_EXPORT_FIELDS = [{
 {
     'field': 'protocols.settlementTiles.settlementTiles.*.grid*.organism.commonName',
     'label': 'Tile {i:02d}, Grid Pt. {j:02d}',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.settlementTiles.notes',
     'label': 'Sessile Organism Notes',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.waterTemperature.method',
     'label': 'Sample {i:02d}: Water Temperature Method',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.waterTemperature.results.0',
     'label': 'Sample {i:02d}: Water Temperature (Result 1)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.waterTemperature.results.1',
     'label': 'Sample {i:02d}: Water Temperature (Result 2)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.waterTemperature.results.2',
     'label': 'Sample {i:02d}: Water Temperature (Result 3)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.dissolvedOxygen.method',
     'label': 'Sample {i:02d}: Dissolved Oxygen Method',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.dissolvedOxygen.results.0',
     'label': 'Sample {i:02d}: Dissolved Oxygen (Result 1)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.dissolvedOxygen.results.1',
     'label': 'Sample {i:02d}: Dissolved Oxygen (Result 2)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.dissolvedOxygen.results.2',
     'label': 'Sample {i:02d}: Dissolved Oxygen (Result 3)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.salinity.method',
     'label': 'Sample {i:02d}: Salinity Method',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.salinity.results.0',
     'label': 'Sample {i:02d}: Salinity (Result 1)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.salinity.results.1',
     'label': 'Sample {i:02d}: Salinity (Result 2)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.salinity.results.2',
     'label': 'Sample {i:02d}: Salinity (Result 3)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.pH.method',
     'label': 'Sample {i:02d}: pH Method',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.pH.results.0',
     'label': 'Sample {i:02d}: pH (Result 1)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.pH.results.1',
     'label': 'Sample {i:02d}: pH (Result 2)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.pH.results.2',
     'label': 'Sample {i:02d}: pH (Result 3)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.turbidity.method',
     'label': 'Sample {i:02d}: Turbidity Method',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.turbidity.results.0',
     'label': 'Sample {i:02d}: Turbidity (Result 1)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.turbidity.results.1',
     'label': 'Sample {i:02d}: Turbidity (Result 2)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.turbidity.results.2',
     'label': 'Sample {i:02d}: Turbidity (Result 3)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.ammonia.method',
     'label': 'Sample {i:02d}: Ammonia Method',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.ammonia.results.0',
     'label': 'Sample {i:02d}: Ammonia (Result 1)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.ammonia.results.1',
     'label': 'Sample {i:02d}: Ammonia (Result 2)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.ammonia.results.2',
     'label': 'Sample {i:02d}: Ammonia (Result 3)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.nitrates.method',
     'label': 'Sample {i:02d}: Nitrates Method',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.nitrates.results.0',
     'label': 'Sample {i:02d}: Nitrates (Result 1)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.nitrates.results.1',
     'label': 'Sample {i:02d}: Nitrates (Result 2)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.nitrates.results.2',
     'label': 'Sample {i:02d}: Nitrates (Result 3)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.phosphate.method',
     'label': 'Sample {i:02d}: Phosphate Method',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.phosphate.results.0',
     'label': 'Sample {i:02d}: Phosphate (Result 1)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.phosphate.results.1',
     'label': 'Sample {i:02d}: Phosphate (Result 2)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.samples.*.phosphate.results.2',
     'label': 'Sample {i:02d}: Phosphate (Result 3)',
+    'only': [ 'expeditions' ],
 }, {
     'field': 'protocols.waterQuality.notes',
     'label': 'Water Quality Notes',
+    'only': [ 'expeditions' ],
 }]
 
 
@@ -391,7 +444,7 @@ def populate_expedition_record(record, source, flt, counter=0, placeholders={}, 
     record['{:04d}|{}'.format(pos, lbl)] = current
 
 
-def generate_batch_expeditions_tsv(query='status/published', limit=False, maxcount=-1):
+def generate_batch_expeditions_tsv(report_name='expeditions', query='status/published', limit=False, maxcount=-1):
     api = API('bop-worker')
     api.setup()
     s3 = boto3.client('s3')
@@ -423,6 +476,16 @@ def generate_batch_expeditions_tsv(query='status/published', limit=False, maxcou
             count += 1
 
             for i, flt in enumerate(EXPEDITION_DATA_EXPORT_FIELDS):
+                # the "only" list being present means that only report_names in that
+                # list will cause those field(s) to be included
+                #
+                # the "only" list being absent means that the field(s) should be included
+                # in all cases
+                #
+                if 'only' in flt:
+                    if report_name not in flt['only']:
+                        continue
+
                 populate_expedition_record(record, dict(expedition), flt, pos=i)
 
             data[expedition['name']] = record
@@ -464,7 +527,7 @@ def generate_batch_expeditions_tsv(query='status/published', limit=False, maxcou
     s3.put_object(
         ACL='public-read',
         Bucket=bucket,
-        Key=EXPEDITION_EXPORT_KEY,
+        Key='{}/{}.tsv'.format('reports', report_name),
         ContentType='text/tab-separated-values',
         StorageClass='REDUCED_REDUNDANCY',
         Body=output,
