@@ -22,7 +22,7 @@ bindings:
 
 <section class="content row">
     <div class="col-md-12 col-lg-6">
-        <h2 class="text-center">My Recent Expeditions</h2>
+        <h2 class="text-center">My Recent Expeditions {{ $.bindings.user.id }}</h2>
 
         <ul class="list-group w-100">
             {{ range $i, $expedition := $.bindings.myexpeditions }}
