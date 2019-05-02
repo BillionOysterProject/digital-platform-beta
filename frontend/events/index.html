@@ -23,6 +23,18 @@ bindings:
 
 <section class="content">       
     <section class="container">
+        <div class="text-right pt-2">
+            {{ if $.flags.admin }}
+            <a
+                href="/events/editor"
+                class="btn btn-primary mb-2"
+            >
+                <i class="fa fa-plus"></i>
+                Add Event
+            </a>
+            {{ end }}
+        </div>
+
         <h2 class="text-center">Upcoming Events</h2>
         <div class="unit-lessons">
             <div class="row">
