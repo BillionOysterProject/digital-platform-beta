@@ -75,6 +75,18 @@ bindings:
     </div>
     
     <h2 class="text-center">All Resources</h2>
+    <div class="text-right pr-2">
+        {{ if $.flags.admin }}
+        <a
+            href="/resources/editor"
+            class="btn btn-primary mb-2"
+        >
+            <i class="fa fa-plus"></i>
+            Add Resource
+        </a>
+        {{ end }}
+    </div>
+
     <table class="table table-sm table-bordered table-striped table-hover" id="resources">
         <thead>
             <tr>
